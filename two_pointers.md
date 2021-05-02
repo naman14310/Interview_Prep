@@ -2,7 +2,7 @@
 
 ## Easy
 
-#### 283. Move Zeroes
+#### 1. Move Zeroes
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
 Hint: Use two pointers from left to right. Left pointer to keep track for rightmost non zero index. Right pointer to iterate array.
@@ -26,7 +26,7 @@ void moveZeroes(vector<int>& nums) {
 }
 ```
 
-#### 27. Remove Element
+#### 2. Remove Element
 Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 
 ```cpp
@@ -45,7 +45,7 @@ int removeElement(vector<int>& nums, int val) {
 }
 ```
 
-#### 26. Remove Duplicates from Sorted Array
+#### 3. Remove Duplicates from Sorted Array
 Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
 
 ```cpp
@@ -68,7 +68,7 @@ int removeDuplicates(vector<int>& nums) {
 }
 ```
 
-#### 88. Merge Sorted Array
+#### 4. Merge Sorted Array
 Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
 
 ```cpp
@@ -95,7 +95,7 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 }
 ```
 
-#### 350. Intersection of Two Arrays II
+#### 5. Intersection of Two Arrays II
 Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
 
 ```cpp
@@ -121,7 +121,7 @@ vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
 }
 ```
 
-#### 844. Backspace String Compare
+#### 6. Backspace String Compare
 Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
 ```cpp
@@ -165,7 +165,7 @@ bool backspaceCompare(string s, string t) {
 }
 ```
 
-#### 125. Valid Palindrome
+#### 7. Valid Palindrome
 Given a string s, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
 
 ```cpp

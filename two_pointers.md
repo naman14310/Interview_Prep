@@ -194,6 +194,7 @@ Given two strings s and t, check if s is a subsequence of t.
 
 ```cpp
 /* EFFIECIENT FOR SINGLE QUERY => O(N) Approach*/
+
 bool isSubsequence(string s, string t) {
     if(s.length()==0 && t.length()==0) return true;
     if(s.length()>t.length()) return false;

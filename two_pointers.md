@@ -188,3 +188,46 @@ vector<int> sortedSquares(vector<int>& nums) {
     return res;
 }
 ```
+
+#### 8. Is Subsequence
+Given two strings s and t, check if s is a subsequence of t.
+
+```cpp
+/* EFFIECIENT FOR SINGLE QUERY => O(N) Approach*/
+bool isSubsequence(string s, string t) {
+    if(s.length()==0 && t.length()==0) return true;
+    if(s.length()>t.length()) return false;
+    int i=0, j=0;
+    while(i<s.length() && j<t.length()){
+        if(s[i]==t[j]){
+            i++;j++;
+        }
+        else j++;
+    }
+    if(i<s.length()) return false;
+    return true;
+}
+
+/* EFFIECIENT FOR MULTIPLE QUERIES -> Q*(LOG N) Approach */
+    
+bool isSubsequence(string s, string t) {
+    unordered_map<char, vector<int>> mp;
+    int idx = 0;
+    for(char ch : t){
+        mp[ch].push_back(idx);
+        idx++;
+    }
+
+    int low=0;
+    for(int i=0; i<s.length(); i++){
+        char ch = s[i];
+        if(mp.find(ch)==mp.end()) return false;
+        auto v = mp[ch];
+        int pos = lower_bound(v.begin(), v.end(), low) - v.begin();
+        if(pos<v.size()) low = v[pos]+1;
+        else return false;
+    }
+    return true;
+}
+
+```

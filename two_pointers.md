@@ -4,7 +4,6 @@
 
 #### 1. Move Zeroes
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
-
 Hint: Use two pointers from left to right. Left pointer to keep track for rightmost non zero index. Right pointer to iterate array.
 
 ```cpp
@@ -165,25 +164,7 @@ bool backspaceCompare(string s, string t) {
 }
 ```
 
-#### 7. Valid Palindrome
-Given a string s, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
-
-```cpp
-bool isPalindrome(string s) {
-    int n = s.size(), l = 0, r = n - 1;
-    while (l < r) {
-        while (l < r && !isalnum(s[l])) 
-            l++;
-        while (l < r && !isalnum(s[r])) 
-            r--;
-        if (tolower(s[l++]) != tolower(s[r--])) 
-            return false;
-    }
-    return true;
-}
-```
-
-#### 8. Squares of a Sorted Array 
+#### 7. Squares of a Sorted Array 
 Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
 
 ```cpp

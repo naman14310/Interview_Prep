@@ -341,7 +341,7 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
 #### 9. Maximum Product Subarray (Kadane with multiplication)
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
 
-Hint: Use Maintain positive and negative products and swap(ptemp, ntemp) whenever negative element appears. ps, zeros are break points (reinitialize ptemp, ntemp to 1)
+Hint: Maintain positive and negative products and swap(ptemp, ntemp) whenever negative element appears. ps, zeros are break points (reinitialize ptemp, ntemp to 1)
 
 ```cpp
 int maxProduct(vector<int>& nums) {

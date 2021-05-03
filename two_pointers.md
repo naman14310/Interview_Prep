@@ -67,7 +67,37 @@ int removeDuplicates(vector<int>& nums) {
 }
 ```
 
-#### 4. Merge Sorted Array
+#### 4. Remove Duplicates from Sorted Array II
+Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.
+
+```cpp
+int removeDuplicates(vector<int>& nums) {
+    int len = nums.size();
+    if(len<=2) return len;
+
+    int var = nums[0];
+    int i=1, j=1, count=1;
+    while(j<len){
+        if(nums[j]==var){
+            count++;
+            if(count<=2){
+                swap(nums[i], nums[j]);
+                i++; j++;
+            }
+            else j++;
+        }
+        else{
+            var = nums[j];
+            count = 1;
+            swap(nums[i], nums[j]);
+            i++; j++;
+        }
+    }
+    return i;
+}
+```
+
+#### 5. Merge Sorted Array
 Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
 
 ```cpp
@@ -94,7 +124,7 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 }
 ```
 
-#### 5. Intersection of Two Arrays II
+#### 6. Intersection of Two Arrays II
 Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
 
 ```cpp
@@ -120,7 +150,7 @@ vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
 }
 ```
 
-#### 6. Backspace String Compare
+#### 7. Backspace String Compare
 Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
 ```cpp
@@ -164,7 +194,7 @@ bool backspaceCompare(string s, string t) {
 }
 ```
 
-#### 7. Squares of a Sorted Array 
+#### 8. Squares of a Sorted Array 
 Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
 
 ```cpp
@@ -189,7 +219,7 @@ vector<int> sortedSquares(vector<int>& nums) {
 }
 ```
 
-#### 8. Is Subsequence
+#### 9. Is Subsequence
 Given two strings s and t, check if s is a subsequence of t.
 
 ```cpp
@@ -233,7 +263,7 @@ bool isSubsequence(string s, string t) {
 
 ```
 
-#### 9. Container With Most Water
+#### 10. Container With Most Water
 
 ```cpp
 int maxArea(vector<int>& height) {
@@ -246,5 +276,71 @@ int maxArea(vector<int>& height) {
         else j--;
     }
     return res;
+}
+```
+
+## Medium
+
+#### 1. 3Sum (Remove Duplicates)
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+=> Notice that the solution set must not contain duplicate triplets.
+
+```cpp
+vector<vector<int>> threeSum(vector<int>& nums) {
+    vector<vector<int>> ans;
+    if(nums.size()<3) return ans;
+
+    sort(nums.begin(), nums.end());
+
+    for(int k=0; k<nums.size()-2; k++){
+        if(k>0 && nums[k]==nums[k-1]) continue; // FOR REMOVING DUPLICATES
+
+        int sum = -(nums[k]);
+        int i=k+1, j=nums.size()-1;
+
+        while(i<j){
+            if(nums[i]+nums[j]==sum){
+                vector<int> temp;
+                temp.push_back(nums[k]);
+                temp.push_back(nums[i]);
+                temp.push_back(nums[j]);
+                ans.push_back(temp);
+                i++;
+                j--;
+                while(i<j && nums[i]==nums[i-1]) i++; // FOR REMOVING DUPLICATES
+                while(i<j && nums[j]==nums[j+1]) j--; // FOR REMOVING DUPLICATES
+            }
+            else if(nums[i]+nums[j]<sum) i++;
+            else j--;
+        }
+    }
+    return ans;
+}
+```
+
+#### 2. 3Sum Closest
+Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. 
+
+```cpp
+int threeSumClosest(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    int closest = INT_MAX;
+    int ans = 0;
+    for(int i=0; i<nums.size()-2; i++){
+        int a = nums[i];
+        int l = i+1; 
+        int r = nums.size()-1;
+Global and Local Inversions
+        while(l<r){
+            int sum = a+nums[l]+nums[r];
+            if(closest > abs(target-sum)){
+                closest = abs(target-sum);
+                ans = sum;
+            }
+            if(sum>target) r--;
+            else l++;
+        }
+    }
+    return ans;
 }
 ```

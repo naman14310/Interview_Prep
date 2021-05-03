@@ -330,7 +330,6 @@ int threeSumClosest(vector<int>& nums, int target) {
         int a = nums[i];
         int l = i+1; 
         int r = nums.size()-1;
-Global and Local Inversions
         while(l<r){
             int sum = a+nums[l]+nums[r];
             if(closest > abs(target-sum)){

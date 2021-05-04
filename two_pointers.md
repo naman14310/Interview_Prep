@@ -318,7 +318,49 @@ vector<vector<int>> threeSum(vector<int>& nums) {
 }
 ```
 
-#### 2. 3Sum Closest
+#### 2. 3Sum With Multiplicity (Tricky)
+Given an integer array arr, and an integer target, return the number of tuples i, j, k such that i < j < k and arr[i] + arr[j] + arr[k] == target. As the answer can be very large, return it modulo 109 + 7.
+
+Approach:
+The idea is same with 3Sum, but need to care about combination of duplicates. Firstly sort A, then say we fix i as first number, and we want to find all possibilities of A[lo] + A[hi] == target - A[i].
+Case1 => A[lo] != A[hi]. Count the number of duplicates of A[lo] and A[hi], as cntlo and cnthi, then for i, there are cnthi*cntlo possibilities
+Case2 => A[lo] == A[hi]. Now all number between lo and hi are same. Say the number of duplicates is n, any two of n can meet A[lo] + A[hi] == target - A[i], that is n*(n-1)/2.
+
+```cpp
+int threeSumMulti(vector<int>& arr, int target) {
+    int n = arr.size(), mod = 1e9+7;
+    sort(arr.begin(), arr.end());
+    int ans = 0;
+    for(int i=0; i<n-2; i++){
+        int j = i+1, k = n-1;
+
+        while(j<k){
+            if(arr[i] + arr[j] + arr[k] == target){
+                int countj = 1, countk = 1; 
+                while(j<n-1 && arr[j]==arr[j+1]){
+                    j++; countj++;
+                }
+                while(k>i+1 && arr[k]==arr[k-1]){
+                    k--; countk++;
+                }
+                if(arr[j]!=arr[k])                                 // -----> CASE 1
+                    ans = (ans + countj*countk) % mod;
+                else                                               // -----> CASE 2
+                    ans = (ans + (countj*(countj-1))/2) % mod;
+
+                j++; k--;
+            }
+            else if(arr[i] + arr[j] + arr[k] > target) k--;
+            else j++;
+        }
+    }   
+    return ans;
+}
+```
+
+
+
+#### 3. 3Sum Closest
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. 
 
 ```cpp
@@ -343,3 +385,49 @@ int threeSumClosest(vector<int>& nums, int target) {
     return ans;
 }
 ```
+
+#### 4. Boats to Save People
+You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most limit. Return the minimum number of boats to carry every given person.
+
+```cpp
+int numRescueBoats(vector<int>& people, int limit) {
+    sort(people.begin(), people.end());
+    int i=0, j=people.size()-1;
+    int boats = 0;
+    while(i<=j){
+        if(people[i]+people[j]<=limit){
+            i++; j--;
+        }
+        else j--;
+  
+        boats++;
+    }
+    return boats;
+}
+```
+
+#### 5. Max Number of K-Sum Pairs (Two sum in other words)
+You are given an integer array nums and an integer k. In one operation, you can pick two numbers from the array whose sum equals k and remove them from the array.
+Return the maximum number of operations you can perform on the array.
+
+```cpp
+int maxOperations(vector<int>& nums, int k) {
+    sort(nums.begin(), nums.end());
+    int i=0, j=nums.size()-1;
+    int ans = 0;
+    while(i<j){
+        if(nums[i] + nums[j] == k){
+            ans++;
+            i++; j--;
+        }
+
+        else if(nums[i] + nums[j] > k)
+            j--;
+
+        else
+            i++;
+    }
+    return ans;
+}
+```
+

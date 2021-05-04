@@ -484,6 +484,106 @@ void nextPermutation(vector<int>& nums) {
 ```
 
 
+#### 13. 4Sum II
+Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that: 0 <= i, j, k, l < n and nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+
+Hint: Use two hashmaps for storing sum of A[i]+B[i] and C[i]+D[i]
+
+```cpp
+int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+    int len = A.size();
+    int count = 0; 
+    unordered_map<int, int> mp1;
+    unordered_map<int, int> mp2;
+
+    for(int i=0; i<len; i++){
+        for(int j=0; j<len; j++){
+                mp1[A[i]+B[j]]++;
+        }
+    }
+    for(int i=0; i<len; i++){
+        for(int j=0; j<len; j++){
+                mp2[C[i]+D[j]]++;
+            }
+    }
+    for(auto p1 : mp1){
+        int nsum = -1*p1.first;
+        int freq = p1.second;
+        if(mp2.find(nsum)!=mp2.end())
+            count+= freq*mp2[nsum];       
+    }
+    return count;
+}
+```
+
+#### 14. Arithmetic Slices
+An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. Given an integer array nums, return the number of arithmetic subarrays of nums.
+
+Hint: Find count of equal common differences. If count is n then it gives n*(n-1)/2 subarrays.
+
+```cpp
+int numberOfArithmeticSlices(vector<int>& A) {
+    int len = A.size();
+    int ans = 0;
+    int i=1;
+    while(i<len){
+        int item = A[i]-A[i-1];
+        int count = 0;
+
+        while(i<len && A[i]-A[i-1]==item){
+            count++;
+            i++;
+        }
+        if(count>=2) ans += (count*(count-1))/2;
+    }
+    return ans;
+}
+```
+
+#### 15. Increasing Triplet Subsequence
+Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+
+Hint: Maintain two variables for storing smallest and second smallest elements so far.
+
+```cpp
+bool increasingTriplet(vector<int>& nums) {
+    int len = nums.size();
+    if(len<3) return false;
+
+    int n1 = nums[0], n2 = INT_MAX;
+    for(int i=1; i<len; i++){
+        if(nums[i]<=n1) 
+            n1 = nums[i];
+        else if(nums[i]<=n2) 
+            n2 = nums[i];
+        else 
+            return true;
+    }
+    return false;
+}
+```
+
+#### 16. Smallest Range II (Tricky)
+Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
+
+[Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173495/Actual-explanation-for-people-who-don't-understand-(I-hope))
+
+```cpp
+int smallestRangeII(vector<int>& A, int k) {
+    if(A.size()==1) return 0;
+    sort(A.begin(), A.end());
+    int ans = INT_MAX;
+    
+    for(int i=0; i<A.size()-1; i++){
+        int a = min(A[0]+k, A[i+1]-k);
+        int b = max(A[i]+k, A[A.size()-1]-k);
+        ans = min(ans, abs(a-b));
+    }
+    ans = min(ans, A[A.size()-1]-A[0]);
+    return ans;
+}
+```
+
 ## Hard
 
 #### 1. First Missing Positive (Swap Sort)

@@ -81,8 +81,8 @@ int maxProfit(vector<int>& prices) {
 Hint: Swap sort (Use swap sort whenever they asked for duplicacy or missingness of no. ranges from [1,n] )
 
 Similar questions (on leetcode):
-1. Missing Number
-2. Find All Duplicates in an Array
+1. Find All Duplicates in an Array
+2. Set Mismatch
 
 
 ```cpp

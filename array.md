@@ -584,6 +584,89 @@ int smallestRangeII(vector<int>& A, int k) {
 }
 ```
 
+#### 17. Sum of Absolute Differences in a Sorted Array (Prefix Sum)
+You are given an integer array nums sorted in non-decreasing order. Build and return an integer array result with the same length as nums such that result[i] is equal to the summation of absolute differences between nums[i] and all the other elements in the array.
+
+Hint: Calculate prefix sum. Find left sum and right sum for every index i and calculate results.
+
+```cpp
+vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> res(n, 0);
+
+    vector<int> csum(n, 0);
+    csum[0] = nums[0];
+
+    for(int i=1; i<n; i++)
+        csum[i] = csum[i-1] + nums[i];
+
+    for(int i=0; i<n; i++){
+        int left = 0, right = 0;
+        left = csum[i];
+        right = csum[n-1] - csum[i];
+        res[i] = ((i+1)*nums[i] - left) + (right - (n-i-1)*nums[i]);   
+    }
+    return res;
+}
+```
+
+#### 18. Majority Element II (Variation of Moore Voting)
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
+Hint: Use item1 and item2 to store largest and second largest element & count1 and count2 to store their respective counts.
+
+```cpp
+bool checkValidity(vector<int> & nums, int item){
+    int c = 0;
+    for(int i : nums)
+        if(i==item) c++;
+
+    if(c > nums.size()/3) return true;
+    return false;
+}
+
+vector<int> majorityElement(vector<int>& nums) {
+    int count1 = 0, count2 = 0;
+    int item1 = 0, item2 = 0;
+    int i=0;
+
+    while(i<nums.size()){
+        if(count1 == 0){
+            item1 = nums[i];
+            count1++;
+        }
+        else if(item1==nums[i]) count1++;
+
+        else if(count2 == 0){
+            item2 = nums[i];
+            count2++;
+        }
+        else if(item2 == nums[i]) count2++;
+
+        else{
+            count1--;
+            count2--;
+        }
+
+        if(count2>count1){
+            swap(item1, item2);
+            swap(count1, count2);
+        }
+        i++;
+    }
+
+    vector<int> res;
+    if(checkValidity(nums, item1))
+        res.push_back(item1);
+    if(item2!=item1)
+        if(checkValidity(nums, item2))
+            res.push_back(item2);
+
+    return res;
+}
+
+```
+
 ## Hard
 
 #### 1. First Missing Positive (Swap Sort)

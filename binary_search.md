@@ -379,3 +379,48 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
     return ans;
 }
 ```
+
+## Hard
+
+#### 1. Median of Two Sorted Arrays (Log(m+n) approach)
+
+[Video Solution](https://www.youtube.com/watch?v=ws98ud9uxl4)
+
+Approach:
+1. Let smaller array be nums1 and other one be nums2.
+2. Run binary search over nums1 to calculate mid1. Let start = 0 and end = n. => then mid = start + (end-start)/2
+3. Now calculate mid2 using this formula => mid2 = (n+m+1)/2 - mid1
+4. Create four variable maxLeft1, maxLeft2, minRight1, minRight2 for endpoints. (Basically we are dividing elements into two logical sets)
+5. Now if maxLeft1<=minRight2 && maxLeft2<=minRight1 => then return median.
+6. Else if maxLeft1>minRight2 => shift to left => end = mid-1
+7. Else shift to right => start = mid+1
+
+```cpp
+double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {    
+    int n = nums1.size();
+    int m = nums2.size();
+    if(n>m) return findMedianSortedArrays(nums2, nums1);
+
+    int start = 0, end = n;
+    while(start<=end){
+        int mid1 =  start + (end-start)/2;
+        int mid2 = (n+m+1)/2 - mid1;
+
+        int maxLeft1 = mid1==0 ? INT_MIN : nums1[mid1-1];
+        int maxLeft2 = mid2==0 ? INT_MIN : nums2[mid2-1];
+        int minRight1 = mid1==n ? INT_MAX : nums1[mid1];
+        int minRight2 = mid2==m ? INT_MAX : nums2[mid2];
+
+        if(maxLeft1<=minRight2 && maxLeft2<=minRight1){
+            if((m+n)%2==0)
+                return (double) (max(maxLeft1, maxLeft2) + min(minRight1, minRight2))/2.0;
+            else
+                return (double) max(maxLeft1, maxLeft2);
+        }
+
+        else if(maxLeft1>minRight2) end = mid1-1;
+        else start = mid1+1;
+    }
+   return -1;
+}
+```

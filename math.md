@@ -82,6 +82,30 @@ int trailingZeroes(int n) {
 }
 ```
 
+#### 5. Count Primes (Sieve of Eratosthenes)
+Count the number of prime numbers less than a non-negative number, n.
+
+```cpp
+int countPrimes(int n) {
+    if(n<2) return 0;
+    int root = sqrt(n);
+    vector<bool> primes(n, false);
+    int count = 0;
+
+    for(int i=2; i<=root; i++){
+        if(!primes[i]){
+            for(int j=i+i; j<n; j+=i)
+                primes[j] = true;
+        }
+    }
+
+    for(int i=2; i<n; i++){
+        if(!primes[i]) count++; 
+    }
+    return count;
+}
+```
+
 ## Medium
 
 #### 1. Reordered Power of 2

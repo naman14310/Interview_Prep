@@ -431,3 +431,50 @@ int maxOperations(vector<int>& nums, int k) {
 }
 ```
 
+## Hard
+
+#### 1. Trapping Rain Water (Best approach using two pointers) - O(n) | O(1)
+
+[Video Solution](https://www.youtube.com/watch?v=C8UjlJZsHBw)
+
+Hint: Use two pointers left and right, and two variables maxLeft and maxRight. Now iterate over the array and calculate trapped water on each index using following logic:
+1. If maxLeft < maxRight => maxLeft will be used for calculating water at that index => if height[i] > maxLeft then update maxLeft else calculate trapped water using maxLeft - height[i] and do left++;
+2. if maxRight > maxLeft => maxRight will be used => use same above logic
+
+```cpp
+int trap(vector<int>& height) {
+    int n = height.size();
+    if(n<3) return 0;
+
+    int left = 1, right = n-2;
+    int maxLeft = height[0], maxRight = height[n-1];
+
+    int water = 0;
+
+    while(left<=right){
+
+        if(maxLeft<=maxRight){
+            if(height[left]>maxLeft){
+                maxLeft = height[left];
+                left++;
+            }
+            else{
+                water += maxLeft - height[left];
+                left++;
+            }
+        }
+        else{
+            if(height[right]>maxRight){
+                maxRight = height[right];
+                right--;
+            }
+            else{
+                water += maxRight - height[right];
+                right--;
+            }
+        }
+    }
+
+    return water;
+}
+```

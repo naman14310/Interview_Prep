@@ -151,6 +151,35 @@ int getMin() {
 }
 ```
 
+#### 3. Validate Stack Sequences
+Given two sequences pushed and popped with distinct values, return true if and only if this could have been the result of a sequence of push and pop operations on an initially empty stack.
+
+```cpp
+bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+    stack<int> s;
+    int i=0, j=0;
+
+    while(i<pushed.size()){
+        if(!s.empty() && s.top()==popped[j]){
+            s.pop();
+            j++;
+        }
+        else{
+            s.push(pushed[i]);
+            i++;
+        }
+    }
+
+    while(j<popped.size() && s.top()==popped[j]){
+        s.pop();
+        j++;
+    } 
+
+    if(s.empty()) return true;
+    return false;
+}
+```
+
 ## Medium
 
 ### @ Problems on Monotonous Increasing Stack (NGL|NGR|NSL|NSR)

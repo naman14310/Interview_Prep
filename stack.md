@@ -259,6 +259,60 @@ string removeKdigits(string num, int k) {
 }
 ```
 
+#### 4. Largest Rectangle in Histogram 
+Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+![hist](https://assets.leetcode.com/uploads/2021/01/04/histogram.jpg)
+
+Hint: Find NSL and NSR for calculating width for each index. Then area for each index will be width * heights[i].
+
+```cpp
+vector<int> nsl, nsr;
+
+void NSL(vector<int> & heights, int n){
+    stack<int> stk;
+
+    for(int i=0; i<n; i++){
+        while(!stk.empty() && heights[stk.top()]>=heights[i]) stk.pop();
+
+        if(stk.empty()) nsl.push_back(0);
+        else nsl.push_back(stk.top()+1);
+
+        stk.push(i);
+    }
+}
+
+void NSR(vector<int> & heights, int n){
+    stack<int> stk;
+    vector<int> temp (n, 0);
+    nsr = temp;
+
+    for(int i=n-1; i>=0; i--){
+        while(!stk.empty() && heights[stk.top()]>=heights[i]) stk.pop();
+
+        if(stk.empty()) nsr[i] = n-1;
+        else nsr[i] = stk.top()-1;
+
+        stk.push(i);
+    }
+}
+
+int largestRectangleArea(vector<int>& heights) {
+    int n = heights.size();
+    int maxArea = 0;
+    NSL(heights, n); 
+    NSR(heights, n);
+
+    for(int i=0; i<n; i++){
+        int width = (i - nsl[i]) + (nsr[i] - i) + 1;
+        int area = heights[i] * width;
+        maxArea = max(area, maxArea);
+    }
+    return maxArea;
+}
+```
+
+
 ### @ Parenthesis Based Questions
 
 #### 1. Valid Parentheses

@@ -194,4 +194,36 @@ Hint: Use first row and first col as auxillary vectors to mark 0 for whole cols 
     }
 ```
 
+#### 5. Rotating the Box
+You are given an m x n matrix of characters box representing a side-view of a box. Each cell of the box is one of the following:
 
+1. A stone '#'
+2. A stationary obstacle '*'
+3. Empty '.'
+
+The box is rotated 90 degrees clockwise, causing some of the stones to fall due to gravity. Each stone falls down until it lands on an obstacle, another stone, or the bottom of the box. Gravity does not affect the obstacles' positions, and the inertia from the box's rotation does not affect the stones' horizontal positions. It is guaranteed that each stone in box rests on an obstacle, another stone, or the bottom of the box. Return an n x m matrix representing the box after the rotation described above.
+
+![box](https://assets.leetcode.com/uploads/2021/04/08/rotatingtheboxleetcode3withstone.png)
+
+```cpp
+vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
+        int row = box.size(), col = box[0].size();
+        vector<vector<char>> res (col, vector<char> (row, '.'));
+
+        for(int i=0; i<row; i++){
+            int top = col-1;
+            for(int j=col-1; j>=0; j--){
+
+                if(box[i][j]=='*'){
+                    res[j][row-i-1] = '*';
+                    top = j-1;
+                }
+                else if(box[i][j]=='#'){
+                    res[top][row-i-1] = '#';
+                    top--;
+                }
+            }
+        }
+        return res;
+}
+```

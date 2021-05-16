@@ -34,6 +34,7 @@ lock.acquire()
 shared_resource()
 lock.release()
 ```
+[GFG Resource link](https://www.geeksforgeeks.org/multithreading-in-python-set-2-synchronization/)
 
 
 

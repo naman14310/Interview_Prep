@@ -7,10 +7,9 @@ In Python, the threads may be running on different processors, but they will onl
 
 Therefore it’s not recommended to use multithreading for CPU intensive tasks in Python. If not for CPU intensive tasks, Python threads are helpful in dealing with blocking I/O operations including reading & writing files, interacting with networks, communicating with devices like displays etc. These tasks happen when Python make certain types of system calls. Tasks that spend much of their time waiting for external events are generally good candidates for threading.
 
-
-
 [Video Explaination](https://youtu.be/f9q5m321iEU)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Q2. How can we assure synchronisation between threads in python ?
 **Ans.** Thread synchronization is defined as a mechanism which ensures that two or more concurrent threads do not simultaneously execute some particular program segment known as critical section.

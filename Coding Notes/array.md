@@ -121,6 +121,36 @@ int maxSubArray(vector<int>& nums) {
 }
 ```
 
+#### 6. Duplicate Zeros
+Given a fixed length array arr of integers, duplicate each occurrence of zero, shifting the remaining elements to the right. Note that elements beyond the length of the original array are not written.
+
+Hint: Start shifting from back
+
+```cpp
+void duplicateZeros(vector<int>& arr) {
+    int zc = 0;
+    for(int i=0; i<arr.size(); i++)
+        if(arr[i]==0) 
+            zc++;
+
+    int i=arr.size()-1;
+
+    while(i>=0){
+      if(arr[i]==0){
+          zc--;
+          int pos = i+zc;
+          if(pos<arr.size()) arr[pos] = arr[i];
+          if(pos+1<arr.size()) arr[pos+1] = 0;
+      }
+      else{
+          int pos = i+zc;
+          if(pos<arr.size()) arr[pos] = arr[i];
+      }
+      i--;
+    }
+}
+```
+
 ## Medium
 
 #### 1. Product of Array Except Self

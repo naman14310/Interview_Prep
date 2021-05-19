@@ -151,6 +151,25 @@ void duplicateZeros(vector<int>& arr) {
 }
 ```
 
+#### 7. Minimum Moves to Equal Array Elements II
+Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
+
+Hint: Convert each no. to median
+
+```cpp
+int minMoves2(vector<int>& nums) {
+    int n = nums.size();
+    sort(nums.begin(), nums.end());
+
+    int median = nums[n/2];
+    int ans = 0;
+    for(int i : nums)
+        ans += abs(i-median);
+
+    return ans;
+}
+```
+
 ## Medium
 
 #### 1. Product of Array Except Self

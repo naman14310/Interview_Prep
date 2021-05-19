@@ -36,7 +36,7 @@ int minSwaps(vector<int>&nums){
 ```
 
 #### 2. Biggest Number String
-![img](https://drive.google.com/file/d/1ixWKV11Y556oV7JZ-NG0OeVfBO27QOWV/view?usp=sharing)
+You're given a vector of numbers, Create a lexiographically largest no. by concatenating those numbers.
 
 ```cpp
 bool comp(int a, int b){

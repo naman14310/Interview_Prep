@@ -317,6 +317,44 @@ double myPow(double x, int n) {
 }
 ```
 
+#### 9. Koko Eating Bananas (Binary Search on Answer)
+Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
+
+**Example**
+Input: piles = [30,11,23,4,20], h = 5
+Output: 30
+
+```cpp
+bool isvalid(vector<int> & piles, long long int mid, int h){
+    long long int cnt = 0;
+    for(int i=0; i<piles.size(); i++){
+        if(piles[i]<=mid) cnt++;
+        else cnt += (int) ceil ((double)piles[i]/(double)mid);
+    }
+    if(cnt>h) return false;
+    return true;
+}
+
+int binarySearch(vector<int> & piles, long long int start, long long int end, int h){
+    int ans = end;
+    while(start<=end){
+        long long int mid = start + (end-start)/2;
+        if(isvalid(piles, mid, h)){
+            ans = mid;
+            end = mid-1;
+        }
+        else start = mid+1;
+    }
+    return ans;
+}
+
+int minEatingSpeed(vector<int>& piles, int h) {
+    long long int low = 1, high = 0;
+    for(int i : piles) high+=i;
+    return binarySearch(piles, low, high, h);
+}
+```
+
 ## @Binary Search on Matrix
 
 #### 1. Search a 2D Matrix II

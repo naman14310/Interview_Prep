@@ -355,6 +355,71 @@ int minEatingSpeed(vector<int>& piles, int h) {
 }
 ```
 
+#### 10. Minimum Number of Days to Make m Bouquets (Binary Search on Answer)
+Given an integer array bloomDay, an integer m and an integer k. We need to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
+The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet. Return the minimum number of days you need to wait to be able to make m bouquets from the garden. If it is impossible to make m bouquets return -1.
+
+Input: bloomDay = [7,7,7,7,12,7,7], m = 2, k = 3
+
+Output: 12
+
+Explanation: We need 2 bouquets each should have 3 flowers.
+Here's the garden after the 7 and 12 days:
+
+After day 7: [x, x, x, x, _, x, x]
+
+We can make one bouquet of the first three flowers that bloomed. We cannot make another bouquet from the last three flowers that bloomed because they are not adjacent.
+
+After day 12: [x, x, x, x, x, x, x]
+
+It is obvious that we can make two bouquets in different ways.
+
+```cpp
+bool isValid(vector<int> & bloomDay, int mid, int m, int k){
+    int i=0, sz=0, cnt=0;
+    while(i<bloomDay.size()){
+        if(i==0 || bloomDay[i-1]>mid) sz=0;
+        if(bloomDay[i]<=mid) sz++;
+        if(sz==k){
+            sz=0;
+            cnt++;
+        }
+        i++;
+    }
+    if(cnt<m) return false;
+    return true;        
+}
+
+int binarySearch(vector<int> & bloomDay, int start, int end, int m, int k){
+    int ans = end;
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        if(isValid(bloomDay, mid, m, k)){
+            ans = mid;
+            end = mid-1;
+        }
+        else
+            start = mid+1;           
+    }
+    return ans;
+}
+
+int minDays(vector<int>& bloomDay, int m, int k) {
+    int n = bloomDay.size();
+    if(m*k > n) return -1;
+
+    int low = INT_MAX;
+    int high = INT_MIN;
+
+    for(int b : bloomDay){
+        low = min(b, low);
+        high = max(b, high);
+    }
+    return binarySearch(bloomDay, low, high, m, k);
+}
+```
+
+
 ## @Binary Search on Matrix
 
 #### 1. Search a 2D Matrix II

@@ -61,53 +61,7 @@ int mySqrt(int x) {
 ```
 ## Medium
 
-#### 1. Capacity To Ship Packages Within D Days (Binary Search on Answer)
-A conveyor belt has packages that must be shipped from one port to another within D days. The ith package on the conveyor belt has a weight of weights[i]. Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship. Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
-
-```cpp
-bool isValid(vector<int> & weights, int D, int capacity){
-    int count = 1;
-    int i = 0;
-    int cap = 0;
-    while(i<weights.size()){
-        cap += weights[i];
-        if(cap>capacity){
-            count++;
-            cap=0;
-        }
-        else
-            i++;
-    }
-    if(count>D) return false;
-    else return true;
-}
-
-int binarySearch(vector<int> & weights, int low, int high, int D){
-    int ans = high;
-    while(low<=high){
-        int mid = low + (high-low)/2;
-        if(isValid(weights, D, mid)){
-            ans = mid;
-            high = mid-1;
-        }
-        else low = mid+1;
-    }
-    return ans;
-}
-
-
-int shipWithinDays(vector<int>& weights, int D) {
-    int low = 0;
-    int high = 0;
-    for(int i : weights){
-        low = max(low, i);
-        high+=i;
-    }
-    return binarySearch(weights, low, high, D);
-}
-```
-
-#### 2. Find Minimum in Rotated Sorted Array
+#### 1. Find Minimum in Rotated Sorted Array
 
 ```cpp
 int findMin(vector<int>& nums) {
@@ -124,7 +78,7 @@ int findMin(vector<int>& nums) {
 }
 ```
 
-#### 3. Find Minimum in Rotated Sorted Array II (Repeating values)
+#### 2. Find Minimum in Rotated Sorted Array II (Repeating values)
 
 ```cpp
 int findMin(vector<int>& nums) {
@@ -141,7 +95,7 @@ int findMin(vector<int>& nums) {
 }
 ```
 
-#### 4. Longest Increasing Subsequence (NlogN approach using Binary Search)
+#### 3. Longest Increasing Subsequence (NlogN approach using Binary Search)
 
 PS: It will only give correct Length but not correct sequence.
 
@@ -166,7 +120,7 @@ int lengthOfLIS(vector<int>& nums) {
 }
 ```
 
-#### 5. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
+#### 4. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
 
 ```cpp
 int lowerBound(vector<int> & nums, int target, int n){
@@ -213,7 +167,7 @@ vector<int> searchRange(vector<int>& nums, int target) {
 }
 ```
 
-#### 6. Search in Rotated Sorted Array (Values are distinct)
+#### 5. Search in Rotated Sorted Array (Values are distinct)
 
 ```cpp
 int findMinPos(vector<int> & nums){
@@ -247,7 +201,7 @@ int search(vector<int>& nums, int target) {
 }
 ```
 
-#### 7. Search in Rotated Sorted Array II (Values can be repeating)
+#### 6. Search in Rotated Sorted Array II (Values can be repeating)
 
 ```cpp
 bool search(vector<int>& nums, int target) {
@@ -290,7 +244,7 @@ bool search(vector<int>& nums, int target) {
 }
 ```
 
-#### 8. Pow(x, n) (Fast exponentiation using Binary Search)
+#### 7. Pow(x, n) (Fast exponentiation using Binary Search)
 
 ```cpp
 double myPow(double x, int n) {
@@ -317,7 +271,54 @@ double myPow(double x, int n) {
 }
 ```
 
-#### 9. Koko Eating Bananas (Binary Search on Answer)
+## @ Binary Search on Answer (Tricky Questions)
+
+#### 1. Capacity To Ship Packages Within D Days (Binary Search on Answer)
+A conveyor belt has packages that must be shipped from one port to another within D days. The ith package on the conveyor belt has a weight of weights[i]. Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship. Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
+
+```cpp
+bool isValid(vector<int> & weights, int D, int capacity){
+    int count = 1;
+    int i = 0;
+    int cap = 0;
+    while(i<weights.size()){
+        cap += weights[i];
+        if(cap>capacity){
+            count++;
+            cap=0;
+        }
+        else
+            i++;
+    }
+    if(count>D) return false;
+    else return true;
+}
+
+int binarySearch(vector<int> & weights, int low, int high, int D){
+    int ans = high;
+    while(low<=high){
+        int mid = low + (high-low)/2;
+        if(isValid(weights, D, mid)){
+            ans = mid;
+            high = mid-1;
+        }
+        else low = mid+1;
+    }
+    return ans;
+}
+
+int shipWithinDays(vector<int>& weights, int D) {
+    int low = 0;
+    int high = 0;
+    for(int i : weights){
+        low = max(low, i);
+        high+=i;
+    }
+    return binarySearch(weights, low, high, D);
+}
+```
+
+#### 2. Koko Eating Bananas (Binary Search on Answer)
 Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
 
 **Example**
@@ -355,7 +356,7 @@ int minEatingSpeed(vector<int>& piles, int h) {
 }
 ```
 
-#### 10. Minimum Number of Days to Make m Bouquets (Binary Search on Answer)
+#### 3. Minimum Number of Days to Make m Bouquets (Binary Search on Answer)
 Given an integer array bloomDay, an integer m and an integer k. We need to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
 The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet. Return the minimum number of days you need to wait to be able to make m bouquets from the garden. If it is impossible to make m bouquets return -1.
 
@@ -419,7 +420,7 @@ int minDays(vector<int>& bloomDay, int m, int k) {
 }
 ```
 
-#### 11. Find the Smallest Divisor Given a Threshold
+#### 4. Find the Smallest Divisor Given a Threshold
 Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, divide all the array by it, and sum the division's result. Find the smallest divisor such that the result mentioned above is less than or equal to threshold. Each result of the division is rounded to the nearest integer greater than or equal to that element. (For example: 7/3 = 3 and 10/2 = 5).
 
 ```cpp
@@ -457,7 +458,57 @@ int smallestDivisor(vector<int>& nums, int threshold) {
 }
 ```
 
-## @Binary Search on Matrix
+#### 5. Sum of Mutated Array Closest to Target
+Given an integer array arr and a target value target, return the integer value such that when we change all the integers larger than value in the given array to be equal to value, the sum of the array gets as close as possible (in absolute difference) to target. In case of a tie, return the minimum such integer.
+
+```cpp
+int getSum(vector<int> & arr, int mid, int target){
+    int sum=0;
+    for(auto i : arr){
+        if(i>mid) sum+=mid;
+        else sum+=i;
+    }
+    return sum;
+}
+
+
+int binarySearch(vector<int> & arr, int start, int end, int target, int & mindiff){
+    int ans = end;
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        int sum = getSum(arr, mid, target);
+        int diff = abs(sum-target);
+
+        if(diff<mindiff){
+            ans = mid;
+            mindiff = diff;
+        }
+
+        else if(diff==mindiff && mid<ans){
+            ans=mid;
+        }
+
+        if(sum<target) start = mid+1;
+        else end = mid-1;
+    }
+    return ans;     
+}
+
+
+int findBestValue(vector<int>& arr, int target) {
+    int low = 0;
+    int high = INT_MIN;
+    for(int i : arr){
+        high = max(high, i);
+    }
+    int mindiff = INT_MAX;
+    return binarySearch(arr, low, high, target, mindiff);
+}
+```
+
+
+## @ Binary Search on Matrix
 
 #### 1. Search a 2D Matrix II
 

@@ -810,3 +810,55 @@ int longestConsecutive(vector<int>& nums) {
     return ans;
 }
 ```
+
+#### 4. Best Time to Buy and Sell Stock III (Atmost two transactions allowed)
+
+[Video Solution](https://www.youtube.com/watch?v=37s1_xBiqH0)
+
+```cpp
+/* 
+
+Whole idea is to divide the whole array in two parts 
+and perform two transaction in two different parts
+
+*/
+
+int maxProfit(vector<int>& prices) {
+
+    int n = prices.size();
+
+    vector<int> left (n, 0);     // This will contain max profit for left part (1st transaction)
+    vector<int> right (n, 0);    // This will contain max profit for right part (2nd transaction)
+
+    int leftMin = prices[0];
+    int rightMax = prices[n-1];
+
+    for(int i=1; i<n; i++){
+        if(prices[i]<=leftMin){
+            leftMin = prices[i];
+            left[i] = left[i-1];
+        }
+        else{
+            left[i] = max(left[i-1], prices[i]-leftMin);
+        }
+    }
+
+    for(int i=n-2; i>=0; i--){
+
+        if(prices[i]>=rightMax){
+            rightMax = prices[i];
+            right[i] = right[i+1];
+        }
+        else{
+            right[i] = max(right[i+1], rightMax-prices[i]);
+        }
+    }
+
+    int ans = 0;
+
+    for(int i=0; i<n; i++)
+        ans = max(ans, left[i]+right[i]);
+
+    return ans;
+}
+```

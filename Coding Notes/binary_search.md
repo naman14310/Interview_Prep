@@ -610,6 +610,30 @@ int median(vector<vector<int>> &matrix, int r, int c){
 }
 ```
 
+#### 4. Row with max 1s (Best approach - O(m+n))
+Given a boolean 2D array of n x m dimensions where each row is sorted. Find the 0-based index of the first row that has the maximum number of 1's.
+
+Approach: Instead of doing binary search in every row, we first check whether the row has more 1s than max so far. If the row has more 1s, then only count 1s in the row. Also, to count 1s in a row, we don't do binary search in complete row, we do search in before the index of last max.
+
+```cpp
+int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
+   int ans = -1;
+   int prev_pos = m;
+   
+   for(int i=0; i<n; i++){
+
+       if(arr[i][prev_pos-1]==0) continue;
+
+       int pos = lower_bound(arr[i].begin(), arr[i].begin()+prev_pos, 1) - arr[i].begin();
+       prev_pos = pos;
+       ans = i;
+
+       if (prev_pos == 0) return ans;
+   }
+   return ans;
+}
+```
+
 ## Hard
 
 #### 1. Median of Two Sorted Arrays (Log(m+n) approach)

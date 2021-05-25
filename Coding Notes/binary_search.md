@@ -571,6 +571,45 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
 }
 ```
 
+#### 3. Median in a row-wise sorted Matrix
+
+[Video Solution](https://www.youtube.com/watch?v=_4rxBuhyLXw)
+
+```cpp
+pair<int,int> count(vector<vector<int>> & matrix, int val, int row, int col){
+    int leftCount = 0, rightCount = 0;
+    for(int i=0; i<row; i++){
+        int pos = upper_bound(matrix[i].begin(), matrix[i].end(), val) - matrix[i].begin();
+        leftCount += pos;
+        rightCount += col-pos;
+    }
+    return {leftCount, rightCount};
+}
+
+int median(vector<vector<int>> &matrix, int r, int c){
+
+    int row = matrix.size(), col = matrix[0].size();
+    int low = INT_MAX, high = INT_MIN;
+
+    for(int i=0; i<row; i++){
+        low = min(low, matrix[i][0]);
+        high = max(high, matrix[i][col-1]);
+    }
+
+    while(low<=high){
+        int mid = low + (high-low)/2;
+        auto p = count(matrix, mid, row, col);
+
+        int lc = p.first;
+        int rc = p.second;
+
+        if(lc-1<rc) low = mid+1;
+        else high = mid-1;
+    }
+    return low;
+}
+```
+
 ## Hard
 
 #### 1. Median of Two Sorted Arrays (Log(m+n) approach)

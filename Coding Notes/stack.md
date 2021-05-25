@@ -180,6 +180,37 @@ bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
 }
 ```
 
+#### 4. Evaluate Reverse Polish Notation
+Input: tokens = ["4","13","5","/","+"]
+
+Output: 6
+
+Explanation: (4 + (13 / 5)) = 6
+
+```cpp
+int evalRPN(vector<string>& tokens) {
+
+    stack<int> stk;
+    for(string s : tokens){
+
+        if(s=="+" || s=="-" || s=="*" || s=="/"){
+            int num2 = stk.top(); stk.pop();
+            int num1 = stk.top(); stk.pop();
+
+            int res = 0;
+            if(s=="+") res = num1+num2;
+            else if(s=="-") res = num1-num2;
+            else if (s=="*") res = num1*num2;
+            else res = num1/num2;
+            stk.push(res);
+        }
+        else
+            stk.push(stoi(s));
+    }
+    return stk.top();
+}
+```
+
 ## Medium
 
 ### @ Problems on Monotonous Increasing Stack (NGL|NGR|NSL|NSR)

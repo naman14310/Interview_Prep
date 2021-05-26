@@ -4,8 +4,9 @@
 
 #### 1. Merge Sort 
 
-**Time Complexity : O(nlogn) (for all cases) 
-**Space Complexity : O(n) (drawback)
+**Time Complexity : O(nlogn) (for all cases)**
+
+**Space Complexity : O(n) (drawback)**
 
 ```cpp
 void merge(vector<int> & v, int start, int end, int mid){
@@ -46,8 +47,9 @@ void sort(vector<int> & v){
 
 #### 2. Quick Sort 
 
-**Time Complexity : O(n2) (worst case, Rare) | O(nlogn) (avg case) 
-**Space Complexity : O(1)
+**Time Complexity : O(n2) (worst case, Rare) | O(nlogn) (avg case)**
+
+**Space Complexity : O(1)**
 
 ```cpp
 int get_partition(vector<int> & v, int start, int end){
@@ -77,8 +79,9 @@ void quicksort(vector<int> & v, int start, int end){
 
 #### 3. Quick Select (Variation of Quick sort for finding Kth smallest/largest element in array without sorting)
 
-**Time Complexity : O(n2) (worst case, Rare) | O(n) (avg case) 
-**Space Complexity : O(1)
+**Time Complexity : O(n2) (worst case, Rare) | O(n) (avg case)**
+
+**Space Complexity : O(1)**
 
 ```cpp
 /* Exact same partition function of quicksort */

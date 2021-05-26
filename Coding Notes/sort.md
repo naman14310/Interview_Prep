@@ -162,6 +162,28 @@ long long int inversionCount(long long arr[], long long N){
 }
 ```
 
+#### 2. Biggest Number String
+You're given a vector of numbers, Create a lexiographically largest no. by concatenating those numbers.
+
+```cpp
+bool comp(int a, int b){
+    string s1 = to_string(a); 
+    string s2 = to_string(b);
+    
+    return s1+s2 > s2+s1;
+}
+
+string concatenate(vector<int> numbers){
+    sort(numbers.begin(), numbers.end(), comp);
+    string ans;
+    
+    for(auto i : numbers)
+        ans += to_string(i);
+        
+    return ans;
+}
+```
+
 ## Medium
 
 #### 1. Minimum Swaps to Sort
@@ -197,45 +219,4 @@ int minSwaps(vector<int>&nums){
 }
 ```
 
-#### 2. Biggest Number String
-You're given a vector of numbers, Create a lexiographically largest no. by concatenating those numbers.
 
-```cpp
-bool comp(int a, int b){
-    string s1 = to_string(a); 
-    string s2 = to_string(b);
-    
-    int i=0, j=0;
-    while(i<s1.length() && j<s2.length()){
-        if(s1[i]>s2[j]) return true;
-        if(s2[i]>s1[i]) return false;
-        i++; j++;
-    }
-    
-    int start=0;
-    while(i<s1.length()){
-        if(s1[i]>s1[start]) return true;
-        else if(s1[i]<s1[start]) return false;
-        i++; start++;
-    }
-    
-    start=0;
-    while(j<s2.length()){
-        if(s2[j]>s2[start]) return false;
-        else if(s2[i]<s2[start]) return true;
-        j++; start++;
-    }
-    return true;
-}
-
-
-string concatenate(vector<int> numbers){
-    sort(numbers.begin(), numbers.end(), comp);
-    string ans;
-    
-    for(auto i : numbers)
-        ans += to_string(i);
-        
-    return ans;
-}
-```

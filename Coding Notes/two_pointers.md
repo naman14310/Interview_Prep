@@ -358,8 +358,6 @@ int threeSumMulti(vector<int>& arr, int target) {
 }
 ```
 
-
-
 #### 3. 3Sum Closest
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. 
 
@@ -386,7 +384,28 @@ int threeSumClosest(vector<int>& nums, int target) {
 }
 ```
 
-#### 4. Boats to Save People
+#### 4. Count triplets with sum smaller than X
+
+```cpp
+long long countTriplets(long long arr[], int n, long long sum){
+      sort(arr, arr+n);
+      long long count = 0;
+      
+      for(int i=0; i<n-2; i++){
+          int j=i+1, k=n-1;
+          while(j<k){
+              if(arr[i]+arr[j]+arr[k]<sum){
+                  count+=k-j;
+                  j++;
+              } 
+              else k--;
+          }
+      }
+      return count;
+}
+```
+
+#### 5. Boats to Save People
 You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most limit. Return the minimum number of boats to carry every given person.
 
 ```cpp
@@ -406,7 +425,7 @@ int numRescueBoats(vector<int>& people, int limit) {
 }
 ```
 
-#### 5. Max Number of K-Sum Pairs (Two sum in other words)
+#### 6. Max Number of K-Sum Pairs (Two sum in other words)
 You are given an integer array nums and an integer k. In one operation, you can pick two numbers from the array whose sum equals k and remove them from the array.
 Return the maximum number of operations you can perform on the array.
 

@@ -507,6 +507,67 @@ int findBestValue(vector<int>& arr, int target) {
 }
 ```
 
+#### 6. Allocate minimum number of pages
+You are given N number of books. Every ith book has Ai number of pages.You have to allocate books to M number of students. The task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value. 
+
+Each book will be allocated to exactly one student. Each student has to be allocated at least one book.
+
+Note: Return -1 if a valid assignment is not possible, and allotment should be in contiguous order
+
+```cpp
+bool isValid(int arr[], int mid, int m, int n){
+    int i=0, sum=0, cnt=1;
+    while(i<n){
+        sum+=arr[i];
+
+        if(sum>mid){
+            cnt++;
+            sum=arr[i];
+        }
+        i++;
+    }
+    if(cnt<=m) return true;
+    else return false;
+}
+
+int binarySearch(int arr[], int start, int end, int m, int n){
+    int ans = -1;
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(isValid(arr, mid, m, n)){
+            ans = mid;
+            end = mid-1;
+        }
+        else start = mid+1;
+    }
+    return ans;
+}
+
+int findPages(int arr[], int n, int m) 
+{   if(n<m) return -1;
+
+    int low = INT_MIN, high = 0;
+    for(int i=0; i<n; i++){
+        low = max(low, arr[i]);
+        high+=arr[i];
+    }
+
+    int res = binarySearch(arr, low, high, m, n);
+    
+    int maxpage = 0, i=0, sum=0;
+    while(i<n){
+        sum+=arr[i];
+        if(sum>res){
+            maxpage = max(maxpage, sum-arr[i]);
+            sum=arr[i];
+        }
+        i++;
+    }
+    return max(sum,maxpage);
+}
+```
+
 
 ## @ Binary Search on Matrix
 

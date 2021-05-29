@@ -170,6 +170,36 @@ int minMoves2(vector<int>& nums) {
 }
 ```
 
+#### 8. Partition Array Into Three Parts With Equal Sum (Prefix Sum)
+Given an array of integers arr, return true if we can partition the array into three non-empty parts with equal sums.
+
+```cpp
+bool canThreePartsEqualSum(vector<int>& arr) {
+    int sum = 0;
+    for(int i : arr) sum+=i;
+
+    if(sum%3!=0) return false;
+
+    sum = sum/3;
+    for(int i=1; i<arr.size(); i++)
+        arr[i] += arr[i-1]; 
+
+    bool firstfound=false, secondfound=false;
+    for(int i=0; i<arr.size(); i++){
+        if(!firstfound){
+            if(arr[i]==sum) firstfound = true;
+        }
+        else if(!secondfound){
+            if(arr[i]==sum*2) secondfound = true;
+        }
+        else{
+            if(arr[i]==sum*3) return true;
+        }
+    }
+    return false;
+}
+```
+
 ## Medium
 
 #### 1. Product of Array Except Self

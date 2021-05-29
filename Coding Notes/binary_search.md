@@ -271,6 +271,41 @@ double myPow(double x, int n) {
 }
 ```
 
+#### 8. Find the missing number in Arithmetic Progression
+Given an array that represents elements of arithmetic progression in order. One element is missing in the progression, find the missing number.
+
+Input: arr[]  = {2, 4, 8, 10, 12, 14}
+
+Output: 6
+
+```cpp
+int findMissingUtil(int arr[], int low, int high, int diff){
+    if (high <= low)
+        return INT_MAX;
+  
+    int mid = low + (high - low) / 2;
+  
+    // The element just after the middle element is missing.
+    if (arr[mid + 1] - arr[mid] != diff)
+        return (arr[mid] + diff);
+  
+    // The element just before mid is missing
+    if (mid > 0 && arr[mid] - arr[mid - 1] != diff)
+        return (arr[mid - 1] + diff);
+
+    if (arr[mid] == arr[0] + mid * diff)
+        return findMissingUtil(arr, mid + 1, high, diff);
+  
+    return findMissingUtil(arr, low, mid - 1, diff);
+}
+  
+
+int findMissing(int arr[], int n) {
+    int diff = (arr[n - 1] - arr[0]) / n;
+    return findMissingUtil(arr, 0, n - 1, diff);
+}
+```
+
 ## @ Binary Search on Answer (Tricky Questions)
 
 #### 1. Capacity To Ship Packages Within D Days (Binary Search on Answer)

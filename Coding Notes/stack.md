@@ -211,6 +211,24 @@ int evalRPN(vector<string>& tokens) {
 }
 ```
 
+#### 5. Insert at the end of Stack without using any Data structure
+
+Hint : Use recursion
+
+```cpp
+void insert_at_end(stack<int> & stk, int val){
+    if(stk.empty()){
+        stk.push(val);
+        return;
+    }
+
+    int item = stk.top();
+    stk.pop(); 
+    insert_at_end(stk, val);
+    stk.push(item);
+}
+```
+
 ## Medium
 
 ### @ Problems on Monotonous Increasing Stack (NGL|NGR|NSL|NSR)

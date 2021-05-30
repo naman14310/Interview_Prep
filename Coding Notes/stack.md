@@ -489,6 +489,44 @@ string removeDuplicates(string s, int k) {
 }
 ```
 
+#### 2. The Celebrity Problem
+A celebrity is a person who is known to all but does not know anyone at a party. If you go to a party of N people, find if there is a celebrity in the party or not.
+
+Approach: 
+
+If A knows B, then A can't be a celebrity. Discard A, and B may be celebrity.
+
+If A doesn't know B, then B can't be a celebrity. Discard B, and A may be celebrity.
+
+```cpp
+int celebrity(vector<vector<int> >& matrix, int n) {
+    stack<int> stk;
+
+    for(int i=0; i<n; i++)
+        stk.push(i);    
+    
+    while(stk.size()>1){
+        int a = stk.top(); stk.pop();
+        int b = stk.top(); stk.pop();
+        if(matrix[a][b]==0)
+            stk.push(a);
+        else
+            stk.push(b);
+    }
+
+    int probable_celebrity = stk.top();
+
+    for(int i=0; i<n; i++)
+        if(i!=probable_celebrity && matrix[i][probable_celebrity]==0) return -1;
+    
+    for(int j=0; j<n; j++)
+        if(matrix[probable_celebrity][j]==1) return -1;
+    
+    return probable_celebrity;
+}
+```
+
+
 ## Hard
 
 #### 1. Implement k stacks in a single array

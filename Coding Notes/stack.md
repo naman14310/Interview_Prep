@@ -488,3 +488,70 @@ string removeDuplicates(string s, int k) {
     return ans;
 }
 ```
+
+## Hard
+
+#### 1. Implement k stacks in a single array
+The idea is to use two extra arrays for efficient implementation of k stacks in an array. Following are the two extra arrays are used:
+
+1) top[]: This is of size k and stores indexes of top elements in all stacks.
+
+2) next[]: This is of size n and stores indexes of next item for the items in array arr[]. Here arr[] is actual array that stores k stacks.
+
+All entries in top[] are initialized as -1 to indicate that all stacks are empty. All entries next[i] are initialized as i+1 because all slots are free initially and pointing to next slot. Top of free stack, ‘free’ is initialized as 0.
+
+[Explaination](https://www.geeksforgeeks.org/efficiently-implement-k-stacks-single-array/)
+
+```cpp
+class Kstack{
+
+    vector<int> stk;
+    vector<int> next;
+    vector<int> top;
+    int next_free;
+
+    public:
+
+        Kstack(int size, int K){
+            stk = vector<int> (size, 0);
+
+            for(int i=0; i<size; i++) next.push_back(i+1);
+            next[size-1] = -1;
+
+            top = vector<int> (K, -1);
+            next_free = 0;            
+        }
+
+        void push(int val, int stk_num){
+            if(full(stk_num)) return;
+
+            int idx = next_free;
+            next_free = next[idx];
+            next[idx] = top[stk_num];
+            top[stk_num] = idx;
+
+            stk[idx] = val;
+        }
+
+        /* POP -> Just write push operations in reverse order */ 
+
+        int pop(int stk_num){
+            if(empty(stk_num)) return -1;
+
+            int idx = top[stk_num];
+            top[stk_num] = next[idx];
+            next[idx] = next_free;
+            next_free = idx;
+
+            return stk[idx];
+        }
+
+        bool full(int stk_num){
+            return next_free == -1;
+        }
+
+        bool empty(int stk_num){
+            return top[stk_num] == -1;
+        }
+};
+```

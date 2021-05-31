@@ -540,7 +540,7 @@ bool isValid(string s) {
 }
 ```
 
-#### 2. Minimum Remove to Make Valid Parentheses
+#### 2. Minimum Remove to Make Valid Parentheses (Same as Longest valid substring)
 
 Approach: First iterate from left to right and remove extra ')'  brackets using bracketCount. Similaily, then move from right to left and remove extra '(' brackets using bracketCount.
 

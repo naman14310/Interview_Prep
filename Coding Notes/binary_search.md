@@ -61,7 +61,7 @@ int mySqrt(int x) {
 ```
 ## Medium
 
-#### 1. Find Minimum in Rotated Sorted Array
+#### 1. Find Minimum in Rotated Sorted Array (Same as No. of times a sorted array is rotated)
 
 ```cpp
 int findMin(vector<int>& nums) {
@@ -299,10 +299,66 @@ int findMissingUtil(int arr[], int low, int high, int diff){
     return findMissingUtil(arr, low, mid - 1, diff);
 }
   
-
 int findMissing(int arr[], int n) {
     int diff = (arr[n - 1] - arr[0]) / n;
     return findMissingUtil(arr, 0, n - 1, diff);
+}
+```
+
+#### 9. Search in a Infinite Sorted Array (IMP for interview)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int INFINITE = 100000;
+
+// return index
+int binarySearch(vector<int> & v, int start, int end, int val){
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        if(v[mid]==val) return mid;
+        if(v[mid]>val) end = mid-1;
+        else start = mid+1;
+    }
+    return -1;
+}
+
+pair<int,int> find_start_end(vector<int> & v, int val){
+    int start=0, end=1;
+    while(val>end){
+        start = end;
+        end *= 2;
+    }
+    return {start,end};
+}
+
+int main(){
+    int val = 15;                    // ----> TO BE SEARCHED
+    vector<int> v (INFINITE, 0);     // ---->  [1, 2, 3, 4, 5 . . . . . INFIITE]
+    for(int i=0; i<INFINITE; i++)
+        v[i] = i+1;
+
+    auto p = find_start_end(v, val);
+    int start = p.first, end = p.second;
+    cout<<binarySearch(v, start, end, val);
+}
+```
+
+#### 10.  Minimum Difference element in sorted array
+
+```cpp
+int binarySearch(vector<int> & v, int val){
+    int start = 0, end = v.size()-1;
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        if(v[mid]==val) return v[mid];
+        if(v[mid]>val) end = mid-1;
+        else start = mid+1;
+    }
+
+    if(end<0) return v[start];
+    if(start>v.size()-1) return v[end];
+    return abs(v[start]-val) < abs(v[end]-val) ? v[start] : v[end];
 }
 ```
 

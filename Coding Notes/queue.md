@@ -118,3 +118,17 @@ bool empty() {
 }
 ```
 
+#### 4. Reverse Queue using Recursion
+
+```cpp
+void reverse(queue<int> & q){
+    if(q.empty()) 
+        return;
+    
+    int x = q.front();
+    q.pop();
+    
+    reverse(q);
+    q.push(x);
+}
+```

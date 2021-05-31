@@ -229,6 +229,20 @@ void insert_at_end(stack<int> & stk, int val){
 }
 ```
 
+#### 6. Reverse a stack without using any Data structure
+
+```cpp
+void reverse_stack(stack<int> & stk){
+    if(stk.empty()) 
+        return;
+
+    int item = stk.top();
+    stk.pop();
+
+    reverse_stack(stk);
+    insert_at_end(stk, item);   // Use above function for insert_at_end()
+}
+```
 ## Medium
 
 ### @ Problems on Monotonous Increasing Stack (NGL|NGR|NSL|NSR)

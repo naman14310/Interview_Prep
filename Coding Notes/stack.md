@@ -351,7 +351,32 @@ string removeKdigits(string num, int k) {
 }
 ```
 
-#### 4. Largest Rectangle in Histogram 
+#### 4. Stock span problem 
+
+Hint : Push indexes instead of actual elements
+
+```cpp
+vector <int> calculateSpan(int price[], int n){
+    vector<int> res (n, 1);
+    stack<int> stk;
+    stk.push(0);
+
+    for(int i=1; i<n; i++){
+        while(!stk.empty() && price[stk.top()]<=price[i])
+            stk.pop();
+
+        if(!stk.empty())
+            res[i] = i-stk.top();
+        else
+            res[i] = i+1;
+
+        stk.push(i);
+    }
+    return res;
+}
+```
+
+#### 5. Largest Rectangle in Histogram 
 Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
 
 ![hist](https://assets.leetcode.com/uploads/2021/01/04/histogram.jpg)
@@ -401,6 +426,83 @@ int largestRectangleArea(vector<int>& heights) {
         maxArea = max(area, maxArea);
     }
     return maxArea;
+}
+```
+
+#### 6. Largest Rectangle in Binary Matrix
+
+Hint : Use concept of Largest area in Histogram
+
+```cpp
+void NSL(vector<int> & heights, vector<int> & nsl, int n){
+    stack<int> stk;
+
+    for(int i=0; i<n; i++){
+        while(!stk.empty() && heights[stk.top()]>=heights[i]) 
+            stk.pop();
+
+        if(stk.empty()) nsl.push_back(0);
+        else nsl.push_back(stk.top()+1);
+
+        stk.push(i);
+    }
+}
+
+void NSR(vector<int> & heights, vector<int> & nsr, int n){
+    stack<int> stk;
+    nsr = vector<int> (n, 0);
+
+    for(int i=n-1; i>=0; i--){
+        while(!stk.empty() && heights[stk.top()]>=heights[i]) 
+            stk.pop();
+
+        if(stk.empty()) nsr[i] = n-1;
+        else nsr[i] = stk.top()-1;
+
+        stk.push(i);
+    }
+}
+
+int largestRectangleArea(vector<int> & heights) {
+    vector<int> nsl, nsr;
+    int n = heights.size();
+
+    NSL(heights, nsl, n); 
+    NSR(heights, nsr, n);
+
+    int maxArea = 0;
+
+    for(int i=0; i<n; i++){
+        int width = (i - nsl[i]) + (nsr[i] - i) + 1;
+        int area = heights[i] * width;
+        maxArea = max(area, maxArea);
+    }
+
+    return maxArea;
+}
+
+int maximalRectangle(vector<vector<char>>& matrix) {
+    int row = matrix.size();
+    if(row==0) return 0;
+
+    int col = matrix[0].size();
+    vector<int> arr(col, 0);
+
+    for(int j=0; j<col; j++)
+        arr[j] = matrix[0][j]-'0';
+
+    int ans = largestRectangleArea(arr);
+
+    for(int i=1; i<row; i++){
+
+        for(int j=0; j<col; j++)
+            arr[j] = matrix[i][j] == '0' ? 0 : arr[j] + (matrix[i][j]-'0');
+
+        int area = largestRectangleArea(arr);
+        ans = max(ans, area);
+    }
+
+    return ans;
 }
 ```
 

@@ -585,6 +585,57 @@ string minRemoveToMakeValid(string s) {
 }
 ```
 
+#### 3. Longest Valid Parenthesis (Very Tricky)
+Given a string consisting of opening and closing parenthesis, find the length of the longest valid parenthesis substring.
+
+[Explaination](https://www.geeksforgeeks.org/length-of-the-longest-valid-substring/)
+
+Algo:
+
+1. Create an empty stack and push -1 to it. The first element of the stack is used to provide a base for the next valid string. 
+
+2. Initialize result as 0.
+
+3. If the character is '(' i.e. str[i] == '('), push index'i' to the stack. 
+
+4. Else (if the character is ')')
+
+   a) Pop an item from the stack (Most of the time an opening bracket)
+   
+   b) If the stack is not empty, then find the length of current valid substring by taking the difference between the current index and top of the stack. If current length is more than the result, then update the result.
+   
+   c) If the stack is empty, push the current index as a base for the next valid substring.
+
+5. Return result.
+
+```cpp
+int longestValidParentheses(string s) {
+    if(s.length()<2) 
+        return 0;
+
+    stack<int> stk;
+    stk.push(-1);
+
+    int ans = 0;
+    for(int i=0; i<s.length(); i++){
+    
+        if(s[i]=='(') 
+            stk.push(i);
+            
+        else{
+            stk.pop();
+
+            if(stk.empty()) 
+                stk.push(i);
+            else
+                ans = max(ans, i-stk.top());
+        }
+    }
+    return ans;
+}
+```
+
+
 ### @ Hard to guess as Stack
 
 #### 1. Remove All Adjacent Duplicates in String II

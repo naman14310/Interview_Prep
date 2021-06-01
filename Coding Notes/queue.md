@@ -171,6 +171,10 @@ queue<int> modifyQueue(queue<int> q, int k){
 
 #### 6. Interleave the first half of the queue with second half
 
+Input : 11 12 13 14 15 16 17 18 19 20
+
+Output : 11 16 12 17 13 18 14 19 15 20
+
 Approach:
 
 1.Push the first half elements of queue to stack.

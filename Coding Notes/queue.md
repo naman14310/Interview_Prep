@@ -223,7 +223,7 @@ queue<int> interleave_two_halves(queue<int> & q){
 }
 ```
 
-#### 7. Circular Tour
+#### 7. Circular Tour (IMP)
 
 [Video Explaination](https://www.youtube.com/watch?v=zcnVaVJkLhY)
 
@@ -246,5 +246,34 @@ int tour(petrolPump p[],int n){
        count++;
    }
    return -1;
+}
+```
+
+#### 8. First non-repeating character in a stream (GFG)
+Given an input stream of A of n characters consisting only of lower case alphabets. The task is to find the first non repeating character, each time a character is inserted to the stream. If there is no such character then append '#' to the answer.
+
+Input: A = "aabc"
+
+Output: "a#bb"
+
+```cpp
+string FirstNonRepeating(string A){
+    queue<char> q;
+    vector<int> freq (26, 0);
+    string ans = "";
+    
+    for(char ch : A){
+        freq[ch-'a']+=1;
+
+        if(freq[ch-'a']==1)
+            q.push(ch);
+
+        while(!q.empty() && freq[q.front()-'a']>1)
+            q.pop();
+
+        if(q.empty()) ans.push_back('#');
+        else ans.push_back(q.front());
+    }
+    return ans;
 }
 ```

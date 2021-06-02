@@ -222,3 +222,29 @@ queue<int> interleave_two_halves(queue<int> & q){
     return ans;
 }
 ```
+
+#### 7. Circular Tour
+
+[Video Explaination](https://www.youtube.com/watch?v=zcnVaVJkLhY)
+
+```cpp
+int tour(petrolPump p[],int n){
+   int front = 0, rear = 0;
+   int count=0, balance = 0;
+   while(count<2*n){
+       if(balance+p[rear].petrol<p[rear].distance){
+           rear++;
+           front = rear;
+           balance=0;
+       }
+       else{
+           balance = balance + p[rear].petrol - p[rear].distance;
+           rear = (rear+1)%n;
+           if(rear==front) 
+                return front;
+       }
+       count++;
+   }
+   return -1;
+}
+```

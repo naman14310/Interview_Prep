@@ -7,7 +7,7 @@
 Hint: The idea is to have a variable firstNegativeIndex to keep track of the first negative element in the k sized window.
 
 ```cpp
-vector<long long> printFirstNegativeInteger(long long int A[], long long int N, long long int k) {                                            
+vector<long long> printFirstNegativeInteger(long long int A[], long long int N, long long int k) {  
     vector<long long> v;                                   
     int first_negative_index = -1;
     int next_index = 0;

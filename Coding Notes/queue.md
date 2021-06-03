@@ -277,3 +277,38 @@ string FirstNonRepeating(string A){
     return ans;
 }
 ```
+
+#### 9. Sliding window Maximum (using Dequeue)
+
+```cpp
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+
+    deque<int> dq;        // we will only push indexes in the deque
+    vector<int> ans;
+    int i=0;
+
+    for( ; i<k; i++){
+
+       while(!dq.empty() and nums[dq.back()]<nums[i]) 
+           dq.pop_back();
+
+        dq.push_back(i);
+    }
+
+    ans.push_back(nums[dq.front()]);
+
+    for( ; i<nums.size(); i++){
+
+        while(!dq.empty() and dq.front()<i-k+1)         // popping out index which goes out of the window
+            dq.pop_front();
+
+        while(!dq.empty() and nums[dq.back()]<nums[i]) 
+            dq.pop_back();
+
+        dq.push_back(i);
+        ans.push_back(nums[dq.front()]);
+    }
+
+    return ans;
+}
+```

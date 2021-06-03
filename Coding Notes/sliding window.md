@@ -1,6 +1,6 @@
 # Sliding Window
 
-## TYPE 1 : Fixed Window Size
+## Type 1 : Fixed Window Size
 
 #### 1. First negative integer in every window of size k
 

@@ -2,7 +2,39 @@
 
 ## Type 1 : Fixed Window Size
 
-#### 1. First negative integer in every window of size k
+#### 1. Count Occurences of Anagrams
+Given a word pat and a text txt. Return the count of the occurences of anagrams of the word in the text.
+
+Hint: Create a count array for storing frequency
+
+```cpp
+int count_occurance(string pat, string txt) {
+    int ans = 0;
+    vector<int> v1 (26, 0);
+    vector<int> v2 (26, 0);
+
+    int k = pat.size();
+    int n = txt.size();
+    int i=0;
+
+    for( ; i<k; i++){
+        v1[pat[i]-'a'] += 1;
+        v2[txt[i]-'a'] += 1;
+    }
+    if(v1==v2) ans+=1;
+
+    for( ; i<n; i++){
+        v2[txt[i]-'a'] +=1;
+        v2[txt[i-k]-'a'] -=1;
+
+        if(v1==v2) ans+=1;
+    }
+    return ans;
+}
+```
+
+
+#### 2. First negative integer in every window of size k
 
 Hint: The idea is to have a variable firstNegativeIndex to keep track of the first negative element in the k sized window.
 

@@ -148,7 +148,42 @@ int longest_substring(string s, int k){
 1. Fruit in a Basket (leetcode)
 2. Pick toys (aditya verma playlist)
 
-#### 3. Minimum Window Substring
+#### 3. Smallest Distinct Window
+Given a string 's'. The task is to find the smallest window length that contains all the characters of the given string at least one time. For eg. A = “aabcbcdbca”, then the result would be 4 as of the smallest window will be “dbca”.
+
+```cpp
+string smallestWindow(string s){
+    unordered_set<char> st;
+    for(auto ch : s) st.insert(ch);
+    int k = st.size();            // Number of unique elements
+
+    string ans = s;
+    unordered_map<int,int> freq;
+    int i=0, j=0;
+
+    while(j<s.size()){
+        char ch = s[j];
+        freq[ch] += 1;
+
+        while(freq.size()==k){
+            if(j-i+1<ans.size())
+                ans = s.substr(i, j-i+1);
+
+            char temp = s[i];
+
+            if(freq[temp]==1) freq.erase(temp);
+            else freq[temp]--;
+
+            i++;
+        }
+
+        j++;
+    }
+    return ans;
+}
+```
+
+#### 4. Minimum Window Substring
 Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
 
 Hint: Use two vectors for storing frequency of characters. Use one count variable. Increment count whenever `freq_t[ch]>0 and freq_s[ch]==freq_t[ch]` and decrement it whenever `freq_t[temp]>0 and freq_s[temp]<freq_t[temp]`

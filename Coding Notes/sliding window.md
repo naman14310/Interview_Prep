@@ -118,8 +118,6 @@ int lengthOfLongestSubstring(string s) {
 
 #### 2. Longest Substring with atmost k distinct characters
 
-**Approach 1 : using hashmap**
-
 ```cpp
 int longest_substring(string s, int k){
     unordered_map<char, int> freq;
@@ -144,3 +142,8 @@ int longest_substring(string s, int k){
     return ans;
 }
 ```
+
+**Similar Questions**
+
+1. Fruit in a Basket (leetcode)
+2. Pick toys (aditya verma playlist)

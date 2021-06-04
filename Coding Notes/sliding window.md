@@ -88,6 +88,8 @@ vector<long long> printFirstNegativeInteger(long long int A[], long long int N, 
 
 ## Type 2 : Variable Window Size
 
+These type of problems can be solved with two poiters i and j. `i` points to the leftmost element of window (including i) and `j` points to rightmost element of window (including j)
+
 #### 1. Longest Substring Without Repeating Characters
 
 ```cpp

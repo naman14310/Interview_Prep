@@ -95,21 +95,68 @@ int lengthOfLongestSubstring(string s) {
     if(s.length()==0) 
         return 0;
 
-    vector<int> freq (256, -1);  // It will store index of last occurance
+    vector<int> last_index (256, -1);  // It will store index of last occurance
     int i=0, j=0;
     int ans = 1;
 
     while(j<s.length()){
         char ch = s[j];
 
-        if(freq[ch]>=i)
-            i = freq[ch]+1;
+        if(last_index[ch]>=i)
+            i = last_index[ch]+1;
 
-        freq[ch] = j;
+        last_index[ch] = j;
         ans = max(ans, j-i+1);
         j++;
     }
 
+    return ans;
+}
+```
+
+#### 2. Longest Substring with atmost k distinct characters
+
+Hint: Use vector to store index of last occurance
+
+```cpp
+/* This Function will return leftmost index to which pointer i can be directly jump while contracting window size */ 
+
+int get_leftmost_index(vector<int> & last_index, int i){
+    int index = INT_MAX;
+    for(int idx : last_index){
+        if(idx>=i)
+            index = min(index, idx);
+    }
+    return index+1;
+}
+
+int longest_substring(string s, int k){
+    vector<int> last_index (256, -1);
+
+    int i=0, j=0;
+    int ans=0;
+
+    while(j<s.length()){
+        char ch = s[j];
+
+        if(last_index[ch]>=i){
+            last_index[ch] = j;
+            ans = j-i+1;
+        }
+        else{
+            if(k>0){
+                last_index[ch] = j;
+                ans = j-i+1;
+                k--;
+            }
+            else{
+                last_index[ch] = j;
+                i = get_leftmost_index(last_index, i);
+            }
+        }
+        j++;
+    }
+    
     return ans;
 }
 ```

@@ -147,3 +147,61 @@ int longest_substring(string s, int k){
 
 1. Fruit in a Basket (leetcode)
 2. Pick toys (aditya verma playlist)
+
+#### 3. Minimum Window Substring
+Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+
+Hint: Use two vectors for storing frequency of characters. Use one count variable. Increment count whenever `freq_t[ch]>0 and freq_s[ch]==freq_t[ch]` and decrement it whenever `freq_t[temp]>0 and freq_s[temp]<freq_t[temp]`
+
+[Video explaination](https://www.youtube.com/watch?v=iwv1llyN6mo)
+
+```cpp
+string minWindow(string s, string t) {
+    if(t.length()>s.length()) 
+        return "";
+
+    vector<int> freq_s (128, 0);
+    vector<int> freq_t (128, 0);
+
+    for(char ch : t)
+        freq_t[ch]++;
+
+    /* No. of distinct characters in t */
+    int k=0;            
+    for(int i=0; i<128; i++)
+        if(freq_t[i]>0) k++;
+
+    /* It stores count of characters which are fulfilled completely so far */
+    int count=0; 
+
+    string ans = s;
+    bool found = false;
+    int i=0, j=0;
+
+    while(j<s.length()){
+        char ch = s[j];
+        freq_s[ch]++;
+
+        if(freq_t[ch]>0 and freq_s[ch]==freq_t[ch])
+            count++;
+
+        while(count==k){
+            found = true;
+            if(j-i+1 < ans.length())
+                ans = s.substr(i, j-i+1);
+
+            char temp = s[i];
+            freq_s[temp]--;
+
+            if(freq_t[temp]>0 and freq_s[temp]<freq_t[temp]) count--;
+
+            i++;
+        }
+
+        j++;
+    }
+
+    if(!found) return "";
+    return ans;
+}
+```

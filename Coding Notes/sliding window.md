@@ -120,6 +120,8 @@ int lengthOfLongestSubstring(string s) {
 
 Hint: Use vector to store index of last occurance
 
+**Approach 1 : using hashmap**
+
 ```cpp
 int longest_substring(string s, int k){
     unordered_map<char, int> freq;
@@ -128,22 +130,17 @@ int longest_substring(string s, int k){
 
     while(j<s.size()){
         char ch = s[j];
+        freq[ch]+=1;
 
-        if(freq.find(ch)==freq.end()){
-            freq[ch] += 1;
-            ans = max(ans, j-i+1);
-        }
-            
-        else{
-            freq[ch]=1;
-            while(freq.size()>=k){
-                char temp = s[i];
-                i++;
+        while(freq.size()>k){
+            char temp = s[i];
+            i++;
 
-                if(freq[temp]>1) freq[temp]--;
-                else freq.erase(temp); 
-            }
+            if(freq[temp]>1) freq[temp]--;
+            else freq.erase(temp); 
         }
+        
+        ans = max(ans, j-i+1);
         j++;
     }
     return ans;

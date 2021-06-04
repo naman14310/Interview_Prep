@@ -121,44 +121,31 @@ int lengthOfLongestSubstring(string s) {
 Hint: Use vector to store index of last occurance
 
 ```cpp
-/* This Function will return leftmost index to which pointer i can be directly jump while contracting window size */ 
-
-int get_leftmost_index(vector<int> & last_index, int i){
-    int index = INT_MAX;
-    for(int idx : last_index){
-        if(idx>=i)
-            index = min(index, idx);
-    }
-    return index+1;
-}
-
 int longest_substring(string s, int k){
-    vector<int> last_index (256, -1);
-
-    int i=0, j=0;
+    unordered_map<char, int> freq;
     int ans=0;
+    int i=0, j=0;
 
-    while(j<s.length()){
+    while(j<s.size()){
         char ch = s[j];
 
-        if(last_index[ch]>=i){
-            last_index[ch] = j;
-            ans = j-i+1;
+        if(freq.find(ch)==freq.end()){
+            freq[ch] += 1;
+            ans = max(ans, j-i+1);
         }
+            
         else{
-            if(k>0){
-                last_index[ch] = j;
-                ans = j-i+1;
-                k--;
-            }
-            else{
-                last_index[ch] = j;
-                i = get_leftmost_index(last_index, i);
+            freq[ch]=1;
+            while(freq.size()>=k){
+                char temp = s[i];
+                i++;
+
+                if(freq[temp]>1) freq[temp]--;
+                else freq.erase(temp); 
             }
         }
         j++;
     }
-    
     return ans;
 }
 ```

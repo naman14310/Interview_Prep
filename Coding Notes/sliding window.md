@@ -118,8 +118,6 @@ int lengthOfLongestSubstring(string s) {
 
 #### 2. Longest Substring with atmost k distinct characters
 
-Hint: Use vector to store index of last occurance
-
 **Approach 1 : using hashmap**
 
 ```cpp

@@ -85,3 +85,31 @@ vector<long long> printFirstNegativeInteger(long long int A[], long long int N, 
     return v;
  }
 ```
+
+## Type 2 : Variable Window Size
+
+#### 1. Longest Substring Without Repeating Characters
+
+```cpp
+int lengthOfLongestSubstring(string s) {
+    if(s.length()==0) 
+        return 0;
+
+    vector<int> freq (256, -1);  // It will store index of last occurance
+    int i=0, j=0;
+    int ans = 1;
+
+    while(j<s.length()){
+        char ch = s[j];
+
+        if(freq[ch]>=i)
+            i = freq[ch]+1;
+
+        freq[ch] = j;
+        ans = max(ans, j-i+1);
+        j++;
+    }
+
+    return ans;
+}
+```

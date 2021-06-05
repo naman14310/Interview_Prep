@@ -148,7 +148,39 @@ int longest_substring(string s, int k){
 1. Fruit in a Basket (leetcode)
 2. Pick toys (aditya verma playlist)
 
-#### 3. Smallest Distinct Window
+#### 3. Longest Repeating Character Replacement (Tricky)
+You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
+
+```cpp
+int characterReplacement(string s, int k) {
+    vector<int> freq (26, 0);
+    int ans = 0;
+    int i=0, j=0;
+    int total_charCount = 0, max_freq_count = 0;
+
+    while(j<s.length()){
+        char ch = s[j];
+        freq[ch-'A']++;
+        total_charCount++;
+
+        if(max_freq_count<freq[ch-'A'])
+            max_freq_count = freq[ch-'A'];
+
+        if(total_charCount - max_freq_count > k){
+            char temp = s[i];
+            freq[temp-'A']--;
+            total_charCount--;
+            i++;
+        }
+
+        ans = max(ans, j-i+1);
+        j++;
+    }
+    return ans;
+}
+```
+
+#### 4. Smallest Distinct Window
 Given a string 's'. The task is to find the smallest window length that contains all the characters of the given string at least one time. For eg. A = “aabcbcdbca”, then the result would be 4 as of the smallest window will be “dbca”.
 
 ```cpp
@@ -183,7 +215,7 @@ string smallestWindow(string s){
 }
 ```
 
-#### 4. Minimum Window Substring
+#### 5. Minimum Window Substring
 Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
 
 Hint: Use two vectors for storing frequency of characters. Use one count variable. Increment count whenever `freq_t[ch]>0 and freq_s[ch]==freq_t[ch]` and decrement it whenever `freq_t[temp]>0 and freq_s[temp]<freq_t[temp]`

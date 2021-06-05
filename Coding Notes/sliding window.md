@@ -86,6 +86,42 @@ vector<long long> printFirstNegativeInteger(long long int A[], long long int N, 
  }
 ```
 
+#### 3. Maximum Points You Can Obtain from Cards (Think in reverse)
+There are several cards arranged in a row, and each card has an associated number of points. The points are given in the integer array cardPoints. In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards. Your score is the sum of the points of the cards you have taken. Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+
+Input: cardPoints = [1,2,3,4,5,6,1], k = 3
+
+Output: 12
+
+Hint: Similar to minimum sum windows of size (n-k)
+
+```cpp
+int maxScore(vector<int>& cardPoints, int k) {
+    int totalSum = 0;
+    for(int point : cardPoints)
+        totalSum += point;
+
+    int window_size = cardPoints.size() - k;
+
+    int i=0;
+    int minSum = 0, windowSum = 0;
+
+    for( ; i<window_size; i++)
+        windowSum += cardPoints[i];
+
+    minSum = windowSum;
+
+    for( ; i<cardPoints.size(); i++){
+        windowSum += cardPoints[i];
+        windowSum -= cardPoints[i-window_size];
+
+        minSum = min(minSum, windowSum);
+    }
+
+    return totalSum - minSum;
+}
+```
+
 ## Type 2 : Variable Window Size
 
 These type of problems can be solved with two poiters i and j. `i` points to the leftmost element of window (including i) and `j` points to rightmost element of window (including j)
@@ -278,5 +314,49 @@ string minWindow(string s, string t) {
 
     if(!found) return "";
     return ans;
+}
+```
+
+#### 6. Minimum Operations to Reduce X to Zero (Think in Reverse)
+You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost element from the array nums and subtract its value from x. Note that this modifies the array for future operations. Return the minimum number of operations to reduce x to exactly 0 if it's possible, otherwise, return -1.
+
+Input: nums = [1,1,4,2,3], x = 5
+
+Output: 2
+
+Hint: Similar to finding longest window having sum = totalSum-x
+
+```cpp
+int minOperations(vector<int>& nums, int x) {
+    int totalSum = 0;
+    for(int num : nums)
+        totalSum += num;
+
+    if(totalSum<x) return -1;
+
+    int required_windowSum = totalSum-x;
+    int windowSize = 0;
+    int sum = 0; 
+    int i=0, j=0;
+    bool found = false;
+
+    while(j<nums.size()){
+        sum += nums[j];
+
+        while(sum>required_windowSum){
+            sum -= nums[i];
+            i++;
+        }
+
+        if(sum==required_windowSum){
+            found = true;
+            windowSize = max(windowSize, j-i+1);
+        }
+
+        j++;
+    }
+
+    if(!found) return -1;
+    return nums.size()-windowSize;
 }
 ```

@@ -412,3 +412,44 @@ int equalSubstring(string s, string t, int maxCost) {
     return ans;
 }
 ```
+
+#### 9. Count Number of Nice Subarrays (Tricky)
+Given an array of integers nums and an integer k. A continuous subarray is called nice if there are k odd numbers on it. Return the number of nice sub-arrays.
+
+Hint: Convert all odd numbers to 1 and all even numbers to 0. Now problem is reduced to number of subarrays having sum equals k.
+
+```cpp
+int no_of_subarrays(vector<int> & v, int k){
+    unordered_map<int,int> mp;
+    mp[0] = 1;
+    int count = 0;
+    int csum = 0;
+
+    for(int num : v){
+        csum += num;
+
+        if(mp.find(csum-k)!=mp.end())
+            count+=mp[csum-k];
+
+        mp[csum]++; 
+    }
+
+    return count;
+}
+
+
+
+int numberOfSubarrays(vector<int>& nums, int k) {
+    for(int i=0; i<nums.size(); i++){
+        if(nums[i]%2==0)
+            nums[i]=0;
+        else
+            nums[i]=1;
+    }
+
+    // Now problem reduced to no. of subarrays whose sum equals to k
+
+    return no_of_subarrays(nums, k);
+}
+```
+

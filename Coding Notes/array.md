@@ -746,6 +746,42 @@ vector<int> majorityElement(vector<int>& nums) {
 
 ```
 
+#### 19. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
+Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
+
+```cpp
+bool terminate(vector<int> v){
+    for(auto i : v)
+        if(i!=0)
+            return false;
+
+    return true;
+}
+
+int minOperations(vector<int>& nums) {
+    int ans = 0;
+    int n = nums.size();
+
+    while(!terminate(nums)){
+        for(int i=0; i<n; i++){
+            if(nums[i]%2==1){
+                nums[i]--;
+                ans++;
+            }
+        }
+
+        if(terminate(nums)) break;
+
+        for(int i=0; i<n; i++)
+            nums[i]/=2;
+
+        ans++;
+    }
+
+    return ans;
+}
+```
+
 ## Hard
 
 #### 1. First Missing Positive (Swap Sort)

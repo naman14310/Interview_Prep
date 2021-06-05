@@ -151,6 +151,14 @@ int longest_substring(string s, int k){
 #### 3. Longest Repeating Character Replacement (Tricky)
 You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
 
+Input: s = "ABAB", k = 2
+
+Output: 4
+
+Hint: Given this, we can apply the at most k changes constraint and maintain a sliding window such that
+
+`(length of substring - number of times of the maximum occurring character in the substring) <= k`
+
 ```cpp
 int characterReplacement(string s, int k) {
     vector<int> freq (26, 0);

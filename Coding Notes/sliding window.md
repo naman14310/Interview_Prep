@@ -122,6 +122,43 @@ int maxScore(vector<int>& cardPoints, int k) {
 }
 ```
 
+#### 4. Minimum Number of K Consecutive Bit Flips (Tricky)
+In an array nums containing only 0s and 1s, a k-bit flip consists of choosing a (contiguous) subarray of length k and simultaneously changing every 0 in the subarray to 1, and every 1 in the subarray to 0. Return the minimum number of k-bit flips required so that there is no 0 in the array.  If it is not possible, return -1.
+
+Input: nums = [0,0,0,1,0,1,1,0], k = 3
+
+Output: 3
+
+Hint: Do Not flip bits everytime. Instead use one boolean variable reverse to track if bits are reversed. Remember to flip the next bit (if reverse is true) before sliding the window.
+
+```cpp
+int minKBitFlips(vector<int>& A, int K) {
+    int i=0, j=K-1;
+    int flip_count = 0;
+    bool rev = false;
+
+    while(j<A.size()){
+
+        if((rev and A[i]==1) or (!rev and A[i]==0)){
+            rev = !rev;
+            flip_count++;
+        }
+
+        if(rev and j+1<A.size())
+            A[j+1] = !A[j+1];
+
+        i++; j++;
+    }
+
+    while(i<A.size()){
+        if((rev and A[i]==1) or (!rev and A[i]==0)) return -1;
+        i++;
+    }
+
+    return flip_count;
+}
+```
+
 ## Type 2 : Variable Window Size
 
 These type of problems can be solved with two poiters i and j. `i` points to the leftmost element of window (including i) and `j` points to rightmost element of window (including j)

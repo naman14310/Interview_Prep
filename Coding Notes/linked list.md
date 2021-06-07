@@ -175,7 +175,44 @@ bool hasCycle(ListNode *head) {
 }
 ```
 
-#### 9. Palindrome Linked List
+#### 9. Linked List Cycle II (return the node where the cycle begins)
+
+Approach:
+
+1. Find the meeting point using above Floyds cycle detection algo. If no cycle is present return NULL else return meeting point.
+2. Start one pointer temp1 from head and other pointer temp2 from meetPoint with same speed. Where they both meets, will be our starting node of the cycle.
+
+```cpp
+ListNode* findMeetPoint(ListNode* head){
+    ListNode* slow=head, *fast=head;
+
+    while(fast and fast->next){
+        fast = fast->next->next;
+        slow = slow->next;
+
+        if(slow==fast) return slow;
+    }
+
+    return NULL;
+}
+
+ListNode *detectCycle(ListNode *head) {
+
+    ListNode* meetPoint = findMeetPoint(head);
+    if(!meetPoint) return NULL;
+
+    ListNode* temp1 = head, *temp2 = meetPoint;
+
+    while(temp1!=temp2){
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+
+    return temp1;
+}
+```
+
+#### 10. Palindrome Linked List
 
 ```cpp
 ListNode* reverseSecondHalf(ListNode* mid){
@@ -222,7 +259,7 @@ bool isPalindrome(ListNode* head) {
 }
 ```
 
-#### 10. Swapping Nodes in a Linked List
+#### 11. Swapping Nodes in a Linked List
 You are given the head of a linked list, and an integer k. Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
 
 ![img](https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg)
@@ -303,6 +340,8 @@ ListNode* swapPairs(ListNode* head) {
 
 #### 3. Sort List
 
+Hint: Use divide and conquer approach
+
 ```cpp
 ListNode* findMid(ListNode* head){
     ListNode *slow=head, *fast=head, *prev=NULL;
@@ -350,6 +389,8 @@ Given the head of a linked list and a value x, partition it such that all nodes 
 
 **Solution by creating two seperate lists**
 
+Approach: Use to new linked list, one for storing nodes lesser then x and other for storing nodes greater then or equals to x. 
+
 ```cpp
 ListNode *partition(ListNode *head, int x) {
     ListNode node1(0), node2(0);
@@ -368,6 +409,12 @@ ListNode *partition(ListNode *head, int x) {
 ```
 
 **Inplace solution**
+
+Approach:
+
+1. Use two pointers to traverse
+2. Left pointer is points the location where node lesser then x will be inserted
+3. Right pointer iterates over the whole linked list, find nodes >= x, removes them, copy their data to newNode and attach that newNode in left pointer's pos.
 
 ```cpp
 void insertAtPos(ListNode* pos, ListNode* newNode){
@@ -406,6 +453,160 @@ ListNode* partition(ListNode* head, int x) {
 
         else temp2 = temp2->next;
     }
+
+    return head;
+}
+```
+
+#### 5. Copy List with Random Pointer (Tricky)
+
+Approach:
+
+1. Create cross connections using next pointers
+2. Copy random pointers using cross connections
+3. Reconnect next pointers
+
+```cpp
+Node* copyRandomList(Node* head) {
+    if(!head) return head;
+
+    Node* temp1 = head;
+    Node* newHead;
+    bool first = true;
+
+    /* Creating new list and assign cross connections */ 
+
+    while(temp1){
+        Node* newNode = new Node(temp1->val);
+        newNode->next = temp1->next;
+
+        if(first){
+            newHead = newNode;
+            first = false;
+        }
+
+        temp1->next = newNode;
+        temp1 = newNode->next;
+    }
+
+    /* Copying random pointers */
+
+    temp1 = head;
+
+    while(temp1){
+        temp1->next->random = temp1->random ? temp1->random->next : NULL;
+        temp1 = temp1->next->next;
+    }
+
+    /* Correcting next pointers */ 
+
+    temp1 = head;
+
+    while(temp1){
+        Node* temp2 = temp1->next->next;
+        temp1->next->next = temp2 ? temp2->next : NULL;
+        temp1->next = temp2;
+        temp1 = temp2;
+    }
+
+    return newHead;
+}
+```
+
+#### 6. Reorder List (Cyclic)
+
+![img](https://assets.leetcode.com/uploads/2021/03/09/reorder2-linked-list.jpg)
+
+Approach:
+
+1. Find mid using slow and fast pointers
+2. Reverse the linked list after mid (pass mid in reverse function)
+3. Iterate two pointers, temp1 from left and temp2 from right till temp1!=mid.
+4. Also add another breaking condition inside while loop i.e. temp2==mid (before assiging temp2)
+
+```cpp
+ListNode* reverse(ListNode* curr){
+    ListNode *prev=NULL, *next=NULL;
+    while(curr){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;        // returning last node of linked list
+}
+
+ListNode* findMid(ListNode* head){
+    ListNode* slow=head, *fast=head;
+    while(fast and fast->next){
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return slow;
+}
+
+void reorderList(ListNode* head) {
+    if(!head or !head->next or !head->next->next) return;
+
+    ListNode* temp1 = head;
+
+    ListNode* mid = findMid(head);
+    ListNode* temp2 = reverse(mid);
+
+    while(temp1!=mid){
+        ListNode* ptr;
+        ptr = temp1->next;
+        temp1->next = temp2;
+        temp1 = ptr;
+
+        if(temp2==mid) break;
+        ptr = temp2->next;
+        temp2->next = temp1;
+        temp2 = ptr;
+    }
+}
+```
+
+#### 7. Reverse Linked List II
+Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return the reversed list.
+
+![img](https://assets.leetcode.com/uploads/2021/02/19/rev2ex2.jpg)
+
+```cpp
+ListNode* reverseBetween(ListNode* head, int left, int right) {
+
+    /*
+        temp1 -> points towards the node from where we need to reverse the linked list
+        prev_temp -> points towards the previous of temp1
+    */
+
+    ListNode* temp1 = head, *prev_temp = NULL;
+    int count=1;
+
+    while(count<left){
+        prev_temp = temp1;
+        temp1 = temp1->next;
+        count++;
+    }
+
+    /* Reversing logic */
+
+    ListNode* prev = NULL, *curr = temp1, *next = NULL;
+
+    while(curr and count<=right){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+
+    /* Reconnecting list */
+
+    temp1->next = curr;
+
+    if(prev_temp) prev_temp->next = prev;
+    else head = prev;                              // Head will change if reversing starts from head
 
     return head;
 }

@@ -282,3 +282,58 @@ ListNode* oddEvenList(ListNode* head) {
     return head;
 }
 ```
+
+#### 2. Swap Nodes in Pairs (without modifying the values)
+
+![img](https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg)
+
+**Recursive**
+
+```cpp
+ListNode* swapPairs(ListNode* head) {
+    if(!head or !head->next) return head;
+
+    ListNode* temp = head->next;
+    head->next = swapPairs(temp->next);
+    temp->next = head;
+
+    return temp;
+}
+```
+
+### @ Problems on Conversion of Linked List to Trees and vice versa
+
+#### 1. Convert Sorted List to Binary Search Tree
+
+![img](https://assets.leetcode.com/uploads/2020/08/17/linked.jpg)
+
+Note: Do not forget to make prev null
+
+```cpp
+ListNode* findMid(ListNode* head){
+    ListNode *slow=head, *fast=head, *prev=NULL;
+
+    while(fast and fast->next){
+        fast=fast->next->next;
+        prev=slow;
+        slow=slow->next;
+    }
+
+    if(prev) prev->next = NULL;
+    return slow;
+}
+
+TreeNode* sortedListToBST(ListNode* head) {
+    if(!head) return NULL;
+
+    if(!head->next) return new TreeNode(head->val);
+
+    ListNode* mid = findMid(head);
+
+    TreeNode* root = new TreeNode(mid->val);
+    root->left = sortedListToBST(head);
+    root->right = sortedListToBST(mid->next);
+
+    return root;
+}
+```

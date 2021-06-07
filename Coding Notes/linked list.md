@@ -301,6 +301,116 @@ ListNode* swapPairs(ListNode* head) {
 }
 ```
 
+#### 3. Sort List
+
+```cpp
+ListNode* findMid(ListNode* head){
+    ListNode *slow=head, *fast=head, *prev=NULL;
+
+    while(fast and fast->next){
+        fast = fast->next->next;
+        prev = slow;
+        slow = slow->next;
+    }
+
+    if(prev) prev->next = NULL;
+    return slow;
+}
+
+ListNode* mergeTwoSortedLists(ListNode* l1, ListNode* l2){
+    if(!l1) return l2;
+    if(!l2) return l1;
+
+    if(l1->val <= l2->val){
+        l1->next = mergeTwoSortedLists(l1->next, l2);
+        return l1;
+    }
+
+    else{
+        l2->next = mergeTwoSortedLists(l1, l2->next);
+        return l2;
+    }        
+}
+
+ListNode* sortList(ListNode* head) {
+    if(!head or !head->next) return head;
+
+    ListNode* mid = findMid(head);
+    ListNode* head1 = sortList(head);
+    ListNode* head2 = sortList(mid);
+
+    return mergeTwoSortedLists(head1, head2);
+}
+```
+
+#### 4. Partition list
+Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.
+
+![img](https://assets.leetcode.com/uploads/2021/01/04/partition.jpg)
+
+**Solution by creating two seperate lists**
+
+```cpp
+ListNode *partition(ListNode *head, int x) {
+    ListNode node1(0), node2(0);
+    ListNode *p1 = &node1, *p2 = &node2;
+    while (head) {
+        if (head->val < x)
+            p1 = p1->next = head;
+        else
+            p2 = p2->next = head;
+        head = head->next;
+    }
+    p2->next = NULL;
+    p1->next = node2.next;
+    return node1.next;
+}
+```
+
+**Inplace solution**
+
+```cpp
+void insertAtPos(ListNode* pos, ListNode* newNode){
+    newNode->next = pos->next;
+    pos->next = newNode;
+}
+
+void insertAtBegin(ListNode* &head, ListNode* newNode){
+    newNode->next = head;
+    head = newNode;
+}
+
+ListNode* partition(ListNode* head, int x) {
+    if(!head or !head->next) return head;
+    ListNode* temp1 = head->val<x ? head : NULL;
+
+    while(temp1 and temp1->val<x and temp1->next and temp1->next->val<x)
+        temp1 = temp1->next;
+
+    ListNode* temp2 = temp1 ? temp1 : head;
+    while(temp2 and temp2->next){
+        if(temp2->next->val < x){
+            ListNode* newNode = new ListNode(temp2->next->val);
+            temp2->next = temp2->next->next;
+
+            if(temp1){
+                insertAtPos(temp1, newNode);
+                temp1 = temp1->next;
+            }
+            else{
+                insertAtBegin(head, newNode);
+                temp1 = head;
+            }
+
+        }
+
+        else temp2 = temp2->next;
+    }
+
+    return head;
+}
+```
+
 ### @ Problems on Conversion of Linked List to Trees and vice versa
 
 #### 1. Convert Sorted List to Binary Search Tree

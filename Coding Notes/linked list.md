@@ -221,3 +221,64 @@ bool isPalindrome(ListNode* head) {
     return true;
 }
 ```
+
+#### 10. Swapping Nodes in a Linked List
+You are given the head of a linked list, and an integer k. Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
+
+![img](https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg)
+
+```cpp
+/* Single pass solution */
+
+ListNode* swapNodes(ListNode* head, int k) {
+    if(!head or !head->next) return head;
+
+    ListNode *temp1 = head;
+    for(int i=1; i<k; i++)
+        temp1 = temp1->next;
+
+    ListNode *slow = head, *fast = temp1;
+    while(fast->next){
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    swap(temp1->val, slow->val);
+
+    return head;
+}
+```
+
+## Medium
+
+#### 1. Odd Even Linked List
+Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
+
+![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)
+
+```cpp
+ListNode* oddEvenList(ListNode* head) {
+    if (!head or !head->next) return head;
+
+    ListNode* head2 = head->next;
+    ListNode *temp1 = head, *temp2 = head2, *prev=NULL;
+
+    while(temp1 and temp2){
+        temp1->next = temp2->next;
+        prev = temp1;
+        temp1 = temp1->next;
+
+        if(temp1){
+            temp2->next = temp1->next;
+            temp2 = temp2->next;
+        }
+    }
+
+    if(!temp2)
+        temp1->next = head2;
+    else
+        prev->next = head2;
+
+    return head;
+}
+```

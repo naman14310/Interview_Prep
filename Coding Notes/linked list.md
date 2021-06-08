@@ -101,7 +101,47 @@ ListNode* deleteDuplicates(ListNode* head) {
 
 Note: For removing duplicates from Unsorted List, create an unordered_set for keeping track of visited nodes. Also use prev pointer for logically deleting the node.
 
-#### 6. Remove Linked List Elements
+#### 6. Remove Duplicates from Sorted List II
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+
+![img](https://assets.leetcode.com/uploads/2021/01/04/linkedlist2.jpg)
+
+Hint: Use dummy node for head and then use two pointers. We will use temp2 for detecting repeatedness and append non repeated elements in temp1->next everytime.
+
+```cpp
+ListNode* deleteDuplicates(ListNode* head) {
+    if(!head or !head->next) return head;
+
+    /* I've created dummy node to efficiently maintain the head position */
+
+    ListNode* dummy = new ListNode(-101);
+    dummy->next = head;
+    head = dummy;
+
+    ListNode* temp1 = head, *temp2 = temp1->next;
+    while(temp2){
+
+        if(temp2->next and temp2->next->val == temp2->val){
+            int val = temp2->val;
+
+            while(temp2 and temp2->val == val)
+                temp2 = temp2->next;
+        }
+        else{
+            temp1->next = temp2;
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+    }
+
+    temp1->next = NULL;
+    head = head->next;
+    
+    return head;
+}
+```
+
+#### 7. Remove Linked List Elements
 Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
 
 ```cpp
@@ -130,7 +170,7 @@ ListNode* removeElements(ListNode* head, int val) {
 }
 ```
 
-#### 7. Intersection of Two Linked Lists
+#### 8. Intersection of Two Linked Lists
 
 ```cpp
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
@@ -154,7 +194,7 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 }
 ```
 
-#### 8. Linked List Cycle (Floyds cycle detection algo)
+#### 9. Linked List Cycle (Floyds cycle detection algo)
 
 ```cpp
 bool hasCycle(ListNode *head) {
@@ -171,7 +211,7 @@ bool hasCycle(ListNode *head) {
 }
 ```
 
-#### 9. Linked List Cycle II (return the node where the cycle begins)
+#### 10. Linked List Cycle II (return the node where the cycle begins)
 
 Approach:
 
@@ -210,7 +250,7 @@ ListNode *detectCycle(ListNode *head) {
 
 Note: For removing cycle, check for the condition temp1->next==temp2->next. Whenever it occurs, store NULL in temp2->next;
 
-#### 10. Palindrome Linked List
+#### 11. Palindrome Linked List
 
 ```cpp
 ListNode* reverseSecondHalf(ListNode* mid){
@@ -257,7 +297,7 @@ bool isPalindrome(ListNode* head) {
 }
 ```
 
-#### 11. Swapping Nodes in a Linked List
+#### 12. Swapping Nodes in a Linked List (first and kth last node)
 You are given the head of a linked list, and an integer k. Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
 
 ![img](https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg)
@@ -284,9 +324,33 @@ ListNode* swapNodes(ListNode* head, int k) {
 }
 ```
 
-## Medium
+#### 13. Remove Nth Node From End of List
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
-#### 1. Odd Even Linked List
+```cpp
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+    if(!head->next and n==1) return NULL;
+
+    ListNode* slow=head, *fast=head;
+    int i=0;
+    while(fast and i<n){
+        fast = fast->next;
+        i++;
+    }
+
+    if(!fast) return head->next;    // Boundary case, when first node needs to be deleted
+
+    while(fast->next){
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    slow->next = slow->next->next;
+    return head;
+}
+```
+
+#### 14. Odd Even Linked List
 Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)
@@ -318,7 +382,9 @@ ListNode* oddEvenList(ListNode* head) {
 }
 ```
 
-#### 2. Swap Nodes in Pairs (without modifying the values)
+## Medium
+
+#### 1. Swap Nodes in Pairs (without modifying the values)
 
 ![img](https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg)
 
@@ -336,7 +402,7 @@ ListNode* swapPairs(ListNode* head) {
 }
 ```
 
-#### 3. Sort List
+#### 2. Sort List
 
 Hint: Use divide and conquer approach
 
@@ -380,7 +446,7 @@ ListNode* sortList(ListNode* head) {
 }
 ```
 
-#### 4. Partition list
+#### 3. Partition list
 Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.
 
 ![img](https://assets.leetcode.com/uploads/2021/01/04/partition.jpg)
@@ -446,9 +512,7 @@ ListNode* partition(ListNode* head, int x) {
                 insertAtBegin(head, newNode);
                 temp1 = head;
             }
-
         }
-
         else temp2 = temp2->next;
     }
 
@@ -456,7 +520,7 @@ ListNode* partition(ListNode* head, int x) {
 }
 ```
 
-#### 5. Copy List with Random Pointer (Tricky)
+#### 4. Copy List with Random Pointer (Tricky)
 
 Approach:
 
@@ -511,7 +575,7 @@ Node* copyRandomList(Node* head) {
 }
 ```
 
-#### 6. Reorder List (Cyclic)
+#### 5. Reorder List (Cyclic)
 
 ![img](https://assets.leetcode.com/uploads/2021/03/09/reorder2-linked-list.jpg)
 
@@ -565,7 +629,7 @@ void reorderList(ListNode* head) {
 }
 ```
 
-#### 7. Reverse Linked List II
+#### 6. Reverse Linked List II
 Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return the reversed list.
 
 ![img](https://assets.leetcode.com/uploads/2021/02/19/rev2ex2.jpg)

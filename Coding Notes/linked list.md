@@ -773,6 +773,65 @@ ListNode* rotateRight(ListNode* head, int k) {
 }
 ```
 
+#### 9. Remove Zero Sum Consecutive Nodes from Linked List (Tricky)
+Given the head of a linked list, we repeatedly delete consecutive sequences of nodes that sum to 0 until there are no such sequences. After doing so, return the head of the final linked list.  You may return any such answer.
+
+Input: head = [1,2,-3,3,1]
+
+Output: [3,1]
+
+[Explaination](https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/discuss/366350/C%2B%2B-O(n)-(explained-with-pictures))
+
+![img](https://assets.leetcode.com/users/hamlet_fiis/image_1566705933.png)
+
+```cpp
+ListNode* removeZeroSumSublists(ListNode* head) {
+    ListNode* temp = head;
+
+    ListNode* dummy = new ListNode(-1);
+    dummy->next = head;
+    head = dummy;
+
+    int csum = 0;
+
+    /* This unordered map stores cummulative sum values and their respective pointers to node */
+
+    unordered_map<int, ListNode*> mp;  
+
+    /* mp[0] is pointing to dummy head */
+
+    mp[0] = head;     
+
+    while(temp){
+        csum += temp->val;
+
+        if(mp.find(csum)!=mp.end()){
+            ListNode* ptr1 = mp[csum], *ptr2 = ptr1;
+
+            /* deleting bad references */
+
+            int temp_csum = csum;  
+            while(ptr2 != temp){
+                ptr2 = ptr2->next;
+                temp_csum += ptr2->val;
+                if(ptr2!=temp)
+                    mp.erase(temp_csum);
+            }
+
+            ptr1->next = temp->next;
+        }
+
+        else
+            mp[csum] = temp;
+
+        temp = temp->next;
+    }
+
+    head = head->next;    // resetting heads posn
+    return head;
+}
+```
+
 ### @ Problems on Conversion of Linked List to Trees and vice versa
 
 #### 1. Convert Sorted List to Binary Search Tree

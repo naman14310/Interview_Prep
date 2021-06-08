@@ -673,6 +673,105 @@ ListNode* reverseBetween(ListNode* head, int left, int right) {
     return head;
 }
 ```
+#### 7. Add Two Numbers
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+```cpp
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    if(!l1) return l2;
+    if(!l2) return l1;
+
+    ListNode* temp1 = l1, *temp2 = l2;
+    ListNode* head, *temp3;
+
+    bool first = true;
+    int carry = 0, digit = 0;
+
+    /* looping till both lists are present */
+
+    while(temp1 and temp2){
+        int num = temp1->val + temp2->val + carry;
+        carry = num/10;
+        digit = num%10;
+
+        ListNode* node = new ListNode(digit);
+
+        if(first){
+            head = node;
+            temp3 = node;
+            first = false;
+        }
+        else{
+            temp3->next = node;
+            temp3 = temp3->next;
+        }
+
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+
+    /* while loop if list 1 is still left */
+
+    while(temp1){
+        int num = temp1->val + carry;
+        carry = num/10;
+        digit = num%10;
+
+        temp3->next = new ListNode(digit);
+        temp3 = temp3->next;
+        temp1 = temp1->next;
+    }
+
+    /* while loop if list 2 is still left */
+
+    while(temp2){
+        int num = temp2->val + carry;
+        carry = num/10;
+        digit = num%10;
+
+        temp3->next = new ListNode(digit);
+        temp3 = temp3->next;
+        temp2 = temp2->next;
+    }
+
+    /* Do not forgot to add this condition for carry */
+
+    if(carry==1) temp3->next = new ListNode(carry);
+
+    return head;
+}
+```
+
+#### 8. Rotate List
+Given the head of a linked list, rotate the list to the right by k places.
+
+```cpp
+ListNode* rotateRight(ListNode* head, int k) {        
+    if(!head or !head->next) return head;
+
+    ListNode* temp = head;
+    int n = 1;
+    while(temp->next){
+        n++;
+        temp = temp->next;
+    }
+
+    k = n - (k % n);
+
+    if(k==0) return head;
+
+    temp->next = head;      /* Joining tail to head */
+
+    ListNode* head2 = head, *prev = NULL;
+    for(int i=1; i<=k ; i++){
+        prev = head2;
+        head2 = head2->next;
+    }
+
+    prev->next =  NULL;
+    return head2;
+}
+```
 
 ### @ Problems on Conversion of Linked List to Trees and vice versa
 

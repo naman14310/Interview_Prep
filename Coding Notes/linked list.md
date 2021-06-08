@@ -83,51 +83,47 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
 
 #### 5. Remove Duplicates from Sorted List
 
-Hint: Use two pointers
-
 ```cpp
 ListNode* deleteDuplicates(ListNode* head) {
     if(!head or !head->next) return head;
+    ListNode* temp = head;
 
-    ListNode* temp1 = head;
-    ListNode* temp2 = head->next;
-
-    while(temp1){
-        while(temp2 and temp2->val==temp1->val)
-            temp2 = temp2->next;
-
-        temp1->next = temp2;
-        temp1 = temp2;
-
-        if(!temp2) break;
-
-        temp2 = temp2->next;
+    while(temp){
+        if(temp->next and temp->next->val == temp->val)
+            temp->next = temp->next->next;
+        else
+            temp = temp->next;
     }
+
     return head;
 }
 ```
+
+Note: For removing duplicates from Unsorted List, create an unordered_set for keeping track of visited nodes. Also use prev pointer for logically deleting the node.
 
 #### 6. Remove Linked List Elements
 Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
 
 ```cpp
 ListNode* removeElements(ListNode* head, int val) {
-    while(head and head->val==val)
+    while(head and head->val==val){
+        ListNode* p = head;
         head = head->next;
+        delete p;                //--> physically freeing memory
+    }
 
     if(!head or !head->next) return head;
+    ListNode *temp = head;
 
-    ListNode *temp1 = head, *temp2 = head->next;
+    while(temp){
 
-    while(temp1){
-        while(temp2 and temp2->val==val)
-            temp2 = temp2->next;
-
-        temp1->next = temp2;
-        temp1 = temp2;
-
-        if(!temp2) break;
-        temp2 = temp2->next;
+        if(temp->next and temp->next->val == val){
+            ListNode* p = temp->next;
+            temp->next = temp->next->next;
+            delete p;
+        }
+        else
+            temp = temp->next;
     }
 
     return head;
@@ -211,6 +207,8 @@ ListNode *detectCycle(ListNode *head) {
     return temp1;
 }
 ```
+
+Note: For removing cycle, check for the condition temp1->next==temp2->next. Whenever it occurs, store NULL in temp2->next;
 
 #### 10. Palindrome Linked List
 

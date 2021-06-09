@@ -312,3 +312,44 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     return ans;
 }
 ```
+
+#### 10. Jump Game VI (using Deque)
+You are given a 0-indexed integer array nums and an integer k. You are initially standing at index 0. In one move, you can jump at most k steps forward without going outside the boundaries of the array. That is, you can jump from index i to any index in the range [i + 1, min(n - 1, i + k)] inclusive. You want to reach the last index of the array (index n - 1). Your score is the sum of all nums[j] for each index j you visited in the array. Return the maximum score you can get.
+
+Input: nums = [1,-1,-2,4,-7,3], k = 2
+
+Output: 7
+
+Hint: Think something similar to sliding window maximum. 
+
+Approach:
+
+1. Create a vector best_score in which we store best score for every index i.
+2. Start iterating from right and for every time check for max best_score from i+1 to i+k (logic similar to sliding window maximum)
+
+```cpp
+int maxResult(vector<int>& nums, int k) {
+    int n = nums.size();
+    deque<int> dq;
+
+    vector<int> best_score(n, 0);
+    best_score[n-1] = nums[n-1];
+
+    dq.push_back(n-1);
+
+    for(int i=n-2; i>=0; i--){
+
+        while(!dq.empty() and dq.front() > i+k)
+            dq.pop_front();
+
+        best_score[i] = nums[i] + best_score[dq.front()];
+
+        while(!dq.empty() and best_score[dq.back()] <= best_score[i])
+            dq.pop_back();
+
+        dq.push_back(i);
+    }
+
+    return best_score[0];
+}
+```

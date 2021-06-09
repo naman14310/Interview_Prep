@@ -99,8 +99,6 @@ ListNode* deleteDuplicates(ListNode* head) {
 }
 ```
 
-Note: For removing duplicates from Unsorted List, create an unordered_set for keeping track of visited nodes. Also use prev pointer for logically deleting the node.
-
 #### 6. Remove Duplicates from Sorted List II
 Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
 

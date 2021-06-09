@@ -868,3 +868,45 @@ TreeNode* sortedListToBST(ListNode* head) {
     return root;
 }
 ```
+
+## Hard
+
+#### 1. Merge k Sorted Lists
+
+Approach: 
+
+1. Create a minheap using priority queue of type pair<int,int> for {val, list_id}
+2. Create a vector of type ListNode* for storing pointers to nodes of every list
+3. Push first value of every list to minHeap
+4. Pop minimum val and push its next value to minheap if it is not NULL
+5. repeat untill minheap becomes empty
+
+```cpp
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+    priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>> > minheap;
+
+    vector<ListNode*> v (lists.size(), NULL);      /* It will store iterative pointers of every list; */
+
+    for(int i=0; i<lists.size(); i++){
+        v[i] = lists[i];
+        if(v[i]) minheap.push({v[i]->val, i});
+    }
+
+    ListNode* dummy = new ListNode(0);
+    ListNode* temp = dummy;
+
+    while(!minheap.empty()){
+        auto p = minheap.top(); minheap.pop();
+        int val = p.first, list_id = p.second;
+
+        temp->next = new ListNode(val);
+        temp = temp->next;
+
+        v[list_id] = v[list_id]->next;
+        if(v[list_id]) minheap.push({v[list_id]->val, list_id});
+    }
+
+    return dummy->next;
+}
+```
+

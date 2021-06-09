@@ -1,10 +1,10 @@
 # Heap (Priority Queue)
 
-**Maxheap using priority queue*
+**Maxheap using priority queue**
 
 `priority_queue<int> maxheap;`
 
-**Maxheap using priority queue*
+**Minheap using priority queue**
 
 `priority_queue<int, vector<int>, greater<int>> minheap;`
 

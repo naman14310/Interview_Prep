@@ -910,3 +910,51 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 }
 ```
 
+#### 2. Reverse Nodes in k-Group
+
+Hint : Use recursion
+
+```cpp
+/* Returns true if there are atleast k nodes after head */
+
+bool is_k_nodes(ListNode* head, int k){
+    ListNode* temp = head;
+    int node_cnt = 0;
+    
+    while(temp){
+        node_cnt++;
+        temp = temp->next;
+        if(node_cnt==k) return true;
+    }
+    
+    return false;
+}
+
+ListNode* recurse(ListNode* head, int k){
+
+    /* if less then k nodes left then directly return head */
+
+    if(!is_k_nodes(head, k)) return head;
+
+    int cnt = 1;
+    ListNode* curr = head, *prev = NULL, *next = NULL;
+
+    while(curr and cnt<=k){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        cnt++;
+    }
+
+    head->next = recurse(curr, k);
+    head = prev;
+
+    return head;
+}
+
+ListNode* reverseKGroup(ListNode* head, int k) {
+    return recurse(head, k);
+}
+```
+

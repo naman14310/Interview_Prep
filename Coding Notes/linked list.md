@@ -141,7 +141,34 @@ ListNode* deleteDuplicates(ListNode* head) {
 }
 ```
 
-#### 7. Remove Linked List Elements
+#### 7. Remove duplicates from an unsorted linked list
+
+```cpp
+Node * removeDuplicates( Node *head) {
+    unordered_set<int> s;
+
+    Node* dummy = new Node(0);
+    dummy->next = head;
+
+    Node *prev = dummy, *temp=head;
+    while(temp){
+        int val = temp->data;
+
+        if(s.find(val)==s.end()){
+            s.insert(val);
+            prev->next = temp;
+            prev = prev->next;
+        }
+
+        temp = temp->next;
+    }
+
+    prev->next = NULL;
+    return dummy->next;
+}
+```
+
+#### 8. Remove Linked List Elements
 Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
 
 ```cpp
@@ -170,7 +197,7 @@ ListNode* removeElements(ListNode* head, int val) {
 }
 ```
 
-#### 8. Intersection of Two Linked Lists
+#### 9. Intersection of Two Linked Lists
 
 ```cpp
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
@@ -194,7 +221,7 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 }
 ```
 
-#### 9. Linked List Cycle (Floyds cycle detection algo)
+#### 10. Linked List Cycle (Floyds cycle detection algo)
 
 ```cpp
 bool hasCycle(ListNode *head) {
@@ -211,7 +238,7 @@ bool hasCycle(ListNode *head) {
 }
 ```
 
-#### 10. Linked List Cycle II (return the node where the cycle begins)
+#### 11. Linked List Cycle II (return the node where the cycle begins)
 
 Approach:
 
@@ -250,7 +277,7 @@ ListNode *detectCycle(ListNode *head) {
 
 Note: For removing cycle, check for the condition temp1->next==temp2->next. Whenever it occurs, store NULL in temp2->next;
 
-#### 11. Palindrome Linked List
+#### 12. Palindrome Linked List
 
 ```cpp
 ListNode* reverseSecondHalf(ListNode* mid){
@@ -297,7 +324,7 @@ bool isPalindrome(ListNode* head) {
 }
 ```
 
-#### 12. Swapping Nodes in a Linked List (first and kth last node)
+#### 13. Swapping Nodes in a Linked List (first and kth last node)
 You are given the head of a linked list, and an integer k. Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
 
 ![img](https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg)
@@ -324,7 +351,7 @@ ListNode* swapNodes(ListNode* head, int k) {
 }
 ```
 
-#### 13. Remove Nth Node From End of List
+#### 14. Remove Nth Node From End of List
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
 ```cpp
@@ -350,7 +377,7 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
 }
 ```
 
-#### 14. Odd Even Linked List
+#### 15. Odd Even Linked List
 Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)

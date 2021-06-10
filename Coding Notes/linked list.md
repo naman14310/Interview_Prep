@@ -918,8 +918,106 @@ Node *flatten(Node *root){
    //reset_next_pointers(head);
    return head;
 }
-
 ```
+
+#### 11. Sort a linked list of 0s, 1s and 2s by changing links
+
+Hint: To avoid many null checks, we use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
+
+```cpp
+Node* segregate(Node *head) {
+    Node* dummy0 = new Node(0);
+    Node* dummy1 = new Node(1);
+    Node* dummy2 = new Node(2);
+
+    Node *temp0 = dummy0, *temp1 = dummy1, *temp2 = dummy2;
+
+    while(head){
+        if(head->data == 0){
+            temp0->next = new Node(0);
+            temp0 = temp0->next;
+        }
+        else if(head->data == 1){
+            temp1->next = new Node(1);
+            temp1 = temp1->next;
+        }
+        else{
+            temp2->next = new Node(2);
+            temp2 = temp2->next;
+        }
+        head = head->next;
+    }
+
+    if(dummy1->next){
+        temp0->next = dummy1->next;
+        temp1->next = dummy2->next;
+    }
+    else{
+        temp0->next = dummy2->next;
+    }
+
+    return dummy0->next;
+}
+```
+
+#### 12. Delete nodes having greater value on right
+Given a singly linked list, remove all the nodes which have a greater value on its following nodes.
+
+**Method 1: Recursive approach**
+
+```cpp
+Node *compute(Node *head){
+    if(!head or !head->next) return head;
+
+    Node* rightmax = compute(head->next);
+
+    if(head->data >= rightmax->data){
+        head->next = rightmax;
+        return head;
+    }
+    else return rightmax;
+}
+```
+
+**Method 2 : Iterative approach (By reversing linked list)**
+
+Approach:
+
+1. Reverse the list. 
+2. Traverse the reversed list. Keep max till now. If the next node is less than max, then delete the next node, otherwise max = next node. 
+3. Reverse the list again to retain the original order. 
+
+```cpp
+Node* reverse(Node* head){
+    Node* curr = head, *prev = NULL, *next = NULL;
+    while(curr){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+
+Node *compute(Node *head){
+    if(!head or !head->next) return head;
+
+    Node* tail = reverse(head);
+    Node* temp = tail;
+    int maxSoFar = temp->data;
+
+    while(temp->next){
+        if(temp->next->data < maxSoFar)
+            temp->next = temp->next->next;
+        else{
+            temp = temp->next;
+            maxSoFar = temp->data;
+        }
+    }
+    return reverse(tail);
+}
+```
+
 ### @ Problems on Conversion of Linked List to Trees and vice versa
 
 #### 1. Convert Sorted List to Binary Search Tree

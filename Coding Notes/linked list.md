@@ -857,6 +857,73 @@ ListNode* removeZeroSumSublists(ListNode* head) {
 }
 ```
 
+#### 10. Flattening a Linked List 
+Given a Linked List of size N, where every node represents a sub-linked-list and contains two pointers:
+
+(i) a next pointer to the next node,
+
+(ii) a bottom pointer to a linked list where this node is head.
+
+Each of the sub-linked-list is in sorted order. Flatten the Link List such that all the nodes appear in a single level while maintaining the sorted order. 
+
+Note: The flattened list will be printed using the bottom pointer instead of next pointer.
+
+```cpp
+/*
+Input: 
+
+5 -> 10 -> 19 -> 28
+|     |     |     | 
+7     20    22   35
+|           |     | 
+8          50    40
+|                 | 
+30               45
+
+Output: 5-> 7-> 8- > 10 -> 19-> 20-> 22-> 28-> 30-> 35-> 40-> 45-> 50
+
+Node* merge(Node* l1, Node* l2){
+    if(!l1) return l2;
+    if(!l2) return l1;
+    
+    if(l1->data <= l2->data){
+        l1->bottom = merge(l1->bottom, l2);
+        return l1;
+    }
+    else{
+        l2->bottom = merge(l1, l2->bottom);
+        return l2;
+    }
+}
+
+/* Optional : Call it when we need to flatten with respect to next pointers */
+
+void reset_next_pointers(Node* head){
+    Node* temp = head;
+    while(temp){
+        temp->next = temp->bottom;
+        temp->bottom = NULL;
+        temp = temp->next;
+    }
+}
+
+Node *flatten(Node *root){
+   Node* head = root;
+   Node* temp = head->next;
+   
+   while(temp){
+       head = merge(head, temp);
+       temp = temp->next;
+   }
+   
+   //reset_next_pointers(head);
+   return head;
+}
+
+*/
+
+
+```
 ### @ Problems on Conversion of Linked List to Trees and vice versa
 
 #### 1. Convert Sorted List to Binary Search Tree

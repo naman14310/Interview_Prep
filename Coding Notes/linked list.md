@@ -869,7 +869,6 @@ Each of the sub-linked-list is in sorted order. Flatten the Link List such that 
 Note: The flattened list will be printed using the bottom pointer instead of next pointer.
 
 ```cpp
-/*
 Input: 
 
 5 -> 10 -> 19 -> 28
@@ -919,9 +918,6 @@ Node *flatten(Node *root){
    //reset_next_pointers(head);
    return head;
 }
-
-*/
-
 
 ```
 ### @ Problems on Conversion of Linked List to Trees and vice versa

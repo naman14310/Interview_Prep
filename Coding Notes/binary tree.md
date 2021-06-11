@@ -45,3 +45,22 @@ TreeNode* increasingBST(TreeNode* root) {
 ```
 
 Better Solution : [Without creating new Tree](https://leetcode.com/problems/increasing-order-search-tree/discuss/165885/C%2B%2BJavaPython-Self-Explained-5-line-O(N)) 
+
+#### 3. N-ary Tree Preorder Traversal
+
+```cpp
+void traverse(Node* root, vector<int> & ans){
+    if(root){
+        ans.push_back(root->val);
+
+        for(int i=0; i<root->children.size(); i++)
+            traverse(root->children[i], ans);
+    }
+}
+
+vector<int> preorder(Node* root) {
+    vector<int> ans;
+    traverse(root, ans);
+    return ans;
+}
+```

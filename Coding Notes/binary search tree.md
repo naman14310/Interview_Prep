@@ -77,8 +77,44 @@ int getMinimumDifference(TreeNode* root) {
 ```
 Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
+#### 5. Find Mode in Binary Search Tree
+Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it. If the tree has more than one mode, return them in any order.
 
-#### 5. Convert Sorted Array to Height Balanced Binary Search Tree
+Approach : Do Inorder traversal (as it gives sorted order on BST) and compute mode.
+
+```cpp
+void inorder(TreeNode* root, int & curr_count, int & running_item, int & mode, vector<int> & mode_item){
+    if(root){
+        inorder(root->left, curr_count, running_item, mode, mode_item);
+
+        if(curr_count==0 or root->val!=running_item){
+            curr_count = 1;
+            running_item = root->val;
+        }
+        else curr_count++;
+
+        if(curr_count > mode){
+            mode = curr_count;
+            mode_item.clear();
+            mode_item.push_back(running_item);
+        }
+        else if(curr_count == mode)
+            mode_item.push_back(running_item);
+        
+        inorder(root->right, curr_count, running_item, mode, mode_item);
+    }
+}
+
+vector<int> findMode(TreeNode* root) {
+    int curr_count = 0, running_item = INT_MIN, mode = 0;
+    vector<int> mode_item;
+
+    inorder(root, curr_count, running_item, mode, mode_item);
+    return mode_item;
+}
+```
+
+#### 6. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -99,7 +135,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 6. Two Sum IV - Input is a BST
+#### 7. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp

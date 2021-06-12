@@ -150,7 +150,26 @@ bool isSameTree(TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 5. Sum of Left Leaves
+#### 5. Symmetric Tree
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+![img](https://assets.leetcode.com/uploads/2021/02/19/symtree1.jpg)
+
+```cpp
+bool traverse(TreeNode* root1, TreeNode* root2){
+    if(!root1 and !root2) return true;
+    if(!root1 or !root2) return false;
+
+    return (root1->val == root2->val) and traverse(root1->left, root2->right) and traverse(root1->right, root2->left);
+}
+
+bool isSymmetric(TreeNode* root) {
+    if(!root) return true;
+    return traverse(root->left, root->right);
+}
+```
+
+#### 6. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -171,7 +190,7 @@ int sumOfLeftLeaves(TreeNode* root) {
 }
 ```
 
-#### 6. Is Siblings
+#### 7. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -187,7 +206,7 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 7. Cousins in Binary Tree
+#### 8. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -220,6 +239,26 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
+#### 9. Diameter of Binary Tree
+
+```cpp
+int height(TreeNode* root, int & diameter){
+    if(!root) return 0;
+
+    int leftHeight = height(root->left, diameter);
+    int rightHeight = height(root->right, diameter);
+
+    diameter = max(diameter, leftHeight + rightHeight);
+
+    return max(leftHeight, rightHeight) + 1;
+}
+
+int diameterOfBinaryTree(TreeNode* root) {
+    int diameter=0;
+    height(root, diameter);
+    return diameter;
+}
+```
 
 ----
 

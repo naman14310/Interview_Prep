@@ -88,7 +88,32 @@ vector<int> preorder(Node* root) {
 }
 ```
 
-#### 2. Sum of Root To Leaf Binary Numbers (Tricky)
+#### 2. Binary Tree Paths
+Given the root of a binary tree, return all root-to-leaf paths in any order.
+
+```cpp
+void traverse(TreeNode* root, vector<string> & paths, string path){
+    if(!root) return;
+
+    if(!root->left and !root->right){
+       path += to_string(root->val);
+       paths.push_back(path);
+       return;
+    } 
+
+    path += to_string(root->val) + "->";
+    traverse(root->left, paths, path); 
+    traverse(root->right, paths, path); 
+}
+
+vector<string> binaryTreePaths(TreeNode* root) {
+    vector<string> paths;
+    traverse(root, paths, "");
+    return paths;
+}
+```
+
+#### 3. Sum of Root To Leaf Binary Numbers (Tricky)
 You are given the root of a binary tree where each node has a value 0 or 1.  Each root-to-leaf path represents a binary number starting with the most significant bit.  For example, if the path is 0 -> 1 -> 1 -> 0 -> 1, then this could represent 01101 in binary, which is 13.
 
 Hint : Use Bitwise logic to form integer on the go.

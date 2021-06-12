@@ -35,7 +35,50 @@ int rangeSumBST(TreeNode* root, int L, int R) {
 }
 ```
 
-#### 3. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 3. Lowest Common Ancestor of a Binary Search Tree
+Here we allow a node to be a descendant of itself.
+
+```cpp
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if(!root) return NULL;
+
+    if(root->val < min(p->val, q->val)) 
+        return lowestCommonAncestor(root->right, p, q);
+
+    if(root->val > max(p->val, q->val)) 
+        return lowestCommonAncestor(root->left, p, q);
+
+    return root;
+}
+```
+
+#### 4. Minimum Absolute Difference in BST
+Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+
+Approach 1 : Simply perform inorder traversal (which gives sorted order). Everytime compute minDiff with curr node and prev node. 
+
+```cpp
+void inorder(TreeNode* root, int & prev, int & minDiff){
+    if(root){
+        inorder(root->left, prev, minDiff);
+        minDiff = min(minDiff, abs(root->val - prev));
+        prev = root->val;
+        inorder(root->right, prev, minDiff);
+    }
+}
+
+int getMinimumDifference(TreeNode* root) {
+    int minDiff = INT_MAX;
+    int prev = INT_MAX;
+
+    inorder(root, prev, minDiff);
+    return minDiff;
+}
+```
+Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
+
+
+#### 5. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -56,7 +99,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 4. Two Sum IV - Input is a BST
+#### 6. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp
@@ -84,30 +127,6 @@ bool findTarget(TreeNode* root, int k) {
 }
 ```
 
-#### 5. Minimum Absolute Difference in BST
-Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
 
-Approach 1 : Simply perform inorder traversal (which gives sorted order). Everytime compute minDiff with curr node and prev node. 
-
-```cpp
-void inorder(TreeNode* root, int & prev, int & minDiff){
-    if(root){
-        inorder(root->left, prev, minDiff);
-        minDiff = min(minDiff, abs(root->val - prev));
-        prev = root->val;
-        inorder(root->right, prev, minDiff);
-    }
-}
-
-int getMinimumDifference(TreeNode* root) {
-    int minDiff = INT_MAX;
-    int prev = INT_MAX;
-
-    inorder(root, prev, minDiff);
-    return minDiff;
-}
-```
-
-Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
 

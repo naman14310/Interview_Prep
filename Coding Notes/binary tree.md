@@ -169,6 +169,29 @@ bool isSymmetric(TreeNode* root) {
 }
 ```
 
+#### 6. Subtree of Another Tree
+Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.
+
+![img](https://assets.leetcode.com/uploads/2021/04/28/subtree1-tree.jpg)
+
+```cpp
+bool isSame(TreeNode* root1, TreeNode* root2){
+    if(!root1 and !root2) return true;
+    if(!root1 or !root2) return false;
+
+    return root1->val == root2->val and isSame(root1->left, root2->left) and isSame(root1->right, root2->right);
+}
+
+bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+    if(!root) return false;
+    if(isSame(root, subRoot)) return true;
+
+    return isSubtree(root->left, subRoot) or isSubtree(root->right, subRoot);
+}
+```
+
+Optimization: To optimize the time complexity of our code, instead of checking subtree at every node, we will only check when both roots are at same level.
+
 #### 6. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 

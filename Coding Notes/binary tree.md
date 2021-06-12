@@ -138,6 +138,88 @@ int sumRootToLeaf(TreeNode* root) {
 }
 ```
 
+#### 4. Same Tree
+Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+```cpp
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if(!p and !q) return true;
+    if(!p or !q) return false;
+
+    return (p->val==q->val and isSameTree(p->left, q->left) and isSameTree(p->right, q->right));
+}
+```
+
+#### 5. Sum of Left Leaves
+Observation : Left leaves are those who are attached on the left side of their parent.
+
+```cpp
+void traverse(TreeNode* root, int & sum, bool isLeft){
+    if(!root) return;
+
+    if(!root->left and !root->right and isLeft)
+        sum += root->val;
+
+    traverse(root->left, sum, true);
+    traverse(root->right, sum, false);
+}
+
+int sumOfLeftLeaves(TreeNode* root) {
+    int sum = 0;
+    traverse(root, sum, false);
+    return sum;
+}
+```
+
+#### 6. Is Siblings
+Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
+
+```cpp
+bool isSiblings(TreeNode* root, int x, int y){
+    if(!root) return false;
+
+    if(root->left and root->right){
+        if((root->left->val==x and root->right->val==y) or (root->left->val==y and root->right->val==x))
+            return true;
+    }
+
+    return isSiblings(root->left, x, y) or isSiblings(root->right, x, y);
+}
+```
+
+#### 7. Cousins in Binary Tree
+Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
+
+```cpp
+/* Function that will return the level of both nodes in one traversing */
+
+void traverse(TreeNode* root, int x, int y, int & levelx, int & levely, int level){
+    if(!root) return;
+
+    if(root->val==x){
+        levelx = level;
+        if(levely!=-1) return;      // pruning the traversing
+    }
+
+    if(root->val==y){
+        levely = level;
+        if(levelx!=-1) return;      // pruning the traversing
+    }
+
+    traverse(root->left, x, y, levelx, levely, level+1);
+
+    if(levelx==-1 or levely==-1)    // Condition to prevent unnecessary traversing
+        traverse(root->right, x, y, levelx, levely, level+1);
+}
+
+bool isCousins(TreeNode* root, int x, int y) {
+    int levelx = -1, levely = -1;
+    traverse(root, x, y, levelx, levely, 0);
+
+    return !isSiblings(root, x, y) and levelx==levely;
+}
+```
+
 
 ----
 

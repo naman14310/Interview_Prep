@@ -192,7 +192,7 @@ bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 
 Optimization: To optimize the time complexity of our code, instead of checking subtree at every node, we will only check when both roots are at same level.
 
-#### 6. Sum of Left Leaves
+#### 7. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -213,7 +213,7 @@ int sumOfLeftLeaves(TreeNode* root) {
 }
 ```
 
-#### 7. Is Siblings
+#### 8. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -229,7 +229,7 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 8. Cousins in Binary Tree
+#### 9. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -262,7 +262,7 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 9. Diameter of Binary Tree
+#### 10. Diameter of Binary Tree
 
 ```cpp
 int height(TreeNode* root, int & diameter){

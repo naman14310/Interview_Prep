@@ -349,6 +349,8 @@ int distributeCoins(TreeNode* root) {
 
 #### 14. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
+Similar Question : Smallest Subtree with all the Deepest Nodes
+
 ![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/01/sketch1.png)
 
 Approach (for one pass solution) :

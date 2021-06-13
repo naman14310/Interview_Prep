@@ -2,7 +2,7 @@
 
 ## DFS (Recursive) based Questions
 
-#### @ Questions based on changing Tree pointers
+### @ Questions based on changing Tree pointers
 
 #### 1. Merge Two Binary Trees
 
@@ -67,7 +67,7 @@ TreeNode* increasingBST(TreeNode* root) {
 Better Solution : [Without creating new Tree](https://leetcode.com/problems/increasing-order-search-tree/discuss/165885/C%2B%2BJavaPython-Self-Explained-5-line-O(N)) 
 
 
-#### @ Questions based on Path traversals
+### @ Questions based on Path traversals
 
 #### 1. N-ary Tree Preorder Traversal
 
@@ -317,6 +317,50 @@ int minDepth(TreeNode* root) {
         return max(left, right) + 1;
     else
         return min(left, right) + 1;
+}
+```
+
+### @ Questions based on Tree Construction (Tricky)
+
+#### 1. Maximum Binary Tree
+You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
+
+1. Create a root node whose value is the maximum value in nums.
+2. Recursively build the left subtree on the subarray prefix to the left of the maximum value.
+3. Recursively build the right subtree on the subarray suffix to the right of the maximum value.
+
+INPUT : nums = [3,2,1,6,0,5]
+![img](https://assets.leetcode.com/uploads/2020/12/24/tree1.jpg)
+
+Approach:
+
+1. We scan numbers from left to right, build the tree one node by one step;
+2. We use a stack to keep some (not all) tree nodes and ensure a decreasing order;
+3. For each number, we keep pop the stack until empty or a bigger number; The bigger number (if exist, it will be still in stack) is current number's root, and the last popped number (if exist) is current number's left child (temporarily, this relationship may change in the future); Then we push current number into the stack.
+
+```cpp
+TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+
+    stack<TreeNode*> stk;
+
+    for(int i=0; i<nums.size(); i++){
+
+        TreeNode* node = new TreeNode(nums[i]);
+
+        while(!stk.empty() and stk.top()->val < nums[i]){
+            node->left = stk.top();
+            stk.pop();
+        }
+
+        if(!stk.empty())
+            stk.top()->right = node;
+
+        stk.push(node);
+    }
+
+    while(stk.size()>1) stk.pop();
+
+    return stk.top();
 }
 ```
 

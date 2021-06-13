@@ -85,8 +85,31 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
     return root;
 }
 ```
+#### 6. Kth Smallest Element in a BST
 
-#### 6. Minimum Absolute Difference in BST
+```cpp
+void inorder(TreeNode* root, int & k, int & ans){
+    if(root){
+        inorder(root->left, k, ans);
+        k--;
+
+        if(k==0){
+            ans = root->val;
+            return;
+        } 
+
+        if(k>0) inorder(root->right, k, ans);
+    }
+}
+
+int kthSmallest(TreeNode* root, int k) {
+    int ans = -1;
+    inorder(root, k, ans);
+    return ans;
+}
+```
+
+#### 7. Minimum Absolute Difference in BST
 Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
 
 Approach 1 : Simply perform inorder traversal (which gives sorted order). Everytime compute minDiff with curr node and prev node. 
@@ -112,7 +135,7 @@ int getMinimumDifference(TreeNode* root) {
 Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
 
-#### 7. Find Mode in Binary Search Tree
+#### 8. Find Mode in Binary Search Tree
 Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it. If the tree has more than one mode, return them in any order.
 
 Approach : Do Inorder traversal (as it gives sorted order on BST) and compute mode.
@@ -149,7 +172,7 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
-#### 8. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 9. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -170,7 +193,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 9. Two Sum IV - Input is a BST
+#### 10. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp

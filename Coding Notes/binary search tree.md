@@ -4,7 +4,6 @@ In BST, we need to decide whether to go left or right according to question.
 ## DFS (Recursive) based Questions
 
 #### 1. Search in a Binary Search Tree
-Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null.
 
 ```cpp
 TreeNode* searchBST(TreeNode* root, int val) {
@@ -17,7 +16,22 @@ TreeNode* searchBST(TreeNode* root, int val) {
 }
 ```
 
-#### 2. Range Sum of BST
+#### 2. Insert into a Binary Search Tree
+
+```cpp
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+    if(!root) return new TreeNode(val);
+
+    if(root->val < val)
+        root->right = insertIntoBST(root->right, val);
+    else
+        root->left = insertIntoBST(root->left, val);
+
+    return root;
+}
+```
+
+#### 3. Range Sum of BST
 Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high].
 
 ```cpp
@@ -35,7 +49,7 @@ int rangeSumBST(TreeNode* root, int L, int R) {
 }
 ```
 
-#### 3. Lowest Common Ancestor of a Binary Search Tree
+#### 4. Lowest Common Ancestor of a Binary Search Tree
 Here we allow a node to be a descendant of itself.
 
 ```cpp
@@ -52,7 +66,7 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 4. Minimum Absolute Difference in BST
+#### 5. Minimum Absolute Difference in BST
 Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
 
 Approach 1 : Simply perform inorder traversal (which gives sorted order). Everytime compute minDiff with curr node and prev node. 
@@ -77,7 +91,8 @@ int getMinimumDifference(TreeNode* root) {
 ```
 Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
-#### 5. Find Mode in Binary Search Tree
+
+#### 6. Find Mode in Binary Search Tree
 Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it. If the tree has more than one mode, return them in any order.
 
 Approach : Do Inorder traversal (as it gives sorted order on BST) and compute mode.
@@ -114,7 +129,7 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
-#### 6. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 7. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -135,7 +150,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 7. Two Sum IV - Input is a BST
+#### 8. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp

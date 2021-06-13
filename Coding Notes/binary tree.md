@@ -330,6 +330,7 @@ You are given an integer array nums with no duplicates. A maximum binary tree ca
 3. Recursively build the right subtree on the subarray suffix to the right of the maximum value.
 
 INPUT : nums = [3,2,1,6,0,5]
+
 ![img](https://assets.leetcode.com/uploads/2020/12/24/tree1.jpg)
 
 Approach:

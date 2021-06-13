@@ -347,6 +347,41 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
+#### 14. Lowest Common Ancestor of Deepest Leaves (Tricky)
+
+![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/01/sketch1.png)
+
+Approach (for one pass solution) :
+
+1. Create a function which return maxdepth of tree
+2. Recurse for left and right subtree
+3. Maintain a referenced variable deepest which store the deepest node so far
+4. If left == right and left>=deepest then that node may be the lca
+
+```cpp
+int maxdepth(TreeNode* root, int level, int & deepest, TreeNode* & lca){
+    if(!root) return level;
+
+    int left = maxdepth(root->left, level+1, deepest, lca);
+    int right = maxdepth(root->right, level+1, deepest, lca);
+
+    if(left==right and left>=deepest){
+        deepest = left;
+        lca = root;
+    }
+
+    return max(left, right);
+}
+
+TreeNode* lcaDeepestLeaves(TreeNode* root) {
+    int deepest = -1;
+    TreeNode* lca = NULL;
+
+    maxdepth(root, 0, deepest, lca);
+    return lca;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

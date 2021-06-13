@@ -384,75 +384,6 @@ TreeNode* lcaDeepestLeaves(TreeNode* root) {
 }
 ```
 
-#### 15. All Nodes Distance K in Binary Tree
-We are given a binary tree (with root node root), a target node, and an integer value k. Return a list of the values of all nodes that have a distance k from the target node. 
-
-Hint : Convert tree into graph by creating parent child mappings. Then use bfs to get all nodes at distance k.
-
-```cpp
-/* This function will create parent child mappings */
-
-void create_parent_links(TreeNode* root, unordered_map<int,TreeNode*> & parent){
-    if(!root) return;
-    if(!root->left and !root->right) return;
-
-    if(root->left) parent[root->left->val] = root;
-    if(root->right) parent[root->right->val] = root; 
-
-    create_parent_links(root->left, parent);
-    create_parent_links(root->right, parent);
-}
-
-
-vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-    vector<int> res;
-    unordered_map<int,TreeNode*> parent;
-    unordered_map<int, bool> vis;
-
-    create_parent_links(root, parent);
-
-    queue<TreeNode*> q;
-    q.push(target);
-    q.push(NULL);      /* Will act as a ending delimeter for levels in bfs */
-
-    vis[target->val] = true;
-    int dist = 0;
-
-    while(!q.empty()){
-        TreeNode* node = q.front(); q.pop();
-
-        if(node==NULL){
-            if(q.empty()) break;
-            else{
-                q.push(NULL);
-                dist++;
-            }
-            continue;
-        }
-
-        if(dist==k) res.push_back(node->val);
-        else if(dist>k) break;
-
-        if(node->left and !vis[node->left->val]){
-            q.push(node->left);
-            vis[node->left->val] = true;
-        }
-
-        if(node->right and !vis[node->right->val]){
-            q.push(node->right); 
-            vis[node->right->val] = true;
-        }
-
-        if(parent[node->val] and !vis[parent[node->val]->val]){
-            q.push(parent[node->val]);
-            vis[parent[node->val]->val] = true;
-        }
-    }
-
-    return res;
-}
-```
-
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree
@@ -541,6 +472,75 @@ vector<double> averageOfLevels(TreeNode* root) {
             childCount = 0;
         }
     }
+    return res;
+}
+```
+
+#### 2. All Nodes Distance K in Binary Tree
+We are given a binary tree (with root node root), a target node, and an integer value k. Return a list of the values of all nodes that have a distance k from the target node. 
+
+Hint : Convert tree into graph by creating parent child mappings. Then use bfs to get all nodes at distance k.
+
+```cpp
+/* This function will create parent child mappings */
+
+void create_parent_links(TreeNode* root, unordered_map<int,TreeNode*> & parent){
+    if(!root) return;
+    if(!root->left and !root->right) return;
+
+    if(root->left) parent[root->left->val] = root;
+    if(root->right) parent[root->right->val] = root; 
+
+    create_parent_links(root->left, parent);
+    create_parent_links(root->right, parent);
+}
+
+
+vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+    vector<int> res;
+    unordered_map<int,TreeNode*> parent;
+    unordered_map<int, bool> vis;
+
+    create_parent_links(root, parent);
+
+    queue<TreeNode*> q;
+    q.push(target);
+    q.push(NULL);      /* Will act as a ending delimeter for levels in bfs */
+
+    vis[target->val] = true;
+    int dist = 0;
+
+    while(!q.empty()){
+        TreeNode* node = q.front(); q.pop();
+
+        if(node==NULL){
+            if(q.empty()) break;
+            else{
+                q.push(NULL);
+                dist++;
+            }
+            continue;
+        }
+
+        if(dist==k) res.push_back(node->val);
+        else if(dist>k) break;
+
+        if(node->left and !vis[node->left->val]){
+            q.push(node->left);
+            vis[node->left->val] = true;
+        }
+
+        if(node->right and !vis[node->right->val]){
+            q.push(node->right); 
+            vis[node->right->val] = true;
+        }
+
+        if(parent[node->val] and !vis[parent[node->val]->val]){
+            q.push(parent[node->val]);
+            vis[parent[node->val]->val] = true;
+        }
+    }
+
     return res;
 }
 ```

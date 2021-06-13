@@ -495,7 +495,6 @@ void create_parent_links(TreeNode* root, unordered_map<int,TreeNode*> & parent){
     create_parent_links(root->right, parent);
 }
 
-
 vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
     vector<int> res;
     unordered_map<int,TreeNode*> parent;
@@ -541,6 +540,43 @@ vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         }
     }
 
+    return res;
+}
+```
+
+### @ Questions based on Different views of Binary Tree
+
+#### 1. Binary Tree Right Side View
+
+```cpp
+vector<int> rightSideView(TreeNode* root) {
+    vector<int> res;
+    if(!root) return res;
+
+    queue<TreeNode*> q;
+    q.push(root);
+    int currentCount = 1, childCount = 0;
+
+    while(!q.empty()){
+        TreeNode* node = q.front(); q.pop();
+        currentCount--;
+
+        if(node->left){
+            q.push(node->left);
+            childCount++;
+        }
+        
+        if(node->right){
+            q.push(node->right);
+            childCount++;
+        }
+
+        if(currentCount == 0){
+            res.push_back(node->val);
+            currentCount = childCount;
+            childCount = 0;
+        }
+    }
     return res;
 }
 ```

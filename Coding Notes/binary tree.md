@@ -320,6 +320,33 @@ int minDepth(TreeNode* root) {
 }
 ```
 
+#### 13. Distribute Coins in Binary Tree
+You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
+
+![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
+
+Hint: Use postorder traversal, compute total coins at each node by left + right + root->val - 1. Add this abs(total_coins) to moves and return total_coins without abs. +ve total coins means that node has extra coins, negative total coins means, that node or its subtrees require more coins.
+
+```cpp
+int traverse(TreeNode* root, int & moves){
+    if(!root) return 0;
+
+    int left = traverse(root->left, moves);
+    int right = traverse(root->right, moves);
+
+    int extra_coins = left + right + root->val - 1;
+    moves += abs(extra_coins);
+
+    return extra_coins;
+}
+
+int distributeCoins(TreeNode* root) {
+    int moves = 0;
+    traverse(root, moves);
+    return moves;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

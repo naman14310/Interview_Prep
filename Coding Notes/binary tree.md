@@ -820,6 +820,50 @@ vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
 }
 ```
 
+#### 4. Maximum Width of Binary Tree
+The maximum width of a tree is the maximum width among all levels. The width of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes are also counted into the length calculation.
+
+```cpp
+int widthOfBinaryTree(TreeNode* root) {
+    if(!root) return 0;
+
+    queue<pair<TreeNode*,unsigned long long>> q;
+    q.push({root, 1});
+
+    unsigned long long currentCount = 1, childCount = 0;
+    unsigned long long width = 1;
+
+    while(!q.empty()){
+        auto p = q.front(); q.pop();
+        TreeNode* node = p.first; 
+        unsigned long long pos = p.second;
+        currentCount--;
+
+        if(node->left){
+            q.push({node->left, 2*pos});
+            childCount++;
+        }
+
+        if(node->right){
+            q.push({node->right, 2*pos+1});
+            childCount++;
+        }
+
+        if(currentCount==0 and !q.empty()){
+            unsigned long long left = q.front().second;
+            unsigned long long right = q.back().second;
+
+            width = max(width, right-left+1);
+
+            currentCount = childCount;;
+            childCount = 0;
+        }
+    }
+
+    return (int)width;
+}
+```
+
 ### @ Questions based on Different views of Binary Tree
 
 #### 1. Binary Tree Right Side View

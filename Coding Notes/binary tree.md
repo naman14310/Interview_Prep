@@ -91,6 +91,42 @@ void flatten(TreeNode* root) {
 }
 ```
 
+#### 4. Add One Row to Tree
+Given the root of a binary tree and two integers val and depth, add a row of nodes with value val at the given depth depth. Note that the root node is at depth 1.
+
+![img](https://assets.leetcode.com/uploads/2021/03/11/add2-tree.jpg)
+
+```cpp
+void addRow(TreeNode* root, int v, int d, int level){
+    if(!root) return;
+
+    if(level==d-1){
+        TreeNode* newLeftNode = new TreeNode(v);
+        newLeftNode->left = root->left;
+        root->left = newLeftNode;
+
+        TreeNode* newRightNode = new TreeNode(v);
+        newRightNode->right = root->right;
+        root->right = newRightNode;
+        return;
+    }
+
+    addRow(root->left, v, d, level+1);
+    addRow(root->right, v, d, level+1);
+}
+
+TreeNode* addOneRow(TreeNode* root, int v, int d) {
+    if(d==1){
+        TreeNode* newRoot = new TreeNode(v);
+        newRoot->left = root;
+        return newRoot;
+    }
+
+    addRow(root, v, d, 1);
+    return root;
+}
+```
+
 ### @ Questions based on Path traversals
 
 #### 1. N-ary Tree Preorder Traversal

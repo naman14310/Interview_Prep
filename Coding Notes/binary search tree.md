@@ -297,7 +297,37 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 12. Two Sum IV - Input is a BST
+#### 12. Convert Sorted List to Binary Search Tree
+
+```cpp
+ListNode* findMid(ListNode* head){
+    ListNode* slow = head, *fast = head, *prev=NULL;
+
+    while(fast and fast->next){
+        fast = fast->next->next;
+        prev = slow;
+        slow = slow->next;
+    }
+
+    prev->next = NULL;
+    return slow;
+}
+
+TreeNode* sortedListToBST(ListNode* head) {
+    if(!head) return NULL;
+    if(!head->next) return new TreeNode(head->val);
+
+    ListNode* mid = findMid(head);
+
+    TreeNode* root = new TreeNode(mid->val);
+    root->left = sortedListToBST(head);
+    root->right = sortedListToBST(mid->next);
+
+    return root;
+}
+```
+
+#### 13. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp

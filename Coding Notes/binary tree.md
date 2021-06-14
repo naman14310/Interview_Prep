@@ -127,6 +127,29 @@ TreeNode* addOneRow(TreeNode* root, int v, int d) {
 }
 ```
 
+#### 5. Populating Next Right Pointers in Each Node (Tricky)
+
+![img](https://assets.leetcode.com/uploads/2019/02/14/116_sample.png)
+
+Hint: Observe that root->left nodes can be easily linked with root->right nodes. Trick here is to connect root->right nodes with its next node at same level. Look closely, every root->right->next is pointing to root->next->left.
+
+```cpp
+Node* connect(Node* root) {
+    if(!root) return NULL;
+
+    if(root->left)
+        root->left->next = root->right;
+
+    if(root->right and root->next)
+        root->right->next = root->next->left;
+
+    connect(root->left);
+    connect(root->right);
+
+    return root;
+}
+```
+
 ### @ Questions based on Path traversals
 
 #### 1. N-ary Tree Preorder Traversal

@@ -197,6 +197,85 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
+#### 9. Increasing Order Search Tree
+
+![img](https://assets.leetcode.com/uploads/2020/11/17/ex1.jpg)
+
+Method 1 : Do inorder traversal and build newtree.
+Drawback : Require extra space for building new tree.
+
+```cpp
+void inorder(TreeNode* root, TreeNode* & itr){
+    if(root){
+        inorder(root->left, itr);
+        itr->right = new TreeNode(root->val);
+        itr = itr->right;
+        inorder(root->right, itr);
+    }
+}
+
+TreeNode* increasingBST(TreeNode* root) {
+    TreeNode* dummy = new TreeNode(0);
+    TreeNode* newRoot = dummy;
+
+    inorder(root, dummy);
+
+    return newRoot->right;
+}
+```
+
+Method 2 : Flatten binary tree to linked list using recursion
+
+```cpp
+/* 
+This function return head and tail of linked list formed by flatten bst
+return type : pair<head, tail> 
+*/
+
+pair<TreeNode*, TreeNode*> flatten(TreeNode* root){
+
+    /* Case 1 : No left and right child */
+    
+    if(!root->left and !root->right) return {root, root};
+    
+    /* Case 2 : No Right child */    
+    
+    else if(!root->left){
+        auto right = flatten(root->right);
+        root->right = right.first;
+        return {root, right.second};
+    }
+
+    /* Case 3 : No left child */
+    
+    else if(!root->right){
+        auto left = flatten(root->left);
+        left.second->right = root;
+        root->left = NULL;
+        return {left.first, root};
+    }
+
+    /* Case 4 : Have both childs */
+
+    else{
+        auto left = flatten(root->left);
+        auto right = flatten(root->right);      
+
+        left.second->right = root;
+        root->right = right.first;
+        root->left = NULL;
+
+        return {left.first, right.second};
+    }
+}
+
+TreeNode* increasingBST(TreeNode* root) {
+    if(!root) return NULL;
+    auto ll = flatten(root);
+    return ll.first;
+}
+```
+
 #### 10. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 

@@ -315,10 +315,29 @@ bool isSubtree(TreeNode* root, TreeNode* subRoot) {
     return isSubtree(root->left, subRoot) or isSubtree(root->right, subRoot);
 }
 ```
-
 Optimization: To optimize the time complexity of our code, instead of checking subtree at every node, we will only check when both roots are at same level.
 
-#### 9. Sum of Left Leaves
+
+#### 9. Lowest Common Ancestor of a Binary Tree
+
+```cpp
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if(!root) return NULL;
+
+    if(root == p or root == q) return root;
+
+    auto left = lowestCommonAncestor(root->left, p, q);
+    auto right = lowestCommonAncestor(root->right, p, q);
+
+    if(!left and !right) return NULL;
+
+    if(!left or !right) return left ? left : right;
+
+    return root;
+}
+```
+
+#### 10. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -339,7 +358,7 @@ int sumOfLeftLeaves(TreeNode* root) {
 }
 ```
 
-#### 10. Is Siblings
+#### 11. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -355,7 +374,7 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 11. Cousins in Binary Tree
+#### 12. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -388,7 +407,7 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 12. Diameter of Binary Tree
+#### 13. Diameter of Binary Tree
 
 ```cpp
 int height(TreeNode* root, int & diameter){
@@ -409,7 +428,7 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 13. Minimum Depth of Binary Tree
+#### 14. Minimum Depth of Binary Tree
 Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 ```cpp
@@ -428,7 +447,7 @@ int minDepth(TreeNode* root) {
 }
 ```
 
-#### 14. Distribute Coins in Binary Tree
+#### 15. Distribute Coins in Binary Tree
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
 
 ![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
@@ -455,7 +474,7 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 15. House Robber III (Similar as Max Subset Sum in Binary tree)
+#### 16. House Robber III (Similar as Max Subset Sum in Binary tree)
 All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
@@ -491,7 +510,7 @@ int rob(TreeNode* root) {
 }
 ```
 
-#### 16. Lowest Common Ancestor of Deepest Leaves (Tricky)
+#### 17. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 

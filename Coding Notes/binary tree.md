@@ -597,7 +597,52 @@ vector<double> averageOfLevels(TreeNode* root) {
 }
 ```
 
-#### 2. All Nodes Distance K in Binary Tree
+#### 2. Binary Tree Zigzag Level Order Traversal
+
+```cpp
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>> res;
+    if(!root) return res;
+
+    queue<TreeNode*> q;
+    q.push(root);
+
+    vector<int> row;
+    int currentCount = 1, childCount = 0;
+    bool rev = false;
+
+    while(!q.empty()){
+        TreeNode* node = q.front(); q.pop();
+        row.push_back(node->val);
+        currentCount--;
+
+        if(node->left){
+            q.push(node->left);
+            childCount++;
+        }
+
+        if(node->right){
+            q.push(node->right);
+            childCount++;
+        }
+
+        if(currentCount==0){
+            if(rev) reverse(row.begin(), row.end());
+
+            res.push_back(row);
+            currentCount = childCount;
+            childCount = 0;
+
+            row.clear();
+            rev = !rev;
+        }
+    }
+
+    return res;
+}
+```
+
+#### 3. All Nodes Distance K in Binary Tree
 We are given a binary tree (with root node root), a target node, and an integer value k. Return a list of the values of all nodes that have a distance k from the target node. 
 
 Hint : Convert tree into graph by creating parent child mappings. Then use bfs to get all nodes at distance k.

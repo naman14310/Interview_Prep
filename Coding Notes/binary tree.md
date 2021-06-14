@@ -40,33 +40,6 @@ TreeNode* invertTree(TreeNode* root) {
 }
 ```
 
-#### 3. Increasing Order Search Tree
-
-![img](https://assets.leetcode.com/uploads/2020/11/17/ex1.jpg)
-
-```cpp
-void inorder(TreeNode* root, TreeNode* & itr){
-    if(root){
-        inorder(root->left, itr);
-        itr->right = new TreeNode(root->val);
-        itr = itr->right;
-        inorder(root->right, itr);
-    }
-}
-
-TreeNode* increasingBST(TreeNode* root) {
-    TreeNode* dummy = new TreeNode(0);
-    TreeNode* newRoot = dummy;
-
-    inorder(root, dummy);
-
-    return newRoot->right;
-}
-```
-
-Better Solution : [Without creating new Tree](https://leetcode.com/problems/increasing-order-search-tree/discuss/165885/C%2B%2BJavaPython-Self-Explained-5-line-O(N)) 
-
-
 ### @ Questions based on Path traversals
 
 #### 1. N-ary Tree Preorder Traversal

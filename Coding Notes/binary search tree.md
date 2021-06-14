@@ -130,7 +130,24 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
     return root;
 }
 ```
-#### 7. Kth Smallest Element in a BST
+
+#### 7. Validate Binary Search Tree
+
+```cpp
+bool isValid(TreeNode* root, long long minRange, long long maxRange){
+    if(!root) return true;
+
+    if(root->val <= minRange or root->val >= maxRange) return false;
+
+    return isValid(root->left, minRange, root->val) and isValid(root->right, root->val, maxRange);
+}
+
+bool isValidBST(TreeNode* root) {
+    return isValid(root, LLONG_MIN, LLONG_MAX);
+}
+```
+
+#### 8. Kth Smallest Element in a BST
 
 ```cpp
 void inorder(TreeNode* root, int & k, int & ans){
@@ -154,7 +171,7 @@ int kthSmallest(TreeNode* root, int k) {
 }
 ```
 
-#### 8. Convert BST to Greater Tree
+#### 9. Convert BST to Greater Tree
 Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus sum of all keys greater than the original key in BST.
 
 ![img](https://assets.leetcode.com/uploads/2019/05/02/tree.png)
@@ -179,7 +196,7 @@ TreeNode* convertBST(TreeNode* root) {
 }
 ```
 
-#### 9. Minimum Absolute Difference in BST
+#### 10. Minimum Absolute Difference in BST
 Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
 
 Approach 1 : Simply perform inorder traversal (which gives sorted order). Everytime compute minDiff with curr node and prev node. 
@@ -205,7 +222,7 @@ int getMinimumDifference(TreeNode* root) {
 Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
 
-#### 10. Find Mode in Binary Search Tree
+#### 11. Find Mode in Binary Search Tree
 Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it. If the tree has more than one mode, return them in any order.
 
 Approach : Do Inorder traversal (as it gives sorted order on BST) and compute mode.
@@ -242,7 +259,7 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
-#### 11. Increasing Order Search Tree
+#### 12. Increasing Order Search Tree
 
 ![img](https://assets.leetcode.com/uploads/2020/11/17/ex1.jpg)
 
@@ -321,7 +338,7 @@ TreeNode* increasingBST(TreeNode* root) {
 }
 ```
 
-#### 12. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 13. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -342,7 +359,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 13. Convert Sorted List to Binary Search Tree
+#### 14. Convert Sorted List to Binary Search Tree
 
 ```cpp
 ListNode* findMid(ListNode* head){
@@ -372,7 +389,7 @@ TreeNode* sortedListToBST(ListNode* head) {
 }
 ```
 
-#### 14. Two Sum IV - Input is a BST
+#### 15. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp

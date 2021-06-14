@@ -197,7 +197,7 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
-#### 9. Increasing Order Search Tree
+#### 10. Increasing Order Search Tree
 
 ![img](https://assets.leetcode.com/uploads/2020/11/17/ex1.jpg)
 
@@ -276,7 +276,7 @@ TreeNode* increasingBST(TreeNode* root) {
 }
 ```
 
-#### 10. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 11. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -297,7 +297,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 11. Two Sum IV - Input is a BST
+#### 12. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp

@@ -40,6 +40,57 @@ TreeNode* invertTree(TreeNode* root) {
 }
 ```
 
+#### 3. Flatten Binary Tree to Linked List
+The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+
+![img](https://assets.leetcode.com/uploads/2021/01/14/flaten.jpg)
+
+Hint: Approach same as flatten inorder (or Increasing Order Search Tree)
+
+```cpp
+pair<TreeNode*, TreeNode*> flatten_preorder(TreeNode* & root){
+
+    /* Case 1 : No left and right child */
+
+    if(!root->left and !root->right) return {root, root};
+
+    /* Case 2 : No right child */
+
+    else if(!root->right){
+        auto left = flatten_preorder(root->left);
+        root->left = NULL;
+        root->right = left.first;
+        return {root, left.second};
+    }
+
+    /* Case 3 : No left child */
+
+    else if(!root->left){
+        auto right = flatten_preorder(root->right);
+        root->right = right.first;
+        return {root, right.second};
+    }
+
+    /* Case 4 : Have both left and right child */
+
+    else{
+        auto left = flatten_preorder(root->left);
+        auto right = flatten_preorder(root->right);
+
+        root->left = NULL;
+        root->right = left.first;
+        left.second->right = right.first;
+
+        return {root, right.second};
+    }
+}
+
+void flatten(TreeNode* root) {
+    if(!root) return;
+    flatten_preorder(root);
+}
+```
+
 ### @ Questions based on Path traversals
 
 #### 1. N-ary Tree Preorder Traversal

@@ -173,7 +173,32 @@ vector<string> binaryTreePaths(TreeNode* root) {
 }
 ```
 
-#### 3. Sum of Root To Leaf Binary Numbers (Tricky)
+#### 3. Sum Root to Leaf Numbers
+You are given the root of a binary tree containing digits from 0 to 9 only. Return the total sum of all root-to-leaf numbers.
+
+```cpp
+void traverse(TreeNode* root, string num, int & sum){
+    if(!root) return;
+
+    num.push_back('0' + root->val);
+
+    if(!root->left and !root->right){
+        sum += stoi(num);
+        return;
+    }
+
+    traverse(root->left, num, sum);
+    traverse(root->right, num, sum);
+}
+
+int sumNumbers(TreeNode* root) {
+    int sum = 0;
+    traverse(root, "", sum);
+    return sum;
+}
+```
+
+#### 4. Sum of Root To Leaf Binary Numbers (Tricky)
 You are given the root of a binary tree where each node has a value 0 or 1.  Each root-to-leaf path represents a binary number starting with the most significant bit.  For example, if the path is 0 -> 1 -> 1 -> 0 -> 1, then this could represent 01101 in binary, which is 13.
 
 Hint : Use Bitwise logic to form integer on the go.
@@ -198,7 +223,7 @@ int sumRootToLeaf(TreeNode* root) {
 }
 ```
 
-#### 4. Path Sum
+#### 5. Path Sum
 Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
 
 ```cpp
@@ -216,7 +241,7 @@ bool hasPathSum(TreeNode* root, int targetSum) {
 }
 ```
 
-#### 5. Same Tree
+#### 6. Same Tree
 Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
 ```cpp
@@ -228,7 +253,7 @@ bool isSameTree(TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 6. Symmetric Tree
+#### 7. Symmetric Tree
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 
 ![img](https://assets.leetcode.com/uploads/2021/02/19/symtree1.jpg)
@@ -247,7 +272,7 @@ bool isSymmetric(TreeNode* root) {
 }
 ```
 
-#### 7. Subtree of Another Tree
+#### 8. Subtree of Another Tree
 Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/28/subtree1-tree.jpg)
@@ -270,7 +295,7 @@ bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 
 Optimization: To optimize the time complexity of our code, instead of checking subtree at every node, we will only check when both roots are at same level.
 
-#### 8. Sum of Left Leaves
+#### 9. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -291,7 +316,7 @@ int sumOfLeftLeaves(TreeNode* root) {
 }
 ```
 
-#### 9. Is Siblings
+#### 10. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -307,7 +332,7 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 10. Cousins in Binary Tree
+#### 11. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -340,7 +365,7 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 11. Diameter of Binary Tree
+#### 12. Diameter of Binary Tree
 
 ```cpp
 int height(TreeNode* root, int & diameter){
@@ -361,7 +386,7 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 12. Minimum Depth of Binary Tree
+#### 13. Minimum Depth of Binary Tree
 Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 ```cpp
@@ -380,7 +405,7 @@ int minDepth(TreeNode* root) {
 }
 ```
 
-#### 13. Distribute Coins in Binary Tree
+#### 14. Distribute Coins in Binary Tree
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
 
 ![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
@@ -407,7 +432,7 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 14. House Robber III (Similar as Max Subset Sum in Binary tree)
+#### 15. House Robber III (Similar as Max Subset Sum in Binary tree)
 All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
@@ -443,7 +468,7 @@ int rob(TreeNode* root) {
 }
 ```
 
-#### 15. Lowest Common Ancestor of Deepest Leaves (Tricky)
+#### 16. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 

@@ -407,7 +407,43 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 14. Lowest Common Ancestor of Deepest Leaves (Tricky)
+#### 14. House Robber III (Similar as Max Subset Sum in Binary tree)
+All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
+
+![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
+
+Approach:
+
+1. Create a funtion which will return pair<included, not_included> 
+2. Recurse on left subtree and right subtres and store their results in variable left, right
+3. Now included_cost = left.second + right.second + root->val
+4. and Not_included_cost = max(left.first, left.second) + max(right.first, right.second)
+5. return this computed pair
+
+```cpp
+/* pair<included, not_included> */
+
+pair<int,int> solve(TreeNode* root){
+    if(!root) return {0,0};
+
+    if(!root->left and !root->right) return {root->val, 0};
+
+    auto left = solve(root->left);
+    auto right = solve(root->right);
+
+    int include = root->val + left.second + right.second;
+    int not_include = max(left.first, left.second) + max(right.first, right.second);
+
+    return {include, not_include};
+}
+
+int rob(TreeNode* root) {
+    auto res = solve(root);
+    return max(res.first, res.second);
+}
+```
+
+#### 15. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 

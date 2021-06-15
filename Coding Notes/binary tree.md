@@ -660,6 +660,69 @@ TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
 }
 ```
 
+#### 2. Construct Binary Tree from Preorder and Inorder Traversal
+
+```cpp
+int find_root_index(vector<int> & v, int start, int end, int root_value){
+    for(int i=start; i<=end; i++){
+        if(v[i]==root_value)
+            return i;
+    }
+    return -1;
+}
+
+TreeNode* build(vector<int> & preorder, vector<int> & inorder, int pstart, int pend, int istart, int iend){
+    if(pstart>pend) return NULL;
+
+    int root_value = preorder[pstart];
+    TreeNode* root = new TreeNode(root_value);
+
+    int pivot = find_root_index(inorder, istart, iend, root_value);
+    int left_subtree_size = pivot - istart;
+
+    root->left = build(preorder, inorder, pstart+1, pstart+left_subtree_size, istart, pivot-1);
+    root->right = build(preorder, inorder, pstart+left_subtree_size+1, pend, pivot+1, iend);
+
+    return root;
+}
+
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+    int n = preorder.size();
+    return build(preorder, inorder, 0, n-1, 0, n-1);
+}
+```
+
+#### 3. Construct Binary Tree from Inorder and Postorder Traversal
+
+```cpp
+int find_root_index(vector<int> & v, int start, int end, int val){
+    for(int i=start; i<=end; i++){
+        if(v[i]==val) return i;
+    }
+    return -1;
+}
+
+TreeNode* build(vector<int>& inorder, vector<int>& postorder, int istart, int iend, int pstart, int pend){
+    if(pstart>pend) return NULL;
+
+    int root_val = postorder[pend];
+    TreeNode* root = new TreeNode(root_val);
+
+    int pivot = find_root_index(inorder, istart, iend, root->val);
+    int right_subtree_size = iend - pivot;
+
+    root->left = build(inorder, postorder, istart, pivot-1, pstart, pend-right_subtree_size-1);
+    root->right = build(inorder, postorder, pivot+1, iend, pend-right_subtree_size, pend-1);
+
+    return root;
+}
+
+TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+    int n = inorder.size();
+    return build(inorder, postorder, 0, n-1, 0, n-1);
+}
+```
+
 ----
 
 

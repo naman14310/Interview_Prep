@@ -6,7 +6,7 @@
 
 #### 1. Preorder
 
-Hint : Use single stack
+Hint : Use single stack of type TreeNode*
 
 Approach:
 
@@ -28,6 +28,80 @@ vector<int> preorderTraversal(TreeNode* root) {
 
         if(node->right) stk.push(node->right);
         if(node->left) stk.push(node->left);
+    }
+
+    return res;
+}
+```
+
+#### 2. Inorder
+
+Hint: Use one stack of type TreeNode* + one variable of type TreeNode*
+
+Approach:
+1. Create an empty stack and push root. Also create one variable named curr pointing to root->left
+2. Iterate till stack becomes empty and curr becomes NULL (i.e. !stk.empty() or curr)
+3. If curr is NULL then pop one element 'node' from stack, print it and make curr = node->right
+4. Else push curr to top of the stack and make curr = curr->left
+
+```cpp
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if(!root) return res;
+
+    stack<TreeNode*> stk;
+    stk.push(root);
+
+    TreeNode* curr = root->left;
+
+    while(!stk.empty() or curr){
+
+        if(curr){
+            stk.push(curr);
+            curr = curr->left;
+        }
+        else{
+            TreeNode* node = stk.top(); stk.pop();
+            res.push_back(node->val);
+            curr = node->right;
+        }
+    }
+
+    return res;
+}
+```
+
+#### 3. Postorder
+
+Hint: Use two stacks of type TreeNode*
+
+Approach:
+1. Create two stacks and push root to stk1.
+2. Iterate till stk1 becomes empty. 
+3. Pop one node from stk1, push it to stk2, and also push its Left Child and then Right Child (Opposite from preorder) to stk1.
+4. After stk1 becomes empty, second stack will store the postorder in reverse
+5. Pop and print elements from stk2 one by one.
+
+```cpp
+vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if(!root) return res;
+
+    stack<TreeNode*> stk1, stk2;
+    stk1.push(root);
+
+    while(!stk1.empty()){
+
+        TreeNode* node = stk1.top(); stk1.pop();
+        stk2.push(node);
+
+        if(node->left) stk1.push(node->left);
+        if(node->right) stk1.push(node->right);
+    }
+
+    while(!stk2.empty()){
+        res.push_back(stk2.top()->val);
+        stk2.pop();
     }
 
     return res;

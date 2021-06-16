@@ -1233,7 +1233,9 @@ int deepestLeavesSum(TreeNode* root) {
 
 ### @ Questions based on Different views of Binary Tree
 
-#### 1. Binary Tree Right Side View
+#### 1. Right Side View
+
+Hint: Print last node of each level (when currentCount = 0)
 
 ```cpp
 vector<int> rightSideView(TreeNode* root) {
@@ -1267,3 +1269,41 @@ vector<int> rightSideView(TreeNode* root) {
     return res;
 }
 ```
+
+Note: For left view, just print first node of every level (when childCount = 0)
+
+
+#### 2. Top View 
+
+Hint: Insert only when the pos does not occur before (i.e. not present in the map)
+
+```cpp
+vector<int> topView(Node *root){
+    vector<int> res;
+    if(!root) return res;
+
+    map<int, int> mp;     /* <pos, val first occured for that pos >*/
+
+    queue<pair<Node*,int>> q;
+    q.push({root,0});
+
+    while(!q.empty()){
+        auto p = q.front(); q.pop();
+        Node* node = p.first;
+        int pos = p.second;
+
+        if(mp.find(pos)==mp.end())              // ----> Just remove this condition for printing bottom view
+            mp[pos] = node->data;
+
+        if(node->left) q.push({node->left, pos-1});
+        if(node->right) q.push({node->right, pos+1});
+    }
+
+    for(auto p : mp)
+        res.push_back(p.second);
+
+    return res;
+}
+```
+
+Note: For bottom view, just remove the above condition stated in comment

@@ -966,6 +966,69 @@ int widthOfBinaryTree(TreeNode* root) {
 }
 ```
 
+#### 5. Vertical Order Traversal of a Binary Tree
+The vertical order traversal of a binary tree is a list of top-to-bottom orderings for each column index starting from the leftmost column and ending on the rightmost column. There may be multiple nodes in the same row and same column. In such a case, sort these nodes by their values.
+
+```cpp
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+    vector<vector<int>> res;
+    if(!root) return res;
+
+    map<int,vector<int>> mp;               /* <pos, vector of values in top to bottom manner> */
+
+    queue<pair<TreeNode*, int>> q;
+    q.push({root,0});
+
+    int currentCount = 1, childCount = 0;
+
+    vector<pair<int, int>> v;          // ---- > used for removing conflict between two nodes at same level and at same pos
+
+    while(!q.empty()){
+
+        auto p = q.front(); q.pop();
+        TreeNode* node = p.first;
+        int pos = p.second;
+        currentCount--;
+
+        v.push_back({pos, node->val});
+
+        if(node->left){
+            q.push({node->left, pos-1});
+            childCount++;
+        }
+
+        if(node->right){
+            q.push({node->right, pos+1});
+            childCount++;
+        }
+
+        if(currentCount==0){
+            currentCount = childCount;
+            childCount = 0;
+
+            sort(v.begin(), v.end());
+
+            for(auto item : v){
+                int key = item.first, val = item.second;
+                mp[key].push_back(val);
+            }
+
+            v.clear();
+        }
+    }
+
+    for(auto p : mp){
+        vector<int> temp;
+        for(int i : p.second)
+            temp.push_back(i);
+
+        res.push_back(temp);
+    }
+
+    return res;
+}
+```
+
 ### @ Questions based on Different views of Binary Tree
 
 #### 1. Binary Tree Right Side View

@@ -475,7 +475,9 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 15. Diameter of Binary Tree
+#### 15. Diameter of Binary Tree (Longest path from leaf to leaf)
+
+Hint: Use DP on tree concept
 
 ```cpp
 int height(TreeNode* root, int & diameter){
@@ -651,6 +653,34 @@ int minCameraCover(TreeNode* root) {
     if(status==1) 
         camera++;
     return camera;
+}
+```
+
+#### 21. Binary Tree Maximum Path Sum (from any node to any node)
+Refer DP on trees playlist of Aditya verma
+
+Hint: At every node, check whether it can become the best solution and return max off all to its parent. 
+
+```cpp
+int solve(TreeNode* root, int & maxSum){
+    if(!root) return 0;
+
+    int left = solve(root->left, maxSum);
+    int right = solve(root->right, maxSum);
+
+    int curr_subtree_sum = left+right+root->val;
+    int tempSum = max(curr_subtree_sum, max(root->val, max(left,right)+root->val));
+
+    maxSum = max(tempSum, maxSum);
+
+    return max(root->val, max(left, right)+root->val);
+}
+
+int maxPathSum(TreeNode* root) {
+    int maxSum = INT_MIN;
+    solve(root, maxSum);
+
+    return maxSum;
 }
 ```
 

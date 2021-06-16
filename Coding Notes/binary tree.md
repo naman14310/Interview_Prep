@@ -475,7 +475,34 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 15. Diameter of Binary Tree (Longest path from leaf to leaf)
+#### 15. Balanced Binary Tree
+Given a binary tree, determine if it is height-balanced.
+
+```cpp
+pair<int, bool> solve(TreeNode* root){
+    if(!root) return {0, true};
+
+    auto left = solve(root->left);
+    auto right = solve(root->right);
+
+    bool is_subtrees_balanced = left.second and right.second;
+    bool is_tree_balanced = abs(left.first - right.first)<=1;
+
+    int h = max(left.first, right.first) + 1;
+
+    if(is_subtrees_balanced and is_tree_balanced)
+        return {h, true};
+    else
+        return {h, false};
+}
+
+bool isBalanced(TreeNode* root) {
+    auto p = solve(root);
+    return p.second;
+}
+```
+
+#### 16. Diameter of Binary Tree (Longest path from leaf to leaf)
 
 Hint: Use DP on tree concept
 
@@ -498,7 +525,7 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 16. Minimum Depth of Binary Tree
+#### 17. Minimum Depth of Binary Tree
 Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 ```cpp
@@ -517,7 +544,7 @@ int minDepth(TreeNode* root) {
 }
 ```
 
-#### 17. Distribute Coins in Binary Tree
+#### 18. Distribute Coins in Binary Tree
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
 
 ![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
@@ -544,7 +571,7 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 18. House Robber III (Similar as Max Subset Sum in Binary tree)
+#### 19. House Robber III (Similar as Max Subset Sum in Binary tree)
 All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
@@ -580,7 +607,7 @@ int rob(TreeNode* root) {
 }
 ```
 
-#### 19. Lowest Common Ancestor of Deepest Leaves (Tricky)
+#### 20. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 
@@ -617,7 +644,7 @@ TreeNode* lcaDeepestLeaves(TreeNode* root) {
 }
 ```
 
-#### 20. Binary Tree Cameras
+#### 21. Binary Tree Cameras
 You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, itself, and its immediate children. Return the minimum number of cameras needed to monitor all nodes of the tree.
 
 ![img](https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_01.png)
@@ -656,7 +683,7 @@ int minCameraCover(TreeNode* root) {
 }
 ```
 
-#### 21. Binary Tree Maximum Path Sum (from any node to any node)
+#### 22. Binary Tree Maximum Path Sum (from any node to any node)
 Refer DP on trees playlist of Aditya verma
 
 Hint: At every node, check whether it can become the best solution and return max off all to its parent. 
@@ -1056,6 +1083,45 @@ vector<vector<int>> verticalTraversal(TreeNode* root) {
     }
 
     return res;
+}
+```
+
+#### 6. Deepest Leaves Sum
+Given the root of a binary tree, return the sum of values of its deepest leaves.
+
+```cpp
+int deepestLeavesSum(TreeNode* root) {
+    if(!root) return 0;
+
+    queue<TreeNode*> q;
+    q.push(root);
+
+    int currentCount = 1, childCount = 0;
+    int deepest_leaves_sum = 0;
+
+    while(!q.empty()){
+        TreeNode* node = q.front(); q.pop();
+        currentCount--;
+        deepest_leaves_sum += node->val;
+
+        if(node->left){
+            q.push(node->left);
+            childCount++;
+        }
+
+        if(node->right){
+            q.push(node->right);
+            childCount++;
+        }
+
+        if(currentCount == 0){
+            if(childCount==0) return deepest_leaves_sum;
+            currentCount = childCount;
+            childCount = 0;
+            deepest_leaves_sum = 0;
+        }
+    }
+    return 0;
 }
 ```
 

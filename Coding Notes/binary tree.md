@@ -615,6 +615,45 @@ TreeNode* lcaDeepestLeaves(TreeNode* root) {
 }
 ```
 
+#### 20. Binary Tree Cameras
+You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, itself, and its immediate children. Return the minimum number of cameras needed to monitor all nodes of the tree.
+
+![img](https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_01.png)
+
+```cpp
+/*
+    0 -> already covered by neighbour node
+    1 -> request parent to get covered
+    2 -> installed camera
+*/
+
+int traverse(TreeNode* root, int & camera){
+    if(!root) return 0;
+    if(!root->left and !root->right) return 1;
+
+    int left = traverse(root->left, camera);
+    int right = traverse(root->right, camera);
+
+    if(left==1 or right==1){
+        camera++;
+        return 2;
+    }
+
+    else if(left==2 or right==2)
+        return 0;
+
+    else return 1;
+}
+
+int minCameraCover(TreeNode* root) {
+    int camera = 0;
+    int status = traverse(root, camera);
+    if(status==1) 
+        camera++;
+    return camera;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

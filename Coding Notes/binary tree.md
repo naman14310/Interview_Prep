@@ -11,7 +11,7 @@ Hint : Use single stack of type TreeNode*
 Approach:
 
 1. Create an empty stack and push root initially
-2. Iterate till stack becomes empty. Pop one element, print it and push it Right Child and then Left child to stack
+2. Iterate till stack becomes empty. Pop one element, print it and push its Right Child and then Left child to stack
 
 ```cpp
 vector<int> preorderTraversal(TreeNode* root) {
@@ -26,7 +26,7 @@ vector<int> preorderTraversal(TreeNode* root) {
         TreeNode* node = stk.top(); stk.pop();
         res.push_back(node->val);
 
-        if(node->right) stk.push(node->right);
+        if(node->right) stk.push(node->right);     /* First Right then Left */
         if(node->left) stk.push(node->left);
     }
 
@@ -95,7 +95,7 @@ vector<int> postorderTraversal(TreeNode* root) {
         TreeNode* node = stk1.top(); stk1.pop();
         stk2.push(node);
 
-        if(node->left) stk1.push(node->left);
+        if(node->left) stk1.push(node->left);           /* First Left then Right */
         if(node->right) stk1.push(node->right);
     }
 

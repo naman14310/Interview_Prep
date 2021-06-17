@@ -598,7 +598,29 @@ void toSumTree(Node *root){
 }
 ```
 
-#### 14. Is Siblings
+#### 14. Check if Binary tree is Sum tree or not
+Given a Binary Tree. Return 1 if, for every node X in the tree other than the leaves, its value is equal to the sum of its left subtree's value and its right subtree's value. Else return 0. An empty tree is also a Sum Tree. A leaf node is also considered a Sum Tree.
+
+```cpp
+pair<bool, int> solve(Node* root){
+    if(!root) return {true, 0};
+    if(!root->left and !root->right) return {true, root->data};
+
+    auto left = solve(root->left);
+    auto right = solve(root->right);
+
+    bool is_sum_tree = left.first and right.first and root->data==left.second+right.second;
+    return {is_sum_tree, root->data+left.second+right.second};
+}
+
+
+bool isSumTree(Node* root){
+    auto ans = solve(root);
+    return ans.first;
+}
+```
+
+#### 15. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -614,7 +636,7 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 15. Cousins in Binary Tree
+#### 16. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -647,7 +669,7 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 16. Balanced Binary Tree
+#### 17. Balanced Binary Tree
 Given a binary tree, determine if it is height-balanced.
 
 ```cpp
@@ -674,7 +696,7 @@ bool isBalanced(TreeNode* root) {
 }
 ```
 
-#### 17. Diameter of Binary Tree (Longest path from leaf to leaf)
+#### 18. Diameter of Binary Tree (Longest path from leaf to leaf)
 
 Hint: Use DP on tree concept
 
@@ -697,7 +719,7 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 18. Minimum Depth of Binary Tree
+#### 19. Minimum Depth of Binary Tree
 Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 ```cpp
@@ -716,7 +738,7 @@ int minDepth(TreeNode* root) {
 }
 ```
 
-#### 19. Distribute Coins in Binary Tree
+#### 20. Distribute Coins in Binary Tree
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
 
 ![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
@@ -743,7 +765,7 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 20. House Robber III (Similar as Max Subset Sum in Binary tree)
+#### 21. House Robber III (Similar as Max Subset Sum in Binary tree)
 All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
@@ -779,7 +801,7 @@ int rob(TreeNode* root) {
 }
 ```
 
-#### 21. Lowest Common Ancestor of Deepest Leaves (Tricky)
+#### 22. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 
@@ -816,7 +838,7 @@ TreeNode* lcaDeepestLeaves(TreeNode* root) {
 }
 ```
 
-#### 22. Binary Tree Cameras
+#### 23. Binary Tree Cameras
 You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, itself, and its immediate children. Return the minimum number of cameras needed to monitor all nodes of the tree.
 
 ![img](https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_01.png)
@@ -855,7 +877,7 @@ int minCameraCover(TreeNode* root) {
 }
 ```
 
-#### 23. Binary Tree Maximum Path Sum (from any node to any node)
+#### 24. Binary Tree Maximum Path Sum (from any node to any node)
 Refer DP on trees playlist of Aditya verma
 
 Hint: At every node, check whether it can become the best solution and return max off all to its parent. 

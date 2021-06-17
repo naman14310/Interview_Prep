@@ -197,7 +197,53 @@ void flatten(TreeNode* root) {
 }
 ```
 
-#### 4. Add One Row to Tree
+#### 4. Binary Tree to Doubly Linked List
+Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL) In-Place. The left and right pointers in nodes are to be used as previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder of the given Binary Tree. The first node of Inorder traversal (leftmost node in BT) must be the head node of the DLL.
+
+![img](https://www.geeksforgeeks.org/wp-content/uploads/TreeToList.png)
+
+```cpp
+/* pair <head, tail> */
+
+pair<Node*, Node*> convert(Node* root){
+    if(!root) return {NULL, NULL};
+    if(!root->left and !root->right) return {root, root};
+
+    if(!root->left){
+        auto right = convert(root->right);
+        root->right = right.first;
+        right.first->left = root;
+        return {root, right.second};
+    }
+
+    if(!root->right){
+        auto left = convert(root->left);
+        root->left = left.second;
+        left.second->right = root;
+        return {left.first, root};
+    }
+
+    else{
+        auto left = convert(root->left);
+        auto right = convert(root->right);
+
+        root->left = left.second;
+        left.second->right = root;
+
+        root->right = right.first;
+        right.first->left = root;
+
+        return {left.first, right.second};
+    }
+}
+
+Node * bToDLL(Node *root){
+    auto p = convert(root);
+    return p.first;
+}
+```
+
+#### 5. Add One Row to Tree
 Given the root of a binary tree and two integers val and depth, add a row of nodes with value val at the given depth depth. Note that the root node is at depth 1.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/11/add2-tree.jpg)

@@ -417,7 +417,38 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
 }
 ```
 
-#### 9. Maximum Product Subarray (Kadane with multiplication)
+#### 9. Number of Subarrays with Bounded Maximum
+Return the number of (contiguous, non-empty) subarrays such that the value of the maximum array element in that subarray is at least left and at most right.
+
+Approach: Count all valid subarrays ending at an index i, where 0 <= i < n. For a  particular element we can have 3 cases:
+1. ele > R --> We will mark this as the most recent invalid index.
+2. ele < L --> It's answer will be equal to it's previous element's answer
+3. L <= ele <= R --> subarrays ending at ele can be computed as i-last_invalid_index
+
+```cpp
+int numSubarrayBoundedMax(vector<int>& nums, int left, int right) {
+    int last_invalid_index = -1;
+    int ans = 0, prev = 0;
+
+    for(int i=0; i<nums.size(); i++){
+        if(nums[i]<left)
+            ans += prev;
+
+        else if(nums[i]>right){
+            last_invalid_index = i;
+            prev = 0;
+        }
+
+        else{
+            prev = i-last_invalid_index;
+            ans += prev;
+        }
+    }
+    return ans;
+}
+```
+
+#### 10. Maximum Product Subarray (Kadane with multiplication)
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
 
 Hint: Maintain positive and negative products and swap(ptemp, ntemp) whenever negative element appears. ps, zeros are break points (reinitialize ptemp, ntemp to 1)
@@ -454,7 +485,7 @@ int maxProduct(vector<int>& nums) {
 }
 ```
 
-#### 10. Shortest Unsorted Continuous Subarray
+#### 11. Shortest Unsorted Continuous Subarray
 Given an integer array nums, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order.Return the shortest such subarray and output its length.
 
 Approach:
@@ -506,7 +537,7 @@ int findUnsortedSubarray(vector<int>& nums) {
 }
 ```
 
-#### 11. Rotate Array (Awesome 3 line reverse logic)
+#### 12. Rotate Array (Awesome 3 line reverse logic)
 
 ```cpp
 /* ROTATE RIGHT */
@@ -530,7 +561,7 @@ void rotate_left(vector<int>& nums, int k) {
 
 ```
 
-#### 12. Next Permutation
+#### 13. Next Permutation
 
 Approach:
 1. Iterate from right to left and find rightmost flipped bit (i.e. nums[i]>nums[i-1]) and assign its index to pos
@@ -563,7 +594,7 @@ void nextPermutation(vector<int>& nums) {
 ```
 
 
-#### 13. 4Sum II
+#### 14. 4Sum II
 Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that: 0 <= i, j, k, l < n and nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
 
 Hint: Use two hashmaps for storing sum of A[i]+B[i] and C[i]+D[i]
@@ -595,7 +626,7 @@ int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
 }
 ```
 
-#### 14. Arithmetic Slices
+#### 15. Arithmetic Slices
 An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. Given an integer array nums, return the number of arithmetic subarrays of nums.
 
 Hint: Find count of equal common differences. If count is n then it gives n*(n-1)/2 subarrays.
@@ -619,7 +650,7 @@ int numberOfArithmeticSlices(vector<int>& A) {
 }
 ```
 
-#### 15. Increasing Triplet Subsequence
+#### 16. Increasing Triplet Subsequence
 Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
 
 Hint: Maintain two variables for storing smallest and second smallest elements so far.
@@ -642,7 +673,7 @@ bool increasingTriplet(vector<int>& nums) {
 }
 ```
 
-#### 16. Smallest Range II (Tricky)
+#### 17. Smallest Range II (Tricky)
 Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
 
 [Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173495/Actual-explanation-for-people-who-don't-understand-(I-hope))
@@ -663,7 +694,7 @@ int smallestRangeII(vector<int>& A, int k) {
 }
 ```
 
-#### 17. Sum of Absolute Differences in a Sorted Array (Prefix Sum)
+#### 18. Sum of Absolute Differences in a Sorted Array (Prefix Sum)
 You are given an integer array nums sorted in non-decreasing order. Build and return an integer array result with the same length as nums such that result[i] is equal to the summation of absolute differences between nums[i] and all the other elements in the array.
 
 Hint: Calculate prefix sum. Find left sum and right sum for every index i and calculate results.
@@ -689,7 +720,7 @@ vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
 }
 ```
 
-#### 18. Majority Element II (Variation of Moore Voting)
+#### 19. Majority Element II (Variation of Moore Voting)
 Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
 
 Hint: Use item1 and item2 to store largest and second largest element & count1 and count2 to store their respective counts.
@@ -746,7 +777,7 @@ vector<int> majorityElement(vector<int>& nums) {
 
 ```
 
-#### 19. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
+#### 20. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
 Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
 
 ```cpp

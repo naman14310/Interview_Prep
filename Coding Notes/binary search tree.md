@@ -417,6 +417,8 @@ bool findTarget(TreeNode* root, int k) {
 }
 ```
 
+#### 16. Minimum swap required to convert Binary Tree to Binary Search Tree
 
+IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
 

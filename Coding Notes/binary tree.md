@@ -925,6 +925,95 @@ TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
 }
 ```
 
+### @ Questions based on unique Tree Traversals
+
+#### 1. Diagonal Traversal of Binary Tree 
+
+![img](https://www.geeksforgeeks.org/wp-content/uploads/unnamed1.png)
+
+Output : 8 10 14 3 6 7 13 1 4
+
+```cpp
+void solve(Node* root, int pos, map<int, vector<int>> & mp){
+    if(!root) return;
+    
+    mp[pos].push_back(root->data);
+    
+    solve(root->left, pos+1, mp);      // --> increasing vertical distance for left
+    solve(root->right, pos, mp);       // --> passing same distance for right child
+}
+
+vector<int> diagonal(Node *root){
+   map<int, vector<int>> mp;
+   solve(root, 0, mp);
+   
+   vector<int> res;
+   for(auto p : mp)
+       for(int num : p.second)
+           res.push_back(num);
+   
+   return res;
+}
+```
+
+#### 2. Boundary Traversal of Binary Tree
+
+![img](https://contribute.geeksforgeeks.org/wp-content/uploads/boundary.png)
+
+Output: 20 8 4 10 14 25 22
+
+```cpp
+void leaves(Node* root, vector<int> & res){
+    if(!root) return;
+
+    if(!root->left and !root->right){
+        res.push_back(root->data);
+        return;
+    }
+
+    leaves(root->left, res);
+    leaves(root->right, res);
+}
+
+void right_boundary(Node* root, vector<int> & res){
+    if(!root) return;
+    if(!root->left and !root->right) return;
+
+    if(root->right)
+        right_boundary(root->right, res);
+    else
+        right_boundary(root->left, res);
+
+    res.push_back(root->data);
+}
+
+void left_boundary(Node* root, vector<int> & res){
+    if(!root) return;
+    if(!root->left and !root->right) return;
+
+    res.push_back(root->data);
+
+    if(root->left) 
+        left_boundary(root->left, res);
+    else
+        left_boundary(root->right, res);
+}
+
+vector<int> printBoundary(Node *root){
+    vector<int> res;
+    if(!root) return res;
+
+    res.push_back(root->data);
+
+    left_boundary(root->left, res);
+    leaves(root->left, res);
+    leaves(root->right, res);
+    right_boundary(root->right, res);
+
+    return res;
+}
+```
+
 ----
 
 

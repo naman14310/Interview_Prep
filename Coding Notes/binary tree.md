@@ -279,7 +279,7 @@ TreeNode* addOneRow(TreeNode* root, int v, int d) {
 }
 ```
 
-#### 5. Populating Next Right Pointers in Each Node (Tricky)
+#### 6. Populating Next Right Pointers in Each Node (Tricky)
 
 ![img](https://assets.leetcode.com/uploads/2019/02/14/116_sample.png)
 

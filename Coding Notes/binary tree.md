@@ -568,7 +568,7 @@ bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 ```
 Optimization: To optimize the time complexity of our code, instead of checking subtree at every node, we will only check when both roots are at same level.
 
-#### 12. Duplicate subtree in Binary Tree 
+#### 12. Check if a Binary Tree contains duplicate subtrees of size 2 or more 
 Given a binary tree, find out whether it contains a duplicate sub-tree of size two or more, or not.
 
 Hint: Return inorder traversal and store it everytime in a set to check whether it occurs again or not.
@@ -600,7 +600,39 @@ bool dupSub(Node *root){
 }
 ```
 
-#### 13. Lowest Common Ancestor of a Binary Tree
+#### 13. Find all Duplicate subtrees in a Binary tree
+
+![img](https://contribute.geeksforgeeks.org/wp-content/uploads/tree1-1.png)
+
+Output : 2 4
+         4
+
+```cpp
+string traverse(Node* root, unordered_map<string, int> & mp, vector<Node*> & res){
+    if(!root) return "";
+    
+    string left = traverse(root->left, mp, res);
+    string right = traverse(root->right, mp, res);
+    
+    string s = "(" + left + to_string(root->data) + right + ")";
+    
+    if(mp[s]==1) res.push_back(root);
+    
+    mp[s]++;
+    
+    return s;
+}
+
+vector<Node*> printAllDups(Node* root){
+    vector<Node*> res;
+    unordered_map<string, int> mp;    /*we use unordered_map instead of unordered_set because we want to print multiple duplicates only once */
+
+    traverse(root, mp, res);
+    return res;
+}
+```
+
+#### 14. Lowest Common Ancestor of a Binary Tree
 
 ```cpp
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
@@ -619,7 +651,7 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 14. Min distance between two given nodes of a Binary Tree
+#### 15. Min distance between two given nodes of a Binary Tree
 
 Hint: First find their lca. Then min distance between nodes n1, n2 will be : dist(n1, n2) = dist(lca, n1) + dist(lca, n2)
 
@@ -652,7 +684,7 @@ int findDist(Node* root, int a, int b) {
 }
 ```
 
-#### 15. Sum of Left Leaves
+#### 16. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -673,7 +705,7 @@ int sumOfLeftLeaves(TreeNode* root) {
 }
 ```
 
-#### 16. Check if all leaves are at same level
+#### 17. Check if all leaves are at same level
 
 ```cpp
 bool traverse(Node* root, int level, int & leaf_level){
@@ -703,7 +735,7 @@ bool check(Node *root){
 }
 ```
 
-#### 17. Transform to Sum Tree
+#### 18. Transform to Sum Tree
 Given a Binary Tree of size N. Convert this to a tree where each node contains the sum of the left and right sub trees of the original tree. The values of leaf nodes are changed to 0.
 
 ```cpp
@@ -723,7 +755,7 @@ void toSumTree(Node *root){
 }
 ```
 
-#### 18. Check if Binary tree is Sum tree or not
+#### 19. Check if Binary tree is Sum tree or not
 Given a Binary Tree. Return 1 if, for every node X in the tree other than the leaves, its value is equal to the sum of its left subtree's value and its right subtree's value. Else return 0. An empty tree is also a Sum Tree. A leaf node is also considered a Sum Tree.
 
 ```cpp
@@ -745,7 +777,7 @@ bool isSumTree(Node* root){
 }
 ```
 
-#### 19. Is Siblings
+#### 20. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -761,7 +793,7 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 20. Cousins in Binary Tree
+#### 21. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -794,7 +826,7 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 21. Balanced Binary Tree
+#### 22. Balanced Binary Tree
 Given a binary tree, determine if it is height-balanced.
 
 ```cpp
@@ -821,7 +853,7 @@ bool isBalanced(TreeNode* root) {
 }
 ```
 
-#### 22. Diameter of Binary Tree (Longest path from leaf to leaf)
+#### 23. Diameter of Binary Tree (Longest path from leaf to leaf)
 
 Hint: Use DP on tree concept
 
@@ -844,7 +876,7 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 23. Minimum Depth of Binary Tree
+#### 24. Minimum Depth of Binary Tree
 Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 ```cpp
@@ -863,7 +895,7 @@ int minDepth(TreeNode* root) {
 }
 ```
 
-#### 24. Distribute Coins in Binary Tree
+#### 25. Distribute Coins in Binary Tree
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
 
 ![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
@@ -890,7 +922,7 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 25. House Robber III (Similar as Max Subset Sum in Binary tree)
+#### 26. House Robber III (Similar as Max Subset Sum in Binary tree)
 All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
@@ -926,7 +958,7 @@ int rob(TreeNode* root) {
 }
 ```
 
-#### 26. Lowest Common Ancestor of Deepest Leaves (Tricky)
+#### 27. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 
@@ -963,7 +995,7 @@ TreeNode* lcaDeepestLeaves(TreeNode* root) {
 }
 ```
 
-#### 27. Binary Tree Cameras
+#### 28. Binary Tree Cameras
 You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, itself, and its immediate children. Return the minimum number of cameras needed to monitor all nodes of the tree.
 
 ![img](https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_01.png)
@@ -1002,7 +1034,7 @@ int minCameraCover(TreeNode* root) {
 }
 ```
 
-#### 28. Binary Tree Maximum Path Sum (from any node to any node)
+#### 29. Binary Tree Maximum Path Sum (from any node to any node)
 Refer DP on trees playlist of Aditya verma
 
 Hint: At every node, check whether it can become the best solution and return max off all to its parent. 

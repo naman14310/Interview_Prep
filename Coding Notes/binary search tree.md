@@ -76,7 +76,57 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 }
 ```
 
-#### 4. Range Sum of BST
+#### 4. Find Inorder Successor and Predecessor in a BST
+
+```cpp
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key){
+    pre = NULL; suc = NULL;
+    
+    while(root){
+        
+        /* saving successor while going downwards */
+        
+        if(root->key > key){
+            suc = root;
+            root = root->left;
+        }
+        
+        /* saving predecessor while going downwards */
+        
+        else if(root->key < key){
+            pre = root;
+            root = root->right;
+        }
+        
+        else{
+            
+            /* if node->left exist then predecessor will be rightmost element of left subtree */
+            
+            if(root->left){
+                Node* temp = root->left;
+                while(temp){
+                    pre = temp;
+                    temp = temp->right;
+                }
+            }
+            
+            /* if node->right exist then successor will be leftmost element of right subtree */
+            
+            if(root->right){
+                Node* temp = root->right;
+                while(temp){
+                    suc = temp;
+                    temp = temp->left;
+                }
+            }
+            
+            break;
+        }
+    }
+}
+```
+
+#### 5. Range Sum of BST
 Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high].
 
 ```cpp
@@ -94,7 +144,7 @@ int rangeSumBST(TreeNode* root, int L, int R) {
 }
 ```
 
-#### 5. Trim a Binary Search Tree
+#### 6. Trim a Binary Search Tree
 Given the root of a binary search tree and the lowest and highest boundaries as low and high, trim the tree so that all its elements lies in [low, high]. 
 
 ```cpp
@@ -114,7 +164,7 @@ TreeNode* trimBST(TreeNode* root, int low, int high) {
 }
 ```
 
-#### 6. Lowest Common Ancestor of a Binary Search Tree
+#### 7. Lowest Common Ancestor of a Binary Search Tree
 Here we allow a node to be a descendant of itself.
 
 ```cpp
@@ -131,7 +181,7 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 7. Validate Binary Search Tree
+#### 8. Validate Binary Search Tree
 
 ```cpp
 bool isValid(TreeNode* root, long long minRange, long long maxRange){
@@ -147,7 +197,7 @@ bool isValidBST(TreeNode* root) {
 }
 ```
 
-#### 8. Kth Smallest Element in a BST
+#### 9. Kth Smallest Element in a BST
 
 ```cpp
 void inorder(TreeNode* root, int & k, int & ans){
@@ -171,7 +221,7 @@ int kthSmallest(TreeNode* root, int k) {
 }
 ```
 
-#### 9. Convert BST to Greater Tree
+#### 10. Convert BST to Greater Tree
 Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus sum of all keys greater than the original key in BST.
 
 ![img](https://assets.leetcode.com/uploads/2019/05/02/tree.png)
@@ -196,7 +246,7 @@ TreeNode* convertBST(TreeNode* root) {
 }
 ```
 
-#### 10. Minimum Absolute Difference in BST
+#### 11. Minimum Absolute Difference in BST
 Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
 
 Approach 1 : Simply perform inorder traversal (which gives sorted order). Everytime compute minDiff with curr node and prev node. 
@@ -222,7 +272,7 @@ int getMinimumDifference(TreeNode* root) {
 Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
 
-#### 11. Find Mode in Binary Search Tree
+#### 12. Find Mode in Binary Search Tree
 Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it. If the tree has more than one mode, return them in any order.
 
 Approach : Do Inorder traversal (as it gives sorted order on BST) and compute mode.
@@ -259,7 +309,29 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
-#### 12. Increasing Order Search Tree
+#### 13. Populate Inorder Successor for all nodes
+Given a Binary Tree, write a function to populate next pointer for all nodes. The next pointer for every node should be set to point to inorder successor.
+
+Hint: Do reverse preorder traversal (RNL) and use one variable prev.
+
+```cpp
+void connect(Node* root, Node* & prev){
+    if(!root) return;
+
+    connect(root->right, prev);
+    root->next = prev;
+    prev = root;
+    connect(root->left, prev);
+}
+
+
+void populateNext(Node *root){
+    Node* prev = NULL;
+    connect(root, prev);
+}
+```
+
+#### 14. Increasing Order Search Tree
 
 ![img](https://assets.leetcode.com/uploads/2020/11/17/ex1.jpg)
 
@@ -338,7 +410,7 @@ TreeNode* increasingBST(TreeNode* root) {
 }
 ```
 
-#### 13. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 15. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -359,7 +431,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 14. Convert Sorted List to Binary Search Tree
+#### 16. Convert Sorted List to Binary Search Tree
 
 ```cpp
 ListNode* findMid(ListNode* head){
@@ -389,7 +461,7 @@ TreeNode* sortedListToBST(ListNode* head) {
 }
 ```
 
-#### 15. Two Sum IV - Input is a BST
+#### 17. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp
@@ -417,8 +489,16 @@ bool findTarget(TreeNode* root, int k) {
 }
 ```
 
-#### 16. Minimum swap required to convert Binary Tree to Binary Search Tree
+#### 18. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
+#### 19. Convert a normal BST into a Balanced BST
+
+Method 1 : Use AVL rotation functions
+
+Method 2 : Follow below steps:
+
+1. Traverse given BST in inorder and store result in an array. This step takes O(n) time
+2. Build a balanced BST from the above created sorted array using the recursive approach. This step also takes O(n) time.
 

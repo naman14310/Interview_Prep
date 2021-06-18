@@ -312,7 +312,7 @@ vector<int> findMode(TreeNode* root) {
 #### 13. Populate Inorder Successor for all nodes
 Given a Binary Tree, write a function to populate next pointer for all nodes. The next pointer for every node should be set to point to inorder successor.
 
-Hint: Do reverse preorder traversal (RNL) and use one variable prev.
+Hint: Do reverse inorder traversal (RNL) and use one variable prev.
 
 ```cpp
 void connect(Node* root, Node* & prev){

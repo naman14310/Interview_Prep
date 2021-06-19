@@ -200,6 +200,34 @@ bool canThreePartsEqualSum(vector<int>& arr) {
 }
 ```
 
+#### 9. Least Greater Element
+Replace every element with the least greater element on its right
+
+Hint: Iterate from right to left and use Set data structure
+
+```cpp
+vector<int> leastGreaterElement(vector<int> &arr) {
+    int n = arr.size();
+    set<int> s;
+    s.insert(arr[n-1]);
+    arr[n-1] = -1;
+
+    for(int i=n-2; i>=0; i--){
+        int val = arr[i];
+        auto ub = s.upper_bound(arr[i]);
+        
+        if(ub==s.end())
+            arr[i] = -1;
+        else
+            arr[i] = *ub;
+        
+        s.insert(val);
+    }
+    
+	return arr;
+}
+```
+
 ## Medium
 
 #### 1. Product of Array Except Self

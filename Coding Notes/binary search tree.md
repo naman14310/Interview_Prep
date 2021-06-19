@@ -272,7 +272,44 @@ int getMinimumDifference(TreeNode* root) {
 Approach 2 : Do postorder traversal and return a pair of {low, high} for every recursive call, compute diff of curr->val, maxL and curr->val, minR and return minimum of both. Approach 1 is preferable over this.
 
 
-#### 12. Find Mode in Binary Search Tree
+#### 12. Median of BST
+
+```cpp
+void count_nodes(Node* root, int & count){
+    if(!root) return;
+    
+    count++;
+    count_nodes(root->left, count);
+    count_nodes(root->right, count);
+}
+
+void inorder(Node* root, int & mid, int & curr, int & prev){
+    if(!root) return;
+    
+    inorder(root->left, mid, curr, prev);
+    
+    mid--;
+    if(mid==1) prev = root->data;
+    else if(mid==0) curr = root->data;
+    
+    if(mid>0) inorder(root->right, mid, curr, prev);
+}
+
+float findMedian(struct Node *root){
+    int count = 0;
+    count_nodes(root, count);
+
+    int mid = (count/2)+1, curr = -1, prev = -1;
+    inorder(root, mid, curr, prev);
+
+    if(count&1) return curr;
+    else return (prev + curr)/2.0;
+}
+```
+
+Optimization : Use morris order traversal for reducing space
+
+#### 13. Find Mode in Binary Search Tree
 Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it. If the tree has more than one mode, return them in any order.
 
 Approach : Do Inorder traversal (as it gives sorted order on BST) and compute mode.
@@ -309,7 +346,7 @@ vector<int> findMode(TreeNode* root) {
 }
 ```
 
-#### 13. Populate Inorder Successor for all nodes
+#### 14. Populate Inorder Successor for all nodes
 Given a Binary Tree, write a function to populate next pointer for all nodes. The next pointer for every node should be set to point to inorder successor.
 
 Hint: Do reverse inorder traversal (RNL) and use one variable prev.
@@ -331,7 +368,7 @@ void populateNext(Node *root){
 }
 ```
 
-#### 14. Increasing Order Search Tree
+#### 15. Increasing Order Search Tree
 
 ![img](https://assets.leetcode.com/uploads/2020/11/17/ex1.jpg)
 
@@ -410,7 +447,7 @@ TreeNode* increasingBST(TreeNode* root) {
 }
 ```
 
-#### 15. Convert Sorted Array to Height Balanced Binary Search Tree
+#### 16. Convert Sorted Array to Height Balanced Binary Search Tree
 Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
 ```cpp
@@ -431,7 +468,7 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 }
 ```
 
-#### 16. Convert Sorted List to Binary Search Tree
+#### 17. Convert Sorted List to Binary Search Tree
 
 ```cpp
 ListNode* findMid(ListNode* head){
@@ -461,7 +498,7 @@ TreeNode* sortedListToBST(ListNode* head) {
 }
 ```
 
-#### 17. Two Sum IV - Input is a BST
+#### 18. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp
@@ -489,11 +526,12 @@ bool findTarget(TreeNode* root, int k) {
 }
 ```
 
-#### 18. Minimum swap required to convert Binary Tree to Binary Search Tree
+
+#### 19. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 19. Convert a normal BST into a Balanced BST
+#### 20. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 

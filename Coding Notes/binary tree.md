@@ -4,7 +4,7 @@
 
 ### @ Iterative Tree Traversals
 
-#### 1. Preorder
+#### 1. Preorder using stack
 
 Hint : Use single stack of type TreeNode*
 
@@ -34,7 +34,7 @@ vector<int> preorderTraversal(TreeNode* root) {
 }
 ```
 
-#### 2. Inorder
+#### 2. Inorder using stack and variable
 
 Hint: Use one stack of type TreeNode* + one variable of type TreeNode*
 
@@ -71,7 +71,7 @@ vector<int> inorderTraversal(TreeNode* root) {
 }
 ```
 
-#### 3. Postorder
+#### 3. Postorder using two stacks
 
 Hint: Use two stacks of type TreeNode*
 
@@ -102,6 +102,59 @@ vector<int> postorderTraversal(TreeNode* root) {
     while(!stk2.empty()){
         res.push_back(stk2.top()->val);
         stk2.pop();
+    }
+
+    return res;
+}
+```
+
+#### 4. Morris Inorder Traversal (Time complexity : O(n) | Space complexity : O(1))
+
+![img](https://2.bp.blogspot.com/-Oi7ZBzR9Wzs/V5YWWkB1FII/AAAAAAAAY8k/hVhzEWlwigM5HpHHN1VIZITzw9By4zAOACLcB/s1600/threadedBT.png)
+
+Approach: In this traversal, we first create links to Inorder successor and print the data using these links, and finally revert the changes to restore original tree. 
+
+1. Create a var curr which initially points to root.
+2. If left child exists --> find predecessor in left subtree
+        If predecessor->right == NULL, make predecessor->right = curr and move curr to left (we are creating link here)
+        Else make predecessor->right = NULL --> print the curr->val and move curr to right (we are removing link here)
+3. Else print curr->val and move curr to right.
+
+```cpp
+/* Morris inorder traversal will takes O(1) space */
+
+TreeNode* findPredecessor_in_leftSubtree(TreeNode* node){
+    TreeNode* temp = node->left;
+    while(temp->right and temp->right!=node)             // --- > pick the rightmost node not equal to NULL or curr_node
+        temp = temp->right;
+
+    return temp;
+}
+
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    TreeNode* curr = root;
+
+    while(curr){
+
+        if(curr->left){
+            TreeNode* predecessor = findPredecessor_in_leftSubtree(curr);
+
+            if(!predecessor->right){
+                predecessor->right = curr;
+                curr = curr->left;
+            }
+            else{
+                predecessor->right = NULL;
+                res.push_back(curr->val);
+                curr = curr->right;
+            }
+
+        }
+        else{
+            res.push_back(curr->val);
+            curr = curr->right;
+        }
     }
 
     return res;

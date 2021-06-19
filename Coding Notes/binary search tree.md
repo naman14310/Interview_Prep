@@ -526,12 +526,57 @@ bool findTarget(TreeNode* root, int k) {
 }
 ```
 
+#### 19. Check whether BST contains Dead End
+Given a Binary search Tree that contains positive integer values greater then 0. Return true if BST contains a dead end else returns false. Here Dead End means, we are not able to insert any element after that node.
 
-#### 19. Minimum swap required to convert Binary Tree to Binary Search Tree
+Hint: Use unordered_map to store values while traversing. On reaching leaf node, if val-1 and val+1 exists in the map then that leaf is a dead end.
+
+```
+Input :     
+              8
+            /   \ 
+           7     10
+         /      /   \
+        2      9     13
+
+Output : Yes
+Explanation : We can't insert any element at node 9.  
+```
+
+```cpp
+bool traverse(Node* root, unordered_set<int> & s){
+    if(!root) return false;
+    
+    int val = root->data;
+    
+    if(!root->left and !root->right){
+    
+        if (val==1 and s.find(2)!=s.end()) 
+            return true;   // --> boundary case
+        
+        if(s.find(val-1)!=s.end() and s.find(val+1)!=s.end()) 
+            return true;
+    }
+
+    s.insert(val);
+    
+    bool left = traverse(root->left, s);
+    bool right = traverse(root->right, s);
+    
+    return left or right;
+}
+
+bool isDeadEnd(Node *root){
+    unordered_set<int> s;
+    return traverse(root, s);
+}
+```
+
+#### 20. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 20. Convert a normal BST into a Balanced BST
+#### 21. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 

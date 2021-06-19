@@ -116,8 +116,10 @@ Approach: In this traversal, we first create links to Inorder successor and prin
 
 1. Create a var curr which initially points to root.
 2. If left child exists --> find predecessor in left subtree
-        If predecessor->right == NULL, make predecessor->right = curr and move curr to left (we are creating link here)
-        Else make predecessor->right = NULL --> print the curr->val and move curr to right (we are removing link here)
+
+    If predecessor->right == NULL, make predecessor->right = curr and move curr to left (we are creating link here)
+        
+    Else make predecessor->right = NULL --> print the curr->val and move curr to right (we are removing link here)
 3. Else print curr->val and move curr to right.
 
 ```cpp

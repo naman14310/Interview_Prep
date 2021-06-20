@@ -572,11 +572,67 @@ bool isDeadEnd(Node *root){
 }
 ```
 
-#### 20. Minimum swap required to convert Binary Tree to Binary Search Tree
+#### 20. Largest BST
+Given a binary tree. Find the size of its largest subtree that is a Binary Search Tree.
+
+Hint: Return a structure containing following four fields -
+
+1. bool isBST
+2. int size
+3. int min_val
+4. int max_val
+
+```cpp
+struct box{
+  bool isBST;
+  int size;
+  int min_val;
+  int max_val;
+  
+  box(bool isBST, int size, int min_val, int max_val){
+      this->isBST = isBST;
+      this->size = size;
+      this->min_val = min_val;
+      this->max_val = max_val;
+  }
+};
+
+box traverse(Node* root, int & size_of_largest_bst){
+    if(!root){
+        box b (true, 0, INT_MAX, INT_MIN);
+        return b;
+    }
+    
+    auto left = traverse(root->left, size_of_largest_bst);
+    auto right = traverse(root->right, size_of_largest_bst);
+    
+    if(left.isBST and right.isBST and root->data > left.max_val and root->data < right.min_val){
+        int size = left.size + right.size + 1;
+        int min_val = left.min_val == INT_MAX ? root->data : left.min_val;
+        int max_val = right.max_val == INT_MIN ? root->data : right.max_val;
+        
+        size_of_largest_bst = max(size_of_largest_bst, size);
+        box b (true, size, min_val, max_val);
+        return b;
+    }
+    else{
+        box b (false, 0, 0, 0);
+        return b;
+    }
+}
+
+int largestBst(Node *root){
+	int size_of_largest_bst = 0;
+	traverse(root, size_of_largest_bst);
+	return size_of_largest_bst;
+}
+```
+
+#### 21. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 21. Convert a normal BST into a Balanced BST
+#### 22. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 

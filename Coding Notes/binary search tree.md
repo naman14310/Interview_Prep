@@ -668,3 +668,12 @@ Method 2 : Follow below steps:
 1. Traverse given BST in inorder and store result in an array. This step takes O(n) time
 2. Build a balanced BST from the above created sorted array using the recursive approach. This step also takes O(n) time.
 
+#### 24. Merge two balanced BST's
+
+We can use a Doubly Linked List to merge trees in place. Following are the steps.
+
+1. Convert the given two Binary Search Trees into doubly linked list in place. 
+2. Merge the two sorted Linked Lists. 
+3. Build a Balanced Binary Search Tree from the merged list created in step 2.
+
+Time complexity of this method is also O(m+n) and this method does conversion in place.

@@ -628,11 +628,38 @@ int largestBst(Node *root){
 }
 ```
 
-#### 21. Minimum swap required to convert Binary Tree to Binary Search Tree
+#### 21. Valid BST from Preorder (Tricky - O(n) solution)
+
+Hint: Use a stack. Here we find the next greater element and after finding next greater, if we find a smaller element, then return false.
+
+[Explaination](https://www.youtube.com/watch?v=GYdC4hQSo8A)
+
+```cpp
+int solve(vector<int> &A) {
+    stack<int> stk;
+    int root = INT_MIN;
+
+    for(int i=0; i<A.size(); i++){
+
+        while(!stk.empty() and A[i]>stk.top()){
+            root = stk.top();
+            stk.pop();
+        }
+
+        if(A[i]<root) return 0;
+
+        stk.push(A[i]);
+    }
+
+    return 1;
+}
+```
+
+#### 22. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 22. Convert a normal BST into a Balanced BST
+#### 23. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 

@@ -498,7 +498,32 @@ TreeNode* sortedListToBST(ListNode* head) {
 }
 ```
 
-#### 18. Two Sum IV - Input is a BST
+#### 18. Construct Binary Search Tree from Preorder Traversal (Tricky O(n) Solution)
+
+Hint: The trick is to set a range {min .. max} for every node. Initialize the range as {INT_MIN .. INT_MAX}. The first node will definitely be in range, so create a root node. To construct the left subtree, set the range as {INT_MIN …root->data}. If a value is in the range {INT_MIN .. root->data}, the values are part of the left subtree. To construct the right subtree, set the range as {root->data..max .. INT_MAX}.
+
+```cpp
+TreeNode* buildTree(vector<int> & preorder, int & i, int minRange, int maxRange){
+	if(i>=preorder.size() or preorder[i]<minRange or preorder[i]>maxRange)
+	    return NULL;
+
+	TreeNode* root = new TreeNode(preorder[i]);
+	i++;
+
+	root->left = buildTree(preorder, i, minRange, root->val);
+	root->right = buildTree(preorder, i, root->val, maxRange);
+
+	return root;
+}
+
+
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+	int i = 0;
+	return buildTree(preorder, i, INT_MIN, INT_MAX);
+}
+```
+
+#### 19. Two Sum IV - Input is a BST
 Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
 
 ```cpp
@@ -526,7 +551,7 @@ bool findTarget(TreeNode* root, int k) {
 }
 ```
 
-#### 19. Check whether BST contains Dead End
+#### 20. Check whether BST contains Dead End
 Given a Binary search Tree that contains positive integer values greater then 0. Return true if BST contains a dead end else returns false. Here Dead End means, we are not able to insert any element after that node.
 
 Hint: Use unordered_map to store values while traversing. On reaching leaf node, if val-1 and val+1 exists in the map then that leaf is a dead end.
@@ -572,7 +597,7 @@ bool isDeadEnd(Node *root){
 }
 ```
 
-#### 20. Largest BST
+#### 21. Largest BST
 Given a binary tree. Find the size of its largest subtree that is a Binary Search Tree.
 
 Hint: Return a structure containing following four fields -
@@ -628,7 +653,7 @@ int largestBst(Node *root){
 }
 ```
 
-#### 21. Valid BST from Preorder (Tricky - O(n) solution)
+#### 22. Valid BST from Preorder (Tricky - O(n) solution)
 
 Hint: Use a stack. Here we find the next greater element and after finding next greater, if we find a smaller element, then return false.
 
@@ -655,11 +680,11 @@ int solve(vector<int> &A) {
 }
 ```
 
-#### 22. Minimum swap required to convert Binary Tree to Binary Search Tree
+#### 23. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 23. Convert a normal BST into a Balanced BST
+#### 24. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 
@@ -668,7 +693,7 @@ Method 2 : Follow below steps:
 1. Traverse given BST in inorder and store result in an array. This step takes O(n) time
 2. Build a balanced BST from the above created sorted array using the recursive approach. This step also takes O(n) time.
 
-#### 24. Merge two balanced BST's
+#### 25. Merge two balanced BST's
 
 We can use a Doubly Linked List to merge trees in place. Following are the steps.
 

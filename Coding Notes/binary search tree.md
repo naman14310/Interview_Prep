@@ -679,12 +679,71 @@ int solve(vector<int> &A) {
     return 1;
 }
 ```
+#### 23. Print Elements of two BST in Sorted Order (Merge two BST's inorder)
 
-#### 23. Minimum swap required to convert Binary Tree to Binary Search Tree
+Hint: Use Iterative inorder traversal. Use two stacks and two curr var for processing both the trees simultaneously.
+
+```cpp
+void process_remaining_stk(TreeNode* curr, stack<TreeNode*> & stk, vector<int> & res){
+	while(!stk.empty() or curr){
+		while(curr){
+			stk.push(curr);
+			curr = curr->left;
+		}
+
+		res.push_back(stk.top()->val);
+		curr = stk.top()->right;
+		stk.pop();
+	}
+}
+
+vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+	vector<int> res;
+	stack<TreeNode*> stk1, stk2;
+	TreeNode* curr1 = root1, *curr2 = root2;
+
+	while((!stk1.empty() or curr1) and (!stk2.empty() or curr2)){
+		while(curr1){
+			stk1.push(curr1);
+			curr1 = curr1->left;
+		}
+
+		while(curr2){
+			stk2.push(curr2);
+			curr2 = curr2->left;
+		}
+
+		/* Push smaller element of both stk1.top() and stk2.top() */
+
+		if(stk1.top()->val <= stk2.top()->val){
+			res.push_back(stk1.top()->val);
+			curr1 = stk1.top()->right;
+			stk1.pop();
+		}
+		else{
+			res.push_back(stk2.top()->val);
+			curr2 = stk2.top()->right;
+			stk2.pop();
+		}
+	}
+
+	if(!stk1.empty() or curr1)
+		process_remaining_stk(curr1, stk1, res);
+
+	if(!stk2.empty() or curr2)
+		process_remaining_stk(curr2, stk2, res);
+
+	return res;
+}
+```
+
+Note: For merging n trees, convert them to linked list and then merge n linked lists to get combined sorted inorder.
+
+#### 24. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 24. Convert a normal BST into a Balanced BST
+#### 25. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 
@@ -693,7 +752,7 @@ Method 2 : Follow below steps:
 1. Traverse given BST in inorder and store result in an array. This step takes O(n) time
 2. Build a balanced BST from the above created sorted array using the recursive approach. This step also takes O(n) time.
 
-#### 25. Merge two balanced BST's
+#### 26. Merge two balanced BST's
 
 We can use a Doubly Linked List to merge trees in place. Following are the steps.
 

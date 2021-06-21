@@ -1249,7 +1249,7 @@ TreeNode* removeLeafNodes(TreeNode* root, int target) {
 }
 ```
 
-#### 34 Binary Tree Pruning
+#### 34. Binary Tree Pruning
 Given the root of a binary tree, return the same tree where every subtree (of the given tree) not containing a target_val has been removed.
 
 Hint: Return type is boolean which tells whether that subtree contains that value or not

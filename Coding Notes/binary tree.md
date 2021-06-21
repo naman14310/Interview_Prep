@@ -1275,7 +1275,54 @@ TreeNode* pruneTree(TreeNode* root) {
 }
 ```
 
-#### 35. Count Good Nodes in Binary Tree
+#### 35. Delete Nodes And Return Forest
+Given the root of a binary tree, each node in the tree has a distinct value. After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees). Return the roots of the trees in the remaining forest. You may return the result in any order.
+
+Input: root = [1,2,3,4,5,6,7], to_delete = [3,5]
+
+![img](https://assets.leetcode.com/uploads/2019/07/01/screen-shot-2019-07-01-at-53836-pm.png)
+
+Output: [[1,2,null,4],[6],[7]]
+
+Hint: Traverse in postorder manner. If node to be deleted is leaf then simply return NULL. Else if node to be deleted is internal node, save its left child and right child to resultant vector and return NULL.
+
+```cpp
+TreeNode* traverse(TreeNode* root, vector<TreeNode*> & res, unordered_set<int> & del){
+    if(!root) return NULL;
+
+    root->left = traverse(root->left, res, del);
+    root->right = traverse(root->right, res, del);
+
+    if(del.find(root->val)!=del.end()){
+
+        if(!root->left and !root->right) return NULL;
+        else{
+            if(root->left) res.push_back(root->left);
+            if(root->right) res.push_back(root->right);
+            return NULL;
+        }
+    }
+    else 
+        return root;
+}
+
+vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+    vector<TreeNode*> res;
+    unordered_set<int> del;
+
+    for(int i : to_delete)
+        del.insert(i);
+
+    traverse(root, res, del);
+
+    if(del.find(root->val)==del.end())      // --> Boundary case
+        res.push_back(root);
+
+    return res;
+}
+```
+
+#### 36. Count Good Nodes in Binary Tree
 Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
 
 ![img](https://assets.leetcode.com/uploads/2020/04/02/test_sample_1.png)

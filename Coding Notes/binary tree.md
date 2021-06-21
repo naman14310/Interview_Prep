@@ -689,9 +689,7 @@ bool dupSub(Node *root){
 
 ![img](https://contribute.geeksforgeeks.org/wp-content/uploads/tree1-1.png)
 
-Output : 2 4
-
-         4
+Output : [[2 4], [4]]
 
 ```cpp
 string traverse(Node* root, unordered_map<string, int> & mp, vector<Node*> & res){

@@ -1249,7 +1249,33 @@ TreeNode* removeLeafNodes(TreeNode* root, int target) {
 }
 ```
 
-#### 34. Count Good Nodes in Binary Tree
+#### 34 Binary Tree Pruning
+Given the root of a binary tree, return the same tree where every subtree (of the given tree) not containing a target_val has been removed.
+
+Hint: Return type is boolean which tells whether that subtree contains that value or not
+
+```cpp
+bool prune(TreeNode* root, int target){
+    if(!root) return false;
+
+    bool left = prune(root->left, target);
+    bool right = prune(root->right, target);
+
+    if(!left) root->left = NULL;
+    if(!right) root->right = NULL;
+
+    return left or right or root->val==target;
+}
+
+TreeNode* pruneTree(TreeNode* root) {
+    bool res = prune(root, 1);
+
+    if(!res) return NULL;
+    return root;
+}
+```
+
+#### 35. Count Good Nodes in Binary Tree
 Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
 
 ![img](https://assets.leetcode.com/uploads/2020/04/02/test_sample_1.png)

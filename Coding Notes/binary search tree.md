@@ -747,10 +747,9 @@ IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the
 
 Method 1 : Use AVL rotation functions
 
-Method 2 : Follow below steps:
+Method 2 : By converting BST to sorted array (inorder) and build new tree. --> O(n) | O(n)
 
-1. Traverse given BST in inorder and store result in an array. This step takes O(n) time
-2. Build a balanced BST from the above created sorted array using the recursive approach. This step also takes O(n) time.
+Method 3 : By converting BST to sorted linked list (inorder) inplace and convert it again to BST. --> O(n) | O(1)
 
 #### 26. Merge two balanced BST's
 

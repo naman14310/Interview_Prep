@@ -1385,6 +1385,47 @@ vector<int> findFrequentTreeSum(TreeNode* root) {
 }
 ```
 
+#### 38. Longest ZigZag Path in a Binary Tree
+
+![img](https://assets.leetcode.com/uploads/2020/01/22/sample_1_1702.png)
+
+```cpp
+/*
+    dir = true -->left
+    dir = false --> right
+*/
+
+void traverse(TreeNode* root, bool dir, int zig_zag_len, int & res){
+    if(!root) return;
+
+    if(dir){
+        if(root->left)
+            traverse(root->left, true, 1, res);
+
+        if(root->right){
+            res = max(res, zig_zag_len+1);
+            traverse(root->right, false, zig_zag_len+1, res); 
+        }
+    }
+    else{
+        if(root->right)
+            traverse(root->right, false, 1, res);
+
+        if(root->left){
+            res = max(res, zig_zag_len+1);
+            traverse(root->left, true, zig_zag_len+1, res); 
+        }
+    }
+}
+
+int longestZigZag(TreeNode* root) {
+    int res = 0;
+    traverse(root, true, 0, res);
+    return res;
+}
+```
+
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

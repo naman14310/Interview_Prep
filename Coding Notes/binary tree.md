@@ -1193,6 +1193,44 @@ int countNodes(TreeNode* root) {
 }
 ```
 
+#### 32. Serialize and Deserialize Binary Tree
+
+```cpp
+// Encodes a tree to a single string.
+string serialize(TreeNode* root) {
+    if(!root) return "X";
+    return to_string(root->val) + "," + serialize(root->left) + "," + serialize(root->right);  
+}
+
+TreeNode* buildTree(vector<string> v, int & i){
+    if(v[i]=="X"){
+        i++;
+        return NULL;
+    } 
+
+    TreeNode* root = new TreeNode(stoi(v[i]));
+    i++;
+
+    root->left = buildTree(v, i);
+    root->right = buildTree(v, i);
+
+    return root;
+}
+
+// Decodes your encoded data to tree.
+TreeNode* deserialize(string data) {
+    stringstream ss(data);
+    vector<string> v;
+    string tkn;
+
+    while(getline(ss, tkn, ','))
+        v.push_back(tkn);
+
+    int i=0;
+    return buildTree(v, i);
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

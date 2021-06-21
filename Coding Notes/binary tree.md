@@ -1347,6 +1347,44 @@ int goodNodes(TreeNode* root) {
 }
 ```
 
+#### 37. Most Frequent Subtree Sum
+Given the root of a binary tree, return the most frequent subtree sum. If there is a tie, return all the values with the highest frequency in any order.
+
+```cpp
+int traverse(TreeNode* root, map<int,int> & mp){
+    if(!root) return 0;
+
+    int left = traverse(root->left, mp);
+    int right = traverse(root->right, mp);
+
+    int sum = left + right + root->val;
+    mp[sum]++;
+
+    return sum;
+}
+
+vector<int> findFrequentTreeSum(TreeNode* root) {
+    vector<int> res;        
+    map<int,int> mp;
+    int max_freq = INT_MIN;
+
+    traverse(root, mp);
+
+    for(auto p : mp){
+        if(p.second == max_freq)
+            res.push_back(p.first);
+
+        else if(p.second > max_freq){
+            res.clear();
+            max_freq = p.second;
+            res.push_back(p.first);
+        }
+    }
+
+    return res;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

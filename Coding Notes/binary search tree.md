@@ -739,11 +739,48 @@ vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
 
 Note: For merging n trees, convert them to linked list and then merge n linked lists to get combined sorted inorder.
 
-#### 24. Minimum swap required to convert Binary Tree to Binary Search Tree
+#### 24. Serialize and Deserialize BST
+
+Hint: Convert to preorder
+
+```cpp
+string serialize(TreeNode* root) {
+	if(!root) return "";
+	return to_string(root->val) + "," + serialize(root->left) + serialize(root->right);
+}
+
+TreeNode* buildTree(vector<int> v, int & i, int min_val, int max_val){
+	if(i>=v.size() or v[i]<min_val or v[i]>max_val)
+		return NULL;
+
+	TreeNode* root = new TreeNode(v[i]);
+	i++;
+
+	root->left = buildTree(v, i, min_val, root->val);
+	root->right = buildTree(v, i, root->val, max_val);
+
+	return root;
+}
+
+// Decodes your encoded data to tree.
+TreeNode* deserialize(string data) {
+	vector<int> v;
+	stringstream ss(data);
+	string tkn;
+	int i=0; 
+
+	while(getline(ss, tkn, ','))
+		v.push_back(stoi(tkn));
+
+	return buildTree(v, i, INT_MIN, INT_MAX);
+}
+```
+
+#### 25. Minimum swap required to convert Binary Tree to Binary Search Tree
 
 IDEA: Find the inorder of binary tree. Now since inorder of BST is sorted so the problem is reduced to minimum no. of swaps to sort the array. Find the solution of this problem in Sorting section. 
 
-#### 25. Convert a normal BST into a Balanced BST
+#### 26. Convert a normal BST into a Balanced BST
 
 Method 1 : Use AVL rotation functions
 
@@ -753,7 +790,7 @@ Method 3 : By converting BST to sorted linked list (inorder) inplace and convert
 
 [Most Optimized Solution](https://leetcode.com/problems/balance-a-binary-search-tree/discuss/541785/C%2B%2BJava-with-picture-DSW-O(n)orO(1))
 
-#### 26. Merge two balanced BST's
+#### 27. Merge two balanced BST's
 
 We can use a Doubly Linked List to merge trees in place. Following are the steps.
 

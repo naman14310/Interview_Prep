@@ -1249,6 +1249,31 @@ TreeNode* removeLeafNodes(TreeNode* root, int target) {
 }
 ```
 
+#### 34. Count Good Nodes in Binary Tree
+Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+![img](https://assets.leetcode.com/uploads/2020/04/02/test_sample_1.png)
+
+```cpp
+void traverse(TreeNode* root, int max_so_far, int & count){
+    if(!root) return;
+
+    if(root->val >= max_so_far){
+        count++;
+        max_so_far = root->val;
+    } 
+
+    traverse(root->left, max_so_far, count);        
+    traverse(root->right, max_so_far, count);        
+}
+
+int goodNodes(TreeNode* root) {
+    int count = 0;
+    traverse(root, INT_MIN, count);
+    return count;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

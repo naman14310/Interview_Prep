@@ -751,6 +751,8 @@ Method 2 : By converting BST to sorted array (inorder) and build new tree. --> O
 
 Method 3 : By converting BST to sorted linked list (inorder) inplace and convert it again to BST. --> O(n) | O(1)
 
+[Most Optimized Solution](https://leetcode.com/problems/balance-a-binary-search-tree/discuss/541785/C%2B%2BJava-with-picture-DSW-O(n)orO(1))
+
 #### 26. Merge two balanced BST's
 
 We can use a Doubly Linked List to merge trees in place. Following are the steps.

@@ -1231,6 +1231,24 @@ TreeNode* deserialize(string data) {
 }
 ```
 
+#### 33. Delete Leaves With a Given Value
+
+Hint: Traverse in postorder manner
+
+```cpp
+TreeNode* removeLeafNodes(TreeNode* root, int target) {
+    if(!root) return NULL;
+
+    root->left = removeLeafNodes(root->left, target);
+    root->right = removeLeafNodes(root->right, target);
+
+    if(!root->left and !root->right and root->val == target)
+        return NULL;
+    else
+        return root;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

@@ -1503,6 +1503,35 @@ bool isCompleteTree(TreeNode* root) {
 }
 ```
 
+#### 40. Recover Binary Search Tree
+You are given the root of a binary search tree (BST), where exactly two nodes of the tree were swapped by mistake. Recover the tree without changing its structure.
+
+![img](https://assets.leetcode.com/uploads/2020/10/28/recover2.jpg)
+
+Hint: Just do inorder traversal and keep track of first and last incorrect placed node
+
+```cpp
+void inorder(TreeNode* root, TreeNode* & prev, TreeNode* & first, TreeNode* & second){
+    if(!root) return;
+
+    inorder(root->left, prev, first, second);
+
+    if(prev and root->val < prev->val){
+        if(!first) first = prev;
+        second = root;
+    } 
+    prev = root;
+
+    inorder(root->right, prev, first, second);
+}
+
+void recoverTree(TreeNode* root) {
+    TreeNode* first = NULL, *second = NULL, *prev = NULL;
+    inorder(root, prev, first, second);
+    swap(first->val, second->val);
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

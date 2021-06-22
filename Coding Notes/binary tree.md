@@ -1532,6 +1532,52 @@ void recoverTree(TreeNode* root) {
 }
 ```
 
+#### 41. Longest Univalue Path (Tricky)
+Given the root of a binary tree, return the length of the longest path, where each node in the path has the same value. This path may or may not pass through the root. The length of the path between two nodes is represented by the number of edges between them.
+
+![img](https://assets.leetcode.com/uploads/2020/10/13/ex2.jpg)
+
+Hint: Apply DP on trees. At every node, compute the longest path and return the max possible path (from left or right subtree) for its parent.
+
+```cpp
+/* Return type : pair< recent node_val, longest path for that node_val> */
+
+pair<int, int> traverse(TreeNode* root, int & max_path_len){
+    if(!root) return {INT_MIN, 0};    
+
+    auto left = traverse(root->left, max_path_len);
+    auto right = traverse(root->right, max_path_len);
+
+    if(root->val == left.first and root->val == right.first){
+        max_path_len = max(max_path_len, left.second + right.second + 1);
+        int path_len = max(left.second, right.second) + 1;
+        return {root->val, path_len};
+    }
+
+    else if(root->val == left.first){
+        max_path_len = max(max_path_len, left.second + 1);
+        int path_len = left.second + 1;
+        return {root->val, path_len};
+    }
+
+    else if(root->val == right.first){
+        max_path_len = max(max_path_len, right.second + 1);
+        int path_len = right.second + 1;
+        return {root->val, path_len};
+    }
+
+    else return {root->val, 1};
+}
+
+int longestUnivaluePath(TreeNode* root) {
+    if(!root) return 0;
+
+    int max_path_len = 1;
+    traverse(root, max_path_len);
+    return max_path_len-1;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

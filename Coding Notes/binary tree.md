@@ -1423,6 +1423,87 @@ int longestZigZag(TreeNode* root) {
 }
 ```
 
+#### 39. Check Completeness of a Binary Tree (Tricky)
+
+Method 1: DFS (Recursive approach) O(n) | O(h)
+
+If a tree is a complete FULL tree, it must have 1,3,7,15,31..nodes, which is pow of 2 minus 1. And for x = 2^k -1, x has a property that x & (x+1) == 0.
+
+For a complete tree, it must satify at least one of the following condition:
+1. If left subtree is a full tree with l nodes, right subtree must have r nodes that l / 2 <= r <= l
+2. if right subtree is a full tree with r nodes, left subtree must have l nodes that r <= l <= r * 2 + 1.
+
+```cpp
+/* 
+    x = 2^k -1, x has a property that x & (x+1) == 0
+    where x can be 1, 3, 7, 15, 31 
+
+    return type : pair< isCompleteBT, countOfNodes > 
+*/
+
+pair<bool, int> traverse(TreeNode* root){
+    if(!root) return {true, 0};
+
+    auto left = traverse(root->left);
+    auto right = traverse(root->right);
+
+    if(left.first and right.first){
+        int lc = left.second, rc = right.second;
+
+        // --> If left subtree is full with lc nodes 
+        
+        if( (lc&(lc+1))==0 and lc/2<=rc and rc<=lc )
+            return {true, lc+rc+1};
+
+        // --> If right subtree is full with rc nodes 
+
+        else if( (rc&(rc+1))==0 and rc<=lc and lc<=2*rc+1 )
+            return {true, lc+rc+1};
+    }
+    
+    return {false, -1};
+}
+
+bool isCompleteTree(TreeNode* root) {
+    auto res = traverse(root);
+    return res.first;
+}
+```
+
+Method 2: BFS (using queue)
+
+For a complete binary tree, there should not be any node after we met an empty one.
+
+```cpp
+bool isCompleteTree(TreeNode* root) {
+    queue<TreeNode*> q;
+    q.push(root);
+
+    bool first_null_inserted = false;
+
+    while(!q.empty()){
+        TreeNode* node = q.front(); q.pop();
+
+        /* breaking condition when we found first NULL in queue */
+        if(!node){
+            if(q.empty()) return true;
+            else return false;
+        }
+
+        if(!first_null_inserted or node->left){
+            q.push(node->left);
+            if(!node->left) first_null_inserted = true;
+        }
+
+        if(!first_null_inserted or node->right){
+            q.push(node->right);
+            if(!node->right) first_null_inserted = true;
+        }
+    }
+
+    return true;
+}
+```
 
 ### @ Questions based on Tree Construction (Tricky)
 

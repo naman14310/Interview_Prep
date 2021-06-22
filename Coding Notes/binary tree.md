@@ -1427,8 +1427,6 @@ int longestZigZag(TreeNode* root) {
 
 Method 1: DFS (Recursive approach) O(n) | O(h)
 
-If a tree is a complete FULL tree, it must have 1,3,7,15,31..nodes, which is pow of 2 minus 1. And for x = 2^k -1, x has a property that x & (x+1) == 0.
-
 For a complete tree, it must satify at least one of the following condition:
 1. If left subtree is a full tree with l nodes, right subtree must have r nodes that l / 2 <= r <= l
 2. if right subtree is a full tree with r nodes, left subtree must have l nodes that r <= l <= r * 2 + 1.

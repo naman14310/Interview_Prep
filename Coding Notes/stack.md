@@ -635,6 +635,49 @@ int longestValidParentheses(string s) {
 }
 ```
 
+#### 4. Score of Parentheses (Tricky)
+Given a balanced parentheses string s, compute the score of the string based on the following rule:
+1. () has score 1
+2. AB has score A + B, where A and B are balanced parentheses strings.
+3. (A) has score 2 * A, where A is a balanced parentheses string.
+
+```cpp
+/* -1 denotes pushing open bracket in stack */
+
+int scoreOfParentheses(string s) {
+    stack<int> stk;
+
+    for(int i=0; i<s.length(); i++){
+
+        if(s[i]=='(') stk.push(-1);
+
+        else{
+            if(stk.top()==-1){
+                stk.pop();
+                stk.push(1);
+            }
+            else{
+                int sum = 0;
+                while(stk.top()!=-1){
+                    sum += stk.top();
+                    stk.pop();
+                }
+
+                stk.pop();
+                stk.push(2*sum);
+            }
+        }
+    }
+
+    int ans = 0;
+    while(!stk.empty()){
+        ans += stk.top();
+        stk.pop();
+    }
+
+    return ans;
+}
+```
 
 ### @ Hard to guess as Stack
 

@@ -1578,6 +1578,47 @@ int longestUnivaluePath(TreeNode* root) {
 }
 ```
 
+#### 42. Maximum Product of Splitted Binary Tree
+Given a binary tree root. Split the binary tree into two subtrees by removing 1 edge such that the product of the sums of the subtrees are maximized.Since the answer may be too large, return it modulo 10^9 + 7.
+
+![img](https://assets.leetcode.com/uploads/2020/01/21/sample_1_1699.png)
+
+Input: root = [1,2,3,4,5,6]
+
+Output: 110
+
+Hint: In First pass, get the total sum. In Second pass, find the biggest product by calculating sum of all subtrees and product using sum * (totalSum-sum).
+
+```cpp
+int MOD = pow(10, 9) + 7;
+
+long long findTotalSum(TreeNode* root){
+    if(!root) return 0;     
+    return root->val + findTotalSum(root->left) + findTotalSum(root->right);
+}
+
+long long findMaxProduct(TreeNode* root, long long & maxProduct, long long & totalSum){
+    if(!root) return 0;
+
+    long long left = findMaxProduct(root->left, maxProduct, totalSum);
+    long long right = findMaxProduct(root->right, maxProduct, totalSum);
+
+    long long sum = left + right + root->val;
+    long long product = sum * (totalSum-sum);
+
+    maxProduct = max(maxProduct, product);
+    return sum;
+}
+
+int maxProduct(TreeNode* root) {
+    long long maxProduct = 0;
+    long long sum = findTotalSum(root);
+
+    findMaxProduct(root, maxProduct, sum);
+    return maxProduct%MOD;
+}
+```
+
 ### @ Questions based on Tree Construction (Tricky)
 
 #### 1. Maximum Binary Tree

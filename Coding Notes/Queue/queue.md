@@ -118,7 +118,7 @@ bool empty() {
 }
 ```
 
-#### 4. Reverse Queue using Recursion
+#### 3. Reverse Queue using Recursion
 
 ```cpp
 void reverse(queue<int> & q){
@@ -133,7 +133,7 @@ void reverse(queue<int> & q){
 }
 ```
 
-#### 5. Reverse First K elements of Queue 
+#### 4. Reverse First K elements of Queue 
 
 Approach:
 
@@ -169,7 +169,7 @@ queue<int> modifyQueue(queue<int> q, int k){
 }
 ```
 
-#### 6. Interleave the first half of the queue with second half
+#### 5. Interleave the first half of the queue with second half
 
 Input : 11 12 13 14 15 16 17 18 19 20
 
@@ -223,7 +223,7 @@ queue<int> interleave_two_halves(queue<int> & q){
 }
 ```
 
-#### 7. Circular Tour (IMP)
+#### 6. Circular Tour (IMP)
 
 [Video Explaination](https://www.youtube.com/watch?v=zcnVaVJkLhY)
 
@@ -249,7 +249,7 @@ int tour(petrolPump p[],int n){
 }
 ```
 
-#### 8. First non-repeating character in a stream (GFG)
+#### 7. First non-repeating character in a stream (GFG)
 Given an input stream of A of n characters consisting only of lower case alphabets. The task is to find the first non repeating character, each time a character is inserted to the stream. If there is no such character then append '#' to the answer.
 
 Input: A = "aabc"
@@ -278,7 +278,7 @@ string FirstNonRepeating(string A){
 }
 ```
 
-#### 9. Sliding window Maximum (using Dequeue)
+#### 8. Sliding window Maximum (using Dequeue)
 
 ```cpp
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
@@ -313,7 +313,7 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
 }
 ```
 
-#### 10. Jump Game VI (using Deque)
+#### 9. Jump Game VI (using Deque)
 You are given a 0-indexed integer array nums and an integer k. You are initially standing at index 0. In one move, you can jump at most k steps forward without going outside the boundaries of the array. That is, you can jump from index i to any index in the range [i + 1, min(n - 1, i + k)] inclusive. You want to reach the last index of the array (index n - 1). Your score is the sum of all nums[j] for each index j you visited in the array. Return the maximum score you can get.
 
 Input: nums = [1,-1,-2,4,-7,3], k = 2

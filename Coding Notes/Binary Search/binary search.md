@@ -95,7 +95,84 @@ int findMin(vector<int>& nums) {
 }
 ```
 
-#### 3. Longest Increasing Subsequence (NlogN approach using Binary Search)
+#### 3. Search in Rotated Sorted Array (Values are distinct)
+
+```cpp
+int findMinPos(vector<int> & nums){
+    int n = nums.size();
+    int start = 0, end = n-1;
+    while(start<end){
+        int mid = start + (end-start)/2;
+        if(nums[start]<nums[end]) return start;
+        else if(nums[start]<=nums[mid]) start = mid+1;
+        else end = mid;
+    }
+    return start;
+}
+
+int binarySearch(vector<int> & arr, int start, int end, int target){
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        if(arr[mid]==target) return mid;
+        else if (arr[mid]>target) end = mid-1;
+        else start = mid+1;
+    }
+    return -1;
+}
+
+int search(vector<int>& nums, int target) {
+    int n = nums.size();
+    int pos = findMinPos(nums);
+    int ans = binarySearch(nums, 0, pos-1, target);
+    if(ans!=-1) return ans;
+    else return binarySearch(nums, pos, n-1, target);
+}
+```
+
+#### 4. Search in Rotated Sorted Array II (Values can be repeating)
+
+```cpp
+bool search(vector<int>& nums, int target) {
+    int start = 0, end = nums.size()-1;
+    int len = nums.size();
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        if(nums[mid]==target) return true;
+
+        else if(nums[mid]>nums[start]){
+            if(nums[mid]<target){
+                start = mid+1;
+                continue;
+            }
+            else if(target>=nums[start]){
+                end = mid-1;
+                continue;
+            }
+        }
+
+        else if(nums[mid]<nums[end]){
+            if(nums[end]<target){
+                end = mid-1;
+                continue;
+            }
+            else if(target<=nums[end] && target > nums[mid]){
+                start = mid+1;
+                continue;
+            }
+        }
+
+        if(target == nums[start]) return true;
+        else start++;
+
+        if(target == nums[end]) return true;
+        else end--;
+    }
+    return false;
+}
+```
+
+#### 5. Longest Increasing Subsequence (NlogN approach using Binary Search)
 
 PS: It will only give correct Length but not correct sequence.
 
@@ -120,7 +197,7 @@ int lengthOfLIS(vector<int>& nums) {
 }
 ```
 
-#### 4. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
+#### 6. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
 
 ```cpp
 int lowerBound(vector<int> & nums, int target, int n){
@@ -167,82 +244,7 @@ vector<int> searchRange(vector<int>& nums, int target) {
 }
 ```
 
-#### 5. Search in Rotated Sorted Array (Values are distinct)
 
-```cpp
-int findMinPos(vector<int> & nums){
-    int n = nums.size();
-    int start = 0, end = n-1;
-    while(start<end){
-        int mid = start + (end-start)/2;
-        if(nums[start]<nums[end]) return start;
-        else if(nums[start]<=nums[mid]) start = mid+1;
-        else end = mid;
-    }
-    return start;
-}
-
-int binarySearch(vector<int> & arr, int start, int end, int target){
-    while(start<=end){
-        int mid = start + (end-start)/2;
-        if(arr[mid]==target) return mid;
-        else if (arr[mid]>target) end = mid-1;
-        else start = mid+1;
-    }
-    return -1;
-}
-
-int search(vector<int>& nums, int target) {
-    int n = nums.size();
-    int pos = findMinPos(nums);
-    int ans = binarySearch(nums, 0, pos-1, target);
-    if(ans!=-1) return ans;
-    else return binarySearch(nums, pos, n-1, target);
-}
-```
-
-#### 6. Search in Rotated Sorted Array II (Values can be repeating)
-
-```cpp
-bool search(vector<int>& nums, int target) {
-    int start = 0, end = nums.size()-1;
-    int len = nums.size();
-
-    while(start<=end){
-        int mid = start + (end-start)/2;
-        if(nums[mid]==target) return true;
-
-        else if(nums[mid]>nums[start]){
-            if(nums[mid]<target){
-                start = mid+1;
-                continue;
-            }
-            else if(target>=nums[start]){
-                end = mid-1;
-                continue;
-            }
-        }
-
-        else if(nums[mid]<nums[end]){
-            if(nums[end]<target){
-                end = mid-1;
-                continue;
-            }
-            else if(target<=nums[end] && target > nums[mid]){
-                start = mid+1;
-                continue;
-            }
-        }
-
-        if(target == nums[start]) return true;
-        else start++;
-
-        if(target == nums[end]) return true;
-        else end--;
-    }
-    return false;
-}
-```
 
 #### 7. Pow(x, n) (Fast exponentiation using Binary Search)
 
@@ -364,7 +366,7 @@ int binarySearch(vector<int> & v, int val){
 
 ## @ Binary Search on Answer (Tricky Questions)
 
-#### 1. Capacity To Ship Packages Within D Days (Binary Search on Answer)
+#### 1. Capacity To Ship Packages Within D Days 
 A conveyor belt has packages that must be shipped from one port to another within D days. The ith package on the conveyor belt has a weight of weights[i]. Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship. Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
 
 ```cpp
@@ -409,7 +411,7 @@ int shipWithinDays(vector<int>& weights, int D) {
 }
 ```
 
-#### 2. Koko Eating Bananas (Binary Search on Answer)
+#### 2. Koko Eating Bananas 
 Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
 
 **Example**
@@ -447,7 +449,7 @@ int minEatingSpeed(vector<int>& piles, int h) {
 }
 ```
 
-#### 3. Minimum Number of Days to Make m Bouquets (Binary Search on Answer)
+#### 3. Minimum Number of Days to Make m Bouquets 
 Given an integer array bloomDay, an integer m and an integer k. We need to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
 The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet. Return the minimum number of days you need to wait to be able to make m bouquets from the garden. If it is impossible to make m bouquets return -1.
 
@@ -599,9 +601,7 @@ int findBestValue(vector<int>& arr, int target) {
 ```
 
 #### 6. Allocate minimum number of pages
-You are given N number of books. Every ith book has Ai number of pages.You have to allocate books to M number of students. The task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value. 
-
-Each book will be allocated to exactly one student. Each student has to be allocated at least one book.
+You are given N number of books. Every ith book has Ai number of pages.You have to allocate books to M number of students. The task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value. Each book will be allocated to exactly one student. Each student has to be allocated at least one book.
 
 Note: Return -1 if a valid assignment is not possible, and allotment should be in contiguous order
 

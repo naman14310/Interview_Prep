@@ -98,7 +98,7 @@ string normalize(const string &sentence) {
 ```
 
 #### 5. Palindrome break
-Convert a given palindromic string to non palindrome (which is lexicographically smallest) by replacing only one character.
+Convert a given palindromic string containing characters a and b to non palindrome (which is lexicographically smallest) by replacing only one character.
 
 ```cpp
 string breakPalindrome(string s) {

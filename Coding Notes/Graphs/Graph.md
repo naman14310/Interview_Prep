@@ -1,5 +1,7 @@
 # Basic Graph Problems
 
+## @ Questions based on Indegree and Outdegree
+
 #### 1. Find the Town Judge
 In a town, there are n people labelled from 1 to n. One of these people is secretly the town judge. If the town judge exists, then:
 
@@ -30,4 +32,28 @@ int findJudge(int n, vector<vector<int>>& trust) {
 
     return -1;
 }
+```
+
+#### 2. Minimum Number of Vertices to Reach All Nodes
+Given a directed acyclic graph, with n vertices numbered from 0 to n-1, and an array edges where edges[i] = [from_i, to_i] represents a directed edge from node from_i to node to_i. Find the smallest set of vertices from which all nodes in the graph are reachable. It's guaranteed that a unique solution exists.
+
+![img](https://assets.leetcode.com/uploads/2020/07/07/untitled22.png)
+
+Output: [0,3]
+
+Hint: Find all nodes with 0 indegree
+
+```cpp
+ vector<int> findSmallestSetOfVertices(int n, vector<vector<int>>& edges) {
+     vector<int> res;
+     vector<int> indegre (n, 0);
+
+     for(auto e : edges)
+         indegre[e[1]]++;
+
+     for(int i=0; i<n; i++)
+         if(indegre[i]==0) res.push_back(i);
+
+     return res;
+ }
 ```

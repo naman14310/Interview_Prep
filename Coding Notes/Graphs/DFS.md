@@ -130,3 +130,38 @@ int closedIsland(vector<vector<int>>& grid) {
     return res;
 }
 ```
+
+## @ Hard to Guess as Graphs
+
+#### 1. Jump Game III
+Given an array of non-negative integers arr, you are initially positioned at start index of the array. When you are at index i, you can jump to i + arr[i] or i - arr[i], check if you can reach to any index with value 0.
+
+Input: arr = [4,2,3,0,3,1,2], start = 5
+
+Output: true
+
+```cpp
+void dfs(vector<int> & arr, int idx, bool & found){
+    if(arr[idx]==0){
+        found = true;
+        return;
+    }
+
+    int left_nbr = idx-arr[idx];
+    int right_nbr = idx+arr[idx];
+
+    arr[idx] = -1;    // --> marking index vis (after storing left and right nbr)
+
+    if(left_nbr>=0 and arr[left_nbr]!=-1)
+        dfs(arr, left_nbr , found);            // --> dfs call to left (i-arr[i])
+        
+    if(!found and right_nbr<arr.size() and arr[right_nbr]!=-1) 
+        dfs(arr, right_nbr, found);            // --> dfs call to right (i+arr[i])
+}
+
+bool canReach(vector<int>& arr, int start) {
+    bool found = false;
+    dfs(arr, start, found);
+    return found;
+}
+```

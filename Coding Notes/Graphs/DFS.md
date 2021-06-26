@@ -81,3 +81,52 @@ int maxAreaOfIsland(vector<vector<int>>& grid) {
     return maxArea;
 }
 ```
+
+#### 2. Number of Closed Islands
+Given a 2D grid consists of 0s (land) and 1s (water).  An island is a maximal 4-directionally connected group of 0s and a closed island is an island totally (all left, top, right, bottom) surrounded by 1s. Return the number of closed islands.
+
+![img](https://assets.leetcode.com/uploads/2019/10/31/sample_3_1610.png)
+
+Hint: Pass one bool variable isClosed to dfs function, whenever you find any 0(land) on boundary, make isClosed false.
+
+```cpp
+bool isInside(int & x, int & y, int & row, int & col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+void dfs(vector<vector<int>>& grid, int x, int y, int & row, int & col, bool & isClosed){
+    grid[x][y] = 2;     
+
+    if(x==0 or y==0 or x==row-1 or y==col-1)
+        isClosed = false;
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==0)
+            dfs(grid, xnew, ynew, row, col, isClosed);
+    }
+}
+
+
+int closedIsland(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    int res = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(grid[i][j]==0){
+                bool isClosed = true;
+                dfs(grid, i, j, row, col, isClosed);
+
+                if(isClosed) res++;
+            }
+        }
+    }
+    return res;
+}
+```

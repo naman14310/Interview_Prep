@@ -1,5 +1,38 @@
 # BFS
 
+## @ BFS on adjacency list
+
+#### 1. Keys and Rooms
+There are N rooms and you start in room 0. A key rooms[i][j] = v opens the room with number v. Return true if and only if you can enter every room.
+
+Input: [[1],[2],[3],[]]
+
+Output: true
+
+```cpp
+bool canVisitAllRooms(vector<vector<int>>& rooms) {
+    int n = rooms.size();
+    vector<bool> vis (n, false);
+    queue<int> q;
+    int count = 1;
+
+    q.push(0);
+    vis[0] = true;
+
+    while(!q.empty()){
+        int key = q.front(); q.pop();
+        for(int nbr : rooms[key]){
+            if(!vis[nbr]){
+                q.push(nbr);
+                count++;
+                vis[nbr] = true;
+            }
+        }
+    }
+    return count==n;
+}
+```
+
 ## @ BFS on matrix
 
 #### 1. Flood Fill

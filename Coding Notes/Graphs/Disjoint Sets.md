@@ -63,12 +63,73 @@ vector<int> findRedundantConnection(vector<vector<int>>& edges) {
         int root1 = ds_find(ds, e[0]);      
         int root2 = ds_find(ds, e[1]);
 
-        if(root1!=-1 and root1==root2)       // ----> cycle detected
+        if(root1==root2)       // ----> cycle detected
             return e;
 
         ds_union(ds, root1, root2);
     }
 
     return edges.back();
+}
+```
+
+#### 2. Number of Provinces
+There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is connected directly with city c, then city a is connected indirectly with city c. A province is a group of directly or indirectly connected cities and no other cities outside of the group.
+
+You are given an n x n matrix isConnected where isConnected[i][j] = 1 if the ith city and the jth city are directly connected, and isConnected[i][j] = 0 otherwise. Return the total number of provinces.
+
+```cpp
+struct vt{
+    int parent;
+    int rank;
+    vt(int p, int r){
+        parent = p;
+        rank = r;
+    }
+};
+
+int ds_find(vector<vt> & ds, int v){
+    if(ds[v].parent == -1)
+        return v;
+
+    return ds[v].parent = ds_find(ds, ds[v].parent);
+}
+
+void ds_union(vector<vt> & ds, int v1, int v2){
+    if(ds[v1].rank < ds[v2].rank)
+        ds[v1].parent = v2;
+
+    else if(ds[v1].rank > ds[v2].rank)
+        ds[v2].parent = v1;
+
+    else{
+        ds[v1].parent = v2;
+        ds[v2].rank++;
+    }        
+}
+
+int findCircleNum(vector<vector<int>>& isConnected) {
+    int n = isConnected.size();
+    vector<vt> ds (n, vt(-1, 0));
+
+    for(int i=0; i<n; i++){
+        for(int j=i+1; j<n; j++){
+
+            if(isConnected[i][j]){
+                int root1 = ds_find(ds, i);
+                int root2 = ds_find(ds, j);
+
+                if(root1!=root2)
+                    ds_union(ds, root1, root2);
+            }
+        }
+    }
+
+    int province = 0;
+
+    for(int i=0; i<n; i++)
+        if(ds[i].parent==-1) province++;
+
+    return province;
 }
 ```

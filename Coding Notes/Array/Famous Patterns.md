@@ -301,6 +301,56 @@ int maxProduct(vector<int>& nums) {
 }
 ```
 
+#### 3. Maximum Sum Circular Subarray
+
+Hint: Find maxSum subarray and minSum subarray using Kadane's algo. If maxSum<0 return maxSum, else return max(maxSum, totalSum-minSum)
+
+[Full Explaination](https://leetcode.com/problems/maximum-sum-circular-subarray/discuss/178422/One-Pass)
+
+![img](https://assets.leetcode.com/users/motorix/image_1538888300.png)
+
+```cpp
+/* Kadane's algo for max sum subarray */
+
+int maxSum_subarray(vector<int> & nums){
+    int temp_max = nums[0], maxSum = nums[0];
+
+    for(int i=1; i<nums.size(); i++){
+        temp_max = max(temp_max+nums[i], nums[i]);
+        maxSum = max(maxSum, temp_max);
+    }
+
+    return maxSum;
+}
+
+/* Kadane's algo for min sum subarray (just replace max by min)*/
+
+int minSum_subarray(vector<int> & nums){
+    int temp_min = nums[0], minSum = nums[0];
+
+    for(int i=1; i<nums.size(); i++){
+        temp_min = min(temp_min+nums[i], nums[i]);
+        minSum = min(minSum, temp_min);
+    }
+
+    return minSum;
+}
+
+int maxSubarraySumCircular(vector<int>& nums) {
+    int totalSum = 0;
+
+    int maxSum = maxSum_subarray(nums);
+    int minSum = minSum_subarray(nums);
+
+    if(maxSum<0)
+        return maxSum;
+
+    for(int num : nums)
+        totalSum += num;
+
+    return max(maxSum, totalSum-minSum);
+}
+```
 
 ## @ Problems with Subarrays
 

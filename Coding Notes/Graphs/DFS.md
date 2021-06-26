@@ -1,4 +1,6 @@
-# DFS
+# DFS 
+
+## @ DFS on Adjacency List
 
 #### 1. All Paths From Source to Target
 Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1, and return them in any order.
@@ -31,5 +33,51 @@ vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
 
     dfs(graph, vis, res, path, n, 0);
     return res;
+}
+```
+
+## @ DFS on Matrix
+
+#### 1. Max Area of Island
+
+![img](https://assets.leetcode.com/uploads/2021/05/01/maxarea1-grid.jpg)
+
+```cpp
+bool isInside(int & x, int & y, int & row, int & col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+    
+int dfs(vector<vector<int>> & grid, int x, int y, int & row, int & col){
+    int area = 1;
+    grid[x][y] = 2;                // --> marked it as vis
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==1)
+            area += dfs(grid, xnew, ynew, row, col);
+
+    }
+
+    return area;
+}
+
+int maxAreaOfIsland(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    int maxArea = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(grid[i][j]==1){
+                int area = dfs(grid, i, j, row, col);
+                maxArea = max(area, maxArea);
+            }
+        }
+    }
+    return maxArea;
 }
 ```

@@ -577,8 +577,8 @@ Return the minimum number of candies you need to have to distribute the candies 
 
 Approach:
 1. Create a vector candies and initialize it with 1.
-2. Iterate from 1 to n --> If candies[i] > candies[i-1] fill it with candies[i-1]+1
-3. Iterate from n-1 to 0 --> It candies[i] > candies[i+1], fill it with max(candies[i], candies[i+1]+1)
+2. Iterate from 1 to n-1 --> If ratings[i] > ratings[i-1] fill it with candies[i-1]+1
+3. Iterate from n-2 to 0 --> It ratings[i] > ratings[i+1], fill it with max(candies[i], candies[i+1]+1)
 4. Return sum of candies array
 
 ```cpp

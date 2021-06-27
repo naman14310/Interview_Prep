@@ -165,3 +165,69 @@ bool canReach(vector<int>& arr, int start) {
     return found;
 }
 ```
+
+#### 2. Evaluate Division
+You are given an array of variables equations and an array of real numbers values, where equations[i] = [Ai, Bi] and values[i] represent the equation Ai / Bi = values[i]. Each Ai or Bi is a string that represents a single variable.
+
+You are also given some queries, where queries[j] = [Cj, Dj] represents the jth query where you must find the answer for Cj / Dj = ?. Return the answers to all queries. If a single answer cannot be determined, return -1.0.
+
+Input: equations = [["a","b"],["b","c"]], values = [2.0,3.0], queries = [["a","c"],["b","a"],["a","e"],["a","a"],["x","x"]]
+
+Output: [6.00000,0.50000,-1.00000,1.00000,-1.00000]
+
+[Video Explaination](https://www.youtube.com/watch?v=UcDZM6Ap5P4)
+
+Hint: Represent all variables as vertices of graph and values as edge weights. Then perform dfs to find a path from vertice 1 to vertice 2.
+
+```cpp
+void dfs (unordered_map<string, vector<pair<string, double>>> & graph, unordered_set<string> & vis, string src, string end, double tempres, double & res){
+    vis.insert(src);     // ---> mark src vertex visited
+
+    if(src == end){
+        res = tempres;
+        return;
+    }
+
+    for(auto nbr_vt : graph[src]){
+        string nbr = nbr_vt.first;
+        double val = nbr_vt.second;
+
+        if(vis.find(nbr)==vis.end() and res<0)
+            dfs(graph, vis, nbr, end, tempres*val, res);
+    }        
+
+    vis.erase(src);
+}
+
+vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+
+    unordered_map<string, vector<pair<string, double>> > graph;
+
+    for(int i=0; i<equations.size(); i++){
+        graph[equations[i][0]].push_back({equations[i][1], values[i]});
+        graph[equations[i][1]].push_back({equations[i][0], 1.0/values[i]});
+    }
+
+    vector<double> ans;
+
+    for(auto q : queries){
+        string v1 = q[0], v2 = q[1];
+
+        if(graph.find(v1)==graph.end() or graph.find(v2)==graph.end())
+            ans.push_back(-1);
+
+        else if (v1==v2)
+            ans.push_back(1);
+
+        else{
+            unordered_set<string> vis;
+            double res = -1;
+
+            dfs(graph, vis, v1, v2, 1, res);
+            ans.push_back(res);
+        }
+    }
+
+    return ans;
+}
+```

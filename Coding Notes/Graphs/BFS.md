@@ -33,6 +33,44 @@ bool canVisitAllRooms(vector<vector<int>>& rooms) {
 }
 ```
 
+#### 2. Time Needed to Inform All Employees
+A company has n employees with a unique ID for each employee from 0 to n - 1. The head of the company is the one with headID.
+
+Each employee has one direct manager given in the manager array, manager[headID] = -1. Also, it is guaranteed that the subordination relationships have a tree structure.
+
+The head of the company wants to inform all the company employees of an urgent piece of news. He will inform his direct subordinates, and they will inform their subordinates, and so on until all employees know about the urgent news.
+
+The i-th employee needs informTime[i] minutes to inform all of his direct subordinates (i.e., After informTime[i] minutes, all his direct subordinates can start spreading the news). Return the number of minutes needed to inform all the employees about the urgent news.
+
+Input: n = 4, headID = 2, manager = [3,3,-1,2], informTime = [0,0,162,914]
+
+Output: 1076
+
+```cpp
+int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+    unordered_map<int, vector<int>> graph;
+    int time = informTime[headID];
+
+    for(int i=0; i<n; i++)
+        graph[manager[i]].push_back(i);
+
+    queue<pair<int,int>> q;
+    q.push({headID, time});
+
+    while(!q.empty()){
+        auto emp = q.front(); q.pop();
+        int id = emp.first, t = emp.second;
+
+        for(int nbr : graph[id]){
+            q.push({nbr, t+informTime[nbr]});
+            time = max(time, t+informTime[nbr]);
+        }
+    }
+
+    return time;
+}
+```
+
 ## @ BFS on matrix
 
 #### 1. Flood Fill

@@ -133,3 +133,62 @@ int findCircleNum(vector<vector<int>>& isConnected) {
     return province;
 }
 ```
+
+#### 3. Number of Operations to Make Network Connected
+Given an initial computer network connections. You can extract certain cables between two directly connected computers, and place them between any pair of disconnected computers to make them directly connected. Return the minimum number of times you need to do this in order to make all the computers connected. If it's not possible, return -1. 
+
+![img](https://assets.leetcode.com/uploads/2020/01/02/sample_1_1677.png)
+
+Output: 1
+
+Hint: Find total no. of groups after adding all edges one by one and total extra cables (when both pc already exist in same group, then cable between them is extra).
+
+```cpp
+struct vt{
+    int parent;
+    int rank;
+    vt (int p, int r){
+        parent = p;
+        rank = r;
+    }
+};
+
+int ds_find(vector<vt> & ds, int v){
+    if(ds[v].parent==-1)
+        return v;
+
+    return ds[v].parent = ds_find(ds, ds[v].parent);
+}
+
+void ds_union(vector<vt> & ds, int v1, int v2){
+    if(ds[v1].rank < ds[v2].rank)
+        ds[v1].parent = v2;
+
+    else if(ds[v1].rank > ds[v2].rank)
+        ds[v2].parent = v1;
+
+    else{
+        ds[v1].parent = v2;
+        ds[v2].rank++;
+    }
+}
+
+int makeConnected(int n, vector<vector<int>>& connections) {
+    vector<vt> ds (n, vt(-1, 0));
+    int extra_cable = 0, groups = 0;
+
+    for(auto e : connections){
+        int root1 = ds_find(ds, e[0]);
+        int root2 = ds_find(ds, e[1]);
+
+        if(root1==root2) extra_cable++;
+        
+        else ds_union(ds, root1, root2);
+    }
+
+    for(int i=0; i<n; i++)
+        if(ds[i].parent==-1) groups++;
+
+    return groups-1>extra_cable ? -1 : groups-1;
+}
+```

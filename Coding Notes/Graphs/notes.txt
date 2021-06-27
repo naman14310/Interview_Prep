@@ -1,0 +1,5 @@
+Premium Questions List
+----------------------
+
+1. Parallel Courses
+2. Connecting cities with min cost

@@ -247,6 +247,54 @@ int numIslands(vector<vector<char>>& grid) {
 }
 ```
 
+## @ Graph coloring
+
+#### 1. Is Graph Bipartite?
+
+Hint: If graph can be coloured with only two colours such that no two vertices have same color then it is Bipartite.
+
+```cpp
+/*
+    -1 --> uncoloured (unvisited)
+    0 --> red
+    1 --> blue  
+*/
+
+bool dfs (vector<vector<int>>& graph, vector<int> & color, int src){
+    int node_color = color[src];
+
+    for(int nbr : graph[src]){
+
+        if(color[nbr]==-1){
+            color[nbr] = !node_color;
+            bool is_bipartite = dfs(graph, color, nbr);
+            if(!is_bipartite) 
+                return false;
+        }
+
+        else if(color[nbr]==node_color)
+            return false;
+    }
+
+    return true;
+}
+
+bool isBipartite(vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<int> color (n, -1);
+
+    for(int i=0; i<n; i++){
+        if(color[i]==-1){
+            color[i] = 0;
+            bool res = dfs(graph, color, i);
+            if(!res) return false;
+        }
+    }
+
+    return true;
+}
+```
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Jump Game III

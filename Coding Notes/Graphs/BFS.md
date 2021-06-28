@@ -114,6 +114,88 @@ vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int ne
 }
 ```
 
+#### 2. Rotting Oranges
+You are given an m x n grid where each cell can have one of three values:
+
+1. 0 representing an empty cell,
+2. 1 representing a fresh orange, or
+3. 2 representing a rotten orange.
+
+Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten. Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
+
+Hint: Use some delimeter to keep track of ending of one level. Total time to rott oranges will be equal to number of bfs levels.
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+int bfs (vector<vector<int>>& grid, queue<pair<int,int>> & q, int row, int col, int & rotten_oranges){
+    int time = 0;
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    while(!q.empty()){
+        auto cell = q.front(); q.pop();
+        int x = cell.first, y = cell.second;
+
+        if(x==-1){
+            if(q.empty()) return time;
+
+            q.push({-1, -1});
+            time++;
+            continue;
+        }
+
+        rotten_oranges++;         // It will increment count of total rotten oranges
+
+        for(int i=0; i<4; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==1){
+                q.push({xnew, ynew});
+                grid[xnew][ynew] = 2;
+            }
+        }
+
+    }
+
+    return time;
+}
+
+int orangesRotting(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    queue<pair<int, int>> q;
+
+    int total_oranges = 0;
+    int rotten_oranges = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(grid[i][j]==1)
+                total_oranges++;
+
+            else if(grid[i][j]==2){
+                q.push({i,j});
+                total_oranges++;
+            }
+
+        }
+    }
+
+    q.push({-1, -1});      // ----> will act as a ending delimeter for bds levels
+
+    int time = bfs(grid, q, row, col, rotten_oranges);
+
+    if(total_oranges==rotten_oranges) return time;        // ----> Don't forget to check this condition
+    else return -1;
+}
+```
+
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Open the Lock (Too Tricky)

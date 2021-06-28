@@ -36,6 +36,82 @@ vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
 }
 ```
 
+#### 2. Find Eventual Safe States
+A node is evetually safe if all path from the node ends at a terminal node. Return an array containing all the safe nodes of the graph.
+
+![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/03/17/picture1.png)
+
+Input: graph = [[1,2],[2,3],[5],[0],[5],[],[]]
+
+Output: [2,4,5,6]
+
+Hint: Find all nodes which is not involved in any cycle gambling
+
+```cpp
+bool dfs (vector<vector<int>> & graph, vector<bool> & curr_path, vector<bool> & vis, int src, unordered_set<int> & safe){
+    vis[src] = true;
+    curr_path[src] = true;
+
+    bool unsafe = false;
+
+    for(int nbr : graph[src]){
+
+        /* Case 1:  If nbr lies in current path --> that means cycle is formed and curr vertex is unsafe */
+
+        if(curr_path[nbr])
+            unsafe = true;
+
+        /* 
+            Case 2: If nbr was visited earlier,          
+                    A) If it was unsafe --> current vertex is also unsafe
+                    B) If it was safe ----> cannot comment on curr vertex so do nothing
+
+        */
+
+        else if(vis[nbr]){
+            if(safe.find(nbr)==safe.end())
+                unsafe = true;
+        }
+
+        /* Case 3: If nbr is undiscovered --> do DFS and update the information */
+
+        else{
+            bool res = dfs(graph, curr_path, vis, nbr, safe);
+            unsafe = unsafe or res;
+        }
+    }
+
+    curr_path[src] = false;
+
+    if(!unsafe) 
+        safe.insert(src);
+
+    return unsafe;
+}
+
+
+vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<bool> vis (n, false);
+    unordered_set<int> safe;                 // ----> It will store all safe vertices
+
+    for(int i=0; i<n; i++){
+        if(!vis[i]){
+            vector<bool> curr_path (n, false);
+            dfs(graph, curr_path, vis, i, safe);
+        }
+    }
+
+    vector<int> safe_list;
+
+    for(int i=0; i<n; i++)
+        if(safe.find(i)!=safe.end())
+            safe_list.push_back(i);
+
+    return safe_list;
+}
+```
+
 ## @ DFS on Matrix
 
 #### 1. Max Area of Island

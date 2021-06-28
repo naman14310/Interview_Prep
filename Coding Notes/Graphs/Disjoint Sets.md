@@ -192,3 +192,82 @@ int makeConnected(int n, vector<vector<int>>& connections) {
     return groups-1>extra_cable ? -1 : groups-1;
 }
 ```
+
+#### 4. Satisfiability of Equality Equations
+Given an array equations, each string equations[i] has length 4 and takes one of two different forms: "a==b" or "a!=b".  Here, a and b are lowercase letters. Return true if and only if it is possible to assign integers to variable names so as to satisfy all the given equations.
+
+Input: ["a==b","b!=c","c==a"]
+
+Output: false
+
+Hint: All "==" equations actually represent the connection in the graph. The connected nodes should be in the same union/set. Then we check all inequations. Two inequal nodes should be in the different union/set.
+
+```cpp
+struct vt{
+    int parent;
+    int rank;
+    vt(int p, int r){
+        parent = p;
+        rank = r;
+    }
+};
+
+int ds_find(vector<vt>& ds, int v){
+    if(ds[v].parent==-1)
+        return v;
+
+    return ds[v].parent = ds_find(ds, ds[v].parent);
+}
+
+void ds_union(vector<vt>& ds, int v1, int v2){
+    if(ds[v1].rank < ds[v2].rank)
+        ds[v1].parent = v2;
+
+    else if(ds[v1].rank > ds[v2].rank)
+        ds[v2].parent = v1;
+
+    else{
+        ds[v1].parent = v2;
+        ds[v2].rank++;
+    }
+}
+
+
+bool equationsPossible(vector<string>& equations) {
+    int n = equations.size();
+    vector<vt> ds (26, vt(-1, 0));             // ---> Since only lowercase letters will be there
+
+    /* In 1st pass --> union all equalities */
+
+    for(string s : equations){
+
+        if(s[1]=='='){
+
+            int v1 = s[0]-'a', v2 = s[3]-'a';
+
+            int root1 = ds_find(ds, v1);
+            int root2 = ds_find(ds, v2);
+
+            if(root1!=root2)
+                ds_union(ds, root1, root2);
+        }
+    }
+
+    /* In 2nd pass --> verify all inequalities */
+
+    for(string s : equations){
+
+        if(s[1]=='!'){
+
+            int v1 = s[0]-'a', v2 = s[3]-'a';
+
+            int root1 = ds_find(ds, v1);
+            int root2 = ds_find(ds, v2);
+
+            if(root1==root2) return false;
+        }
+    }
+
+    return true;
+}
+```

@@ -186,7 +186,7 @@ int orangesRotting(vector<vector<int>>& grid) {
         }
     }
 
-    q.push({-1, -1});      // ----> will act as a ending delimeter for bds levels
+    q.push({-1, -1});      // ----> will act as a ending delimeter for bfs levels
 
     int time = bfs(grid, q, row, col, rotten_oranges);
 

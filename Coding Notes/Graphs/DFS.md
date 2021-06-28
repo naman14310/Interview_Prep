@@ -207,6 +207,46 @@ int closedIsland(vector<vector<int>>& grid) {
 }
 ```
 
+#### 3. Number of Islands
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+void dfs(vector<vector<char>> & grid, int x, int y, int row, int col){
+    grid[x][y] = '2';
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]=='1')
+            dfs(grid, xnew, ynew, row, col);
+    }
+}
+
+
+int numIslands(vector<vector<char>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    int island = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(grid[i][j]=='1'){
+                dfs(grid, i, j, row, col);
+                island++;
+            }
+        }
+    }
+
+    return island;
+}
+```
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Jump Game III

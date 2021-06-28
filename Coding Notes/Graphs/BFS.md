@@ -113,3 +113,86 @@ vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int ne
     return image;
 }
 ```
+
+## @ Hard to Guess as Graphs
+
+#### 1. Open the Lock (Too Tricky)
+You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'. The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'. Each move consists of turning one wheel one slot. The lock initially starts at '0000'.
+
+You are given a list of deadends dead ends, meaning if the lock displays any of these codes, the wheels of the lock will stop turning and you will be unable to open it. Given a target representing the value of the wheels that will unlock the lock, return the minimum total number of turns required to open the lock, or -1 if it is impossible.
+
+Input: deadends = ["0201","0101","0102","1212","2002"], target = "0202"
+
+Output: 6
+
+Hint: Find all 8 nbrs of current state (4 wheels * 2 directional moves i.e. scroll_up and scroll_down). Apply bfs on string by pushing all nbrs to queue as we do in other questions. Check for deadends before pushing any nbrs to queue and use unordered_set to keep track of already visited strings.
+
+[Video Explaination](https://www.youtube.com/watch?v=vtxETRvR9JY)
+
+```cpp
+vector<string> get_nbrs (string s){
+    vector<string> nbrs;
+
+    for(int i=0; i<4; i++){
+        int digit = s[i]-'0';
+        int digit_after_rotate_up = (digit+1)%10;
+        int digit_after_rotate_down = (digit + 10 - 1)%10;
+
+        string s1 = s, s2 = s;
+        s1[i] = digit_after_rotate_up + '0';
+        s2[i] = digit_after_rotate_down + '0';
+
+        nbrs.push_back(s1);
+        nbrs.push_back(s2);
+    }
+
+    return nbrs;
+}
+
+int bfs (unordered_set<string> & deadends, string src, string target){
+    int moves = 0;
+    queue<string> q;
+    unordered_set<string> vis;
+
+    q.push(src);
+    q.push("#");              // ----> It will act as ending delimeter for one bfs level    
+    vis.insert(src);
+
+    while(!q.empty()){
+        string s = q.front(); q.pop();
+
+        if(s==target) return moves;
+
+        else if(s=="#"){
+            if(q.empty()) break;
+
+            q.push("#");
+            moves++;
+        }
+
+        else{
+            auto nbrs = get_nbrs(s);
+            for(auto nbr : nbrs){
+                if(vis.find(nbr)==vis.end() and deadends.find(nbr)==deadends.end()){
+                    q.push(nbr);
+                    vis.insert(nbr);
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
+int openLock(vector<string>& deadends, string target) {
+    unordered_set<string> dead_ends;
+
+    for(string s : deadends)
+        dead_ends.insert(s);
+
+    if(dead_ends.find("0000")!=dead_ends.end()) return -1;
+
+    return bfs(dead_ends, "0000", target);
+}
+```
+

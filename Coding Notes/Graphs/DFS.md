@@ -89,7 +89,6 @@ bool dfs (vector<vector<int>> & graph, vector<bool> & curr_path, vector<bool> & 
     return unsafe;
 }
 
-
 vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
     int n = graph.size();
     vector<bool> vis (n, false);
@@ -109,6 +108,49 @@ vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
             safe_list.push_back(i);
 
     return safe_list;
+}
+```
+
+#### 3. Course Schedule
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. Return true if you can finish all courses. Otherwise, return false.
+
+Hint: Do simple cycle detection 
+
+```cpp
+bool dfs (unordered_map<int, vector<int>>& graph, vector<bool> & vis, vector<bool> & curr_path, int src){
+    vis[src] = true;
+    curr_path[src] = true;
+
+    for(int nbr : graph[src]){
+
+        if(curr_path[nbr]) return false;
+
+        if(!vis[nbr]){
+            bool res = dfs(graph, vis, curr_path, nbr);
+            if(!res) return false;
+        }
+    }
+
+    curr_path[src] = false;
+    return true;
+}
+
+bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    unordered_map<int, vector<int>> graph;
+    vector<bool> vis (numCourses, false);
+    vector<bool> curr_path(numCourses, false);
+
+    for(auto e : prerequisites)
+        graph[e[0]].push_back(e[1]);        
+
+    for(int i=0; i<numCourses; i++){
+        if(!vis[i]){   
+            int res = dfs(graph, vis, curr_path, i);
+            if(!res) return false;
+        }
+    }
+
+    return true;
 }
 ```
 

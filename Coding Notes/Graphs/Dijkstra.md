@@ -2,6 +2,82 @@
 
 Used for finding shortest path (or cheapest) in weightes graph.
 
+## @ Dijkstra on Adjacency List
+
+#### 1. Network Delay Time
+You are given a network of n nodes, labeled from 1 to n. You are also given a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. We will send a signal from a given node k. Return the time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
+
+![img](https://assets.leetcode.com/uploads/2019/05/23/931_example_1.png)
+
+Input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+
+Output: 2
+
+```cpp
+void dijkstra (unordered_map<int, vector<pair<int, int>>>& graph, vector<int> & cost, int src, int n){
+    vector<bool> vis (n+1, false);
+
+    set<pair<int, int>> s;                                 // ---> set of <cost, vertex>
+    s.insert({cost[src], src});
+
+    while(!s.empty()){
+
+        /* Pop node with lowest cost */
+
+        auto itr = s.begin();
+        int c = itr->first, v = itr->second;
+        s.erase(itr);
+
+        /* Iterating for all nbr */
+
+        for(auto nbr : graph[v]){
+            int nbr_v = nbr.first, nbr_c = nbr.second;
+
+            if(vis[nbr_v]) continue;
+
+            int old_cost = cost[nbr_v];
+            int new_cost = c + nbr_c;
+
+            /* Relaxation */
+
+            if(new_cost < old_cost){
+                auto ptr = s.find({old_cost, nbr_v});
+                if(ptr!=s.end())
+                    s.erase(ptr);
+
+                s.insert({new_cost, nbr_v});
+                cost[nbr_v] = new_cost;
+            }
+        }
+        
+        vis[v] = true;
+    }
+}
+
+int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+    unordered_map<int, vector<pair<int, int>>> graph;        //   v --> [list of (nbr, time)]
+    for(auto e : times)
+        graph[e[0]].push_back({e[1], e[2]});
+
+    vector<int> cost (n+1, INT_MAX);                 // ----> here time will be our cost
+    cost[k] = 0;
+
+    dijkstra(graph, cost, k, n);
+
+    /* Total time will be equals to maxtime among all vertex */
+
+    int total_time = 0;
+    for(int i=1; i<=n; i++){
+        if(cost[i]==INT_MAX) 
+            return -1;
+        total_time = max(total_time,cost[i]);
+    }
+
+    return total_time;
+}
+```
+
+
 ## @ Dijkstra on Matrix
 
 #### 1. Path With Minimum Effort

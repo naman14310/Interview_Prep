@@ -247,6 +247,95 @@ int numIslands(vector<vector<char>>& grid) {
 }
 ```
 
+#### 4. Pacific Atlantic Water Flow
+There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Return a 2D list of grid coordinates such that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
+
+![img](https://assets.leetcode.com/uploads/2021/06/08/waterflow-grid.jpg)
+
+Hint: Flow the water in reverse dir from ocean to land. First iterate the upper and left boundary to flow the pacific water. Then iterate right and bottom boundary to flow the atlantic water. If any cell contains both the water, add it in the answer vector.
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+bool isVisited(vector<vector<pair<bool, bool>>>& water, bool pacific, int x, int y){
+    if(pacific and water[x][y].first)
+        return true;
+
+    if(!pacific and water[x][y].second)
+        return true;
+
+    return false;
+}
+
+void dfs(vector<vector<int>>& heights, vector<vector<pair<bool, bool>>>& water, bool pacific, int x, int y, int row, int col, vector<vector<int>>& res){
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    if(pacific) water[x][y].first = true;
+    else{
+        water[x][y].second = true;
+        if(water[x][y].first){
+            vector<int> temp;
+            temp.push_back(x); temp.push_back(y);
+            res.push_back(temp);
+        }
+    } 
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and !isVisited(water, pacific, xnew, ynew) and heights[xnew][ynew]>=heights[x][y])
+            dfs(heights, water, pacific, xnew, ynew, row, col, res);
+    }
+}
+
+vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+    int row = heights.size(), col = heights[0].size();
+    vector<vector<int>> res;
+
+    /* 
+        water matrix will keep track of pacific and atlantic waters for every cell 
+        and it will also act as a visited matrix
+    */
+
+    vector<vector<pair<bool, bool>>> water (row, vector<pair<bool, bool>> (col, {false, false}));
+
+    /* Iterating upper boundary for pacific ocean */
+
+    for(int j=0; j<col; j++){
+        if(!water[0][j].first)
+            dfs(heights, water, true, 0, j, row, col, res);
+    }
+
+    /* Iterating left boundary for pacific ocean */
+
+    for(int i=0; i<row; i++){
+        if(!water[i][0].first)
+            dfs(heights, water, true, i, 0, row, col, res);
+    }
+
+    /* Iterating right boundary for atlantic ocean */
+
+    for(int i=0; i<row; i++){
+        if(!water[i][col-1].second)
+            dfs(heights, water, false, i, col-1, row, col, res);
+    }
+
+    /* Iterating lower boundary for atlantic ocean */
+
+    for(int j=0; j<col; j++){
+        if(!water[row-1][j].second)
+            dfs(heights, water, false, row-1, j, row, col, res);
+    }
+
+    return res;
+}
+```
+
+
 ## @ Graph coloring
 
 #### 1. Is Graph Bipartite?

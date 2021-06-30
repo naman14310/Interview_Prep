@@ -278,3 +278,79 @@ int openLock(vector<string>& deadends, string target) {
 }
 ```
 
+#### 2. Minimum Genetic Mutation
+A gene string can be represented by an 8-character long string, with choices from 'A', 'C', 'G', and 'T'. Suppose we need to investigate a mutation where one mutation is defined as one single character changed in the gene string.
+
+For example, "AACCGGTT" --> "AACCGGTA" is one mutation.
+There is also a gene bank that records all the valid gene mutations. A gene must be in bank to make it a valid gene string. Note that the starting point is assumed to be valid, so it might not be included in the bank.
+
+Given the two gene strings start and end and the gene bank bank, return the minimum number of mutations needed to mutate from start to end. If there is no such a mutation, return -1.
+
+Input: start = "AACCGGTT", end = "AAACGGTA", bank = ["AACCGGTA","AACCGCTA","AAACGGTA"]
+
+Output: 2
+
+Hint: Similar to Open the Lock Problem
+
+```cpp
+vector<string> get_nbrs(string s, string end){
+    vector<string> nbrs;
+    char choice[] = {'A', 'C', 'G', 'T'};
+
+    for(int i=0; i<8; i++){            
+        for(int c=0; c<4; c++){
+            if(s[i]!=choice[c]){
+                string temp = s;
+                temp[i] = choice[c];
+                nbrs.push_back(temp);
+            }
+        }
+    }
+
+    return nbrs;
+}
+
+/* here, gene bank will also used to mark any string visited. Just erase that string from the bank */
+
+int bfs (string start, string end, unordered_set<string> & gene_bank){
+    int mutation = 0;
+
+    queue<string> q;
+    q.push(start);
+    q.push("#");              
+
+    while(!q.empty()){
+        string s = q.front(); q.pop();
+
+        if(s==end) return mutation;
+
+        if(s=="#"){
+            if(q.empty()) break;
+
+            q.push("#");
+            mutation++;
+            continue;
+        }
+
+        vector<string> nbrs = get_nbrs(s, end);
+
+        for(string nbr : nbrs){
+            if(gene_bank.find(nbr)!=gene_bank.end()){
+                q.push(nbr);
+                gene_bank.erase(nbr);            // ----> mark that nbr vis by erasing it from bank
+            }
+        }
+    }
+
+    return -1;
+}
+
+int minMutation(string start, string end, vector<string>& bank) {
+   unordered_set<string> gene_bank;
+    for(string s : bank)
+        gene_bank.insert(s);
+
+    return bfs (start, end, gene_bank);
+}
+```
+

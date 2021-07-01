@@ -195,6 +195,66 @@ int orangesRotting(vector<vector<int>>& grid) {
 }
 ```
 
+#### 3. 01 Matrix
+Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell. The distance between two adjacent cells is 1.
+
+![img](https://assets.leetcode.com/uploads/2021/04/24/01-2-grid.jpg)
+
+Output: [[0,0,0],[0,1,0],[1,2,1]]
+
+Hint: Think somewhat similar to rotting oranges (parallel bfs)
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+void bfs (vector<vector<int>>& mat, queue<pair<int,int>> & q, int row, int col){
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    while(!q.empty()){
+        auto cell = q.front(); q.pop();
+        int x = cell.first, y = cell.second;
+
+        for(int i=0; i<4; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            /* If nbr is valid and path through parent is more shorter then we will update nbr and push it in the queue */
+
+            if(isInside(xnew, ynew, row, col) and mat[x][y]+1 < mat[xnew][ynew]){
+                mat[xnew][ynew] = mat[x][y]+1;
+                q.push({xnew, ynew});
+            }
+        }
+    }
+}
+
+vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+    int row = mat.size(), col = mat[0].size();
+    queue<pair<int,int>> q;
+
+    /* 
+        Same matrix will be used to store shortest distances
+        First add all cells with 0 to the queue and set cells with 1 to INT_MAX 
+    */
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(mat[i][j]==0)
+                q.push({i,j});     // --> They will be the starting point for parallel bfs
+
+            else
+                mat[i][j]=INT_MAX;
+        }
+    }
+
+    bfs (mat, q, row, col);
+    return mat;
+}
+```
 
 ## @ Hard to Guess as Graphs
 

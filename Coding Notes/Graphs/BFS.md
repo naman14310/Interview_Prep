@@ -256,6 +256,63 @@ vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
 }
 ```
 
+#### 4. Shortest Path in Binary Matrix
+
+![img](https://assets.leetcode.com/uploads/2021/02/18/example2_1.png)
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+int bfs (vector<vector<int>>& grid, int row, int col){
+    int distance = 1;
+
+    int dx[] = {1, -1, 1, -1, 1, 0, -1, 0};
+    int dy[] = {1, 1, -1, -1, 0, 1, 0, -1};
+
+    queue<pair<int,int>> q;
+    q.push({0,0});
+    q.push({-1, -1});
+
+    grid[0][0] = 2;         // ----> marked as vis
+
+    while (!q.empty()){
+        auto p = q.front(); q.pop();
+        int x = p.first, y = p.second;
+
+        if(x==row-1 and y==col-1) return distance;
+
+        if(x==-1){
+            if(q.empty()) break;
+
+            q.push({-1, -1});
+            distance++;
+            continue;
+        }
+
+        for(int i=0; i<8; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==0){
+                q.push({xnew, ynew});
+                grid[xnew][ynew] = 2;
+            }
+        }
+    }
+
+    return -1;
+}
+
+int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    if(grid[0][0]!=0) return -1;
+
+    return bfs (grid, row, col);
+}
+```
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Open the Lock (Too Tricky)

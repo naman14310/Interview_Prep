@@ -3,6 +3,7 @@
 It is a linear ordering of vertices such that for every directed edge u --> v, vertex u comes before vertex v in the ordering.
 
 #### 1. Course Schedule II
+There are a total of numCourses courses labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. Return the ordering of courses you should take to finish all courses. If it is impossible to finish all courses, return an empty array.
 
 **Method 1: DFS + Stack**
 ```cpp

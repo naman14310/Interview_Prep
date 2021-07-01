@@ -7,7 +7,7 @@ There are a total of numCourses courses labeled from 0 to numCourses - 1. You ar
 
 **Method 1: DFS + Stack**
 ```cpp
-bool dfs (unordered_map<int, vector<int>> & graph, vector<bool> & vis, vector<bool> & curr_path, stack<int> & stk, int src){
+bool dfs (unordered_map<int, vector<int>>& graph, vector<bool>& vis, vector<bool>& curr_path, stack<int>& stk, int src){
     vis[src] = true;
     curr_path[src] = true;
 

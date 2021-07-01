@@ -57,3 +57,92 @@ Hint: Find all nodes with 0 indegree
      return res;
  }
 ```
+
+#### 3. Clone graph
+Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph.
+
+![img](https://assets.leetcode.com/uploads/2019/11/04/133_clone_graph_question.png)
+
+Method 1: DFS
+
+```cpp
+ Node* dfs (Node* node, unordered_map<Node*, Node*> & mp){
+
+     /* Create a new clone of node and insert a mapping to map */
+
+     Node* cloned_node = new Node(node->val);
+     mp[node] = cloned_node;
+
+     for(int i=0; i<node->neighbors.size(); i++){
+         Node* nbr = node->neighbors[i];
+
+         /* If nbr is not vis, make a dfs call and pushback returned node to nbrs_vector of cloned node */ 
+
+         if(mp.find(nbr)==mp.end()){
+             Node* cloned_nbr = dfs(nbr, mp);
+             cloned_node->neighbors.push_back(cloned_nbr);
+         }
+
+         /* Else simply push_back nbr to nbrs_vector of cloned node */
+
+         else
+             cloned_node->neighbors.push_back(mp[nbr]);
+     }
+
+     return cloned_node;
+ }
+
+ Node* cloneGraph(Node* node) {
+     if(!node) return NULL;
+
+     unordered_map<Node*, Node*> mp;
+     return dfs(node, mp);   
+ }
+```
+
+Method 2: BFS
+
+```cpp
+ Node* bfs (Node* node, unordered_map<Node*, Node*>& mp){
+
+     /* Creating a clone for initial node and insert mapping in mp */
+
+     mp[node] = new Node(node->val);
+
+     queue<Node*> q;
+     q.push(node);
+
+     while(!q.empty()){
+
+         /* pop one node from q and name it vt */
+
+         Node* vt = q.front(); q.pop();
+
+         for(int i=0; i<vt->neighbors.size(); i++){                
+             Node* nbr = vt->neighbors[i];
+
+             /* If nbr is not visited then create a clone of nbr and pushback it in mp[vt]->neighbors */
+
+             if(mp.find(nbr)==mp.end()){
+                 mp[nbr] = new Node(nbr->val);
+                 mp[vt]->neighbors.push_back(mp[nbr]);
+                 q.push(nbr);
+             }
+
+             /* Else simply insert mp[nbr] in mp[vt]->neighbours */
+
+             else
+                 mp[vt]->neighbors.push_back(mp[nbr]);   
+         }
+     }
+
+     return mp[node];
+ }
+
+ Node* cloneGraph(Node* node) {
+     if(!node) return NULL;
+
+     unordered_map<Node*, Node*> mp;
+     return bfs (node, mp);
+ }
+```

@@ -10,7 +10,7 @@ Input: tickets = [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL"
 Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
 
 ```cpp
-void euler_path (unordered_map<string, multiset<string>> & graph, stack<string> & stk, string src, vector<string> & res){
+void euler_path (unordered_map<string, multiset<string>>& graph, stack<string>& stk, string src, vector<string>& res){
 
     /* Push src node in stack */
 

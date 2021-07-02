@@ -476,6 +476,52 @@ bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
 }
 ```
 
+## @ DFS with pruning
+
+#### 1. Cheapest Flights Within K Stops
+There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei]. You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+
+Note: This is simple approach using dfs. Optimized approach is using dijkstra.
+
+```cpp
+void dfs (unordered_map<int, vector<pair<int, int>>> & graph, vector<bool> & curr_path, int curr_cost, int & min_cost, int k, int src, int dst){
+    if(k<-1 or curr_cost >= min_cost) return;    // ----> prune condition
+
+    if(k>=-1 and src==dst){
+        min_cost = min(min_cost, curr_cost);     // ----> if curr path cost is lesser then update min_cost
+        return;
+    }
+
+    curr_path[src] = true;
+
+    for(auto nbr : graph[src]){
+        int nbr_node = nbr.first;
+        int nbr_cost = nbr.second;
+
+        if(!curr_path[nbr.first])
+            dfs(graph, curr_path, curr_cost+nbr_cost, min_cost, k-1, nbr_node, dst);
+    }
+
+    curr_path[src] = false;
+}
+
+
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+    unordered_map<int, vector<pair<int, int>>> graph;
+    vector<bool> curr_path (n, false);
+
+    for(auto e : flights)
+        graph[e[0]].push_back({e[1], e[2]});
+
+    int min_cost = INT_MAX;
+
+    dfs(graph, curr_path, 0, min_cost, k, src, dst);
+
+    if(min_cost==INT_MAX) return -1;
+    else return min_cost;
+}
+```
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Jump Game III

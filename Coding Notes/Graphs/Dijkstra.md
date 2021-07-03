@@ -184,7 +184,7 @@ There are n cities connected by some number of flights. You are given an array f
 
 **Intuition behind the solution**
 
-The key difference with the classic Dijkstra algo is, we don't maintain the global optimal distance to each node (i.e. Relaxation should not be done), because there could be routes which their length is shorter but pass more stops, and those routes don't necessarily constitute the best route in the end. To deal with this, the solution simply put all possible routes into the priority queue, so that all of them has a chance to be processed. IMO, this is the most brilliant part.
+The key difference with the classic Dijkstra algo is, we don't maintain the global optimal distance to each node (i.e. Relaxation should not be done), because there could be routes which their length is shorter but pass more stops, and those routes don't necessarily constitute the best route in the end. To deal with this, the solution simply put all possible routes into the multiset (or priority queue), so that all of them has a chance to be processed. IMO, this is the most brilliant part.
 And the solution simply returns the first qualified route.
 
 ```cpp

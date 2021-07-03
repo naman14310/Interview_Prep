@@ -146,3 +146,58 @@ Method 2: BFS
      return bfs (node, mp);
  }
 ```
+
+#### 4. Minimum Height Trees
+Given a tree of n nodes labelled from 0 to n - 1, and an array of n - 1 edges where edges[i] = [ai, bi] indicates an undirected edge, you can choose any node of the tree as the root. When you select a node x as the root, the result tree has height h. Among all possible rooted trees, those with minimum height (i.e. min(h))  are called minimum height trees (MHTs). Return a list of all MHTs' root labels.
+
+Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
+
+Output: [3,4]
+
+![img](https://assets.leetcode.com/uploads/2020/09/01/e2.jpg)
+
+Hint: The idea is to eat up all the leaves at the same time, until one/two leaves are left.
+
+```cpp
+ vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+     if(n==1) return vector<int> (1, 0);
+
+     unordered_map<int, unordered_set<int>> graph;
+     queue<int> q;
+
+     for(auto e : edges){
+         graph[e[0]].insert(e[1]);
+         graph[e[1]].insert(e[0]);
+     }
+
+     for(int i=0; i<n; i++)
+         if(graph[i].size()==1)
+             q.push(i);
+
+     while(n>2){            
+         int len = q.size();
+
+         for(int i=0; i<len; i++){
+             int node = q.front(); q.pop();
+
+             for(int nbr : graph[node]){   
+                 graph[nbr].erase(node);
+
+                 if(graph[nbr].size()==1)
+                     q.push(nbr);
+             }
+         }
+
+         n -= len;
+     }
+
+     vector<int> res;
+
+     while(!q.empty()){
+         res.push_back(q.front());
+         q.pop();
+     }
+
+     return res;
+ }
+```

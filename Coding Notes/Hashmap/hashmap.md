@@ -42,3 +42,46 @@ int numMatchingSubseq(string s, vector<string>& words) {
     return ans;   
 }
 ```
+
+#### 2. Couples Holding Hands
+There are n couples sitting in 2n seats. The people and seats are represented by an integer array row where row[i] is the ID of the person sitting in the ith seat. The couples are numbered in order, the first couple being (0, 1), the second couple being (2, 3), and so on with the last couple being (2n - 2, 2n - 1).
+Return the minimum number of swaps so that every couple is sitting side by side.
+
+Input: row = [0,2,1,3]
+
+Output: 1
+
+```cpp
+int minSwapsCouples(vector<int>& row) {
+    int swap = 0;
+    unordered_map<int,int> mp;            
+
+    /* Insert all element with their indexes in array */
+
+    for(int i=0; i<row.size(); i++)
+        mp[row[i]] = i;
+
+    /* Iterate every even index and crrct its next element */
+
+    for(int i=0; i<row.size()-1; i+=2){
+
+        int first = row[i];
+        int second = first%2==0 ? first+1 : first-1;
+
+        /* if second val is not correct, find swap it with crrct value and increment the count */
+
+        if(row[i+1]!=second){
+
+            mp[row[i+1]] = mp[second];     // ----> Don't forget to update the index in hashmap
+
+            int temp = row[i+1];
+            row[i+1] = row[mp[second]];
+            row[mp[second]] = temp;
+
+            swap++;
+        }
+    }
+
+    return swap;
+}
+```

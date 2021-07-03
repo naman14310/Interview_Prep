@@ -174,3 +174,80 @@ int minimumEffortPath(vector<vector<int>>& heights) {
     return dijkstra(heights, cost, row, col);
 }
 ```
+
+## @ Dijkstra without Relaxation
+
+#### 1. Cheapest Flights Within K Stops
+There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei]. You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
+
+![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/02/16/995.png)
+
+**Intuition behind the solution**
+
+The key difference with the classic Dijkstra algo is, we don't maintain the global optimal distance to each node (i.e. Relaxation should not be done), because there could be routes which their length is shorter but pass more stops, and those routes don't necessarily constitute the best route in the end. To deal with this, the solution simply put all possible routes into the priority queue, so that all of them has a chance to be processed. IMO, this is the most brilliant part.
+And the solution simply returns the first qualified route.
+
+```cpp
+struct vertex {
+    int val, cost, k;
+
+    vertex (int val, int cost, int k){
+        this->val = val;
+        this->cost = cost;
+        this->k = k;
+    }
+
+    /* overriding < operator, This function is used by set to order vertices based on cost */
+
+    bool operator< (const vertex & vt) const{
+        return (this->cost < vt.cost);
+    }
+};
+
+int dijkstra (unordered_map<int, vector<pair<int, int>>>& graph, int src, int dst, int k){
+    multiset<vertex> s;
+    s.insert(vertex (src, 0, k));
+
+    while(!s.empty()){
+
+        /* Take out one node with minimum cost from the set */
+
+        auto itr = s.begin();
+        vertex vt = *itr;
+        s.erase(itr);
+
+        /* If node==dst, simply return its cost */
+
+        if(vt.val==dst) return vt.cost;
+
+        /* If curr popped vertex is not destination and k<0 then do not explore that vertex further */
+
+        if(vt.k<0) continue;    
+
+        /* Else explore its neighbours */
+
+        for(auto nbr : graph[vt.val]){
+
+            /* 
+                compute new_cost and insert new_nbr with new_cost and new value for stops 
+                We will not do Relaxation here, i.e. we will not update old value,
+                instead we always insert new nbr thats why cost array is not required in this question
+            */
+
+            vertex new_nbr (nbr.first, vt.cost + nbr.second, vt.k-1);
+            s.insert(new_nbr);
+        }
+    }
+
+    return -1;
+}
+
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+    unordered_map<int, vector<pair<int, int>>> graph;
+
+    for(auto e : flights)
+        graph[e[0]].push_back({e[1], e[2]});
+
+    return dijkstra(graph, src, dst, k);
+}
+```

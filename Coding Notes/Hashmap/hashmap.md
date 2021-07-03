@@ -56,7 +56,7 @@ int minSwapsCouples(vector<int>& row) {
     int swap = 0;
     unordered_map<int,int> mp;            
 
-    /* Insert all element with their indexes in array */
+    /* Insert all element with their indexes in hashmap */
 
     for(int i=0; i<row.size(); i++)
         mp[row[i]] = i;

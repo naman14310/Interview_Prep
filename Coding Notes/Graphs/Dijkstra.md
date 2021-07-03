@@ -204,9 +204,16 @@ struct vertex {
     }
 };
 
-int dijkstra (unordered_map<int, vector<pair<int, int>>>& graph, int src, int dst, int k){
+int dijkstra (unordered_map<int, vector<pair<int, int>>>& graph, int n, int src, int dst, int k){
+
+    /* We will use multiset because distinct proprety of set only works on cost not on the whole structure */
+
     multiset<vertex> s;
     s.insert(vertex (src, 0, k));
+
+    /* We will use this vector for pruning */
+
+    vector<pair<int,int>> dist_hop (n, {INT_MAX, 0});   
 
     while(!s.empty()){
 
@@ -215,6 +222,13 @@ int dijkstra (unordered_map<int, vector<pair<int, int>>>& graph, int src, int ds
         auto itr = s.begin();
         vertex vt = *itr;
         s.erase(itr);
+
+        /* 
+            If the already node distance of this node is smaller and hop counts was also better last time
+            then we will simply discard this node and continue 
+        */
+
+        if(vt.cost>= dist_hop[vt.val].first and vt.k<= dist_hop[vt.val].second) continue;
 
         /* If node==dst, simply return its cost */
 
@@ -237,6 +251,8 @@ int dijkstra (unordered_map<int, vector<pair<int, int>>>& graph, int src, int ds
             vertex new_nbr (nbr.first, vt.cost + nbr.second, vt.k-1);
             s.insert(new_nbr);
         }
+
+        dist_hop[vt.val] = {vt.cost, vt.k};
     }
 
     return -1;
@@ -248,6 +264,6 @@ int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int
     for(auto e : flights)
         graph[e[0]].push_back({e[1], e[2]});
 
-    return dijkstra(graph, src, dst, k);
+    return dijkstra(graph, n, src, dst, k);
 }
 ```

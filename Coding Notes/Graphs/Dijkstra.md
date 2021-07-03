@@ -175,6 +175,87 @@ int minimumEffortPath(vector<vector<int>>& heights) {
 }
 ```
 
+#### 2. Swim in Rising Water
+You are given an n x n integer matrix grid where each value grid[i][j] represents the elevation at that point (i, j). The rain starts to fall. At time t, the depth of the water everywhere is t. You can swim from a square to another 4-directionally adjacent square if and only if the elevation of both squares individually are at most t. You can swim infinite distances in zero time. Return the least time until you can reach the bottom right square (n - 1, n - 1) if you start at the top left square (0, 0).
+
+![img](https://assets.leetcode.com/uploads/2021/06/29/swim2-grid-1.jpg)
+
+Output: 16
+
+```cpp
+struct cell{
+    int x, y, time;
+
+    cell (int x, int y, int time){
+        this->x = x;
+        this->y = y;
+        this->time = time;
+    }
+
+    bool operator< (const cell & c) const{
+        return this->time <= c.time;
+    }
+};
+
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+int dijkstra (vector<vector<int>>& grid, int row, int col){
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    vector<vector<bool>> vis (row, vector<bool> (col, false));
+    vector<vector<int>> cost (row, vector<int> (col, INT_MAX));
+    cost[0][0] = grid[0][0];
+
+    cell src (0, 0, grid[0][0]);
+
+    set<cell> s;
+    s.insert(src);
+
+    while(!s.empty()){  
+        auto itr = s.begin();
+        int x = itr->x, y = itr->y, time = itr->time;
+        s.erase(itr);
+
+        if(x==row-1 and y==col-1) return time;
+
+        for(int i=0; i<4; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, row, col) and !vis[xnew][ynew]){
+
+                int old_cost = cost[xnew][ynew];
+                int new_cost = max(time, grid[xnew][ynew]);
+
+                if(new_cost < old_cost){
+                    cell nbr (xnew, ynew, old_cost);
+
+                    if(s.find(nbr)!=s.end())
+                        s.erase(nbr);
+
+                    s.insert(cell(xnew, ynew, new_cost));
+                    cost[xnew][ynew] = new_cost;
+                }
+            }
+        }
+        vis[x][y] = true;
+    }
+
+    return -1;
+}
+
+
+int swimInWater(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+
+    return dijkstra(grid, row, col);
+}
+```
+
+
 ## @ Dijkstra without Relaxation
 
 #### 1. Cheapest Flights Within K Stops

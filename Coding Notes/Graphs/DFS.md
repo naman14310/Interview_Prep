@@ -289,7 +289,71 @@ int numIslands(vector<vector<char>>& grid) {
 }
 ```
 
-#### 4. Pacific Atlantic Water Flow
+#### 4. Surrounded Regions
+Given an m x n matrix board containing 'X' and 'O', capture all regions surrounded by 'X'. A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+![img](https://assets.leetcode.com/uploads/2021/02/19/xogrid.jpg)
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+void dfs (vector<vector<char>>& board, int x, int y, int row, int col){
+    board[x][y] = '.';
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and board[xnew][ynew]=='O')
+            dfs(board, xnew, ynew, row, col);   
+    }
+}
+
+void solve(vector<vector<char>>& board) {
+    int row = board.size(), col = board[0].size();
+
+    /* Iterate all four boundaries and convert all related O to . */
+
+    for(int j=0; j<col; j++){
+        if(board[0][j]=='O')
+            dfs(board, 0, j, row, col);
+    }
+
+    for(int j=0; j<col; j++){
+        if(board[row-1][j]=='O')
+            dfs(board, row-1, j, row, col);
+    }
+
+    for(int i=1; i<row-1; i++){
+        if(board[i][0]=='O')
+            dfs(board, i, 0, row, col);
+    }
+
+    for(int i=1; i<row-1; i++){
+        if(board[i][col-1]=='O')
+            dfs(board, i, col-1, row, col);
+    }
+
+    /* Convert all remaining O to X and . to O again */
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(board[i][j]=='O')
+                board[i][j] = 'X';
+
+            else if(board[i][j]=='.')
+                board[i][j] = 'O';
+        }
+    }
+}
+```
+
+#### 5. Pacific Atlantic Water Flow
 There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Return a 2D list of grid coordinates such that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
 
 ![img](https://assets.leetcode.com/uploads/2021/06/08/waterflow-grid.jpg)

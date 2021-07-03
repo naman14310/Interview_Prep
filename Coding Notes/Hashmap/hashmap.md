@@ -68,7 +68,7 @@ int minSwapsCouples(vector<int>& row) {
         int first = row[i];
         int second = first%2==0 ? first+1 : first-1;
 
-        /* if second val is not correct, find swap it with crrct value and increment the count */
+        /* if second val is not correct, swap it with crrct value and increment the count */
 
         if(row[i+1]!=second){
 

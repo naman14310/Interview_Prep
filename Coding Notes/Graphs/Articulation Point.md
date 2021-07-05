@@ -52,7 +52,7 @@ void tarjans_algo (unordered_map<int, vector<int>> & graph, vector<int> & discov
                 AP[src] = true;
         }
 
-        /* Else if nbr is vis and not the parent */
+        /* Else if nbr is vis and not the parent that means the edge is backedge */
 
         else if (parent[src]!=nbr)
             low_time[src] = min (low_time[src], discovery_time[nbr]);

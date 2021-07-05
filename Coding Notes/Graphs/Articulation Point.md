@@ -5,7 +5,7 @@ A node is defined as Articulation point if on removing it, no. of components in 
 **Application**
 Find single point of failure in a network
 
-### 1. Simple Approach (Brute Force)
+#### Simple Approach (Brute Force)
 For each node do, 
 1. Take out the node and all passing edges.
 2. Find if we have only one component.
@@ -13,7 +13,7 @@ For each node do,
   
 Time Complexity : O(V*(V+E))
 
-### 2. Using Tarjans Algo
+#### Approach using Tarjans Algo
 
 **Conditions of AP**
 1. If node U is root of DFS tree and has atleast 2 childrens (i.e. independent subgraphs)
@@ -64,7 +64,6 @@ void tarjans_algo (unordered_map<int, vector<int>> & graph, vector<int> & discov
     }
 }
 
-
 vector<int> findArticulationPoints(unordered_map<int, vector<int>> & graph, int n){
     vector<int> discovery_time (n, -1);
     vector<int> low_time (n, -1);
@@ -82,6 +81,7 @@ vector<int> findArticulationPoints(unordered_map<int, vector<int>> & graph, int 
 }
 ```
 
+
 # Bridges (or Cut Edges)
 
 A bridge is an edge, removing which increases the number of components.
@@ -89,7 +89,7 @@ A bridge is an edge, removing which increases the number of components.
 **Application**
 Find critical connections in a network
 
-### 1. Simple Approach (Brute Force)
+#### Simple Approach (Brute Force)
 For each edge repeat, 
 1. Remove edge from the graph.
 2. Find if we have only one component.
@@ -97,7 +97,7 @@ For each edge repeat,
   
 Time Complexity : O(E*(V+E))
 
-#### Critical Connections in a Network
+#### Critical Connections in a Network (using Tarjans Algo)
 There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. A critical connection is a connection that, if removed, will make some servers unable to reach some other server. Return all critical connections in the network in any order.
 
 ![img](https://assets.leetcode.com/uploads/2019/09/03/1537_ex1_2.png)
@@ -140,7 +140,6 @@ void tarjans_algo (unordered_map<int, vector<int>>& graph, vector<int>& discover
 
     }
 }
-
 
 vector<vector<int>> findBridges(int n,  unordered_map<int, vector<int>>& graph){
     vector<int> discovery_time (n, -1);

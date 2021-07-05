@@ -1,6 +1,6 @@
 # Dijkstra Algo
 
-Used for finding shortest path (or cheapest) in weightes graph.
+Used for finding shortest path (or cheapest) in weighted graph.
 
 ## @ Dijkstra on Adjacency List
 

@@ -13,7 +13,7 @@ For each node do,
   
 Time Complexity : O(V*(V+E))
 
-#### Approach using Tarjans Algo
+#### Approach using Tarjans Algo | O(V+E)
 
 **Conditions of AP**
 1. If node U is root of DFS tree and has atleast 2 childrens (i.e. independent subgraphs)
@@ -97,10 +97,12 @@ For each edge repeat,
   
 Time Complexity : O(E*(V+E))
 
-#### Critical Connections in a Network (using Tarjans Algo)
+#### Approach using Tarjans Algo | O(V+E)
 There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. A critical connection is a connection that, if removed, will make some servers unable to reach some other server. Return all critical connections in the network in any order.
 
 ![img](https://assets.leetcode.com/uploads/2019/09/03/1537_ex1_2.png)
+
+[Video Explaination] (https://www.youtube.com/watch?v=Rhxs4k6DyMM)
 
 ```cpp
 void tarjans_algo (unordered_map<int, vector<int>>& graph, vector<int>& discovery_time, vector<int>& low_time, vector<int>& parent, vector<vector<int>>& bridges, int src, int & time){

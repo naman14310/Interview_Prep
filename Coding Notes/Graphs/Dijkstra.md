@@ -256,7 +256,9 @@ int swimInWater(vector<vector<int>>& grid) {
 ```
 
 
-## @ Dijkstra without Relaxation
+## @ Dijkstra without Relaxation (within k based questions)
+
+**Data Structure : Multiset or Priority Queue**
 
 #### 1. Cheapest Flights Within K Stops
 There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei]. You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
@@ -346,5 +348,94 @@ int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int
         graph[e[0]].push_back({e[1], e[2]});
 
     return dijkstra(graph, n, src, dst, k);
+}
+```
+
+#### 2. Shortest Path in a Grid with Obstacles Elimination
+Given a m * n grid, where each cell is either 0 (empty) or 1 (obstacle). In one step, you can move up, down, left or right from and to an empty cell. Return the minimum number of steps to walk from the upper left corner (0, 0) to the lower right corner (m-1, n-1) given that you can eliminate at most k obstacles. If it is not possible to find such walk return -1.
+
+```
+Input: k = 1,
+grid = 
+[[0, 0, 0],
+ [1, 1, 0],
+ [0, 0, 0],
+ [0, 1, 1],
+ [0, 0, 0]], 
+
+Output: 6
+```
+
+Hint: Use same approach that we used in cheapest flights within k stops
+
+```cpp
+struct cell{
+    int x, y, steps, k;
+
+    cell (int x, int y, int steps, int k){
+        this->x = x;
+        this->y = y;
+        this->steps = steps;
+        this->k = k;
+    }
+
+    bool operator< (const cell & c) const{
+        return this->steps < c.steps;
+    }
+};
+
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+int dijkstra (vector<vector<int>>& grid, int k, int row, int col){
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    multiset<cell> s;
+    vector<vector<pair<int,int>>> vis (row, vector<pair<int, int>>(col, {INT_MAX, 0}));
+
+    if(grid[0][0]==1) 
+        k--;
+
+    cell src (0, 0, 0, k);
+    s.insert(src);
+
+    while(!s.empty()){
+        auto itr = s.begin();
+        int x = itr->x, y = itr->y, steps = itr->steps, K = itr->k;
+        s.erase(itr);
+
+        if(x==row-1 and y==col-1) return steps;
+
+        if(steps >= vis[x][y].first and K <= vis[x][y].second) continue;
+
+        if(K<0) continue;
+
+        for(int i=0; i<4; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, row, col)){
+                int nbr_k = K;
+
+                if(grid[xnew][ynew]==1)
+                    nbr_k--;
+
+                cell nbr (xnew, ynew, steps+1, nbr_k);
+                s.insert(nbr);
+            }
+        }
+
+        vis[x][y] = {steps, K};
+    }
+
+    return -1;
+}
+
+int shortestPath(vector<vector<int>>& grid, int k) {
+    int row = grid.size(), col = grid[0].size();
+
+    return dijkstra (grid, k, row, col);
 }
 ```

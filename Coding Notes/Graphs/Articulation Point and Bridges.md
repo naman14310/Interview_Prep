@@ -102,7 +102,7 @@ There are n servers numbered from 0 to n - 1 connected by undirected server-to-s
 
 ![img](https://assets.leetcode.com/uploads/2019/09/03/1537_ex1_2.png)
 
-[Video Explaination] (https://www.youtube.com/watch?v=Rhxs4k6DyMM)
+[Video Explaination](https://www.youtube.com/watch?v=Rhxs4k6DyMM)
 
 ```cpp
 void tarjans_algo (unordered_map<int, vector<int>>& graph, vector<int>& discovery_time, vector<int>& low_time, vector<int>& parent, vector<vector<int>>& bridges, int src, int & time){

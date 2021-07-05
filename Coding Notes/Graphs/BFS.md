@@ -472,3 +472,90 @@ int minMutation(string start, string end, vector<string>& bank) {
 }
 ```
 
+#### 3. Jump Game IV
+Given an array of integers arr, you are initially positioned at the first index of the array. In one step you can jump from index i to index:
+
+1. i + 1 where: i + 1 < arr.length.
+2. i - 1 where: i - 1 >= 0.
+3. j where: arr[i] == arr[j] and i != j.
+
+Return the minimum number of steps to reach the last index of the array. Notice that you can not jump outside of the array at any time.
+
+Input: arr = [100,-23,-23,404,100,23,23,23,3,404]
+
+Output: 3 (You need three jumps from index 0 --> 4 --> 3 --> 9)
+
+```cpp
+vector<int> get_nbrs (unordered_map<int, vector<int>>& mp, vector<int>& arr, int src, int n){
+    vector<int> nbrs;
+
+    if(src>0) nbrs.push_back(src-1);
+    if(src<n-1) nbrs.push_back(src+1);
+
+    for(int nbr : mp[arr[src]])
+        if(nbr!=src or nbr!=src-1 or nbr!=src+1)
+            nbrs.push_back(nbr);
+
+    return nbrs;
+}
+
+int bfs (vector<int>& arr, unordered_map<int, vector<int>>& mp, int src, int n){
+    vector<bool> vis (n, false);
+    queue<int> q;
+    int jumps = 0;
+
+    q.push(src);
+    q.push(-1);
+    vis[src] = true;
+
+    while(!q.empty()){
+        src = q.front(); q.pop();
+
+        if(src==n-1) return jumps;
+
+        if(src==-1){
+            if(q.empty()) break;
+
+            q.push(-1);
+            jumps++;
+            continue;
+        }
+
+        vector<int> nbrs = get_nbrs(mp, arr, src, n);
+
+        for(int nbr : nbrs){
+            if(!vis[nbr]){
+                q.push(nbr);
+                vis[nbr] = true;
+            }
+        }
+    }
+
+    return -1;
+}
+
+int minJumps(vector<int>& arr) {
+    int n = arr.size();
+    unordered_map<int, vector<int>> mp;         // ---> It will map same values to their indexes
+
+    int item = 0;
+    int count = 0;
+
+    /* Trick for duplicates : We will insert only first and last index for continous duplicates */
+
+    for(int i=0; i<n; i++){
+
+        if(item==arr[i]) count++;
+        else{
+            item = arr[i];
+            count = 1;
+        } 
+
+        if(count>2) mp[arr[i]].pop_back();
+
+        mp[arr[i]].push_back(i);
+    }
+
+    return bfs(arr, mp, 0, n);
+}
+```

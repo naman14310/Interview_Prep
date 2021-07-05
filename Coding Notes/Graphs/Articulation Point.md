@@ -43,12 +43,12 @@ void tarjans_algo (unordered_map<int, vector<int>> & graph, vector<int> & discov
             
             /************************ Following are two conditions for articulation point *****************************/
 
-            /* Condition 1 : if src node is root node and have two independent child subgraphs then its an articulation point */
+            /* Cond 1 : if src node is root node and have two independent child subgraphs then its an articulation point */
 
             if (parent[src]==-1 and child >= 2)
                 AP[src] = true;
 
-            /* Condition 2 : Else If src node is not root node and has a subgraph with NO backedge to any of its ancestors */
+            /* Cond 2 : Else If src node is not root node and has a subgraph with NO backedge to any of its ancestors */
 
             else if(parent[src]!=-1 and low_time[nbr] >= discovery_time[src])
                 AP[src] = true;

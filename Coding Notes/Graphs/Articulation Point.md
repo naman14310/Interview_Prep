@@ -6,14 +6,10 @@ A node is defined as Articulation point if on removing it, no. of components in 
 Find single point of failure in a network
 
 ### Simple Approach (Brute Force)
-
-1. For each node
-
-  a. Take out the node and all passing edges.
-  
-  b. Find if we have only one component.
-  
-  c. If component==1 then Node is not AP else Node is AP.
+For each node do, 
+1. Take out the node and all passing edges.
+2. Find if we have only one component.
+3. If component==1 then Node is not AP else Node is AP.
   
 Time Complexity : O(V*(V+E))
 

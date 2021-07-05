@@ -5,7 +5,7 @@ A node is defined as Articulation point if on removing it, no. of components in 
 **Application**
 Find single point of failure in a network
 
-### Simple Approach (Brute Force)
+### 1. Simple Approach (Brute Force)
 For each node do, 
 1. Take out the node and all passing edges.
 2. Find if we have only one component.
@@ -13,11 +13,11 @@ For each node do,
   
 Time Complexity : O(V*(V+E))
 
-### Using Tarjans Algo
+### 2. Using Tarjans Algo
 
 **Conditions of AP**
 1. If node U is root of DFS tree and has atleast 2 childrens (i.e. independent subgraphs)
-2. If node U is not root and it has a child V such that no vertex in subtree (subgraph) rooted with V has a backedge to one of the ancestors of U.
+2. If node U is not root and it has a child V such that no vertex in subgraph rooted with V has a backedge to one of the ancestors of U.
 
 [Video Explaination](https://www.youtube.com/watch?v=64KK9K4RpKE)
 

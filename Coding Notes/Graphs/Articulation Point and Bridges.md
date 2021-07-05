@@ -2,7 +2,7 @@
 
 A node is defined as Articulation point if on removing it, no. of components in the graph increases.
 
-**Application**
+**Application** : 
 Find single point of failure in a network
 
 #### Simple Approach (Brute Force)
@@ -86,7 +86,7 @@ vector<int> findArticulationPoints(unordered_map<int, vector<int>> & graph, int 
 
 A bridge is an edge, removing which increases the number of components.
 
-**Application**
+**Application** : 
 Find critical connections in a network
 
 #### Simple Approach (Brute Force)

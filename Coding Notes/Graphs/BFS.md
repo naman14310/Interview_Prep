@@ -614,7 +614,6 @@ int bfs (unordered_set<string> & words, string & beginWord, string & endWord){
     return 0;
 }
 
-
 int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
     unordered_set<string> words;
 

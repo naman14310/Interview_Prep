@@ -472,7 +472,79 @@ int minMutation(string start, string end, vector<string>& bank) {
 }
 ```
 
-#### 3. Jump Game IV
+#### 3. K-Similar Strings
+Strings s1 and s2 are k-similar (for some non-negative integer k) if we can swap the positions of two letters in s1 exactly k times so that the resulting string equals s2. Given two anagrams s1 and s2, return the smallest k for which s1 and s2 are k-similar.
+
+Input: s1 = "abac", s2 = "baca"
+
+Output: 2
+
+```cpp
+/* Find nbrs by swapping posn (with desired chars) */
+
+vector<string> get_nbrs(string s, string s2, int pos){
+    vector<string> nbrs;
+    char ch = s2[pos];      // ----> desired char
+
+    for(int i=pos+1; i<s.length(); i++){
+
+        if(s[i]==ch){
+            string temp = s;
+            swap(temp[pos], temp[i]);
+            nbrs.push_back(temp);
+        }
+    }
+
+    return nbrs;
+}
+
+int bfs (string s1, string s2){
+    int swaps = 0;         // ----> Number of swaps required
+    int pos = 0;           // ----> Position on which we are working currently
+
+    unordered_set<string> vis;
+    queue<pair<string, int>> q;
+
+    q.push({s1, pos});
+    q.push({"#", pos});
+    vis.insert(s1);
+
+    while(!q.empty()){
+        auto src = q.front(); q.pop();
+        string s = src.first; int pos = src.second;
+
+        if(s==s2) return swaps;
+
+        if(s=="#"){
+            if(q.empty()) break;
+
+            q.push({"#", pos});
+            swaps++;
+            continue;
+        }
+
+        while(s[pos]==s2[pos]) pos++;
+
+        vector<string> nbrs = get_nbrs (s, s2, pos);
+
+        for(string nbr : nbrs){
+            if(vis.find(nbr)==vis.end()){                    
+                q.push({nbr, pos+1});
+                vis.insert(nbr);
+            }
+        }
+    }
+
+    return -1;
+}
+
+int kSimilarity(string s1, string s2) {
+    int n = s1.size();
+    return bfs (s1, s2);
+}
+```
+
+#### 4. Jump Game IV
 Given an array of integers arr, you are initially positioned at the first index of the array. In one step you can jump from index i to index:
 
 1. i + 1 where: i + 1 < arr.length.

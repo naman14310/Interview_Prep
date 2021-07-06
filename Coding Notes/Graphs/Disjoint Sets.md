@@ -275,3 +275,98 @@ bool equationsPossible(vector<string>& equations) {
     return true;
 }
 ```
+
+#### 5. Largest Component Size by Common Factor
+Given a non-empty array of unique positive integers nums, consider the following graph:
+
+1. There are nums.length nodes, labelled nums[0] to nums[nums.length - 1];
+2. There is an edge between nums[i] and nums[j] if and only if nums[i] and nums[j] share a common factor greater than 1.
+
+Return the size of the largest connected component in the graph.
+
+Input: nums = [2,3,6,7,4,12,21,39]
+
+Output: 8
+
+![img](https://assets.leetcode.com/uploads/2018/12/01/ex3.png)
+
+Hint: Union each number with all its factor. Count the most frequent parent.
+
+```cpp
+/* --------------------------------- GENERAL UNION FIND TEMPLATE ----------------------------------- */
+
+struct vt{
+    int parent;
+    int rank;
+};
+
+int ds_find(vector<vt> & ds, int v){
+    if(ds[v].parent==-1)
+        return v;
+
+    return ds[v].parent = ds_find(ds, ds[v].parent);
+}
+
+void ds_union(vector<vt> & ds, int v1, int v2){
+    if(ds[v1].rank < ds[v2].rank)
+        ds[v1].parent = v2;
+
+    else if(ds[v1].rank > ds[v2].rank)
+        ds[v2].parent = v1;
+
+    else{
+        ds[v1].parent = v2;
+        ds[v2].rank++;
+    }
+}
+
+/* ------------------------------------------------------------------------------------------------- */
+
+int largestComponentSize(vector<int>& nums) {
+    int mx = *max_element(nums.begin(), nums.end());
+
+    vector<vt> ds (mx+1, {-1, 0});
+
+    /* Iterate array nums */
+
+    for(int num : nums){
+        int sqr_root = sqrt(num);
+
+        /* For each element, find prime factors (by iterating from 2 to sqrt(num)) */
+
+        for(int i=2; i<=sqr_root; i++){
+
+            /* Do union operation of num with its every prime factor */
+
+            if(num%i==0){
+
+                /* We need to do find operation everytime because root may change anytime */
+
+                int root1 = ds_find(ds, num);
+                int root2 = ds_find(ds, i);
+
+                if(root1!=root2)
+                    ds_union(ds, root1, root2);
+
+                root1 = ds_find(ds, num); 
+                root2 = ds_find(ds, num/i);
+
+                if(root1!=root2)
+                    ds_union(ds, root1, root2);
+            }
+        }
+    }
+
+    unordered_map<int, int> mp;     // ----> will contains frequency of roots of each element
+    int ans = 1;
+
+    for(int num : nums){
+        int root = ds_find(ds, num);
+        mp[root]++;
+
+        ans = max(ans, mp[root]);  // ----> Ans will be the max frequency of all roots
+    }
+
+    return ans;
+}
+```

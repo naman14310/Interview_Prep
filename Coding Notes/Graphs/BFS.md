@@ -544,7 +544,88 @@ int kSimilarity(string s1, string s2) {
 }
 ```
 
-#### 4. Jump Game IV
+#### 4. Word Ladder
+A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
+
+1. Every adjacent pair of words differs by a single letter.
+2. Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.
+3. sk == endWord
+
+Given two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.
+
+Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+```cpp
+/* 
+    Replace char at every index with all 25 other possible lowercase char 
+    and check if that new_word is present in set wordList
+    then push that word in the nbrs vector
+*/
+
+vector<string> get_nbrs (unordered_set<string> & words, string & s){
+    vector<string> nbrs;
+
+    for(int i=0; i<s.length(); i++){
+        string new_word = s;
+
+        for(int offset=0; offset<26; offset++){
+            char ch = 'a' + offset;
+            if(ch!=s[i]) new_word[i] = ch;
+
+            if(words.find(new_word)!=words.end())
+                nbrs.push_back(new_word);
+        }
+    }
+
+    return nbrs;
+}
+
+int bfs (unordered_set<string> & words, string & beginWord, string & endWord){
+    int transformation = 1;
+    queue<string> q;
+
+    q.push(beginWord);
+    q.push("#");
+    words.erase(beginWord);              // ----> Erasing is similar to marking that word visited
+
+    while(!q.empty()){
+        string s = q.front(); q.pop();
+
+        if(s==endWord) return transformation;
+
+        if(s=="#"){
+            if(q.empty()) break;
+
+            q.push("#");
+            transformation++;
+            continue;
+        }
+
+        vector<string> nbrs = get_nbrs(words, s);
+
+        for(string nbr : nbrs){
+            q.push(nbr);
+            words.erase(nbr);
+        }
+    }
+
+    return 0;
+}
+
+
+int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+    unordered_set<string> words;
+
+    for(auto word : wordList)
+        words.insert(word);
+
+    return bfs (words, beginWord, endWord);   
+}
+```
+
+#### 5. Jump Game IV
 Given an array of integers arr, you are initially positioned at the first index of the array. In one step you can jump from index i to index:
 
 1. i + 1 where: i + 1 < arr.length.

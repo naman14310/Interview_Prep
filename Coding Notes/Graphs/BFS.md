@@ -624,7 +624,123 @@ int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
 }
 ```
 
-#### 5. Jump Game IV
+#### 5. Word Ladder II
+Given two words, beginWord and endWord, and a dictionary wordList, return all the shortest transformation sequences from beginWord to endWord, or an empty list if no such sequence exists. Each sequence should be returned as a list of the words [beginWord, s1, s2, ..., sk]
+
+Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: [["hit","hot","dot","dog","cog"],["hit","hot","lot","log","cog"]]
+
+Hint: Push whole path in the queue
+
+```cpp
+/* same as word ladder 1 */
+
+vector<string> get_nbrs (unordered_set<string>& words, string & s){
+    vector<string> nbrs;
+
+    for(int i=0; i<s.size(); i++){
+        string new_word = s;
+
+        for(int offset=0; offset<26; offset++){
+            char ch = 'a' + offset;
+            if(ch==s[i]) continue; 
+
+            new_word[i] = ch;
+
+            if(words.find(new_word)!=words.end())
+                nbrs.push_back(new_word);
+        }
+    }
+
+    return nbrs;
+}
+
+
+vector<vector<string>> bfs (unordered_set<string>& words, string & beginWord, string & endWord){
+    vector<vector<string>> res;   
+
+    /* min_path length discovered so far*/
+
+    int minPath_len = INT_MAX;    
+
+    /* here we store whole path instead of string */
+
+    queue<vector<string>> q;       
+    q.push({beginWord});           // ----> Initially pushing one vector containing beginWord 
+
+    unordered_map<string, int> vis;
+
+    while(!q.empty()){
+        auto path = q.front(); q.pop();
+
+        /* If we got the complete path then */
+
+        if(path.back()==endWord){
+
+            /* 
+                If current path len is lesser then discover path so far
+                then clear the result vector and push new path with shorter len
+                and also update the variable minPath_len
+            */
+
+            if(path.size() < minPath_len){
+                res.clear();
+                res.push_back(path);
+                minPath_len = path.size();
+                continue;
+            }
+
+            /* Else if push curr path also in the res vector and continue our search*/ 
+
+            else if(path.size()==minPath_len){
+                res.push_back(path);
+                continue;
+            }
+
+            /* Else we discoverd the path with greater len, so break (as we are using BFS) */
+
+            else break; 
+        }
+
+        vector<string> nbrs = get_nbrs (words, path.back());
+
+        for(string nbr : nbrs){
+
+            /* 
+                If we got the already visited nbr and 
+                curr_path size >= earlier path size (where this nbr is used) 
+                then we will not use this nbr for curr_path so continue
+            */
+
+            if(vis.find(nbr)!=vis.end() and path.size()>=vis[nbr]) continue;
+
+            /* Else create new branch (new_path) by pushing nbr to old_path */
+
+            vector<string> new_path = path;
+            new_path.push_back(nbr);
+            q.push(new_path);
+
+            vis[nbr] = new_path.size();
+        }
+    }
+
+    return res;
+}
+
+
+vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+    unordered_set<string> words;
+    for(string word : wordList)
+        words.insert(word);
+
+    words.erase(beginWord);
+
+    return bfs (words, beginWord, endWord);
+}
+```
+
+#### 6. Jump Game IV
 Given an array of integers arr, you are initially positioned at the first index of the array. In one step you can jump from index i to index:
 
 1. i + 1 where: i + 1 < arr.length.

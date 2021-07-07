@@ -441,6 +441,71 @@ vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
 }
 ```
 
+#### 6. Rat in a Maze Problem - I 
+Consider a rat placed at (0, 0) in a square matrix of order N * N. It has to reach the destination at (N - 1, N - 1). Find all possible paths that the rat can take to reach from source to destination. The directions in which the rat can move are 'U'(up), 'D'(down), 'L' (left), 'R' (right). Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it. In a path, no cell can be visited more than one time.
+
+```
+Input: N = 4
+m[][] = {{1, 0, 0, 0},
+         {1, 1, 0, 1}, 
+         {1, 1, 0, 0},
+         {0, 1, 1, 1}}
+         
+Output: DDRDRR DRDDRR
+```
+
+Hint: Use pass by reference
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+void dfs (vector<vector<int>> & grid, vector<vector<bool>> & vis, int n, int x, int y, string & path, vector<string> & res){
+    if(x==n-1 and y==n-1){
+        res.push_back(path);
+        return;
+    }
+
+    vis[x][y] = true;
+
+    /* Following order gives sorted order */
+
+    int dx[] = {1, 0, 0, -1};
+    int dy[] = {0, -1, 1, 0};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, n, n) and !vis[xnew][ynew] and grid[xnew][ynew]==1){
+
+            if(i==0) path.push_back('D');
+            else if(i==1) path.push_back('L');
+            else if(i==2) path.push_back('R');
+            else path.push_back('U');
+
+            dfs(grid, vis, n, xnew, ynew, path, res);
+
+            path.pop_back();
+        }
+    }
+
+    vis[x][y] = false;
+}
+
+
+vector<string> findPath(vector<vector<int>> &m, int n) {
+    vector<string> res;
+    if(m[0][0]==0) return res;
+
+    string path = "";
+    vector<vector<bool>> vis (n, vector<bool> (n, false));
+
+    dfs (m, vis, n, 0, 0, path, res);
+    return res;
+}
+```
 
 ## @ Graph coloring
 

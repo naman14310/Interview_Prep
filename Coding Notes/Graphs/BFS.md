@@ -314,6 +314,71 @@ int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
 }
 ```
 
+#### 5. Knight on a Chessboard
+Given a square chessboard, the initial position of Knight and position of a target. Find out the minimum steps a Knight will take to reach the target position. ! based indexing is followed.
+
+Input: N=6, knightPos[ ] = {4, 5}, targetPos[ ] = {1, 1}
+Output: 3
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/KnightChess.jpg)
+
+```cpp
+struct cell{
+    int x, y, steps;
+
+    cell (int x, int y, int steps){
+        this->x = x;
+        this->y = y;
+        this->steps = steps;
+    }
+};
+
+bool isInside(int x, int y, int n){
+    return x>=0 and y>=0 and x<n and y<n;
+}
+
+int bfs (int x, int y, int target_x, int target_y, int n){
+
+    int dx[] = {1, -1, 2, 2, 1, -1, -2, -2};
+    int dy[] = {2, 2, 1, -1, -2, -2, 1, -1};
+
+    vector<vector<bool>> vis (n, vector<bool>(n, false));
+    queue<cell> q;
+
+    cell src (x, y, 0);
+    q.push(src);
+    vis[x][y] = true;
+
+    while(!q.empty()){
+        auto pos = q.front(); q.pop();
+        int x = pos.x, y = pos.y, steps = pos.steps;
+
+        if(x==target_x and y==target_y) return steps;
+
+        for(int i=0; i<8; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, n) and !vis[xnew][ynew]){
+                cell nbr (xnew, ynew, steps+1);
+                q.push(nbr);
+                vis[xnew][ynew] = true;
+            }
+        }
+    }
+
+    return -1;
+}
+
+
+int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int N){
+    int x = KnightPos[0]-1, y = KnightPos[1]-1;
+    int target_x = TargetPos[0]-1, target_y = TargetPos[1]-1;
+
+    return bfs (x, y, target_x, target_y, N);
+}
+```
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Open the Lock (Too Tricky)

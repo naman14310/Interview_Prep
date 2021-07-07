@@ -900,7 +900,85 @@ bool canMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity) {
 }
 ```
 
-#### 8. Bus Routes (Tricky)
+#### 8. Snakes and Ladders
+Return the least number of moves required to win the game. Note that you only take a snake or ladder at most once per move. If the destination to a snake or ladder is the start of another snake or ladder, you do not follow the subsequent snake or ladder.
+
+![img](https://assets.leetcode.com/users/lee215/image_1537671763.png)
+
+Hint: First convert 2D board to 1D matrix
+
+```cpp
+int bfs(vector<int>& game){
+    int n = game.size();
+    int target = n-1;
+    int moves = 0;
+
+    vector<bool> vis (game.size(), false);
+    queue<int> q;
+
+    q.push(1);
+    q.push(-1);
+    vis[1] = true;
+
+    while(!q.empty()){
+        int pos = q.front(); q.pop();
+
+        if(pos==target) return moves;
+
+        if(pos==-1){
+            if(q.empty()) break;
+
+            q.push(-1);
+            moves++;
+            continue;
+        }
+
+        for(int i=1; i<=6; i++){
+
+            if(pos+i>target) continue;
+
+            if(game[pos+i]==-1){
+                if(!vis[pos+i]){
+                    q.push(pos+i);
+                    vis[pos+i] = true;
+                }
+            }   
+            else{
+                if(!vis[game[pos+i]]){
+                    q.push(game[pos+i]);
+                    vis[game[pos+i]] = true;
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
+
+int snakesAndLadders(vector<vector<int>>& board) {
+    int row = board.size(), col = board[0].size();
+    vector<int> game;
+    game.push_back(0);    // ----> dummy index (since indexing starts from 1)
+
+    bool flip = false;
+
+    for(int i=row-1; i>=0; i--){
+        if(flip)
+            for(int j=col-1; j>=0; j--)
+                game.push_back(board[i][j]);
+        else
+            for(int j=0; j<col; j++)
+                game.push_back(board[i][j]);
+
+        flip = !flip;
+    }
+
+    return bfs (game);
+}
+```
+
+#### 9. Bus Routes (Tricky)
 You are given an array routes representing bus routes where routes[i] is a bus route that the ith bus repeats forever. For example, if routes[0] = [1, 5, 7], this means that the 0th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... forever.
 You will start at the bus stop source (You are not on any bus initially), and you want to go to the bus stop target. You can travel between bus stops by buses only. Return the least number of buses you must take to travel from source to target. Return -1 if it is not possible.
 

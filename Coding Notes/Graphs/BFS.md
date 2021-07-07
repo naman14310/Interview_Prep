@@ -827,3 +827,95 @@ int minJumps(vector<int>& arr) {
     return bfs(arr, mp, 0, n);
 }
 ```
+
+#### 7. Bus Routes (Tricky)
+You are given an array routes representing bus routes where routes[i] is a bus route that the ith bus repeats forever. For example, if routes[0] = [1, 5, 7], this means that the 0th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... forever.
+You will start at the bus stop source (You are not on any bus initially), and you want to go to the bus stop target. You can travel between bus stops by buses only. Return the least number of buses you must take to travel from source to target. Return -1 if it is not possible.
+
+Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
+
+Output: 2
+
+```cpp
+struct node{
+    int bus, buses_taken;
+    node(int b, int bt){
+        bus = b; 
+        buses_taken = bt;
+    }
+};
+
+
+int bfs (unordered_map<int, vector<int>>& buses, unordered_map<int, unordered_set<int>>& stops, queue<node>& q, unordered_set<int>& vis_stops, unordered_set<int>& vis_buses, int target){
+
+    while(!q.empty()){
+        node n = q.front(); q.pop();
+        int bus = n.bus, buses_taken = n.buses_taken;
+
+        /* Fetch the route of the popped bus --> If that route contains target stop, then simply return the buses_taken */
+
+        auto route = stops[bus];
+        if(route.find(target)!=route.end()) return buses_taken;
+
+        /* Else Iterate for each stop of that route */
+
+        for(int stop : route){
+            if(vis_stops.find(stop)!=vis_stops.end()) continue;
+
+            /* If that stop is not visited then iterate for all possible buses from that stop */
+
+            for(int b : buses[stop]){
+                if(vis_buses.find(b)!=vis_buses.end()) continue;
+
+                /* If this bus is not visited then push it in the queue and also increment the buses_taken */
+
+                node nbr (b, buses_taken+1);
+                q.push(nbr);
+                vis_buses.insert(b);         // ----> mark that bus visited
+            }
+            vis_stops.insert(stop);          // ----> mark that stop visited
+        }
+    }
+
+    return -1;
+}
+
+
+int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+    if(source==target) return 0;
+
+    int total_buses = routes.size();
+
+    unordered_map<int, vector<int>> buses;                  //----> map of { stop : vector of buses } 
+    unordered_map<int, unordered_set<int>> stops;           //----> map of { bus : unordered_set of stops } 
+
+    unordered_set<int> vis_stops;
+    unordered_set<int> vis_buses;
+
+    queue<node> q;
+
+    /* 
+        Create mappings of bus with their stops
+        and Stops with respective buses
+    */
+
+    for(int bus=0; bus<total_buses; bus++){
+        for(int stop : routes[bus]){
+            stops[bus].insert(stop);        
+            buses[stop].push_back(bus);
+        }                
+    }
+
+    /* Push all buses that can be fetched from source in the queue */
+
+    for(int bus : buses[source]){
+        node n (bus, 1);
+        q.push(n);
+        vis_buses.insert(bus);
+    }
+    vis_stops.insert(source);
+
+    return bfs (buses, stops, q, vis_stops, vis_buses, target);
+}
+```
+

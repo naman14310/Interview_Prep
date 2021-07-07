@@ -828,7 +828,79 @@ int minJumps(vector<int>& arr) {
 }
 ```
 
-#### 7. Bus Routes (Tricky)
+#### 7. Water and Jug Problem
+You are given two jugs with capacities jug1Capacity and jug2Capacity liters. There is an infinite amount of water supply available. Determine whether it is possible to measure exactly targetCapacity liters using these two jugs. If targetCapacity liters of water are measurable, you must have targetCapacity liters of water contained within one or both buckets by the end.
+
+Input: jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
+
+Output: true
+
+```cpp
+struct jug{
+    int one, two, steps;
+    jug(int one, int two, int steps){
+        this->one = one;
+        this->two = two;
+        this->steps = steps;
+    }
+};
+
+vector<pair<int,int>> get_nbrs (int & jug1, int & jug2, int & jug1Capacity, int & jug2Capacity){
+    vector<pair<int,int>> nbrs;
+
+    /* Following are the 6 options to perform operations */
+
+    nbrs.push_back({0, jug2});                                                         // --> empty jug1 
+    nbrs.push_back({jug1, 0});                                                         // --> empty jug2
+    nbrs.push_back({jug1Capacity, jug2});                                              // --> fill jug1 completely
+    nbrs.push_back({jug1, jug2Capacity});                                              // --> fill jug2 completely
+    nbrs.push_back({min(jug1Capacity, jug1+jug2), max(0,jug2-(jug1Capacity-jug1))});   // --> pour water from jug2 to jug1
+    nbrs.push_back({max(0,jug1-(jug2Capacity-jug2)), min(jug2Capacity, jug2+jug1)});   // --> pour water from jug1 to jug2
+
+    return nbrs;
+}
+
+
+bool bfs(int & jug1Capacity, int & jug2Capacity, int & target){
+    jug init (0, 0, 0);
+
+    queue<jug> q;
+    q.push(init);
+
+    unordered_set<string> vis;
+    vis.insert("0-0");
+
+    while(!q.empty()){
+        auto j = q.front(); q.pop();
+        int jug1 = j.one, jug2 = j.two, steps = j.steps;
+
+        /* Target condition is when any one jug is equal to targetCapacity or sum of both jug equals to targetCapacity */
+
+        if(jug1==target or jug2==target or jug1+jug2==target) return true;
+
+        auto nbrs = get_nbrs(jug1, jug2, jug1Capacity, jug2Capacity);
+
+        for(auto nbr : nbrs){
+            string s = to_string(nbr.first) + "-" + to_string(nbr.second);
+            if(vis.find(s)!=vis.end()) continue;
+
+            jug nbr_j (nbr.first, nbr.second, steps+1);
+            q.push(nbr_j);
+            vis.insert(s);
+        }
+    }
+
+    return false;
+}
+
+
+bool canMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity) {
+
+    return bfs (jug1Capacity, jug2Capacity, targetCapacity);
+}
+```
+
+#### 8. Bus Routes (Tricky)
 You are given an array routes representing bus routes where routes[i] is a bus route that the ith bus repeats forever. For example, if routes[0] = [1, 5, 7], this means that the 0th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... forever.
 You will start at the bus stop source (You are not on any bus initially), and you want to go to the bus stop target. You can travel between bus stops by buses only. Return the least number of buses you must take to travel from source to target. Return -1 if it is not possible.
 

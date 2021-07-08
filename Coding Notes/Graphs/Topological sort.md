@@ -163,3 +163,90 @@ int minTimeTakenByJob (unordered_map<int, vector<int>> & graph, int total_jobs){
     return time;
 }
 ```
+
+#### 3. Alien Dictionary (Tricky)
+Given a sorted dictionary of an alien language having N words and k starting alphabets of standard dictionary. Find the order of characters in the alien language.
+
+Input: N = 5, K = 4, dict = {"baa","abcd","abca","cab","cad"}
+
+Output: bdac
+
+```cpp
+/* General DFS based topological order template with cycle detection */
+
+bool topological_sort (unordered_map<char, set<char>> & graph, stack<char> & stk, unordered_set<char> & vis, unordered_set<char> & curr_path, char src){
+    vis.insert(src);
+    curr_path.insert(src);
+
+    for(auto nbr : graph[src]){
+        if(curr_path.find(nbr)!=curr_path.end())
+            return true;
+
+        if(vis.find(nbr)==vis.end()){
+            bool cycle =  topological_sort (graph, stk, vis, curr_path, nbr);
+            if(cycle) return true;
+        }
+    }
+
+    curr_path.erase(src);
+    stk.push(src);
+    return false;
+}
+
+
+string find_alphabetic_order (unordered_map<char, set<char>> & graph, int K){
+    unordered_set<char> vis;
+    unordered_set<char> curr_path;
+    stack<char> stk;
+    string order = "";
+
+    /* Iterate for first K alphabets and do DFS over them */
+
+    for(int i=0; i<K; i++){
+        char src = 'a' + i;
+
+        if(vis.find(src)==vis.end()){
+            bool cycle = topological_sort (graph, stk, vis, curr_path, src);
+            if(cycle) return "";
+        }
+    }
+
+    while(!stk.empty()){
+        order.push_back(stk.top());
+        stk.pop();
+    }
+
+    return order;
+}
+
+
+string findOrder(string dict[], int N, int K) {
+    unordered_map<char, set<char>> graph;
+
+    /*  
+        Main gist of this problem is to Create graph on the basis of given list of words
+
+        Iterate for all words till n-1. For every two consecutive words
+        Check for the first mismatched charachter from beginning
+
+        Let the mismatched char of first word be u and mismatched char of second word be v
+        then insert a directed edge from u to v in the graph.
+    */
+
+    for(int i=0; i<N-1; i++){
+        for(int j=0; j<min(dict[i].length(), dict[i+1].length()); j++){
+
+            if(dict[i][j] != dict[i+1][j]){
+                char u = dict[i][j];
+                char v = dict[i+1][j];
+
+                graph[u].insert(v);
+                break;
+            }
+        }
+    }
+
+    string order = find_alphabetic_order(graph, K);
+    return order;
+}
+```

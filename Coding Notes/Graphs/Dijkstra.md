@@ -2,6 +2,8 @@
 
 Used for finding shortest path (or cheapest) in weighted graph.
 
+Note: It cannot detect negative weight cycles (when sum of all edges in a cycle turns out to be negative). 
+
 ## @ Dijkstra on Adjacency List
 
 #### 1. Network Delay Time

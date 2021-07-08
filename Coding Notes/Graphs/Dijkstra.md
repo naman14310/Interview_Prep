@@ -3,6 +3,7 @@
 Used for finding shortest path (or cheapest) in weighted graph.
 
 Note: It cannot detect negative weight cycles (when sum of all edges in a cycle turns out to be negative). 
+(Read Bellman Ford and Floyd Warshall Algo)
 
 ## @ Dijkstra on Adjacency List
 

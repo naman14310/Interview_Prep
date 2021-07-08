@@ -105,3 +105,59 @@ vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
     return order;
 }
 ```
+
+#### 2. Minimum time taken by each job to be completed given by a Directed Acyclic Graph
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/20200804212533/Semester1.png)
+
+Output: 6
+
+Hint: Use the bfs level logic in topological sort (Use kahns algo)
+
+```cpp
+int topological_sort (unordered_map<int, vector<int>> & graph, vector<int> & indegre){
+    int time = 1;
+    queue<int> q;
+
+    /* Filling queue initially with vertices having indegre zero */
+
+    for(int i=0; i<indegre.size(); i++){
+        if(indegre[i]==0)
+            q.push(i);
+    }
+
+    q.push(-1);    // ----> will represent the end of one topological order level
+
+    while(!q.empty()){
+        int v = q.front(); q.pop();
+
+        if(v==-1){
+            if(q.empty()) break;
+
+            q.push(-1);
+            time++;
+            continue;
+        }
+
+        for(int nbr : graph[v]){
+            indegre[nbr]--;
+            if(indegre[nbr]==0) q.push(nbr);
+        }
+    }
+
+    return time;
+}
+
+
+int minTimeTakenByJob (unordered_map<int, vector<int>> & graph, int total_jobs){
+    vector<int> indegre (total_jobs+1, 0);
+
+    for(auto p : graph){
+        for(int v : p.second)
+            indegre[v]++;
+    }
+
+    int time = topological_sort (graph, indegre);
+    return time;
+}
+```

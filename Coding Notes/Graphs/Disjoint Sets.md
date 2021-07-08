@@ -370,3 +370,65 @@ int largestComponentSize(vector<int>& nums) {
     return ans;
 }
 ```
+
+#### 6. Journey to the Moon
+The member states of the UN are planning to send 2 people to the moon. You will be given a list of pairs of astronaut ID's. Each pair is made of astronauts from the same country. Determine how many pairs of astronauts from different countries they can choose from.
+
+```cpp
+struct vt{
+    int parent, rank;
+    vt (int p, int r){
+       parent = p;
+       rank = r; 
+    }
+};
+
+int ds_find (vector<vt> & ds, int v){
+    if(ds[v].parent==-1)
+        return v;
+    return ds[v].parent = ds_find(ds, ds[v].parent);
+}
+
+void ds_union (vector<vt> & ds, int v1, int v2){
+    if(ds[v1].rank < ds[v2].rank)
+        ds[v1].parent = v2;
+        
+    else if(ds[v1].rank > ds[v2].rank)
+        ds[v2].parent = v1;
+        
+    else{
+        ds[v1].parent = v2;
+        ds[v2].rank++;
+    }
+}
+
+int journeyToMoon(int n, vector<vector<int>> astronaut) {
+    vector<vt> ds (n, vt (-1, 0));
+    
+    for(auto e : astronaut){
+        int a = e[0], b = e[1];
+        int root1 = ds_find(ds, a);
+        int root2 = ds_find(ds, b);
+        
+        if(root1!=root2)
+            ds_union(ds, root1, root2);
+    }
+    
+    unordered_map<int,int> mp;
+    
+    for(int i=0; i<n; i++){
+        int root = ds_find(ds, i);
+        mp[root]++;
+    }
+    
+    long long total_ways = (n*(n-1))/2;
+    long long same_ways = 0;
+    
+    for(auto p : mp){
+        long long m = p.second;
+        same_ways += (m*(m-1))/2; 
+    }
+    
+    return total_ways - same_ways;
+}
+```

@@ -108,6 +108,8 @@ vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
 
 #### 2. Minimum time taken by each job to be completed given by a Directed Acyclic Graph
 
+Similar Question : Parallel Courses I (Leetcode Premium)
+
 ![img](https://media.geeksforgeeks.org/wp-content/uploads/20200804212533/Semester1.png)
 
 Output: 6

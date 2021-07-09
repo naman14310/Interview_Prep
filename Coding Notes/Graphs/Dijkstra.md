@@ -80,7 +80,7 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 }
 ```
 
-#### 2. Minimum edges to reverse to make path from a source to a destination
+#### 2. Minimum edges to reverse to make path from a source to a destination (Tricky)
 Given a directed graph and a source node and destination node, we need to find how many edges we need to reverse in order to make at least 1 path from source node to destination node.
 
 ![img](https://media.geeksforgeeks.org/wp-content/uploads/reverseEdge.png)

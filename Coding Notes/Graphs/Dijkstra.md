@@ -80,6 +80,69 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 }
 ```
 
+#### 2. Minimum edges to reverse to make path from a source to a destination
+Given a directed graph and a source node and destination node, we need to find how many edges we need to reverse in order to make at least 1 path from source node to destination node.
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/reverseEdge.png)
+
+Hint: We make a reverse edge corresponding to every edge and we assign that a weight 1 and assign a weight 0 to original edge. So if we apply Dijkstra’s shortest path on this modified graph from given source, then that will give us minimum cost to reach from source to destination i.e. minimum edge reversal from source to destination. 
+
+```cpp
+int dijkstra (unordered_map<int, vector<pair<int, int>>> & graph, int src, int dest, int n){
+
+    vector<int> cost (n, INT_MAX);
+    cost[src] = 0;
+
+    vector<bool> vis (n, false);
+    set<pair<int,int>> s;
+
+    s.insert({0, src});
+
+    while(!s.empty()){
+        auto itr = s.begin();
+        int v = itr->second, v_cost = itr->first;
+        s.erase(itr);
+
+        if(v==dest) return v_cost;
+
+        for(auto nbr : graph[v]){
+            int nbr_val = nbr.first;
+            int nbr_cost = nbr.second;
+            if(vis[nbr_val]) continue;
+
+            int old_cost = cost[nbr_val];
+            int new_cost = v_cost + nbr_cost;
+
+            if(new_cost < old_cost){
+                pair<int,int> ptr = {old_cost, nbr_val};
+                
+                if (s.find(ptr)!=s.end())
+                    s.erase(ptr);
+
+                s.insert({new_cost, nbr_val});
+                cost[nbr_val] = new_cost;
+            }
+        }
+
+        vis[v] = true;
+    }
+    
+    return -1;
+}
+
+int compute_reversed_edges (vector<vector<int>> & edgeList, int src, int dest, int n){
+    unordered_map<int, vector<pair<int, int>>> graph;
+
+    for(auto e : edgeList){
+        int u = e[0], v = e[1];   
+        graph[u].push_back({v, 0});     // ----> Insert edge u->v with cost 0
+        graph[v].push_back({u, 1});     // ----> Insert edge v->u with cost 1
+    }
+
+    return dijkstra (graph, src, dest, n);
+}
+```
+
 
 ## @ Dijkstra on Matrix
 

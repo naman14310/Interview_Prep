@@ -96,7 +96,25 @@ bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
 }
 ```
 
-#### 3. M-Coloring Problem 
+#### 3. Two Clique Problem (Check if Graph can be divided in two Cliques)
+A Clique is a subgraph of graph such that all vertcies in subgraph are completely connected with each other. 
+
+![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/TwoClique1.png)
+
+Approach: A graph can be divided in two cliques if its complement graph is Bipartitie. 
+
+Step 1: Find complement of Graph. Below is complement graph is above shown graph. In complement, all original edges are removed. And the vertices which did not have an edge between them, now have an edge connecting them.
+
+![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/TwoClique2.png)
+
+Step 2: Return true if complement is Bipartite, else false. Above shown graph is Bipartite.
+
+How does this work?
+
+If complement is Bipartite, then graph can be divided into two sets U and V such that there is no edge connecting to vertices of same set. This means in original graph, these sets U and V are completely connected. Hence original graph could be divided in two Cliques.
+
+
+#### 4. M-Coloring Problem 
 Given an undirected graph and an integer M. The task is to determine if the graph can be colored with at most M colors such that no two adjacent vertices of the graph are colored with the same color.
 
 ```cpp

@@ -287,6 +287,26 @@ bool rotateString(string s, string goal) {
 }
 ```
 
+#### 11. Repeated Substring Pattern (Tricky)
+Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.
+
+Input: s = "abab"
+
+Output: true
+
+Approach:  If we can find a rotation m which is larger than 0 and less than n then the input string consists of repeated substrings.
+
+```cpp
+bool repeatedSubstringPattern(string s) {
+    if(s.length()<=1) return false;
+
+    string s2 = s+s;
+    int idx = s2.find(s, 1);
+
+    return idx<s.length(); 
+}
+```
+
 ## Medium
 
 #### 1. Group Anagrams (Using Hashmap)

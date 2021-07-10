@@ -276,6 +276,17 @@ string longestCommonPrefix(vector<string>& strs) {
 }
 ```
 
+#### 10. Rotate String (Smart Solution)
+We are given two strings, s and goal. A shift on s consists of taking string s and moving the leftmost character to the rightmost position. For example, if s = 'abcde', then it will be 'bcdea' after one shift on s. Return true if and only if s can become goal after some number of shifts on s.
+
+```cpp
+bool rotateString(string s, string goal) {
+    if (s.length()!=goal.length()) return false; 
+    s += s;
+    return s.find(goal)!=-1;
+}
+```
+
 ## Medium
 
 #### 1. Group Anagrams (Using Hashmap)

@@ -173,3 +173,69 @@ vector<vector<string>> suggestedProducts(vector<string>& products, string search
     return give_suggestion (root, searchWord);
 }
 ```
+
+#### 4. Maximum XOR of Two Numbers in an Array
+Given an integer array nums, return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(){
+        children = vector<TrieNode*> (2, NULL);
+        isTerminal = false;
+    }
+};
+
+
+void insert (TrieNode* root, int num){
+    TrieNode* temp = root;
+
+    for(int i=31; i>=0; i--){
+        int idx = (num>>i) & 1;          //--> checking ith bit of num
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+
+int find_max_xor (TrieNode* root, int num){
+    TrieNode* temp = root;
+    int ans = 0;
+
+    for(int i=31; i>=0; i--){
+        int idx = (num>>i) & 1;
+
+        /* For making max_xor with num, first preference will be given to opposite bit */
+
+        if(temp->children[!idx]){
+            ans = ans | (1<<i);             //--> Setting ith bit of answer to 1
+            temp = temp->children[!idx];
+        }      
+
+        else temp = temp->children[idx];
+    }
+
+    return ans;
+}
+
+
+int findMaximumXOR(vector<int>& nums) {
+    TrieNode* root = new TrieNode();
+    int XOR = 0;
+
+    for(int n : nums)
+        insert(root, n);
+
+    for(int n : nums)
+        XOR = max(XOR, find_max_xor(root, n));
+
+    return XOR;
+}
+```

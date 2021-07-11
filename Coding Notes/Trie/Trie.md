@@ -85,3 +85,90 @@ public:
     }
 };
 ```
+
+#### 2. Search Suggestions System
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(){
+        children = vector<TrieNode*> (26, NULL);
+        isTerminal = false;
+    }
+};
+
+
+void insert (TrieNode* root, string word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+} 
+
+
+void fetch_words (TrieNode* temp, int & count, vector<string> & suggestions, string & s){        
+    if(count==3) return;           // --> we will not further dfs after finding 3 words
+
+    if(temp->isTerminal){
+        suggestions.push_back(s);
+        count++;
+    }
+
+    for(int i=0; i<26; i++){
+        if(temp->children[i]){
+            s.push_back('a' + i);
+            fetch_words (temp->children[i], count, suggestions, s);
+            s.pop_back();
+        }
+    }
+}
+
+
+vector<vector<string>> give_suggestion (TrieNode* root, string word){
+    TrieNode* temp = root;
+    vector<vector<string>> res;
+    string s = "";
+
+    for(char ch : word){
+        int idx = ch - 'a';
+
+        if(!temp->children[idx]) break;
+
+        temp = temp->children[idx];
+        s.push_back(ch);
+
+        vector<string> suggestions;
+        int count = 0;
+
+        fetch_words(temp, count, suggestions, s);
+        res.push_back(suggestions);
+    }
+
+    /* adding empty vectors to res if no suggestions found */
+
+    while(res.size()!=word.size())
+        res.push_back(vector<string> ());
+
+    return res;
+}
+
+
+vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+    TrieNode* root = new TrieNode();
+
+    for(string word : products)
+        insert(root, word);
+
+    return give_suggestion (root, searchWord);
+}
+```

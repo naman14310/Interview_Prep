@@ -174,6 +174,84 @@ vector<vector<string>> suggestedProducts(vector<string>& products, string search
 }
 ```
 
+#### 3. Replace Words
+Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the successors in the sentence with the root forming it. If a successor can be replaced by more than one root, replace it with the root that has the shortest length. Return the sentence after the replacement.
+
+Input: dictionary = ["cat","bat","rat"],  sentence = "the cattle was rattled by the battery"
+
+Output: "the cat was rat by the bat"
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(){
+        children = vector<TrieNode*> (26, NULL);
+        isTerminal = false;
+    }
+};
+
+
+void insert (TrieNode* root, string word){
+    TrieNode* temp  = root;
+
+    for(auto ch : word){
+        int idx = ch - 'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+
+string find_rootWord (TrieNode* root, string word){
+    TrieNode* temp = root;
+    string rootWord = "";
+
+    for(auto ch : word){
+        int idx = ch - 'a';
+
+        if(!temp->children[idx])
+            return word;
+
+        temp = temp->children[idx];
+        rootWord.push_back(ch);
+
+        if(temp->isTerminal)
+            return rootWord;
+    }
+
+    return rootWord;
+}
+
+
+string replaceWords(vector<string>& dictionary, string sentence) {
+    string res = "";
+    TrieNode* root = new TrieNode();
+
+    stringstream ss(sentence);  
+    string token;
+    vector<string> tokens;
+
+    while(getline(ss, token, ' '))
+        tokens.push_back(token);
+
+    for(string word : dictionary)
+        insert(root, word);
+
+    for(int i=0; i<tokens.size()-1; i++)
+        res += find_rootWord(root, tokens[i]) + " ";
+
+    res += find_rootWord(root, tokens.back());
+    return res;
+}
+```
+
 #### 4. Maximum XOR of Two Numbers in an Array
 Given an integer array nums, return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
 

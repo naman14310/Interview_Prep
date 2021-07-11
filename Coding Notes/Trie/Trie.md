@@ -118,7 +118,7 @@ void insert (TrieNode* root, string word){
 
 
 void fetch_words (TrieNode* temp, int & count, vector<string> & suggestions, string & s){        
-    if(count==3) return;           // --> we will not further dfs after finding 3 words
+    if(count==3) return;           // --> we will not do further dfs after finding 3 words
 
     if(temp->isTerminal){
         suggestions.push_back(s);

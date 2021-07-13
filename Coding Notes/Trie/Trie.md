@@ -317,3 +317,77 @@ int findMaximumXOR(vector<int>& nums) {
     return XOR;
 }
 ```
+
+#### 5. Design Add and Search Words Data Structure
+Design a data structure that supports adding new words and finding if a string matches any previously added string. Implement the WordDictionary class in which:
+
+1. WordDictionary() : Initializes the object.
+2. void addWord(word) : Adds word to the data structure, it can be matched later.
+3. bool search(word) : Returns true if there is any string in the data structure that matches word or false otherwise. word may contain dots '.' where dots can be matched with any letter.
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+    TrieNode (){
+        children = vector<TrieNode*> (26, NULL);
+        isTerminal = false;
+    }
+};
+
+TrieNode* root;
+
+WordDictionary() {
+    root = new TrieNode();
+}
+
+/* --------------------------------------------------------------------------------------- */
+
+void addWord(string word) {
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch - 'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+/* --------------------------------------------------------------------------------------- */
+
+
+bool search_helper(string word, int i, TrieNode* temp){
+    if(i==word.size()) return temp->isTerminal;
+
+    /* If we get dot at any index i of word, then we will check further in all 26 children */
+
+    if(word[i]=='.'){
+        bool found = false;
+
+        for(int j=0; j<26; j++){
+            if(temp->children[j]){
+                found = search_helper(word, i+1, temp->children[j]);
+                if(found) return true;
+            }
+        }
+        return false;
+    }
+
+    int idx = word[i]-'a';
+
+    if(temp->children[idx])
+        return search_helper(word, i+1, temp->children[idx]);
+
+    return false;
+}
+
+bool search(string word) {
+    TrieNode* temp = root;
+    return search_helper(word, 0, temp);
+}
+```

@@ -391,3 +391,78 @@ bool search(string word) {
     return search_helper(word, 0, temp);
 }
 ```
+
+#### 6. Stream of Characters
+Implement the StreamChecker class as follows:
+
+1. StreamChecker(words): Constructor, init the data structure with the given words.
+2. query(letter): returns true if and only if for some k >= 1, the last k characters queried (in order from oldest to newest, including this letter just queried) spell one of the words in the given list.
+
+```cpp
+class StreamChecker {
+public:
+    
+    struct TrieNode{
+        vector<TrieNode*> children;
+        bool isTerminal;
+        
+        TrieNode(){    
+            children = vector<TrieNode*> (26, NULL);
+            isTerminal = false;
+        }
+    };
+    
+    TrieNode* root;
+    string s;
+    
+    
+    /* Insert all words in Trie in reverse order */
+    
+    void insert(string word){
+        TrieNode* temp = root;
+        
+        for(int i=word.length()-1; i>=0; i--){
+            char ch = word[i];
+            int idx = ch-'a';
+            
+            if(!temp->children[idx])
+                temp->children[idx] = new TrieNode();
+            
+            temp = temp->children[idx];
+        }
+        
+        temp->isTerminal = true;
+    }
+    
+    StreamChecker(vector<string>& words) {
+        root = new TrieNode();
+        for(string word : words)
+            insert(word);
+    }
+    
+    bool query(char letter) {
+        s.push_back(letter);
+        TrieNode* temp = root;
+
+        for(int i=s.length()-1; i>=0; i--){
+            char ch = s[i];
+            int idx = ch-'a';
+            
+            if(temp->children[idx])
+                temp = temp->children[idx];
+            
+            else break;
+            
+            if(temp->isTerminal) return true;
+        }
+        
+        return false;
+    }
+};
+
+/**
+ * Your StreamChecker object will be instantiated and called as such:
+ * StreamChecker* obj = new StreamChecker(words);
+ * bool param_1 = obj->query(letter);
+ */
+```

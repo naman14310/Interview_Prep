@@ -466,3 +466,107 @@ public:
  * bool param_1 = obj->query(letter);
  */
 ```
+
+#### 7. Concatenated Words (Tricky)
+Given an array of strings words (without duplicates), return all the concatenated words in the given list of words. A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
+
+Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
+
+Output: ["catsdogcats","dogcatsdog","ratcatdogcat"]
+
+Hint: Iterate for whole word, if we get any terminal node in between then checks whether the remaining part is complete word OR concatenated word. 
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(){
+        children.assign(26, NULL);
+        isTerminal = false;
+    }
+};
+
+/* Simply insert given word in trie */
+
+void insert(TrieNode* root, string word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+
+/* It checks whether the subpart of given word (starts from index i) exists in trie or not */
+
+bool isWord (TrieNode* root, string word, int start){
+    if(start>=word.size()) return false;
+    TrieNode* temp = root;
+
+    for(int i=start; i<word.size(); i++){
+        char ch = word[i];
+        int idx = ch-'a';
+
+        if(!temp->children[idx]) 
+            return false;
+
+        temp = temp->children[idx];
+    }
+
+    return temp->isTerminal;
+}
+
+/* It will check whether the given word is concatenated or not*/
+
+bool isConcatenatedWord (TrieNode* root, string word, int start){
+    if(start>=word.size()) return false;
+    TrieNode* temp = root;
+
+    /* Simple iterate through whole word from index start */
+
+    for(int i=start; i<word.length(); i++){
+        char ch = word[i];
+        int idx = ch-'a';
+
+        if(!temp->children[idx])
+            return false;
+
+        temp = temp->children[idx];
+
+        /* 
+            If we reach some terminal node, then check whether the remaining part is complete word
+            OR a concatenated word that lies in trie
+        */
+
+        if(temp->isTerminal)
+            if(isWord(root, word, i+1) or isConcatenatedWord(root, word, i+1))
+                return true;
+
+    }
+
+    return false;
+}
+
+
+vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+    TrieNode* root = new TrieNode();
+    vector<string> res;
+
+    for(string word : words)
+        insert(root, word);
+
+    for(string word : words)
+        if(isConcatenatedWord(root, word, 0))
+            res.push_back(word);
+
+    return res;
+}
+```

@@ -560,7 +560,118 @@ int f(string prefix, string suffix) {
 }
 ```
 
-#### 8. Concatenated Words (Tricky)
+#### 8. Longest Duplicate Substring
+Given a string s, consider all duplicated substrings: (contiguous) substrings of s that occur 2 or more times. The occurrences may overlap. Return any duplicated substring that has the longest possible length. If s does not have a duplicated substring, the answer is "".
+
+Input: s = "banana"
+
+Output: "ana"
+
+Hint: Run a binary search over all range of length of substring window. For every mid, find all substrings of size mid, If any substring exists in trie return that string else insert it in trie. Shift start and end ptr of binary search accodingly.
+
+Other Approaches:
+1. Using DP (Variation of longest common substring) - Slowest
+2. Using Rolling Hash - Fastest
+
+[Video Explaination](https://www.youtube.com/watch?v=FQ8hcOOzQMU)
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(){
+        children.assign(26, NULL);
+        isTerminal = false;
+    }
+};
+
+
+TrieNode* root;
+
+
+void insert (string & word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+
+bool search (string & word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+
+        if(!temp->children[idx]) 
+            return false;
+
+        temp = temp->children[idx];
+    }
+
+    return temp->isTerminal;
+}
+
+
+string isDuplicateExist (int & substr_size, string & word){
+
+    /* Find every substring of size substr_size */
+
+    for(int i=0; i<=word.length()-substr_size; i++){
+        string sub = word.substr(i, substr_size);
+
+        /* We will search if that substr exists in trie, if yes return true */
+
+        if(search(sub))
+            return sub;
+
+        /* If not, insert it into trie and search for other substrings */
+
+        insert(sub);
+    }
+
+    return "";
+}
+
+
+/* Simple binary search on length of substrings */
+
+string binarySearch(int start, int end, string & word){
+    string ans = "";
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        string sub = isDuplicateExist(mid, word);
+
+        if(sub!=""){
+            ans = sub;
+            start = mid+1;
+        }
+
+        else end = mid-1;    
+    }
+
+    return ans;
+}
+
+
+string longestDupSubstring(string s) {
+    root = new TrieNode();
+    return binarySearch(1, s.length(), s);
+}
+```
+
+
+#### 9. Concatenated Words (Tricky)
 Given an array of strings words (without duplicates), return all the concatenated words in the given list of words. A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 
 Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
@@ -664,7 +775,7 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
 }
 ```
 
-#### 9. Palindrome Pairs (Tricky)
+#### 10. Palindrome Pairs (Tricky)
 Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.
 
 ```

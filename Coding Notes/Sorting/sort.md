@@ -119,6 +119,15 @@ int search(vector<int> & v, int k){
 }
 ```
 
+#### 4. CountSort ( gives O(n) Time complexity in some cases )
+
+[Video] (https://www.youtube.com/watch?v=pEJiGC-ObQE)
+
+Tip: 
+
+1. Use it while sorting string or stream of characters or symbols.
+2. Use it when numbers lies in given defined range (where maxLimit comes under linear function of total range).
+
 ## Easy
 
 #### 1. Count Inversions
@@ -191,7 +200,7 @@ Input: order = "cba", str = "abcd"
 
 Output: "cbad"
 
-Hint: Create an unordered_map for mapping each char with their rank (pos in order string). Then create a pair vector containing char or str and their respective rank. Sort that vector according to rank.
+Method 1 : Using ranking of characters
 
 ```cpp
 string customSortString(string order, string str) {
@@ -212,6 +221,45 @@ string customSortString(string order, string str) {
 
     for(int i=0; i<str.length(); i++)
         str[i] = v[i].second;
+
+    return str;
+}
+```
+
+Method 2 : Using CountSort logic
+
+```cpp
+/* Based on Counting Sort : O(n) | O(1) */
+
+string customSortString(string order, string str) {
+
+    /* Store count of each char of str in countArr */
+
+    vector<int> countArr (26, 0);
+    for(char ch : str)
+        countArr[ch-'a']++;
+
+    int i=0;
+
+    /* Iterate char in order and start filling it in str */
+
+    for(char ch : order){
+        while(countArr[ch-'a']>0){
+            str[i] = ch;
+            i++;
+            countArr[ch-'a']--;
+        }
+    }
+
+    /* Fill remaining char that are not present in order string */
+
+    for(int j=0; j<26; j++){
+        while(countArr[j]>0){
+            str[i] = 'a'+ j;
+            i++;
+            countArr[j]--;
+        }
+    }
 
     return str;
 }

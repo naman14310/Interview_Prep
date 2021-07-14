@@ -184,6 +184,39 @@ string concatenate(vector<int> numbers){
 }
 ```
 
+#### 3. Custom Sort String
+order and str are strings composed of lowercase letters. In order, no letter occurs more than once. order was sorted in some custom order previously. We want to permute the characters of str so that they match the order that order was sorted. More specifically, if x occurs before y in order, then x should occur before y in the returned string. Return any permutation of str (as a string) that satisfies this property.
+
+Input: order = "cba", str = "abcd"
+
+Output: "cbad"
+
+Hint: Create an unordered_map for mapping each char with their rank (pos in order string). Then create a pair vector containing char or str and their respective rank. Sort that vector according to rank.
+
+```cpp
+string customSortString(string order, string str) {
+    unordered_map<char, int> rank;
+
+    for(int i=0; i<order.length(); i++)
+        rank[order[i]] = i;
+
+    for(char i='a'; i<='z'; i++)
+        if(rank.find(i)==rank.end())
+            rank[i] = -1;
+
+    vector<pair<char, int>> v;
+    for(char ch : str)
+        v.push_back({rank[ch], ch});
+
+    sort(v.begin(), v.end());
+
+    for(int i=0; i<str.length(); i++)
+        str[i] = v[i].second;
+
+    return str;
+}
+```
+
 ## Medium
 
 #### 1. Minimum Swaps to Sort

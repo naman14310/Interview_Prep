@@ -468,7 +468,7 @@ public:
 ```
 
 
-#### 7. Prefix and Suffix Search
+#### 7. Prefix and Suffix Search (Tricky)
 Design a special dictionary with some words that searchs the words in it by a prefix and a suffix. Implement the WordFilter class:
 
 1. WordFilter(string[] words) Initializes the object with the words in the dictionary.

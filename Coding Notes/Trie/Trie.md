@@ -570,3 +570,167 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
     return res;
 }
 ```
+
+#### 8. Palindrome Pairs (Tricky)
+Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.
+
+Approach: 
+
+Following are the cases for making pairs:
+
+Case 1: whole rev(word1) matches with suffix of word2 (such that len(word2) >= len(word1))
+
+Eg1: word1 = lls, word2 = absll
+
+Eg2: word1 = abcd, word2 = dcba
+
+We will handle this case by doing DFS call for remaining part of word2 and check whether it is palindrome or not. (Empty string will be treated as palindrome, like in Eg2)
+
+
+Case 2: rev(word1) matches with suffix of whole word2 (such that len(word1) >= len(word2))
+
+Eg1: word1 = abbab, word2 = ba
+
+We will handle this case by simply checking whether the remaining part of word1 is palindrome or not.
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+    int wordIndex;        // --> It will store the index of word in input array
+
+    TrieNode(){
+        children.assign(26, NULL);
+        isTerminal = false;
+    }
+};
+
+/* ------------------------------------------------------------------------------------------------ */
+
+/* Below function will simply insert the word in reverse order in trie */
+
+void insert (TrieNode* root, string & word, int & wordIndex){
+    TrieNode* temp = root;
+
+    for(int i=word.length()-1; i>=0; i--){
+        char ch = word[i];
+        int idx = ch-'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+    temp->wordIndex = wordIndex;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+
+/* This helper function check whether string s in palindrome or not */
+
+bool isPalindrome (string & s){ 
+    int i=0, j=s.length()-1;
+
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
+
+    return true;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+
+/* It performs dfs on all paths starting from temp node and store all pairs in vector */
+
+void dfs (TrieNode* temp, string & s, vector<vector<int>> & pairs, string & word, int & first_idx){
+
+    /* 
+        if temp is a terminal node and string 's' is palindrome, then this word forms a pair 
+        's' is a remaining part of the second word after removing the suffix (similar to the first word)
+    */
+
+    if(temp->isTerminal and isPalindrome(s)){
+
+        /* Checking if first and second word are not same */
+
+        if(temp->wordIndex != first_idx){
+            pairs.push_back({first_idx, temp->wordIndex});
+
+            /* Boundary Case : when first word is empty */
+
+            if(word=="") pairs.push_back({temp->wordIndex, first_idx});
+        }
+    }
+
+    /* Doing DFS on its children */
+
+    for(int i=0; i<26; i++){
+
+        if(temp->children[i]){
+            s.push_back('a'+i);
+            dfs(temp->children[i], s, pairs, word, first_idx);
+            s.pop_back();
+        }            
+    }
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+
+vector<vector<int>> search_pair(TrieNode* root, string & word, int & first_idx){
+    TrieNode* temp = root;
+    vector<vector<int>> pairs;
+    string s = "";
+    int wlen = word.length();
+
+    for(int i=0; i<word.length(); i++){
+        char ch = word[i];
+        int idx = ch-'a';
+
+        /* 
+            Case 2: If we found any terminal node in between and if the remaining part of word1 is palindrome
+            then it will also be added as pair.
+        */
+
+        if(temp->isTerminal){
+            string sub = word.substr(i, wlen-i+1);
+
+            if(isPalindrome(sub) and temp->wordIndex!=first_idx)
+                pairs.push_back({first_idx, temp->wordIndex});
+        }
+
+        /* If there is no suffix matches with the word simply return pairs */
+
+        if(!temp->children[idx]) 
+            return pairs;
+
+        temp = temp->children[idx];
+    }
+
+    /* Case 1: If we found a suffix matches with the whole word1, do DFS */
+
+    dfs (temp, s, pairs, word, first_idx);
+    return pairs;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+
+vector<vector<int>> palindromePairs(vector<string>& words) {
+    TrieNode* root = new TrieNode();
+    vector<vector<int>> res;
+
+    for(int i=0; i<words.size(); i++)
+        if(words[i].size()>0) 
+            insert(root, words[i], i);
+
+    for(int i=0; i<words.size(); i++){
+        auto pairs = search_pair (root, words[i], i);
+        for(auto p : pairs)
+            res.push_back(p);
+    }
+
+    return res;
+}
+```

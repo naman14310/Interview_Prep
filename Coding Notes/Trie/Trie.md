@@ -468,7 +468,76 @@ public:
 ```
 
 
-#### 7. Prefix and Suffix Search (Tricky)
+#### 7. Find shortest unique prefix for every word in a given list
+Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another. 
+
+Input: arr[] = {"zebra", "dog", "duck", "dove"}
+
+Output: dog, dov, du, z
+
+Hint: Use one more field for storing word frequency in TrieNode structure
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+    int freq;
+
+    TrieNode(){
+        children.assign(26, NULL);
+        isTerminal = true;
+        freq = 1;
+    }
+};
+
+void insert(TrieNode* root, string word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+        
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+        else
+            temp->children[idx]->freq++;
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+void dfs (TrieNode* root, string & s, vector<string> & res){
+    if(root->freq==1){
+        res.push_back(s);
+        return;
+    }
+
+    for(int i=0; i<26; i++){
+        if(root->children[i]){
+            s.push_back('a'+i);
+            dfs (root->children[i], s, res);
+            s.pop_back();
+        }
+    }
+}
+
+vector<string> find_all_unique_prefixes (vector<string> & words){
+    TrieNode* root = new TrieNode(); 
+    root->freq = words.size();
+
+    for(string word : words)
+        insert(root, word);
+
+    vector<string> res;
+    string s = "";
+    dfs (root, s, res);
+
+    return res;
+}
+```
+
+#### 8. Prefix and Suffix Search (Tricky)
 Design a special dictionary with some words that searchs the words in it by a prefix and a suffix. Implement the WordFilter class:
 
 1. WordFilter(string[] words) Initializes the object with the words in the dictionary.
@@ -560,7 +629,7 @@ int f(string prefix, string suffix) {
 }
 ```
 
-#### 8. Longest Duplicate Substring
+#### 9. Longest Duplicate Substring
 Given a string s, consider all duplicated substrings: (contiguous) substrings of s that occur 2 or more times. The occurrences may overlap. Return any duplicated substring that has the longest possible length. If s does not have a duplicated substring, the answer is "".
 
 Input: s = "banana"
@@ -671,7 +740,7 @@ string longestDupSubstring(string s) {
 ```
 
 
-#### 9. Concatenated Words (Tricky)
+#### 10. Concatenated Words (Tricky)
 Given an array of strings words (without duplicates), return all the concatenated words in the given list of words. A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 
 Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
@@ -775,7 +844,7 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
 }
 ```
 
-#### 10. Palindrome Pairs (Tricky)
+#### 11. Palindrome Pairs (Tricky)
 Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.
 
 ```

@@ -467,7 +467,100 @@ public:
  */
 ```
 
-#### 7. Concatenated Words (Tricky)
+
+#### 7. Prefix and Suffix Search
+Design a special dictionary with some words that searchs the words in it by a prefix and a suffix. Implement the WordFilter class:
+
+1. WordFilter(string[] words) Initializes the object with the words in the dictionary.
+2. f(string prefix, string suffix) Returns the index of the word in the dictionary, which has the prefix prefix and the suffix suffix. If there is more than one valid index, return the largest of them. If there is no such word in the dictionary, return -1.
+
+Approach:
+1. Add the word along with all its possible suffixes to trie. (suffix + "#" + word)
+2. Now for a [prefix,suffix] pair --> search suffix + "#" + prefix.
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+    int wid;
+
+    TrieNode(){
+        children.assign(27, NULL);          // --> last index for '#'
+        isTerminal = false;
+    }
+};
+
+TrieNode* root;
+
+void insert(string word, int wid){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch=='#' ? 26 : ch-'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+    temp->wid = wid;
+}
+
+
+WordFilter(vector<string>& words) {
+    root = new TrieNode();
+    int wid = 0;
+    
+    for(string word : words){
+        for(int i=0; i<word.length(); i++){
+            string suffix = word.substr(i, word.length()-i+1); 
+            string s = suffix + "#" + word;
+            insert(s, wid);
+        }
+        wid++;
+    }
+}
+
+/* dfs will traverse all path below temp node and check for all words and keeps updating mx_wid on reaching every terminal node */
+
+void dfs (TrieNode* temp, int & mx_wid){
+    if(temp->isTerminal)
+        mx_wid = max(mx_wid, temp->wid);
+
+    for(int i=0; i<26; i++)
+        if(temp->children[i])
+            dfs (temp->children[i], mx_wid);
+}
+
+/* It will serach till suffix + '#' + prefix, after that we will apply dfs on temp node */
+
+int search (string s){
+    TrieNode* temp = root;
+    int mx_wid = -1;
+
+    for(char ch : s){
+        int idx = ch=='#' ? 26 : ch-'a';
+
+        if(!temp->children[idx]) 
+            return -1;
+
+        temp = temp->children[idx];
+    }
+
+    dfs(temp, mx_wid);
+    return mx_wid;
+}
+
+
+int f(string prefix, string suffix) {
+    string s = suffix + "#" + prefix;
+    return search(s);
+}
+```
+
+#### 8. Concatenated Words (Tricky)
 Given an array of strings words (without duplicates), return all the concatenated words in the given list of words. A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 
 Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
@@ -571,7 +664,7 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
 }
 ```
 
-#### 8. Palindrome Pairs (Tricky)
+#### 9. Palindrome Pairs (Tricky)
 Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.
 
 ```

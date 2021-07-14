@@ -577,14 +577,16 @@ Given a list of unique words, return all the pairs of the distinct indices (i, j
 ```
 Approach: Following are the two cases for making palindrome pairs:
 
-1. Whole rev(word1) matches with suffix of word2 (such that len(word2) >= len(word1))
+Case 1: Whole rev(word1) matches with suffix of word2 (such that len(word2) >= len(word1))
 Eg1: word1 = lls, word2 = absll 
 Eg2: word1 = abcd, word2 = dcba
+
 We will handle this case by doing DFS call for remaining part of word2 and check whether it is palindrome or not. 
 (Empty string will be treated as palindrome, like in Eg2)
 
-2. rev(word1) matches with suffix of whole word2 (such that len(word1) >= len(word2))
+Case 2: rev(word1) matches with suffix of whole word2 (such that len(word1) >= len(word2))
 Eg1: word1 = abbab, word2 = ba
+
 We will handle this case by simply checking whether the remaining part of word1 is palindrome or not.
 ```
 

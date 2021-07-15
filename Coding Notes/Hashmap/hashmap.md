@@ -112,7 +112,6 @@ vector<vector<string> > Anagrams(vector<string>& string_list) {
             res.push_back({s});
             mp[key] = res.size()-1;
         }
-
     }
 
     return res;

@@ -174,7 +174,92 @@ vector<vector<string>> suggestedProducts(vector<string>& products, string search
 }
 ```
 
-#### 3. Replace Words
+#### 3. Phone directory
+Given a list of contacts of length n which exist in a phone directory and a query string s. Run a search query for each prefix p of the query string s (i.e. from  index 1 to |s|) that prints all the distinct contacts which have the same prefix as p in lexicographical increasing order.
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;  
+    bool isTerminal;
+
+    TrieNode(){
+        children.assign(26, NULL);
+        isTerminal = false;
+    }
+};
+
+TrieNode* root;
+
+void insert (string word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';    
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+/* We will do DFS after tempNode for adding all words to res */
+
+void dfs (TrieNode* temp, vector<string> & suggestions, string & s){
+    if(temp->isTerminal)
+        suggestions.push_back(s);
+
+    for(int i=0; i<26; i++){
+        if(temp->children[i]){
+            s.push_back('a'+i);
+            dfs (temp->children[i], suggestions, s);
+            s.pop_back();
+        }
+    }
+}
+
+
+void search (string word, vector<string> & suggestions){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+
+        if(!temp->children[idx]){
+            suggestions.push_back("0");
+            return ;
+        }
+
+        temp = temp->children[idx];
+    }
+
+    dfs (temp, suggestions, word);
+}
+
+
+vector<vector<string>> displayContacts(int n, string contact[], string s){
+    root = new TrieNode();
+    string s1 = "";
+    vector<vector<string>> res; 
+
+    for(int i=0; i<n; i++)
+        insert(contact[i]);
+
+    for(char ch : s){
+        s1.push_back(ch);
+        vector<string> suggestions;
+        search(s1, suggestions);
+        res.push_back(suggestions);
+    }
+
+    return res;
+}
+```
+
+
+#### 4. Replace Words
 Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the successors in the sentence with the root forming it. If a successor can be replaced by more than one root, replace it with the root that has the shortest length. Return the sentence after the replacement.
 
 Input: dictionary = ["cat","bat","rat"],  sentence = "the cattle was rattled by the battery"
@@ -252,7 +337,7 @@ string replaceWords(vector<string>& dictionary, string sentence) {
 }
 ```
 
-#### 4. Maximum XOR of Two Numbers in an Array
+#### 5. Maximum XOR of Two Numbers in an Array
 Given an integer array nums, return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
 
 ```cpp
@@ -318,7 +403,7 @@ int findMaximumXOR(vector<int>& nums) {
 }
 ```
 
-#### 5. Design Add and Search Words Data Structure
+#### 6. Design Add and Search Words Data Structure
 Design a data structure that supports adding new words and finding if a string matches any previously added string. Implement the WordDictionary class in which:
 
 1. WordDictionary() : Initializes the object.
@@ -392,7 +477,7 @@ bool search(string word) {
 }
 ```
 
-#### 6. Stream of Characters
+#### 7. Stream of Characters
 Implement the StreamChecker class as follows:
 
 1. StreamChecker(words): Constructor, init the data structure with the given words.
@@ -468,7 +553,7 @@ public:
 ```
 
 
-#### 7. Find shortest unique prefix for every word in a given list
+#### 8. Find shortest unique prefix for every word in a given list
 Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another. 
 
 Input: arr[] = {"zebra", "dog", "duck", "dove"}
@@ -537,7 +622,7 @@ vector<string> find_all_unique_prefixes (vector<string> & words){
 }
 ```
 
-#### 8. Prefix and Suffix Search (Tricky)
+#### 9. Prefix and Suffix Search (Tricky)
 Design a special dictionary with some words that searchs the words in it by a prefix and a suffix. Implement the WordFilter class:
 
 1. WordFilter(string[] words) Initializes the object with the words in the dictionary.
@@ -629,7 +714,7 @@ int f(string prefix, string suffix) {
 }
 ```
 
-#### 9. Longest Duplicate Substring
+#### 10. Longest Duplicate Substring
 Given a string s, consider all duplicated substrings: (contiguous) substrings of s that occur 2 or more times. The occurrences may overlap. Return any duplicated substring that has the longest possible length. If s does not have a duplicated substring, the answer is "".
 
 Input: s = "banana"
@@ -740,7 +825,7 @@ string longestDupSubstring(string s) {
 ```
 
 
-#### 10. Concatenated Words (Tricky)
+#### 11. Concatenated Words (Tricky)
 Given an array of strings words (without duplicates), return all the concatenated words in the given list of words. A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 
 Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
@@ -844,7 +929,7 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
 }
 ```
 
-#### 11. Palindrome Pairs (Tricky)
+#### 12. Palindrome Pairs (Tricky)
 Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.
 
 ```

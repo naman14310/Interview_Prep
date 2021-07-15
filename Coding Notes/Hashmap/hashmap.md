@@ -85,3 +85,36 @@ int minSwapsCouples(vector<int>& row) {
     return swap;
 }
 ```
+
+#### 3. Print Anagrams Together
+Given an array of strings, return all groups of strings that are anagrams. The groups must be created in order of their appearance in the original array.
+
+Input: words[] = {no,on,is}
+
+Output: [[no, on],[is]]
+
+Hint: Use unordered_map for mapping key to indexes
+
+```cpp
+vector<vector<string> > Anagrams(vector<string>& string_list) {
+    unordered_map<string, int> mp;       // ----> {key, index in res vector}
+    vector<vector<string>> res;
+    
+    for(string s : string_list){
+        string key = s;
+        sort(key.begin(), key.end());
+        
+        if(mp.find(key)!=mp.end()){
+            int idx = mp[key];
+            res[idx].push_back(s);
+        }
+        else{
+            res.push_back({s});
+            mp[key] = res.size()-1;
+        }
+
+    }
+
+    return res;
+}
+```

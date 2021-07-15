@@ -507,6 +507,63 @@ vector<string> findPath(vector<vector<int>> &m, int n) {
 }
 ```
 
+#### 7. Word Search
+Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+![img](https://assets.leetcode.com/uploads/2020/11/04/word2.jpg)
+
+Input: word = "ABCCED"
+
+Output: true
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+bool dfs (vector<vector<char>>& board, int x, int y, string& word, int idx, vector<vector<bool>>& vis, int& row, int& col){
+    if(idx==word.size()) return true;
+
+    vis[x][y] = true;
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and board[xnew][ynew]==word[idx] and !vis[xnew][ynew]){
+            bool found = dfs(board, xnew, ynew, word, idx+1, vis, row, col);
+            if(found) return true;
+        }
+    }
+
+    vis[x][y] = false;
+    return false;
+}
+
+
+bool exist(vector<vector<char>>& board, string word) {
+    int row = board.size(), col = board[0].size();
+    vector<vector<bool>> vis (row, vector<bool> (col, false));
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(board[i][j]==word[0]){
+                bool found = dfs (board, i, j, word, 1, vis, row, col);
+                if(found) return true;
+            }
+        }
+    }
+
+    return false;
+}
+```
+
+
 ## @ DFS with pruning
 
 #### 1. Cheapest Flights Within K Stops

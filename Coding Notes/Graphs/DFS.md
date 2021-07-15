@@ -563,6 +563,122 @@ bool exist(vector<vector<char>>& board, string word) {
 }
 ```
 
+#### 8. Word Search II (DFS + Trie)
+Given an m x n board of characters and a list of strings words, return all words on the board. Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+
+Hint: Insert all words in trie, and explore all words simultaneously as move further inside trie.
+
+```cpp
+struct TrieNode{
+    vector<TrieNode*> children;
+    bool isTerminal;
+
+    TrieNode(){
+        children.assign(26, NULL);
+        isTerminal = false;
+    }
+};
+
+TrieNode* root;
+
+
+void insert(string word){
+    TrieNode* temp = root;
+
+    for(char ch : word){
+        int idx = ch-'a';
+
+        if(!temp->children[idx])
+            temp->children[idx] = new TrieNode();
+
+        temp = temp->children[idx];
+    }
+
+    temp->isTerminal = true;
+}
+
+
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+void dfs (vector<vector<char>>& board, vector<string> & res, vector<vector<bool>> & vis, TrieNode* root, int x, int y, int row, int col, string & s){
+
+    vis[x][y] = true;
+
+    /* if we reached any terminal node, that means we found the word, so insert it in res */
+
+    if(root->isTerminal){
+        res.push_back(s);
+        root->isTerminal = false;     // --> Marking word to be found by removing terminal bit (for preventing duplicates in res)
+        vis[x][y] = false;
+    }
+
+
+    /* do DFS for all childrens of trie */
+
+    for(int i=0; i<26; i++){
+
+        if(root->children[i]){
+            char ch = 'a'+i;
+            s.push_back(ch);
+
+            int dx[] = {1, 0, -1, 0};
+            int dy[] = {0, 1, 0, -1};
+
+            for(int dir = 0; dir<4; dir++){
+                int xnew = x + dx[dir];
+                int ynew = y + dy[dir];
+
+                /* If any option of trie lies in any 4 nbr cell, call the same function recursively */
+
+                if(isInside(xnew, ynew, row, col) and board[xnew][ynew]==ch and !vis[xnew][ynew])
+                    dfs (board, res, vis, root->children[i], xnew, ynew, row, col, s);
+            }
+
+            s.pop_back();
+        }    
+    }
+
+    vis[x][y] = false;
+}
+
+
+vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+    root = new TrieNode();
+
+    /* Insert all words in trie */
+
+    for(string word : words)
+        insert(word);
+
+    int row = board.size(), col = board[0].size();
+    vector<vector<bool>> vis(row, vector<bool> (col, false));
+    vector<string> res;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            /* For each cell on board check if it is an option in trie */
+
+            for(int c=0; c<26; c++){
+
+                /* If it is an option then do DFS on that cell (both on board and trie simultaneously) */
+
+                if(root->children[c] and board[i][j]=='a'+c){
+                    string s = "";
+                    s.push_back('a'+c);
+                    dfs(board, res, vis, root->children[c], i, j, row, col, s);
+                }
+            }
+        }
+    }
+
+    return res;
+}
+```
+
 
 ## @ DFS with pruning
 

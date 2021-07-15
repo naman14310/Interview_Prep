@@ -450,6 +450,40 @@ int maxOperations(vector<int>& nums, int k) {
 }
 ```
 
+#### 7. Valid Triangle Number
+Given an integer array nums, return the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle.
+
+Theorem: In a triangle, the length of any side is less than the sum of the other two sides.
+
+Hint : Largest side of triangle should be less then other two sides.
+
+```cpp
+int twoSum (vector<int> & nums, int i, int j, int k){
+    int pairs = 0;
+
+    while(i<j){
+        if(nums[i]+nums[j] > nums[k]){
+            pairs += j-i;
+            j--;
+        }
+        else i++;
+    }
+
+    return pairs;
+}
+
+
+int triangleNumber(vector<int>& nums) {
+    sort(nums.begin(), nums.end());
+    int triangle = 0;
+
+    for(int k=nums.size()-1; k>1; k--)
+        triangle += twoSum (nums, 0, k-1, k);
+
+    return triangle;
+}
+```
+
 ## Hard
 
 #### 1. Trapping Rain Water (Best approach using two pointers) - O(n) | O(1)

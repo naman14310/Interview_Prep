@@ -203,3 +203,60 @@ vector<string> generateParenthesis(int n) {
     return res;
 }
 ```
+
+
+## 2D Problems
+
+#### 1. Path with Maximum Gold
+In a gold mine grid of size m x n, each cell in this mine has an integer representing the amount of gold in that cell, 0 if it is empty. Return the maximum amount of gold you can collect under the conditions:
+
+1. Every time you are located in a cell you will collect all the gold in that cell.
+2. From your position, you can walk one step to the left, right, up, or down.
+3. You can't visit the same cell more than once.
+4. Never visit a cell with 0 gold.
+5. You can start and stop collecting gold from any position in the grid that has some gold.
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+int backtrack (vector<vector<int>>& grid, int row, int col, int x, int y, vector<vector<bool>> & curr_path){
+    int gold = 0;
+    curr_path[x][y] = true; 
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]!=0 and !curr_path[xnew][ynew])
+            gold = max(gold, backtrack(grid, row, col, xnew, ynew, curr_path));
+    }
+
+    gold += grid[x][y];
+
+    curr_path[x][y] = false;
+    return gold;
+}
+
+
+int getMaximumGold(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    vector<vector<bool>> curr_path (row, vector<bool> (col, false));
+    int max_gold = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(grid[i][j]!=0)
+                max_gold = max(max_gold, backtrack(grid, row, col, i, j, curr_path));
+        }
+    }
+
+    return max_gold;
+}
+```

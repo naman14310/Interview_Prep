@@ -244,8 +244,12 @@ vector<vector<int>> combine(int n, int k) {
 ```
 
 
-#### 7. Combination Sum
-Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+#### 7. Combination Sum (Same Number can be choosen unlimited times)
+Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+
+Input: candidates = [2,3,6,7], target = 7
+
+Output: [[2,2,3],[7]]
 
 ```cpp
 int getSum(vector<int> & v){
@@ -256,7 +260,6 @@ int getSum(vector<int> & v){
 
     return sum;
 }
-
 
 void solve (vector<int> & candidates, int target, int idx, vector<vector<int>> & res, vector<int> & v){
     if(idx==candidates.size()) return;
@@ -275,7 +278,6 @@ void solve (vector<int> & candidates, int target, int idx, vector<vector<int>> &
     }
 }
 
-
 vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
     vector<vector<int>> res;
     vector<int> v;
@@ -285,8 +287,68 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 }
 ```
 
+#### 8. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used once in the combination.
 
-#### 8. Combination Sum III
+Note: The solution set must not contain duplicate combinations.
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8
+
+Output: 
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+
+Hint: Use Sorting beforehand for avoiding duplicates
+
+```cpp
+int getSum(vector<int> & v){
+    int sum = 0;
+    for(int i : v)
+        sum += i;
+
+    return sum;
+}
+
+void solve (vector<int> & candidates, int target, int idx, vector<vector<int>> & res, vector<int> & v){
+    int sum = getSum(v);
+    if(sum>target) return;
+
+    if(sum==target){
+        res.push_back(v);
+        return;
+    }
+
+    int prev = INT_MIN;
+
+    for(int i=idx; i<candidates.size(); i++){
+        if(candidates[i]==prev) continue;      // --> dont put same number at same index more then once
+
+        v.push_back(candidates[i]);
+        prev = candidates[i];
+
+        solve (candidates, target, i+1, res, v);
+        v.pop_back();
+    }
+}
+
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+    vector<vector<int>> res;
+    vector<int> v;
+
+    /* Sort candidates array for removing duplicates */
+
+    sort(candidates.begin(), candidates.end());
+
+    solve (candidates, target, 0, res, v);
+    return res;
+}
+```
+
+#### 9. Combination Sum III
 Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
 1. Only numbers 1 through 9 are used.
 2. Each number is used at most once.
@@ -334,7 +396,7 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
-#### 9. Palindrome Partitioning
+#### 10. Palindrome Partitioning
 Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 
 Input: s = "aab"
@@ -385,7 +447,7 @@ vector<vector<string>> partition(string s) {
 }
 ```
 
-#### 10. Decode String
+#### 11. Decode String
 Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
 
 Input: s = "3[a]2[bc]", Output: "aaabcbc"

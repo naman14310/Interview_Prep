@@ -204,7 +204,47 @@ vector<string> generateParenthesis(int n) {
 }
 ```
 
-#### 6. Combination Sum
+#### 6. Combinations
+Given two integers n and k, return all possible combinations of k numbers out of the range [1, n].
+
+Input: n = 4, k = 2
+
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+```cpp
+void solve (int n, int k, int idx, vector<vector<int>> & res, vector<int> & v){
+    if(v.size()==k){
+        res.push_back(v);
+        return;
+    }
+
+    for(int i=idx; i<=n; i++){
+        v.push_back(i);
+        solve (n, k, i+1, res, v);
+        v.pop_back();
+    }
+}
+
+
+vector<vector<int>> combine(int n, int k) {
+    vector<vector<int>> res;
+    vector<int> v;
+
+    solve(n, k, 1, res, v);
+    return res;
+}
+```
+
+
+#### 7. Combination Sum
 Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
 
 ```cpp
@@ -246,7 +286,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 ```
 
 
-#### 7. Combination Sum III
+#### 8. Combination Sum III
 Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
 1. Only numbers 1 through 9 are used.
 2. Each number is used at most once.

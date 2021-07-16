@@ -385,6 +385,61 @@ vector<vector<string>> partition(string s) {
 }
 ```
 
+#### 10. Decode String
+Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+Input: s = "3[a]2[bc]", Output: "aaabcbc"
+
+Input: s = "3[a2[c]]", Output: "accaccacc"
+
+```cpp
+/* Take special care with "idx" --> that will act as a global index */
+
+string solve (string & s, int & idx){
+    string ans = "";
+
+    for(int i=idx; i<s.length(); i++){
+
+        if(isalpha(s[i]))
+            ans.push_back(s[i]);
+
+        else if (s[i]==']'){
+            idx = i;              // --> Before returning on ']', update the global idx
+            return ans;
+        }
+
+        else{
+
+            /* integer can be of more then 1 digit (eg: 100) , so handle that also */
+
+            string freq_s = "";
+            while(s[i]!='['){
+                freq_s.push_back(s[i]);
+                i++;
+            }
+
+            int freq = stoi(freq_s);   
+            idx = i+1;
+
+            string temp = solve(s, idx); 
+
+            for(int f=0; f<freq; f++)
+                ans += temp;
+
+            i = idx;   // --> after getting res from recursive call, update i to global idx
+        }
+    }
+
+    return ans;
+}
+
+
+string decodeString(string s) {
+    int idx = 0;
+    return solve(s, idx);
+}
+```
+
 
 ## 2D Problems
 

@@ -446,7 +446,45 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
-#### 11. Palindrome Partitioning
+#### 11. Letter Combinations of a Phone Number
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+![img](https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png)
+
+Input: digits = "23"
+
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+```cpp
+void solve (string & digits, int idx, vector<string> & res, string & s, unordered_map<char, string> & mp){
+    if(idx==digits.length()){
+        res.push_back(s);
+        return;
+    }
+
+    for(char ch : mp[digits[idx]]){
+        s.push_back(ch);
+        solve (digits, idx+1, res, s, mp);
+        s.pop_back();
+    }
+}
+
+vector<string> letterCombinations(string digits) {
+    if(digits.size()==0)
+        return vector<string> ();
+
+    unordered_map<char, string> mp = { {'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"}, {'6', "mno"}, {'7', "pqrs"}, {'8', "tuv"}, {'9', "wxyz"} };
+
+    vector<string> res;
+    string s = "";
+
+    solve (digits, 0, res, s, mp);
+
+    return res;
+}
+```
+
+#### 12. Palindrome Partitioning
 Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 
 Input: s = "aab"
@@ -497,7 +535,7 @@ vector<vector<string>> partition(string s) {
 }
 ```
 
-#### 12. Decode String
+#### 13. Decode String
 Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
 
 Input: s = "3[a]2[bc]", Output: "aaabcbc"

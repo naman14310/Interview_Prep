@@ -334,6 +334,57 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
+#### 9. Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+Input: s = "aab"
+
+Output: [["a","a","b"],["aa","b"]]
+
+```cpp
+bool isPalindrome (string& s){
+    if(s.size()==0) return false;
+
+    int i=0, j=s.length()-1;
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
+    return true;
+}
+
+void solve (string s, int idx, vector<vector<string>>& res, vector<string> & v){
+    if(idx==s.length()){
+        res.push_back(v);
+        return;
+    }
+
+    string temp = "";
+
+    /* pushing char in temp one by one */
+
+    for(int i=idx; i<s.length(); i++){
+        temp.push_back(s[i]);
+
+        /* If temp is palindrome, then push it in vector v and recurse for remaining string */
+
+        if(isPalindrome(temp)){
+            v.push_back(temp);
+            solve (s, i+1, res, v);
+            v.pop_back();
+        }
+    }
+}
+
+vector<vector<string>> partition(string s) {
+    vector<vector<string>> res;
+    vector<string> v;
+
+    solve (s, 0, res, v);
+    return res;
+}
+```
+
 
 ## 2D Problems
 

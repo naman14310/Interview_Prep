@@ -204,6 +204,54 @@ vector<string> generateParenthesis(int n) {
 }
 ```
 
+#### 6. Combination Sum III
+Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
+1. Only numbers 1 through 9 are used.
+2. Each number is used at most once.
+
+Return a list of all possible valid combinations. The list must not contain the same combination twice, and the combinations may be returned in any order.
+
+Input: k = 3, n = 9
+
+Output: [[1,2,6],[1,3,5],[2,3,4]]
+
+```cpp
+int getSum (vector<int> & v){
+    int sum = 0;
+
+    for(int i : v)
+        sum += i;
+
+    return sum;
+}
+
+
+void solve (int k, int target, int idx, vector<vector<int>> & res, vector<int> & v){
+    if(v.size()==k){
+        if(getSum(v)==target)
+            res.push_back(v);
+        return;
+    }
+
+    /* we can choose any number for index i in vector v in range between [idx-9] where idx is one greater then the prev number */ 
+
+    for(int i=idx; i<=9; i++){
+        v.push_back(i);
+        solve (k, target, i+1, res, v);
+        v.pop_back();
+    }
+}
+
+
+vector<vector<int>> combinationSum3(int k, int n) {
+    vector<vector<int>> res;
+    vector<int> v;
+
+    solve(k, n, 1, res, v);
+    return res;
+}
+```
+
 
 ## 2D Problems
 

@@ -75,7 +75,57 @@ vector<vector<int>> permute(vector<int>& nums) {
 }
 ```
 
-#### 3. Subsets
+#### 3. Permutations II
+Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+
+Input: nums = [1,1,2]
+
+Output: [[1,1,2], [1,2,1], [2,1,1]]
+
+Hint: Use sorting beforehand for avoiding duplicates
+
+```cpp
+void solve (vector<int> & nums, int idx, vector<vector<int>> & res, vector<int> & v, vector<bool> & vis){
+    if(idx==nums.size()){
+        res.push_back(v);
+        return;
+    }
+
+    int prev = INT_MIN;
+
+    for(int i = 0; i<nums.size(); i++){
+
+        if(prev==nums[i]) continue;       // Same number should not be filled on same index more then once
+
+        if(!vis[i]){
+
+            v[idx] = nums[i];
+            vis[i] = true;
+
+            solve (nums, idx+1, res, v, vis);
+
+            vis[i] = false;
+            prev = nums[i];
+        }
+    }
+}
+
+
+vector<vector<int>> permuteUnique(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> v (nums.size(), 0);
+    vector<bool> vis (nums.size(), false);
+
+    /* Sorting should be done to prevent duplicate permutations */
+
+    sort(nums.begin(), nums.end());
+
+    solve (nums, 0, res, v, vis);
+    return res;
+}
+```
+
+#### 4. Subsets
 Given an integer array nums of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets.
 
 Input: nums = [1,2,3]
@@ -110,7 +160,7 @@ vector<vector<int>> subsets(vector<int>& nums) {
 }
 ```
 
-#### 4. Letter Tile Possibilities
+#### 5. Letter Tile Possibilities
 You have n  tiles, where each tile has one letter tiles[i] printed on it. Return the number of possible non-empty sequences of letters you can make using the letters printed on those tiles.
 
 Input: tiles = "AAB",  Output: 8
@@ -170,7 +220,7 @@ int numTilePossibilities(string tiles) {
 }
 ```
 
-#### 5. Generate Parentheses
+#### 6. Generate Parentheses
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
 Input: n = 3
@@ -204,7 +254,7 @@ vector<string> generateParenthesis(int n) {
 }
 ```
 
-#### 6. Combinations
+#### 7. Combinations
 Given two integers n and k, return all possible combinations of k numbers out of the range [1, n].
 
 Input: n = 4, k = 2
@@ -244,7 +294,7 @@ vector<vector<int>> combine(int n, int k) {
 ```
 
 
-#### 7. Combination Sum (Same Number can be choosen unlimited times)
+#### 8. Combination Sum (Same Number can be choosen unlimited times)
 Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
 
 Input: candidates = [2,3,6,7], target = 7
@@ -287,7 +337,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 }
 ```
 
-#### 8. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
+#### 9. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
 Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used once in the combination.
 
 Note: The solution set must not contain duplicate combinations.
@@ -348,7 +398,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 }
 ```
 
-#### 9. Combination Sum III
+#### 10. Combination Sum III
 Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
 1. Only numbers 1 through 9 are used.
 2. Each number is used at most once.
@@ -396,7 +446,7 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
-#### 10. Palindrome Partitioning
+#### 11. Palindrome Partitioning
 Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 
 Input: s = "aab"
@@ -447,7 +497,7 @@ vector<vector<string>> partition(string s) {
 }
 ```
 
-#### 11. Decode String
+#### 12. Decode String
 Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
 
 Input: s = "3[a]2[bc]", Output: "aaabcbc"

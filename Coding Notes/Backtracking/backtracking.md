@@ -160,7 +160,62 @@ vector<vector<int>> subsets(vector<int>& nums) {
 }
 ```
 
-#### 5. Letter Tile Possibilities
+#### 5. Subsets II (Only in this question, for removing duplicates -> hashset will be used)
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set). The solution set must not contain duplicate subsets.
+
+Input: nums = [1,2,2]
+
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+```cpp
+bool isExist (vector<int> & v, unordered_set<string> & vis){
+    string s = "";
+
+    for(int i : v)
+        s.push_back('0'+i);
+
+    if(vis.find(s)==vis.end()){
+        vis.insert(s);
+        return false;
+    }
+
+    return true;
+}
+
+
+void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int> v, unordered_set<string> & vis){
+    if(idx==nums.size()){
+        if(!isExist(v, vis))
+            res.push_back(v);
+
+        return;
+    }
+
+    /* option 1 : without including idx */
+
+    solve(nums, idx+1, res, v, vis);
+
+    /* option 2 : with including idx */
+
+    v.push_back(nums[idx]);
+    solve(nums, idx+1, res, v, vis);
+}
+
+
+vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> v;
+    unordered_set<string> vis;
+
+    sort(nums.begin(), nums.end());   // --> for avoiding duplicates
+
+    solve (nums, 0, res, v, vis);
+    return res;
+}
+```
+
+
+#### 6. Letter Tile Possibilities
 You have n  tiles, where each tile has one letter tiles[i] printed on it. Return the number of possible non-empty sequences of letters you can make using the letters printed on those tiles.
 
 Input: tiles = "AAB",  Output: 8
@@ -220,7 +275,7 @@ int numTilePossibilities(string tiles) {
 }
 ```
 
-#### 6. Generate Parentheses
+#### 7. Generate Parentheses
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
 Input: n = 3
@@ -254,7 +309,7 @@ vector<string> generateParenthesis(int n) {
 }
 ```
 
-#### 7. Combinations
+#### 8. Combinations
 Given two integers n and k, return all possible combinations of k numbers out of the range [1, n].
 
 Input: n = 4, k = 2
@@ -294,7 +349,7 @@ vector<vector<int>> combine(int n, int k) {
 ```
 
 
-#### 8. Combination Sum (Same Number can be choosen unlimited times)
+#### 9. Combination Sum (Same Number can be choosen unlimited times)
 Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
 
 Input: candidates = [2,3,6,7], target = 7
@@ -337,7 +392,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 }
 ```
 
-#### 9. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
+#### 10. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
 Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used once in the combination.
 
 Note: The solution set must not contain duplicate combinations.
@@ -398,7 +453,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 }
 ```
 
-#### 10. Combination Sum III
+#### 11. Combination Sum III
 Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
 1. Only numbers 1 through 9 are used.
 2. Each number is used at most once.
@@ -446,7 +501,7 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
-#### 11. Letter Combinations of a Phone Number
+#### 12. Letter Combinations of a Phone Number
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
 
 ![img](https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png)
@@ -484,7 +539,7 @@ vector<string> letterCombinations(string digits) {
 }
 ```
 
-#### 12. Palindrome Partitioning
+#### 13. Palindrome Partitioning
 Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 
 Input: s = "aab"
@@ -535,7 +590,7 @@ vector<vector<string>> partition(string s) {
 }
 ```
 
-#### 13. Decode String
+#### 14. Decode String
 Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
 
 Input: s = "3[a]2[bc]", Output: "aaabcbc"

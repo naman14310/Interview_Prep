@@ -645,6 +645,51 @@ string decodeString(string s) {
 }
 ```
 
+#### 15. Increasing Subsequences
+Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order. The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
+
+Input: nums = [4,6,7,7,1]
+
+Output: [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+
+```cpp
+bool exist(string & s, unordered_set<string> & vis){
+    if(vis.find(s)==vis.end()){
+        vis.insert(s);
+        return false;
+    }
+
+    return true;
+}
+
+
+void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int>& v, unordered_set<string> & vis, string & s){
+    if(v.size()>=2 and !exist(s, vis))
+        res.push_back(v);
+
+    for(int i=idx; i<nums.size(); i++){
+
+        if(v.empty() or v.back() <= nums[i]){
+            s.push_back('0'+nums[i]);
+            v.push_back(nums[i]);
+            solve (nums, i+1, res, v, vis, s);
+            v.pop_back();
+            s.pop_back();
+        }
+    }
+}
+
+
+vector<vector<int>> findSubsequences(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> v;
+    unordered_set<string> vis;     // --> used for removing duplicates
+    string s = "";
+
+    solve (nums, 0, res, v, vis, s);
+    return res;
+}
+```
 
 ## 2D Problems
 

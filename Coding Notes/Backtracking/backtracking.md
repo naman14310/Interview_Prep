@@ -645,7 +645,64 @@ string decodeString(string s) {
 }
 ```
 
-#### 15. Increasing Subsequences
+#### 15. Partition to K Equal Sum Subsets (IMP)
+Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.
+
+Input: nums = [4,3,2,3,5,2,1], k = 4
+
+Output: true
+
+```cpp
+bool solve (vector<int> & nums, int target, int idx, int curr_sum, vector<bool> & vis, int k){
+
+    /* If we found k-1 subsets of sum==target then return true */
+
+    if(k==1) return true;    
+
+    /*  Else if k>1 and curr_sum=target then backtrack to find other subsets */
+
+    if(curr_sum==target) 
+        return solve (nums, target, 0, 0, vis, k-1);
+
+    /* Else continue to find current subset of sum==target in range idx to end */
+
+    for(int i=idx; i<nums.size(); i++){
+
+        /* If curr element is already vis or sum will exceed target, then ignore this element */
+
+        if(vis[i] or curr_sum + nums[i] > target) continue;
+
+        /* Else mark this element vis and backtrack */
+
+        vis[i] = true;
+
+        bool found_target = solve (nums, target, i+1, curr_sum + nums[i], vis, k);
+        if(found_target) return true;
+
+        /* If res is false then try for other elements and also unmark curr element to unvisited*/
+
+        vis[i] = false;
+    }
+
+    return false;
+}
+
+
+bool canPartitionKSubsets(vector<int>& nums, int k) {
+    int sum = 0;
+    for(int n : nums)
+        sum += n;
+
+    if(sum%k!=0) return false;
+
+    int target = sum/k;
+    vector<bool> vis (nums.size(), false);
+
+    return solve (nums, target, 0, 0, vis, k);
+}
+```
+
+#### 16. Increasing Subsequences
 Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order. The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
 
 Input: nums = [4,6,7,7,1]

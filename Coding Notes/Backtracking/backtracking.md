@@ -770,7 +770,6 @@ bool exist(string & s, unordered_set<string> & vis){
     return true;
 }
 
-
 void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int>& v, unordered_set<string> & vis, string & s){
     if(v.size()>=2 and !exist(s, vis))
         res.push_back(v);
@@ -787,7 +786,6 @@ void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int>& v
     }
 }
 
-
 vector<vector<int>> findSubsequences(vector<int>& nums) {
     vector<vector<int>> res;
     vector<int> v;
@@ -796,6 +794,27 @@ vector<vector<int>> findSubsequences(vector<int>& nums) {
 
     solve (nums, 0, res, v, vis, s);
     return res;
+}
+```
+
+#### 18. K-th Symbol in Grammar
+We build a table of n rows (1-indexed). We start by writing 0 in the 1st row. Now in every subsequent row, we look at the previous row and replace each occurrence of 0 with 01, and each occurrence of 1 with 10. Given two integer n and k, return the kth (1-indexed) symbol in the nth row of a table of n rows.
+
+```cpp
+int solve (int n, int k){
+    if(n==1) return 0;
+
+    int len = pow(2, n-1);      // --> total bits in nth row of grammar
+
+    if(k<len/2)
+        return solve (n-1, k);
+    else
+        return !solve (n, k-len/2);
+}
+
+
+int kthGrammar(int n, int k) {
+    return solve (n, k-1);     // --> Since question follows 1 based indexing
 }
 ```
 

@@ -818,6 +818,68 @@ int kthGrammar(int n, int k) {
 }
 ```
 
+#### 19. Restore IP Addresses
+Given a string s containing only digits, return all possible valid IP addresses that can be obtained from s. You can return them in any order. A valid IP address consists of exactly four integers, each integer is between 0 and 255, separated by single dots and cannot have leading zeros.
+
+Input: s = "010010"
+
+Output: ["0.10.0.10","0.100.1.0"]
+
+```cpp
+void solve (string s, int idx, vector<string> & res, string ip, int dots){
+    if(dots<0) return;
+
+    string part = "";
+
+    for(int i=idx; i<s.length(); i++){
+        part.push_back(s[i]);
+
+        /* If only 0 appears then only possible way is to append . after it and process further string */
+
+        if(part=="0"){
+
+            /* If all three dots are used and we are on last index then append this ip and return */
+
+            if(dots==0 and i==s.length()-1)
+                res.push_back(ip+part);
+
+            /* Else recurse */
+
+            else
+                solve (s, i+1, res, ip+part+".", dots-1);
+
+            return;
+        }
+
+        /* Else if part<=255 then we will try all cases using backtracking */
+
+        else if(stoi(part)<=255){
+
+            /* If all three dots are used and we are on last index then append this ip and return */
+
+            if(dots==0 and i==s.length()-1){
+                res.push_back(ip+part);
+                return;
+            }
+
+            solve (s, i+1, res, ip+part+".", dots-1);
+        }
+
+        else return;
+    }
+}    
+
+
+vector<string> restoreIpAddresses(string s) {
+    vector<string> res;
+    if(s.length()>12) return res;
+
+    solve (s, 0, res, "", 3);
+
+    return res;
+}
+```
+
 ## 2D Problems
 
 #### 1. Path with Maximum Gold

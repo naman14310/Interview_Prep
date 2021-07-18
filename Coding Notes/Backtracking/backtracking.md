@@ -702,7 +702,58 @@ bool canPartitionKSubsets(vector<int>& nums, int k) {
 }
 ```
 
-#### 16. Increasing Subsequences
+#### 16. Matchsticks to Square
+You are given an integer array matchsticks where matchsticks[i] is the length of the ith matchstick. You want to use all the matchsticks to make one square. You should not break any stick, but you can link them up, and each matchstick must be used exactly one time. Return true if you can make this square and false otherwise.
+
+![img](https://assets.leetcode.com/uploads/2021/04/09/matchsticks1-grid.jpg)
+
+Input: matchsticks = [1,1,2,2,2]
+
+Output: true
+
+
+```cpp
+/* Similar to partition array into k equal sum subsets (here k=4) */
+
+bool solve (vector<int> & matchsticks, int idx, int target, int curr_sum, int k, vector<bool> & vis){
+    if(k==1) return true;
+
+    if(curr_sum == target)
+        return solve (matchsticks, 0, target, 0, k-1, vis);
+
+    for(int i=idx; i<matchsticks.size(); i++){
+
+        if(vis[i] or curr_sum + matchsticks[i] > target) continue;
+
+        vis[i] = true;
+
+        bool sqr_formed = solve (matchsticks, i+1, target, curr_sum + matchsticks[i], k, vis);
+        if(sqr_formed) return true;
+
+        vis[i] = false;
+    }
+
+    return false;
+}
+
+
+bool makesquare(vector<int>& matchsticks) {
+    int sum = 0;
+    for(int m : matchsticks)
+        sum += m;
+
+    if(sum%4!=0) return false;
+
+    sort (matchsticks.begin(), matchsticks.end(), greater<int>());   // --> for making our solution faster
+
+    int target = sum/4;
+    vector<bool> vis (matchsticks.size(), false);
+
+    return solve (matchsticks, 0, target, 0, 4, vis);
+}
+```
+
+#### 17. Increasing Subsequences
 Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order. The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
 
 Input: nums = [4,6,7,7,1]

@@ -935,3 +935,65 @@ int getMaximumGold(vector<vector<int>>& grid) {
     return max_gold;
 }
 ```
+
+#### 2. Unique Paths III
+On a 2-dimensional grid, there are 4 types of squares:
+1. 1 represents the starting square.  There is exactly one starting square.
+2. 2 represents the ending square.  There is exactly one ending square.
+3. 0 represents empty squares we can walk over.
+4. -1 represents obstacles that we cannot walk over.
+
+Return the number of 4-directional walks from the starting square to the ending square, that walk over every non-obstacle square exactly once.
+
+```cpp
+bool isInside (int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+void dfs (vector<vector<int>> & grid, vector<vector<bool>> & curr_path, int x, int y, int & path_cnt, int cnt, int row, int col){
+    if(grid[x][y]==2){
+        if(cnt==-1) path_cnt++;
+        return;
+    }
+
+    curr_path[x][y] = true;
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]!=-1 and !curr_path[xnew][ynew])
+            dfs(grid, curr_path, xnew, ynew, path_cnt, cnt-1, row, col);
+    }
+
+    curr_path[x][y] = false;
+    return;
+}
+
+
+int uniquePathsIII(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    int src_x, src_y;
+    int cnt = 0;
+    int path_cnt = 0;
+
+    vector<vector<bool>> curr_path (row, vector<bool> (col, false));
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(grid[i][j]==0)
+                cnt++;
+            else if(grid[i][j]==1){
+                src_x = i; src_y = j;
+            }
+        }
+    }
+
+    dfs (grid, curr_path, src_x, src_y, path_cnt, cnt, row, col);
+    return path_cnt;
+}
+```

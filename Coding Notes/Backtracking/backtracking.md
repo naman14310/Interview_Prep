@@ -645,7 +645,40 @@ string decodeString(string s) {
 }
 ```
 
-#### 15. Partition to K Equal Sum Subsets (IMP)
+#### 15. Partition Equal Subset Sum
+Given an array arr[] of size N, check if it can be partitioned into two parts such that the sum of elements in both parts is the same.
+
+```cpp
+int solve (int arr[], int N, int idx, int target, int sum){
+    if(idx==N) return 0;
+    if(sum==target) return 1;
+
+    for(int i=idx; i<N; i++){
+        if(sum+arr[i]>target) continue;
+
+        bool res = solve (arr, N, i+1, target, sum+arr[i]);
+        if(res) return 1;
+    }
+
+    return 0;
+}
+
+
+int equalPartition(int N, int arr[]){
+    int sum = 0;
+    for(int i=0; i<N; i++)
+        sum+=arr[i];
+
+    if(sum%2!=0)
+        return 0;
+
+    int target = sum/2;
+
+    return solve (arr, N, 0, target, 0);    
+}
+```
+
+#### 16. Partition to K Equal Sum Subsets (IMP)
 Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.
 
 Input: nums = [4,3,2,3,5,2,1], k = 4
@@ -702,7 +735,7 @@ bool canPartitionKSubsets(vector<int>& nums, int k) {
 }
 ```
 
-#### 16. Matchsticks to Square
+#### 17. Matchsticks to Square
 You are given an integer array matchsticks where matchsticks[i] is the length of the ith matchstick. You want to use all the matchsticks to make one square. You should not break any stick, but you can link them up, and each matchstick must be used exactly one time. Return true if you can make this square and false otherwise.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/09/matchsticks1-grid.jpg)
@@ -753,7 +786,7 @@ bool makesquare(vector<int>& matchsticks) {
 }
 ```
 
-#### 17. Increasing Subsequences
+#### 18. Increasing Subsequences
 Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order. The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
 
 Input: nums = [4,6,7,7,1]
@@ -797,7 +830,7 @@ vector<vector<int>> findSubsequences(vector<int>& nums) {
 }
 ```
 
-#### 18. K-th Symbol in Grammar
+#### 19. K-th Symbol in Grammar
 We build a table of n rows (1-indexed). We start by writing 0 in the 1st row. Now in every subsequent row, we look at the previous row and replace each occurrence of 0 with 01, and each occurrence of 1 with 10. Given two integer n and k, return the kth (1-indexed) symbol in the nth row of a table of n rows.
 
 ```cpp
@@ -818,7 +851,7 @@ int kthGrammar(int n, int k) {
 }
 ```
 
-#### 19. Restore IP Addresses
+#### 20. Restore IP Addresses
 Given a string s containing only digits, return all possible valid IP addresses that can be obtained from s. You can return them in any order. A valid IP address consists of exactly four integers, each integer is between 0 and 255, separated by single dots and cannot have leading zeros.
 
 Input: s = "010010"
@@ -880,7 +913,7 @@ vector<string> restoreIpAddresses(string s) {
 }
 ```
 
-#### 20. Permutation Sequence
+#### 21. Permutation Sequence
 The set [1, 2, 3, ..., n] contains a total of n! unique permutations. Given n and k, return the kth permutation sequence.
 
 ```cpp

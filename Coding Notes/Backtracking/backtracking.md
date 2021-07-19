@@ -880,6 +880,44 @@ vector<string> restoreIpAddresses(string s) {
 }
 ```
 
+#### 20. Permutation Sequence
+The set [1, 2, 3, ..., n] contains a total of n! unique permutations. Given n and k, return the kth permutation sequence.
+
+```cpp
+void get_Kth_permutation(int n, int k, string & s, vector<int> & v, vector<int> & fact){
+    if(n==0) return;
+
+    int block_size = fact[n-1];
+    int idx = k/block_size;
+
+    s.push_back('0'+v[idx]);
+    v.erase(v.begin()+idx);
+
+    k = k - idx*block_size;
+
+    get_Kth_permutation(n-1, k, s, v, fact);
+}
+
+
+string getPermutation(int n, int k) {
+    string ans = "";  
+
+    vector<int> v;
+    for(int i=1; i<=n; i++)
+        v.push_back(i);
+
+    vector<int> fact;
+    fact.push_back(1);
+
+    for(int i=1; i<=n; i++)
+        fact.push_back(fact.back()*i);
+
+    get_Kth_permutation (n, k-1, ans, v, fact);
+
+    return ans;
+}
+```
+
 ## 2D Problems
 
 #### 1. Path with Maximum Gold

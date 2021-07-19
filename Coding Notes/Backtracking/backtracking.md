@@ -997,3 +997,133 @@ int uniquePathsIII(vector<vector<int>>& grid) {
     return path_cnt;
 }
 ```
+
+#### 3. N-Queens
+Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+
+![img](https://assets.leetcode.com/uploads/2020/11/13/queens.jpg)
+
+Input: n = 4
+
+Output: 2
+
+```cpp
+bool canPlace (vector<vector<bool>>& board, int n, int x, int y){
+
+    /* checking same column */
+
+    for(int i=0; i<x; i++)
+        if(board[i][y]) return false;
+
+    /* checking upper left diagonal */
+
+    int i=x-1, j=y-1;
+    while(i>=0 and j>=0){
+        if(board[i][j]) return false;
+        i--; j--;
+    }
+
+    /* checking upper right diagonal */
+
+    i=x-1; j=y+1;
+    while(i>=0 and j<n){
+        if(board[i][j]) return false;
+        i--; j++;
+    }
+
+    return true;
+}
+
+
+void backtrack (vector<vector<bool>> & board, int row, int n, int & sol){
+    if(row==n){
+        sol++;
+        return;
+    }
+
+    for(int i=0; i<n; i++){
+        if(canPlace(board, n, row, i)){
+            board[row][i] = true;
+            backtrack(board, row+1, n, sol);
+            board[row][i] = false;
+        }
+    }
+}
+
+
+int totalNQueens(int n) {
+    vector<vector<bool>> board (n, vector<bool> (n, false));
+    int sol = 0;
+
+    backtrack (board, 0, n, sol);
+    return sol;
+}
+```
+
+#### 4. N-Queens II
+Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+
+Input: n = 4
+
+Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+
+```cpp
+bool canPlace (vector<string>& board, int n, int x, int y){
+
+    /* checking same column */
+
+    for(int i=0; i<x; i++)
+        if(board[i][y]=='Q') return false;
+
+    /* checking upper left diagonal */
+
+    int i=x-1, j=y-1;
+    while(i>=0 and j>=0){
+        if(board[i][j]=='Q') return false;
+        i--; j--;
+    }
+
+    /* checking upper right diagonal */
+
+    i=x-1; j=y+1;
+    while(i>=0 and j<n){
+        if(board[i][j]=='Q') return false;
+        i--; j++;
+    }
+
+    return true;
+}
+
+
+void backtrack (vector<string> & board, int row, int n, vector<vector<string>> & res){
+    if(row==n){
+        res.push_back(board);
+        return;
+    }
+
+    for(int i=0; i<n; i++){
+        if(canPlace(board, n, row, i)){
+            board[row][i] = 'Q';
+            backtrack(board, row+1, n, res);
+            board[row][i] = '.';
+        }
+    }
+}
+
+
+vector<vector<string>> solveNQueens(int n) {
+    vector<string> board;
+    vector<vector<string>> res;
+
+    for(int i=0; i<n; i++){
+        string s = "";
+        for(int j=0; j<n; j++){
+            s.push_back('.');
+        }
+        board.push_back(s);
+    }
+
+    backtrack (board, 0, n, res);
+    return res;
+}
+```

@@ -1127,3 +1127,66 @@ vector<vector<string>> solveNQueens(int n) {
     return res;
 }
 ```
+
+#### 5. Sudoku Solver
+Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+```cpp
+bool canPlace (vector<vector<char>>& board, int x, int y, char ch){
+
+    /* checking in same row */
+
+    for(int i=0; i<9; i++)
+        if(board[x][i]==ch) return false;
+
+    /* checking same column */
+
+    for(int i=0; i<9; i++)
+        if(board[i][y]==ch) return false;
+
+    /* checking in sub-box */
+
+    int start_x = x - (x%3);
+    int start_y = y - (y%3);
+
+    for(int i=start_x; i<start_x+3; i++){
+        for(int j=start_y; j<start_y+3; j++){
+            if(board[i][j]==ch) return false;
+        }
+    }
+
+    return true;
+}
+
+
+bool backtrack (vector<vector<char>>& board, int x, int y){
+    if(x==9) return true;
+
+    if(board[x][y]!='.'){
+        if(y==8) return backtrack (board, x+1, 0);
+        else return backtrack (board, x, y+1);
+    }
+
+    for(int choice=1; choice<=9; choice++){
+        char ch = '0'+choice;
+
+        if (canPlace(board, x, y, ch)){
+            board[x][y] = ch;
+            bool res = false;
+
+            if(y==8) res = backtrack (board, x+1, 0);
+            else res = backtrack (board, x, y+1);
+
+            if(res) return true;
+        }
+    }
+
+    board[x][y] = '.';
+    return false;
+}
+
+
+void solveSudoku(vector<vector<char>>& board) {
+    bool res = backtrack (board, 0, 0);
+}
+```

@@ -974,7 +974,55 @@ int getMaximumGold(vector<vector<int>>& grid) {
 }
 ```
 
-#### 2. Unique Paths III
+#### 2. Rat in a Maze Problem - I 
+Consider a rat placed at (0, 0). It has to reach the destination at (N - 1, N - 1). Find all possible paths that the rat can take to reach from source to destination. Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it.
+
+```cpp
+bool isInside(int x, int y, int n){
+    return x>=0 and y>=0 and x<n and y<n;
+}
+
+void dfs (vector<vector<int>> & grid, int x, int y, int n, vector<vector<bool>> & curr_path, vector<string> & res, string & s){
+    if(x==n-1 and y==n-1){
+        res.push_back(s);
+        return;
+    }
+
+    curr_path[x][y] = true;
+
+    int dx[] = {1, 0, 0, -1};
+    int dy[] = {0, -1, 1, 0};
+
+    vector<char> direction = {'D', 'L', 'R', 'U'};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, n) and grid[xnew][ynew]==1 and !curr_path[xnew][ynew]){
+            s.push_back(direction[i]);
+            dfs (grid, xnew, ynew, n, curr_path, res, s);
+            s.pop_back();
+        }    
+    }
+
+    curr_path[x][y] = false;
+}
+
+
+vector<string> findPath(vector<vector<int>> &m, int n) {
+    vector<vector<bool>> curr_path (n, vector<bool> (n, false));
+    vector<string> res;
+    string s = "";
+
+    if(m[0][0]==0) return res;    // --> Boundary case
+
+    dfs (m, 0, 0, n, curr_path, res, s);
+    return res;
+}
+```
+
+#### 3. Unique Paths III
 On a 2-dimensional grid, there are 4 types of squares:
 1. 1 represents the starting square.  There is exactly one starting square.
 2. 2 represents the ending square.  There is exactly one ending square.
@@ -1036,7 +1084,7 @@ int uniquePathsIII(vector<vector<int>>& grid) {
 }
 ```
 
-#### 3. N-Queens
+#### 4. N-Queens
 Given an integer n, return the number of distinct solutions to the n-queens puzzle.
 
 ![img](https://assets.leetcode.com/uploads/2020/11/13/queens.jpg)
@@ -1098,7 +1146,7 @@ int totalNQueens(int n) {
 }
 ```
 
-#### 4. N-Queens II
+#### 5. N-Queens II
 Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
 
 Input: n = 4
@@ -1166,7 +1214,7 @@ vector<vector<string>> solveNQueens(int n) {
 }
 ```
 
-#### 5. Sudoku Solver
+#### 6. Sudoku Solver
 Write a program to solve a Sudoku puzzle by filling the empty cells.
 
 ```cpp

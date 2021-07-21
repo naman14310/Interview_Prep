@@ -982,6 +982,59 @@ string getPermutation(int n, int k) {
 }
 ```
 
+#### 23. Largest number in K swaps
+Given a number K and string str of digits denoting a positive integer, build the largest number possible by performing swap operations on the digits of str at most K times.
+
+Input: K = 3, str = "3435335"
+
+Output: 5543333
+
+```cpp
+/* get max element after starting index */
+
+int get_max(string & s, int start, int mx){
+    for(int i=start; i<s.length(); i++)
+        mx = max(mx, s[i]-'0');
+    return mx;
+}
+
+
+void solve (string s, int idx, int k, string & ans){
+    if(idx==s.size() or k==0){
+        if(s>ans) ans = s;
+        return;
+    }
+
+    /*  find max element after idx */
+
+    int mx = get_max(s, idx+1, s[idx]-'0');
+
+    /* If there is no greater element then curr element then don't swap and recurse */
+
+    if(mx==s[idx]-'0')
+        solve(s, idx+1, k, ans);
+
+    /* else one by one try to swap all max element indexes and recurse */
+
+    else{
+        for(int i=idx+1; i<s.size(); i++){
+            if(s[i]-'0' != mx) continue;
+
+            swap(s[i], s[idx]);
+            solve(s, idx+1, k-1, ans);
+            swap(s[i], s[idx]);     //--> swapped again to recover the string to original form
+        }
+    }
+}
+
+
+string findMaximumNum(string str, int k){
+    string ans = str;
+    solve (str, 0, k, ans);
+    return ans;
+}
+```
+
 ## 2D Problems
 
 #### 1. Path with Maximum Gold

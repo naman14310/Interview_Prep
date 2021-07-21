@@ -1091,7 +1091,55 @@ int getMaximumGold(vector<vector<int>>& grid) {
 }
 ```
 
-#### 2. Rat in a Maze Problem - I 
+#### 2. Print all possible paths from top left to bottom right of a mXn matrix
+The problem is to print all the possible paths from top left to bottom right of a mXn matrix with the constraints that from each cell you can either move only to right or down.
+
+```cpp
+bool isInside (int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+void dfs (vector<vector<int>> & grid, vector<vector<int>> & res, vector<int> & path, int x, int y, int row, int col){
+    if(x==row-1 and y==col-1){
+        res.push_back(path);
+        return;
+    }
+
+    int dx[] = {1, 0};
+    int dy[] = {0, 1};
+
+    grid[x][y] *= -1;    // --> marked as vis (works only when numbers are greater then 0)
+
+    for(int i=0; i<2; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]>0){
+            path.push_back(grid[xnew][ynew]);
+            dfs (grid, res, path, xnew, ynew, row, col);
+            path.pop_back();
+        }
+    }
+
+    grid[x][y] *=-1;    // --> restoring original val
+}
+
+
+vector<vector<int>> get_all_possible_paths(vector<vector<int>> & grid){
+    int row = grid.size(), col = grid[0].size();
+
+    vector<vector<int>> res;
+    vector<int> path;
+    path.push_back(grid[0][0]);
+
+    dfs (grid, res, path, 0, 0, row, col);
+    return res;
+}
+```
+
+
+#### 3. Rat in a Maze Problem - I 
 Consider a rat placed at (0, 0). It has to reach the destination at (N - 1, N - 1). Find all possible paths that the rat can take to reach from source to destination. Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it.
 
 ```cpp
@@ -1139,7 +1187,7 @@ vector<string> findPath(vector<vector<int>> &m, int n) {
 }
 ```
 
-#### 3. Unique Paths III
+#### 4. Unique Paths III
 On a 2-dimensional grid, there are 4 types of squares:
 1. 1 represents the starting square.  There is exactly one starting square.
 2. 2 represents the ending square.  There is exactly one ending square.
@@ -1201,7 +1249,7 @@ int uniquePathsIII(vector<vector<int>>& grid) {
 }
 ```
 
-#### 4. N-Queens
+#### 5. N-Queens
 Given an integer n, return the number of distinct solutions to the n-queens puzzle.
 
 ![img](https://assets.leetcode.com/uploads/2020/11/13/queens.jpg)
@@ -1263,7 +1311,7 @@ int totalNQueens(int n) {
 }
 ```
 
-#### 5. N-Queens II
+#### 6. N-Queens II
 Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
 
 Input: n = 4
@@ -1331,7 +1379,7 @@ vector<vector<string>> solveNQueens(int n) {
 }
 ```
 
-#### 6. Sudoku Solver
+#### 7. Sudoku Solver
 Write a program to solve a Sudoku puzzle by filling the empty cells.
 
 ```cpp

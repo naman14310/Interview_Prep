@@ -1441,3 +1441,46 @@ void solveSudoku(vector<vector<char>>& board) {
     bool res = backtrack (board, 0, 0);
 }
 ```
+
+#### 8. Longest Possible Route in a Matrix with Hurdles
+Given an M x N matrix, with a few hurdles arbitrarily placed, calculate the length of longest possible route possible from source to destination within the matrix. The route cannot contains any diagonal moves and a location once visited in a particular path cannot be visited again. For example, longest path with no hurdles from source to destination is highlighted for below matrix. The length of the path is 24.
+
+![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/matrix_highlight.png)
+
+```cpp
+bool isInside (int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+void dfs (vector<vector<int>> & grid, int x, int y, int targetX, int targetY, int & max_pathLen, int len, int row, int col){
+    if(x==targetX and y==targetY){
+        max_pathLen = max(max_pathLen, len);
+        return;
+    }   
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    grid[x][y] = -1;
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==1)
+            dfs (grid, xnew, ynew, targetX, targetY, max_pathLen, len+1, row, col);
+    }
+
+    grid[x][y] = 1;
+}
+
+
+int longest_route (vector<vector<int>> & grid, int src_x, int src_y, int dest_x, int dest_y){
+    int row = grid.size(), col = grid[0].size();
+    int maxRoute = -1;
+ 
+    dfs (grid, src_x, src_y, dest_x, dest_y, maxRoute, 0, row, col);
+    return maxRoute;
+}
+```
+

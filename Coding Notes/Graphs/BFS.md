@@ -379,6 +379,83 @@ int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int N){
 }
 ```
 
+#### 6. Find shortest safe route in a path with landmines
+Given a path in the form of a rectangular matrix having few landmines arbitrarily placed (marked as 0), calculate length of the shortest safe route possible from any cell in the first column to any cell in the last column of the matrix. We have to avoid landmines and their four adjacent cells (left, right, above and below) as they are also unsafe. We are allowed to move to only adjacent cells which are not landmines.
+
+```cpp
+struct cell{
+    int x, y, dist;
+    cell (int x, int y, int dist){
+        this->x = x;
+        this->y = y;
+        this->dist = dist;
+    }
+};
+
+
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+bool safe (vector<vector<int>> & grid, int x, int y, int row, int col){
+    if (grid[x][y]==0) return false;
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==0)
+            return false;
+    }
+    return true;
+}
+
+
+int bfs (vector<vector<int>>& grid, queue<cell> & q, int row, int col){
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    while(!q.empty()){
+        cell src = q.front(); q.pop();
+        int x = src.x, y = src.y, dist = src.dist;
+   
+        if(y==col-1) return dist;
+
+        for(int i=0; i<4; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]==1 and safe(grid, xnew, ynew, row, col)){
+                cell nbr (xnew, ynew, dist+1);
+                q.push(nbr);
+                grid[xnew][ynew] = -1;       // ----> marking that cell vis
+            }
+        }
+    }
+
+    return -1;
+}
+
+
+int shortest_route (vector<vector<int>> & grid){
+    int row = grid.size(), col = grid[0].size();
+    queue<cell> q;
+
+    for(int i=0; i<row; i++){
+        if(safe(grid, i, 0, row, col)){
+            cell c (i, 0, 0);
+            q.push(c);
+            grid[i][0]=-1;
+        }
+    }    
+
+    return bfs (grid, q, row, col);
+}
+```
+
+
 ## @ Hard to Guess as Graphs
 
 #### 1. Open the Lock (Too Tricky)

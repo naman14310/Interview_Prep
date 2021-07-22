@@ -522,6 +522,38 @@ vector<int> Solution::findPerm(const string A, int B) {
 }
 ```
 
+#### 15. Partition Array into Disjoint Intervals
+Given an array nums, partition it into two (contiguous) subarrays left and right so that:
+
+1. Every element in left is less than or equal to every element in right.
+2. left and right are non-empty.
+3. left has the smallest possible size.
+
+Return the length of left after such a partitioning.  It is guaranteed that such a partitioning exists.
+
+Hint: Use two vectors for storing max_left_so_far and min_right_so_far. Iterate over array and find index where max_left <= min_right.
+
+```cpp
+int partitionDisjoint(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> mn (n, INT_MAX);
+	vector<int> mx (n, INT_MIN);
+
+	mx[0] = nums[0];
+	mn[n-1] = nums[n-1];
+
+	for(int i=1; i<n; i++) 
+	    mx[i] = max(mx[i-1], nums[i]);
+
+	for(int i=n-2; i>=0; i--)
+	    mn[i] = min(nums[i], mn[i+1]);
+
+	for(int i=0; i<n-1; i++)
+	    if(mx[i]<=mn[i+1])  return i+1;
+
+	return -1;
+}
+```
 
 ## Hard
 

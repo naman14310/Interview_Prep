@@ -109,6 +109,33 @@ vector<int> leastGreaterElement(vector<int> &arr) {
 }
 ```
 
+#### 5. Find Pivot Index (Left sum == Right sum)
+Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
+
+Input: nums = [2,1,-1]
+
+Output: 0
+
+```cpp
+int pivotIndex(vector<int>& nums) {
+	int sum = 0;
+	for(int i : nums)
+		sum += i;
+
+	int lsum = 0;
+
+	for(int i=0; i<nums.size(); i++){
+		int rsum = sum-lsum-nums[i];
+
+		if(lsum==rsum) return i;
+
+		lsum += nums[i];
+	}
+
+	return -1;
+}
+```
+
 ## Medium
 
 #### 1. Product of Array Except Self

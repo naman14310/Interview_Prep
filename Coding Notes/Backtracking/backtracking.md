@@ -2,42 +2,9 @@
 
 ## 1D Problems
 
-#### 1. Letter Case Permutation
-Given a string s, we can transform every letter individually to be lowercase or uppercase to create another string. Return a list of all possible strings we could create.
+### @ Permutation
 
-Input: s = "a1b2"
-
-Output: ["a1b2","a1B2","A1b2","A1B2"]
-
-```cpp
-void solve (string & ip, string op, int idx, int n, vector<string> & res){
-    if(idx==n){
-        res.push_back(op);
-        return;
-    }
-
-    if(isdigit(ip[idx]))
-        solve(ip, op, idx+1, n, res);
-
-    else{   
-        op[idx] = tolower(op[idx]);
-        solve (ip, op, idx+1, n, res);
-
-        op[idx] = toupper(op[idx]);
-        solve (ip, op, idx+1, n, res);
-    }
-}
-
-vector<string> letterCasePermutation(string s) {
-    int n = s.length();
-    vector<string> res;
-
-    solve (s, s, 0, n, res);
-    return res;
-}
-```
-
-#### 2. Permutations
+#### 1. Permutations
 Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
 
 Input: nums = [1,2,3]
@@ -75,7 +42,7 @@ vector<vector<int>> permute(vector<int>& nums) {
 }
 ```
 
-#### 3. Permutations II
+#### 2. Permutations II
 Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
 
 Input: nums = [1,1,2]
@@ -125,157 +92,134 @@ vector<vector<int>> permuteUnique(vector<int>& nums) {
 }
 ```
 
-#### 4. Subsets
-Given an integer array nums of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets.
 
-Input: nums = [1,2,3]
+#### 3. Letter Case Permutation
+Given a string s, we can transform every letter individually to be lowercase or uppercase to create another string. Return a list of all possible strings we could create.
 
-Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+Input: s = "a1b2"
+
+Output: ["a1b2","a1B2","A1b2","A1B2"]
 
 ```cpp
-/* we need to choose whether we include element of that pos or not */
-
-void solve (vector<int> & nums, vector<vector<int>> & res, int idx, vector<int> v){
-    if(idx==nums.size()){
-        res.push_back(v);
+void solve (string & ip, string op, int idx, int n, vector<string> & res){
+    if(idx==n){
+        res.push_back(op);
         return;
     }
 
-    /* vector without include element at idx*/
+    if(isdigit(ip[idx]))
+        solve(ip, op, idx+1, n, res);
 
-    solve (nums, res, idx+1, v);
+    else{   
+        op[idx] = tolower(op[idx]);
+        solve (ip, op, idx+1, n, res);
 
-    /* vector with include element at idx */
-
-    v.push_back(nums[idx]);
-    solve (nums, res, idx+1, v);
+        op[idx] = toupper(op[idx]);
+        solve (ip, op, idx+1, n, res);
+    }
 }
 
-vector<vector<int>> subsets(vector<int>& nums) {
-    vector<vector<int>> res;
-    vector<int> v;
+vector<string> letterCasePermutation(string s) {
+    int n = s.length();
+    vector<string> res;
 
-    solve(nums, res, 0, v);
+    solve (s, s, 0, n, res);
     return res;
 }
 ```
 
-#### 5. Subsets II (Only in this question, for removing duplicates -> hashset will be used)
-Given an integer array nums that may contain duplicates, return all possible subsets (the power set). The solution set must not contain duplicate subsets.
-
-Input: nums = [1,2,2]
-
-Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+#### 4. Permutation Sequence
+The set [1, 2, 3, ..., n] contains a total of n! unique permutations. Given n and k, return the kth permutation sequence.
 
 ```cpp
-bool isExist (vector<int> & v, unordered_set<string> & vis){
-    string s = "";
+void get_Kth_permutation(int n, int k, string & s, vector<int> & v, vector<int> & fact){
+    if(n==0) return;
 
-    for(int i : v)
-        s.push_back('0'+i);
+    int block_size = fact[n-1];
+    int idx = k/block_size;
 
-    if(vis.find(s)==vis.end()){
-        vis.insert(s);
-        return false;
-    }
+    s.push_back('0'+v[idx]);
+    v.erase(v.begin()+idx);
 
-    return true;
+    k = k - idx*block_size;
+
+    get_Kth_permutation(n-1, k, s, v, fact);
 }
 
 
-void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int> v, unordered_set<string> & vis){
-    if(idx==nums.size()){
-        if(!isExist(v, vis))
-            res.push_back(v);
+string getPermutation(int n, int k) {
+    string ans = "";  
 
-        return;
-    }
-
-    /* option 1 : without including idx */
-
-    solve(nums, idx+1, res, v, vis);
-
-    /* option 2 : with including idx */
-
-    v.push_back(nums[idx]);
-    solve(nums, idx+1, res, v, vis);
-}
-
-
-vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-    vector<vector<int>> res;
     vector<int> v;
-    unordered_set<string> vis;
+    for(int i=1; i<=n; i++)
+        v.push_back(i);
 
-    sort(nums.begin(), nums.end());   // --> for avoiding duplicates
+    vector<int> fact;
+    fact.push_back(1);
 
-    solve (nums, 0, res, v, vis);
-    return res;
+    for(int i=1; i<=n; i++)
+        fact.push_back(fact.back()*i);
+
+    get_Kth_permutation (n, k-1, ans, v, fact);
+
+    return ans;
 }
 ```
 
+#### 5. Largest number in K swaps
+Given a number K and string str of digits denoting a positive integer, build the largest number possible by performing swap operations on the digits of str at most K times.
 
-#### 6. Letter Tile Possibilities
-You have n  tiles, where each tile has one letter tiles[i] printed on it. Return the number of possible non-empty sequences of letters you can make using the letters printed on those tiles.
+Input: K = 3, str = "3435335"
 
-Input: tiles = "AAB",  Output: 8
-
-Explanation: The possible sequences are "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA".
+Output: 5543333
 
 ```cpp
-void solve (vector<int> & freq, int idx, int n, unordered_set<string> & vis, string & s, int & count){
-    if(idx==n) return; 
+/* get max element after starting index */
 
-    /* At every pos we have 26 options (A-Z) to fill */
+int get_max(string & s, int start, int mx){
+    for(int i=start; i<s.length(); i++)
+        mx = max(mx, s[i]-'0');
+    return mx;
+}
 
-    for(int i=0; i<26; i++){
 
-        /* If freq > 0 that means we can fill it */
+void solve (string s, int idx, int k, string & ans){
+    if(idx==s.size() or k==0){
+        if(s>ans) ans = s;
+        return;
+    }
 
-        if(freq[i]>0){   
+    /*  find max element after idx */
 
-            /* Decrement its freq and push that char in string */
+    int mx = get_max(s, idx+1, s[idx]-'0');
 
-            freq[i]--;
-            s.push_back('A'+i);
+    /* If there is no greater element then curr element then don't swap and recurse */
 
-            /* If this string s is not vis before, mark it vis and increament the count */ 
+    if(mx==s[idx]-'0')
+        solve(s, idx+1, k, ans);
 
-            if(vis.find(s)==vis.end()){
-                vis.insert(s);
-                count++;
-            }
+    /* else one by one try to swap all max element indexes and recurse */
 
-            /* and simply recurse */
+    else{
+        for(int i=idx+1; i<s.size(); i++){
+            if(s[i]-'0' != mx) continue;
 
-            solve(freq, idx+1, n, vis, s, count);
-
-            /* after coming back, redo the changes */
-
-            s.pop_back();
-            freq[i]++;
+            swap(s[i], s[idx]);
+            solve(s, idx+1, k-1, ans);
+            swap(s[i], s[idx]);     //--> swapped again to recover the string to original form
         }
     }
 }
 
-int numTilePossibilities(string tiles) {
-    int n = tiles.size();
 
-    vector<int> freq (26, 0);          // --> for storing freq of all chars
-    unordered_set<string> vis;         // --> for keeping track of visited strings
-
-    string s = "";
-    int count = 0;
-
-    for(char ch : tiles)
-        freq[ch-'A']++;
-
-    solve (freq, 0, n, vis, s, count);
-    return count;
+string findMaximumNum(string str, int k){
+    string ans = str;
+    solve (str, 0, k, ans);
+    return ans;
 }
 ```
 
-#### 7. Generate Parentheses
+#### 6. Generate Parentheses
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
 Input: n = 3
@@ -309,7 +253,9 @@ vector<string> generateParenthesis(int n) {
 }
 ```
 
-#### 8. Combinations
+### @ Combination
+
+#### 1. Combinations
 Given two integers n and k, return all possible combinations of k numbers out of the range [1, n].
 
 Input: n = 4, k = 2
@@ -349,7 +295,7 @@ vector<vector<int>> combine(int n, int k) {
 ```
 
 
-#### 9. Combination Sum (Same Number can be choosen unlimited times)
+#### 2. Combination Sum (Same Number can be choosen unlimited times)
 Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
 
 Input: candidates = [2,3,6,7], target = 7
@@ -392,7 +338,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 }
 ```
 
-#### 10. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
+#### 3. Combination Sum II (Each number should be only used once + Does not conatain duplicate combinations)
 Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used once in the combination.
 
 Note: The solution set must not contain duplicate combinations.
@@ -453,7 +399,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 }
 ```
 
-#### 11. Combination Sum III
+#### 4. Combination Sum III
 Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
 1. Only numbers 1 through 9 are used.
 2. Each number is used at most once.
@@ -501,7 +447,7 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
-#### 12. Letter Combinations of a Phone Number
+#### 5. Letter Combinations of a Phone Number
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
 
 ![img](https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png)
@@ -539,113 +485,205 @@ vector<string> letterCombinations(string digits) {
 }
 ```
 
-#### 13. Palindrome Partitioning
-Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+#### 6. Increasing Subsequences
+Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order. The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
 
-Input: s = "aab"
+Input: nums = [4,6,7,7,1]
 
-Output: [["a","a","b"],["aa","b"]]
+Output: [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
 
 ```cpp
-bool isPalindrome (string& s){
-    if(s.size()==0) return false;
-
-    int i=0, j=s.length()-1;
-    while(i<j){
-        if(s[i]!=s[j]) return false;
-        i++; j--;
+bool exist(string & s, unordered_set<string> & vis){
+    if(vis.find(s)==vis.end()){
+        vis.insert(s);
+        return false;
     }
+
     return true;
 }
 
-void solve (string s, int idx, vector<vector<string>>& res, vector<string> & v){
-    if(idx==s.length()){
+void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int>& v, unordered_set<string> & vis, string & s){
+    if(v.size()>=2 and !exist(s, vis))
         res.push_back(v);
-        return;
-    }
 
-    string temp = "";
+    for(int i=idx; i<nums.size(); i++){
 
-    /* pushing char in temp one by one */
-
-    for(int i=idx; i<s.length(); i++){
-        temp.push_back(s[i]);
-
-        /* If temp is palindrome, then push it in vector v and recurse for remaining string */
-
-        if(isPalindrome(temp)){
-            v.push_back(temp);
-            solve (s, i+1, res, v);
+        if(v.empty() or v.back() <= nums[i]){
+            s.push_back('0'+nums[i]);
+            v.push_back(nums[i]);
+            solve (nums, i+1, res, v, vis, s);
             v.pop_back();
+            s.pop_back();
         }
     }
 }
 
-vector<vector<string>> partition(string s) {
-    vector<vector<string>> res;
-    vector<string> v;
+vector<vector<int>> findSubsequences(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> v;
+    unordered_set<string> vis;     // --> used for removing duplicates
+    string s = "";
 
-    solve (s, 0, res, v);
+    solve (nums, 0, res, v, vis, s);
     return res;
 }
 ```
 
-#### 14. Decode String
-Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
 
-Input: s = "3[a]2[bc]", Output: "aaabcbc"
+### @ Subsets
 
-Input: s = "3[a2[c]]", Output: "accaccacc"
+#### 1. Subsets
+Given an integer array nums of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets.
+
+Input: nums = [1,2,3]
+
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 
 ```cpp
-/* Take special care with "idx" --> that will act as a global index */
+/* we need to choose whether we include element of that pos or not */
 
-string solve (string & s, int & idx){
-    string ans = "";
-
-    for(int i=idx; i<s.length(); i++){
-
-        if(isalpha(s[i]))
-            ans.push_back(s[i]);
-
-        else if (s[i]==']'){
-            idx = i;              // --> Before returning on ']', update the global idx
-            return ans;
-        }
-
-        else{
-
-            /* integer can be of more then 1 digit (eg: 100) , so handle that also */
-
-            string freq_s = "";
-            while(s[i]!='['){
-                freq_s.push_back(s[i]);
-                i++;
-            }
-
-            int freq = stoi(freq_s);   
-            idx = i+1;
-
-            string temp = solve(s, idx); 
-
-            for(int f=0; f<freq; f++)
-                ans += temp;
-
-            i = idx;   // --> after getting res from recursive call, update i to global idx
-        }
+void solve (vector<int> & nums, vector<vector<int>> & res, int idx, vector<int> v){
+    if(idx==nums.size()){
+        res.push_back(v);
+        return;
     }
 
-    return ans;
+    /* vector without include element at idx*/
+
+    solve (nums, res, idx+1, v);
+
+    /* vector with include element at idx */
+
+    v.push_back(nums[idx]);
+    solve (nums, res, idx+1, v);
 }
 
+vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> v;
 
-string decodeString(string s) {
-    int idx = 0;
-    return solve(s, idx);
+    solve(nums, res, 0, v);
+    return res;
 }
 ```
 
-#### 15. Partition Equal Subset Sum
+#### 2. Subsets II (Only in this question, for removing duplicates -> hashset will be used)
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set). The solution set must not contain duplicate subsets.
+
+Input: nums = [1,2,2]
+
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+
+```cpp
+bool isExist (vector<int> & v, unordered_set<string> & vis){
+    string s = "";
+
+    for(int i : v)
+        s.push_back('0'+i);
+
+    if(vis.find(s)==vis.end()){
+        vis.insert(s);
+        return false;
+    }
+
+    return true;
+}
+
+
+void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int> v, unordered_set<string> & vis){
+    if(idx==nums.size()){
+        if(!isExist(v, vis))
+            res.push_back(v);
+
+        return;
+    }
+
+    /* option 1 : without including idx */
+
+    solve(nums, idx+1, res, v, vis);
+
+    /* option 2 : with including idx */
+
+    v.push_back(nums[idx]);
+    solve(nums, idx+1, res, v, vis);
+}
+
+
+vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> v;
+    unordered_set<string> vis;
+
+    sort(nums.begin(), nums.end());   // --> for avoiding duplicates
+
+    solve (nums, 0, res, v, vis);
+    return res;
+}
+```
+
+#### 3. Letter Tile Possibilities
+You have n  tiles, where each tile has one letter tiles[i] printed on it. Return the number of possible non-empty sequences of letters you can make using the letters printed on those tiles.
+
+Input: tiles = "AAB",  Output: 8
+
+Explanation: The possible sequences are "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA".
+
+```cpp
+void solve (vector<int> & freq, int idx, int n, unordered_set<string> & vis, string & s, int & count){
+    if(idx==n) return; 
+
+    /* At every pos we have 26 options (A-Z) to fill */
+
+    for(int i=0; i<26; i++){
+
+        /* If freq > 0 that means we can fill it */
+
+        if(freq[i]>0){   
+
+            /* Decrement its freq and push that char in string */
+
+            freq[i]--;
+            s.push_back('A'+i);
+
+            /* If this string s is not vis before, mark it vis and increament the count */ 
+
+            if(vis.find(s)==vis.end()){
+                vis.insert(s);
+                count++;
+            }
+
+            /* and simply recurse */
+
+            solve(freq, idx+1, n, vis, s, count);
+
+            /* after coming back, redo the changes */
+
+            s.pop_back();
+            freq[i]++;
+        }
+    }
+}
+
+int numTilePossibilities(string tiles) {
+    int n = tiles.size();
+
+    vector<int> freq (26, 0);          // --> for storing freq of all chars
+    unordered_set<string> vis;         // --> for keeping track of visited strings
+
+    string s = "";
+    int count = 0;
+
+    for(char ch : tiles)
+        freq[ch-'A']++;
+
+    solve (freq, 0, n, vis, s, count);
+    return count;
+}
+```
+
+### @ Subset Partition
+
+#### 1. Partition Equal Subset Sum
 Given an array arr[] of size N, check if it can be partitioned into two parts such that the sum of elements in both parts is the same.
 
 ```cpp
@@ -678,7 +716,7 @@ int equalPartition(int N, int arr[]){
 }
 ```
 
-#### 16. Tug of War
+#### 2. Tug of War (Min diff of two equal sized subsets)
 Given a set of n integers, divide the set in two subsets of n/2 sizes each such that the difference of the sum of two subsets is as minimum as possible. If n is even, then sizes of two subsets must be strictly n/2 and if n is odd, then size of one subset must be (n-1)/2 and size of other subset must be (n+1)/2. Return such possible min difference.
 
 ```cpp
@@ -709,7 +747,7 @@ int tug_of_war (vector<int> & v){
 }
 ```
 
-#### 17. Partition to K Equal Sum Subsets (IMP)
+#### 3. Partition to K Equal Sum Subsets (IMP)
 Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.
 
 Input: nums = [4,3,2,3,5,2,1], k = 4
@@ -766,7 +804,7 @@ bool canPartitionKSubsets(vector<int>& nums, int k) {
 }
 ```
 
-#### 18. Matchsticks to Square
+#### 4. Matchsticks to Square
 You are given an integer array matchsticks where matchsticks[i] is the length of the ith matchstick. You want to use all the matchsticks to make one square. You should not break any stick, but you can link them up, and each matchstick must be used exactly one time. Return true if you can make this square and false otherwise.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/09/matchsticks1-grid.jpg)
@@ -817,51 +855,114 @@ bool makesquare(vector<int>& matchsticks) {
 }
 ```
 
-#### 19. Increasing Subsequences
-Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order. The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
+### @ Recursive Substructure
 
-Input: nums = [4,6,7,7,1]
+#### 1. Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
 
-Output: [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+Input: s = "aab"
+
+Output: [["a","a","b"],["aa","b"]]
 
 ```cpp
-bool exist(string & s, unordered_set<string> & vis){
-    if(vis.find(s)==vis.end()){
-        vis.insert(s);
-        return false;
-    }
+bool isPalindrome (string& s){
+    if(s.size()==0) return false;
 
+    int i=0, j=s.length()-1;
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
     return true;
 }
 
-void solve (vector<int>& nums, int idx, vector<vector<int>>& res, vector<int>& v, unordered_set<string> & vis, string & s){
-    if(v.size()>=2 and !exist(s, vis))
+void solve (string s, int idx, vector<vector<string>>& res, vector<string> & v){
+    if(idx==s.length()){
         res.push_back(v);
+        return;
+    }
 
-    for(int i=idx; i<nums.size(); i++){
+    string temp = "";
 
-        if(v.empty() or v.back() <= nums[i]){
-            s.push_back('0'+nums[i]);
-            v.push_back(nums[i]);
-            solve (nums, i+1, res, v, vis, s);
+    /* pushing char in temp one by one */
+
+    for(int i=idx; i<s.length(); i++){
+        temp.push_back(s[i]);
+
+        /* If temp is palindrome, then push it in vector v and recurse for remaining string */
+
+        if(isPalindrome(temp)){
+            v.push_back(temp);
+            solve (s, i+1, res, v);
             v.pop_back();
-            s.pop_back();
         }
     }
 }
 
-vector<vector<int>> findSubsequences(vector<int>& nums) {
-    vector<vector<int>> res;
-    vector<int> v;
-    unordered_set<string> vis;     // --> used for removing duplicates
-    string s = "";
+vector<vector<string>> partition(string s) {
+    vector<vector<string>> res;
+    vector<string> v;
 
-    solve (nums, 0, res, v, vis, s);
+    solve (s, 0, res, v);
     return res;
 }
 ```
 
-#### 20. K-th Symbol in Grammar
+#### 2. Decode String
+Given an encoded string, return its decoded string. The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+
+Input: s = "3[a]2[bc]", Output: "aaabcbc"
+
+Input: s = "3[a2[c]]", Output: "accaccacc"
+
+```cpp
+/* Take special care with "idx" --> that will act as a global index */
+
+string solve (string & s, int & idx){
+    string ans = "";
+
+    for(int i=idx; i<s.length(); i++){
+
+        if(isalpha(s[i]))
+            ans.push_back(s[i]);
+
+        else if (s[i]==']'){
+            idx = i;              // --> Before returning on ']', update the global idx
+            return ans;
+        }
+
+        else{
+
+            /* integer can be of more then 1 digit (eg: 100) , so handle that also */
+
+            string freq_s = "";
+            while(s[i]!='['){
+                freq_s.push_back(s[i]);
+                i++;
+            }
+
+            int freq = stoi(freq_s);   
+            idx = i+1;
+
+            string temp = solve(s, idx); 
+
+            for(int f=0; f<freq; f++)
+                ans += temp;
+
+            i = idx;   // --> after getting res from recursive call, update i to global idx
+        }
+    }
+
+    return ans;
+}
+
+string decodeString(string s) {
+    int idx = 0;
+    return solve(s, idx);
+}
+```
+
+#### 3. K-th Symbol in Grammar
 We build a table of n rows (1-indexed). We start by writing 0 in the 1st row. Now in every subsequent row, we look at the previous row and replace each occurrence of 0 with 01, and each occurrence of 1 with 10. Given two integer n and k, return the kth (1-indexed) symbol in the nth row of a table of n rows.
 
 ```cpp
@@ -882,7 +983,7 @@ int kthGrammar(int n, int k) {
 }
 ```
 
-#### 21. Restore IP Addresses
+#### 4. Restore IP Addresses
 Given a string s containing only digits, return all possible valid IP addresses that can be obtained from s. You can return them in any order. A valid IP address consists of exactly four integers, each integer is between 0 and 255, separated by single dots and cannot have leading zeros.
 
 Input: s = "010010"
@@ -941,97 +1042,6 @@ vector<string> restoreIpAddresses(string s) {
     solve (s, 0, res, "", 3);
 
     return res;
-}
-```
-
-#### 22. Permutation Sequence
-The set [1, 2, 3, ..., n] contains a total of n! unique permutations. Given n and k, return the kth permutation sequence.
-
-```cpp
-void get_Kth_permutation(int n, int k, string & s, vector<int> & v, vector<int> & fact){
-    if(n==0) return;
-
-    int block_size = fact[n-1];
-    int idx = k/block_size;
-
-    s.push_back('0'+v[idx]);
-    v.erase(v.begin()+idx);
-
-    k = k - idx*block_size;
-
-    get_Kth_permutation(n-1, k, s, v, fact);
-}
-
-
-string getPermutation(int n, int k) {
-    string ans = "";  
-
-    vector<int> v;
-    for(int i=1; i<=n; i++)
-        v.push_back(i);
-
-    vector<int> fact;
-    fact.push_back(1);
-
-    for(int i=1; i<=n; i++)
-        fact.push_back(fact.back()*i);
-
-    get_Kth_permutation (n, k-1, ans, v, fact);
-
-    return ans;
-}
-```
-
-#### 23. Largest number in K swaps
-Given a number K and string str of digits denoting a positive integer, build the largest number possible by performing swap operations on the digits of str at most K times.
-
-Input: K = 3, str = "3435335"
-
-Output: 5543333
-
-```cpp
-/* get max element after starting index */
-
-int get_max(string & s, int start, int mx){
-    for(int i=start; i<s.length(); i++)
-        mx = max(mx, s[i]-'0');
-    return mx;
-}
-
-
-void solve (string s, int idx, int k, string & ans){
-    if(idx==s.size() or k==0){
-        if(s>ans) ans = s;
-        return;
-    }
-
-    /*  find max element after idx */
-
-    int mx = get_max(s, idx+1, s[idx]-'0');
-
-    /* If there is no greater element then curr element then don't swap and recurse */
-
-    if(mx==s[idx]-'0')
-        solve(s, idx+1, k, ans);
-
-    /* else one by one try to swap all max element indexes and recurse */
-
-    else{
-        for(int i=idx+1; i<s.size(); i++){
-            if(s[i]-'0' != mx) continue;
-
-            swap(s[i], s[idx]);
-            solve(s, idx+1, k-1, ans);
-            swap(s[i], s[idx]);     //--> swapped again to recover the string to original form
-        }
-    }
-}
-
-
-string findMaximumNum(string str, int k){
-    string ans = str;
-    solve (str, 0, k, ans);
-    return ans;
 }
 ```
 

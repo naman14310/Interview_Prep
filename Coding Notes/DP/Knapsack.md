@@ -11,6 +11,8 @@ Complexity Analysis:
 2. Auxiliary Space: O(N*W) 
 -> The use of 2D array data structure for storing intermediate states
 
+**Method 1 : Memorization (Top-Down)**
+
 ```cpp
 int solve (int wt[], int val[], int w, int n, int idx, vector<vector<int>> & dp){
     if(idx==n or w==0)
@@ -42,5 +44,24 @@ int knapSack(int w, int wt[], int val[], int n) {
     vector<vector<int>> dp (n+1, vector<int> (w+1, -1));
 
     return solve (wt, val, w, n, 0, dp);
+}
+```
+
+**Method 2 : Tabulation (Bottom-Up)**
+
+```cpp
+int knapSack(int w, int wt[], int val[], int n) { 
+    vector<vector<int>> dp (n+1, vector<int> (w+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=w; j++){
+            if(wt[i-1]>j)
+                dp[i][j] = dp[i-1][j];
+            else
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-wt[i-1]] + val[i-1]);
+        }
+    }
+
+    return dp[n][w];
 }
 ```

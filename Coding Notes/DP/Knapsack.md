@@ -257,3 +257,50 @@ int minDifference(int arr[], int n)  {
 } 
 ```
 
+### 5. Count Subsets with given difference
+Given an integer array arr of size N and a difference diff, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is equal to diff.
+
+Hint: Reduce it to count of subset sums
+
+Input: nums = {1, 1, 2, 3}, diff = 3
+
+Output: 3
+
+```cpp
+int count_subsetSum (vector<int> & nums, int n, int target, int idx, int curr_sum, vector<vector<int>>& dp){
+    if(curr_sum == target) return 1;
+    if(idx==n) return 0;
+
+    if(dp[idx][curr_sum]!=-1) return dp[idx][curr_sum];
+
+    if(curr_sum+nums[idx] <= target){
+        int res1 = count_subsetSum (nums, n, target, idx+1, curr_sum + nums[idx], dp);
+        int res2 = count_subsetSum (nums, n, target, idx+1, curr_sum, dp);
+        return dp[idx][curr_sum] = res1+res2;
+    }
+    else{
+        int res = count_subsetSum (nums, n, target, idx+1, curr_sum, dp);
+        return dp[idx][curr_sum] = res;
+    }
+}
+
+
+int count_subset_with_given_diff (vector<int> & nums, int diff){
+    /*
+        s2 - s1 = diff   (where s1 is smaller subset sum)
+        (totalSum-s1) - s1 = diff --> totalSum - 2*s1 = diff
+        s1 = (totalSum - diff)/2;
+    */
+    int n = nums.size();
+    int totalSum = 0;
+    for(int i : nums)
+        totalSum += i;
+
+    int s1 = (totalSum-diff)/2;
+    vector<vector<int>> dp (n+1, vector<int> (s1+1, -1));
+
+    return count_subsetSum (nums, n, s1, 0, 0, dp);
+}
+```
+
+

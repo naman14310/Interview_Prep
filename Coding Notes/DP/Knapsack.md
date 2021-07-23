@@ -71,9 +71,13 @@ int knapSack(int w, int wt[], int val[], int n) {
 ```
 
 ### 1. Subset Sum Problem
-Given an array of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given sum. 
+Given an array of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given target sum. 
 
-Memorization
+Input: n = 6, arr[] = {3, 34, 4, 12, 5, 2}, target = 9
+
+Output: 1
+
+**Memorization**
 
 ```cpp
 bool solve (int arr[], int n, int target, int idx, int curr_sum, vector<vector<int>> & dp){
@@ -99,7 +103,7 @@ bool isSubsetSum(int n, int arr[], int target){
 }
 ```
 
-Tabulation
+**Tabulation**
 
 ```cpp
 bool isSubsetSum(int n, int arr[], int target){

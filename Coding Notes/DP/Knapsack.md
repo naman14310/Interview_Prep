@@ -173,3 +173,38 @@ Hint: Find if there any subset sum exist whose sum is equal to half of totalSum
         return subsetSum (nums, n, target, 0, 0, dp);
     }
 ```
+
+### 3. Count of Subset Sum
+Given an array arr[] of length N and an integer target, the task is to find the number of subsets with a sum equal to target.
+
+Input: arr[] = {1, 2, 3, 3}, target = 6 
+
+Output: 3 
+
+Hint: Just change return statements and sign in subset sum problem
+
+```cpp
+int solve (vector<int> & nums, int n, int target, int idx, int curr_sum, vector<vector<int>> & dp){
+    if(curr_sum==target) return 1;                       // -->  Change True to 1
+    if(idx==n) return 0;                                 // --> Change False to 0
+
+    if(dp[idx][curr_sum]!=-1) return dp[idx][curr_sum];
+
+    if(curr_sum + nums[idx] <= target){
+        int res1 = solve (nums, n, target, idx+1, curr_sum+nums[idx], dp);    
+        int res2 = solve (nums, n, target, idx+1, curr_sum, dp);
+        return dp[idx][curr_sum] = res1 + res2;           // --> Just change 'OR' from subset sum to '+' sign
+    }
+    else{
+        int res = solve (nums, n, target, idx+1, curr_sum, dp);
+        return dp[idx][curr_sum] = res;
+    }
+}
+
+
+int count_subset_sum (vector<int> & nums, int target){
+    int n = nums.size();
+    vector<vector<int>> dp (n+1, vector<int> (target+1, -1));
+    return solve (nums, n, target, 0, 0, dp);
+}
+```

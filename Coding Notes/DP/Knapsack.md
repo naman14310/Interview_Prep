@@ -129,3 +129,47 @@ bool isSubsetSum(int n, int arr[], int target){
     return dp[n][target];
 }
 ```
+
+### 2. Partition Equal Subset Sum
+Given a non-empty array nums containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+
+Input: nums = [1,5,11,5]
+
+Output: true
+
+Hint: Find if there any subset sum exist whose sum is equal to half of totalSum
+
+```cpp
+    bool subsetSum (vector<int> & nums, int n, int target, int idx, int curr_sum, vector<vector<int>>& dp){
+        if(curr_sum==target) return true;    //--> Always first check truth condition then false condition
+        if(idx==n) return false;
+        
+        if(dp[idx][curr_sum]!=-1) return dp[idx][curr_sum];
+        
+        if(curr_sum + nums[idx] <= target){
+            bool res1 = subsetSum (nums, n, target, idx+1, curr_sum+nums[idx], dp);
+            bool res2 = subsetSum (nums, n, target, idx+1, curr_sum, dp);
+            return dp[idx][curr_sum] = res1 or res2;
+        }
+        else{
+            bool res = subsetSum (nums, n, target, idx+1, curr_sum, dp);
+            return dp[idx][curr_sum] = res;
+        }
+    }
+    
+    
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        
+        int sum=0;
+        for(int i : nums)
+            sum+=i;
+        
+        if(sum%2!=0) return false;
+        
+        int target = sum/2;       //--> Now problem reduced to find if any subset sum exist whose sum==target
+        
+        vector<vector<int>> dp (n+1, vector<int> (target+1, -1));
+        return subsetSum (nums, n, target, 0, 0, dp);
+    }
+```

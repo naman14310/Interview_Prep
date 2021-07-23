@@ -12,6 +12,7 @@ Complexity Analysis:
 -> The use of 2D array data structure for storing intermediate states
 
 Identifying Pattern:
+
 If some array A is given in question and we have choices to choose every item to get considered for filling in a bag W then that problem is of knapsack pattern.
 
 **Method 1 : Memorization (Top-Down)**

@@ -208,3 +208,52 @@ int count_subset_sum (vector<int> & nums, int target){
     return solve (nums, n, target, 0, 0, dp);
 }
 ```
+
+### 4. Minimum Subset Sum Difference
+Given an integer array arr of size N, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is minimum and find the minimum difference.
+
+Input: N = 4, arr[] = {1, 6, 11, 5} 
+
+Output: 1
+
+Hint: Create a subset sum dp table for totalSum of array. Then last row of dp table stores answer for every possible sum in range [0, totalSum]. If sum of smaller subset S1 is closer to middle line then that will give us min subset difference.
+
+```cpp
+/* Here we need to do tabulation method because we want whole last row */
+
+void subsetSum (int arr[], int n, int target, vector<vector<bool>> & dp){
+    for(int i=0; i<=n; i++){
+        for(int j=0; j<=target; j++){
+
+            if(j==0) dp[i][j] = true;
+
+            else if(i==0) dp[i][j] = false;
+
+            else if(arr[i-1]>j)
+                dp[i][j] = dp[i-1][j];
+
+            else
+                dp[i][j] = dp[i-1][j] or dp[i-1][j-arr[i-1]];
+        }
+    }
+}
+
+
+int minDifference(int arr[], int n)  { 
+    int target = 0;
+    for(int i=0; i<n; i++)
+        target += arr[i];
+
+    vector<vector<bool>> dp (n+1, vector<bool> (target+1, false));
+    subsetSum (arr, n, target, dp);
+
+    /* start iterating from target/2 and check whether any subset sum exist */
+    /* because sum that lie closer to the center line will produce min possible difference */
+
+    for(int i=target/2; i>=0; i--)
+        if(dp[n][i]) return target-(2*i);
+
+    return target;
+} 
+```
+

@@ -367,7 +367,7 @@ int findTargetSumWays(vector<int>& v, int diff) {
 ### @ Unbounded Knapsack (Parent Problem)
 This is different from classical Knapsack problem, here we are allowed to use unlimited number of instances of an item.
 
-**Method 1 : Memorization**
+**Method 1 : Memorization (Top-Down)**
 
 ```cpp
 int solve (int wt[], int val[], int n, int w, int idx, vector<vector<int>> & dp){

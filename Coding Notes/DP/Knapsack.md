@@ -415,7 +415,8 @@ int knapSack(int n, int w, int val[], int wt[]){
                 dp[i][j] = dp[i-1][j];
 
             /* 
-                In unbounded knapsack, if we include any item we treat it as unprocesses so after subtracting weight of curr_item from knapsack, 
+                In unbounded knapsack, if we include any item we treat it as unprocessed 
+                so after subtracting weight of curr_item from knapsack, 
                 we will take the profit from same row (i instead of i-1)
 
             */

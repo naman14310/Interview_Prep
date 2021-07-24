@@ -361,4 +361,42 @@ int findTargetSumWays(vector<int>& v, int diff) {
 }
 ```
 
+------
+
+
+### @ Unbounded Knapsack (Parent Problem)
+This is different from classical Knapsack problem, here we are allowed to use unlimited number of instances of an item.
+
+**Method 1 : Memorization**
+
+```cpp
+int solve (int wt[], int val[], int n, int w, int idx, vector<vector<int>> & dp){
+    if(idx==n or w==0) return 0;
+
+    if(dp[idx][w]!=-1) return dp[idx][w];
+
+    if(wt[idx]<=w){
+
+        /* 
+            There is just one difference b/w Knapsack and Unbounded Knapsack is that
+            If include any item, then it will be treated as unprocessed and same idx
+            will be passed to recursion function
+
+        */
+
+        int p1 = val[idx] + solve (wt, val, n, w-wt[idx], idx, dp);      // --> including item
+        int p2 = solve (wt, val, n, w, idx+1, dp);                       // --> not including item
+        return dp[idx][w] = max(p1, p2);
+    }
+    else{
+        int p = solve (wt, val, n, w, idx+1, dp);
+        return dp[idx][w] = p;
+    }
+}
+
+int knapSack(int n, int w, int val[], int wt[]){
+    vector<vector<int>> dp (n+1, vector<int> (w+1, -1));
+    return solve (wt, val, n, w, 0, dp);
+}
+```
 

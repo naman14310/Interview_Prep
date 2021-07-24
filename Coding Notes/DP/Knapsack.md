@@ -429,3 +429,32 @@ int knapSack(int n, int w, int val[], int wt[]){
     return dp[n][w];
 }
 ```
+
+### 1. Rod Cutting Problem
+Given a rod of length n inches and an array of prices that includes prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces.
+
+```cpp
+int solve (vector<int> & price, int n, int idx, int remaining_len, vector<vector<int>> & dp){
+    if(idx==n or remaining_len==0) return 0; 
+
+    if(dp[idx][remaining_len]!=-1) return dp[idx][remaining_len];
+
+    if(idx+1 <= remaining_len){
+        int p1 = price[idx] + solve (price, n, idx, remaining_len-(idx+1), dp);
+        int p2 = solve (price, n, idx+1, remaining_len, dp);
+        return dp[idx][remaining_len] = max(p1, p2);
+    }
+    else{
+        int p = solve (price, n, idx+1, remaining_len, dp);
+        return dp[idx][remaining_len] = p;
+    }
+}
+
+/* price arrays contains the price of every possible len from [1-n] where n is total len of rod*/
+
+int rod_cutting_max_profit (vector<int> & price){
+    int n = price.size();
+    vector<vector<int>> dp (n+1, vector<int>(n+1, -1));
+    return solve (price, n, 0, n, dp);
+}
+```

@@ -400,3 +400,31 @@ int knapSack(int n, int w, int val[], int wt[]){
 }
 ```
 
+**Method 2 : Tabulation (Bottom-Up)**
+
+```cpp
+int knapSack(int n, int w, int val[], int wt[]){
+    vector<vector<int>> dp (n+1, vector<int> (w+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=w; j++){
+
+            /* If weight of curr_item is greater the curr_knapsack then we cannot include it anyhow */
+
+            if(wt[i-1]>j)
+                dp[i][j] = dp[i-1][j];
+
+            /* 
+                In unbounded knapsack, if we include any item we treat it as unprocesses so after subtracting weight of curr_item from knapsack, 
+                we will take the profit from same row (i instead of i-1)
+
+            */
+
+            else
+                dp[i][j] = max(dp[i-1][j], dp[i][j-wt[i-1]] + val[i-1]);    //--> Just one small change from knapsack
+        }
+    }
+
+    return dp[n][w];
+}
+```

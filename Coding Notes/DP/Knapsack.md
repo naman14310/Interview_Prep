@@ -303,4 +303,62 @@ int count_subset_with_given_diff (vector<int> & nums, int diff){
 }
 ```
 
+### 6. Target Sum
+You are given an integer array nums and an integer target. You want to build an expression out of nums by adding one of the symbols '+' and '-' before each integer in nums and then concatenate all the integers. Return the number of different expressions that you can build, which evaluates to target.
+
+Input: nums = [1,1,1,1,1], target = 3
+
+Output: 5
+
+```cpp
+/* Standard count subset sum memorized solution */
+
+int count_subsetSum (vector<int> & nums, int n, int target, int idx, int curr_sum, vector<vector<int>>& dp){
+    if(curr_sum == target) return 1;
+    if(idx==n) return 0;
+
+    if(dp[idx][curr_sum]!=-1) return dp[idx][curr_sum];
+
+    if(curr_sum+nums[idx] <= target){
+        int res1 = count_subsetSum (nums, n, target, idx+1, curr_sum + nums[idx], dp);
+        int res2 = count_subsetSum (nums, n, target, idx+1, curr_sum, dp);
+        return dp[idx][curr_sum] = res1+res2;
+    }
+    else{
+        int res = count_subsetSum (nums, n, target, idx+1, curr_sum, dp);
+        return dp[idx][curr_sum] = res;
+    }
+}
+
+
+int findTargetSumWays(vector<int>& v, int diff) {
+    /*
+        s2 - s1 = diff   (where s1 is smaller subset sum)
+        (totalSum-s1) - s1 = diff --> totalSum - 2*s1 = diff
+        s1 = (totalSum - diff)/2;
+    */
+
+    int totalSum = accumulate(v.begin(), v.end(), 0);
+    int zero_cnt = count(v.begin(), v.end(), 0);
+
+    /* Create new vector nums by removing all zeros */
+
+    vector<int> nums;
+    for(int i : v)
+        if(i!=0) nums.push_back(i);
+
+    int n = nums.size();
+
+    if(diff > totalSum || (totalSum-diff)%2 !=0 )        // --> Boundary case
+        return 0;
+
+    int s1 = (totalSum-diff)/2;
+    vector<vector<int>> dp (n+1, vector<int> (s1+1, -1));
+
+    /* While returning the answer, multiply it with pow(2, zero_cnt) */
+
+    return count_subsetSum (nums, n, s1, 0, 0, dp) * pow(2, zero_cnt);
+}
+```
+
 

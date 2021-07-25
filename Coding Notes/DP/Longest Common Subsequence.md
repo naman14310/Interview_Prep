@@ -159,3 +159,71 @@ int shortestCommonSupersequence(string s1, string s2, int m, int n){
     return m+n-lcs_len;
 }
 ```
+
+### 4. Print Shortest Common Supersequence
+Given two strings s1 and s2, return the shortest string that has both str1 and str2 as subsequences.  If multiple answers exist, you may return any of them.
+
+Input: str1 = "abac", str2 = "cab"
+
+Output: "cabac"
+
+```cpp
+string shortestCommonSupersequence(string s1, string s2) {
+    int n = s1.size(), m = s2.size();
+    vector<vector<int>> dp (n+1, vector<int> (m+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    /* ---------------- Print Supersequence Logic ----------------- */
+
+    int i = n, j = m;
+    string supersequence = "";
+
+    while(i>0 and j>0){
+
+        /* If both char are equal, push it in string one time and move to top-left diagonal cell */
+
+        if(s1[i-1]==s2[j-1]){
+            supersequence.push_back(s1[i-1]);
+            i--; j--;
+        }
+
+        /* Move towards left or up whichever is max, and push the char of the row or col which we are leaving */
+
+        else{
+
+            if(dp[i-1][j] > dp[i][j-1]){
+                supersequence.push_back(s1[i-1]);
+                i--;
+            }
+            else{
+                supersequence.push_back(s2[j-1]);
+                j--;
+            }
+        }
+    }
+
+    /* Don't forget to pushback remaining chars of s1 and s2 */
+
+    while(i>0){
+        supersequence.push_back(s1[i-1]);
+        i--;
+    }
+
+    while(j>0){
+        supersequence.push_back(s2[j-1]);
+        j--;
+    }
+
+    reverse(supersequence.begin(), supersequence.end());
+    return supersequence;
+}
+```

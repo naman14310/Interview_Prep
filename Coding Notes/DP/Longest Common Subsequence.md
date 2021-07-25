@@ -89,7 +89,7 @@ int longestCommonSubstr (string s1, string s2, int n, int m){
 }
 ```
 
-### 2. Print Longest Common Subsequence String
+### 2. Print Longest Common Subsequence
 Given two sequences, print the longest subsequence present in both of them. LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
 
 ```cpp

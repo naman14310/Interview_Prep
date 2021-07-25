@@ -127,3 +127,35 @@ string printLCS (string & s1, string & s2){
     return lcs;
 }
 ```
+
+### 3. Shortest Common Supersequence
+Given two strings s1 and s2 of lengths m and n respectively, find the length of the smallest string which has both, s1 and s2 as its sub-sequences.
+
+Input: s1 = abcd, s2 = xycd
+
+Output: 6
+
+Hint: len(supersequence) = len(s1) + len(s2) - lcs_len
+
+```cpp
+int lcs (string & s1, string & s2, int m, int n){
+    vector<vector<int>> dp (m+1, vector<int> (n+1, 0));
+
+    for(int i=1; i<=m; i++){
+        for(int j=1; j<=n; j++){
+
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    return dp[m][n];
+}
+
+int shortestCommonSupersequence(string s1, string s2, int m, int n){
+    int lcs_len = lcs (s1, s2, m, n);
+    return m+n-lcs_len;
+}
+```

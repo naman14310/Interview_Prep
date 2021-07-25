@@ -479,13 +479,13 @@ int solve (vector<int> & coins, int n, int amount, int idx, vector<vector<int>> 
         int res1 = solve (coins, n, amount-coins[idx], idx, dp);    // --> Either include that coin
         int res2 = solve (coins, n, amount, idx+1, dp);             // --> Or Not include that coin
 
-        if(res1==-1 and res2==-1)           // Case 1: If using both coices, we failed to exchange
+        if(res1==-1 and res2==-1)         // Case 1: If using both coices, we failed to exchange
             dp[idx][amount] = -1;
 
-        else if(res1==-1 or res2==-1)       // Case 2: If either of one case is used for exchange
+        else if(res1==-1 or res2==-1)     // Case 2: If either of one case is used for exchange
             dp[idx][amount] = res1!=-1 ? res1+1 : res2;    
 
-        else                                // Case 3: If both cases leads to some solution then we will take min of both
+        else                              // Case 3: If both cases leads to some solution then we will take min of both
             dp[idx][amount] = min (res1+1, res2);
 
         return dp[idx][amount];

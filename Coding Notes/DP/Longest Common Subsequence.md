@@ -259,3 +259,38 @@ int minOperations(string s1, string s2) {
     return m+n-(2*lcs_len);
 } 
 ```
+
+### 6. Longest Palindromic Subsequence
+Given a string s, find the longest palindromic subsequence's length in s.
+
+Input: s = "bbbab"
+
+Output: 4
+
+Hint: Just find LCS of s and reverse(s)
+
+```cpp
+int lcs (string & s1, string & s2, int n){
+    vector<vector<int>> dp (n+1, vector<int> (n+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    return dp[n][n];
+}
+
+int longestPalindromeSubseq(string s) {
+    int n = s.length();
+    string rev = s;
+    reverse(rev.begin(), rev.end());
+
+    return lcs (s, rev, n);
+}
+```

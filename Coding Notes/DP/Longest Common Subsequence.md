@@ -331,4 +331,31 @@ int minInsertions(string s) {
 }
 ```
 
+### 8. Longest Repeating Subsequence
+Given a string, find the length of the longest repeating subsequence such that the two subsequences don’t have same string character at the same position, i.e., any i’th character in the two subsequences shouldn’t have the same index in the original string. 
 
+Input: str = "aabb"
+
+Output: 2
+
+Hint: Find LCS(s,s) with one additional condition such that s[i-1]==s[j-1] and i!=j
+
+```cpp
+int LongestRepeatingSubsequence(string s){
+    int n = s.length();
+    vector<vector<int>> dp (n+1, vector<int> (n+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+
+            if(s[i-1]==s[j-1] and i!=j)
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+
+        }
+    }
+
+    return dp[n][n];
+}
+```

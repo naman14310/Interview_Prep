@@ -227,3 +227,35 @@ string shortestCommonSupersequence(string s1, string s2) {
     return supersequence;
 }
 ```
+
+### 5. Minimum number of deletions and insertions to transform one string into another
+Given two strings ‘s1’ and ‘s2’ of size m and n respectively. The task is to remove and insert the minimum number of characters from s1 to transform it into s2. It could be possible that the same character needs to be removed from one point of s1 and inserted to some another point.
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/20200817135845/picture2-660x402.jpg)
+
+Hint: Total operations = len(s1) + len(s2) - (2*lcs_len)
+
+```cpp
+int lcs (string & s1, string & s2, int m, int n){
+    vector<vector<int>> dp (m+1, vector<int> (n+1, 0));
+
+    for(int i=1; i<=m; i++){
+        for(int j=1; j<=n; j++){
+
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    return dp[m][n];
+}
+
+int minOperations(string s1, string s2) { 
+    int m = s1.length(), n = s2.length();
+    int lcs_len = lcs(s1, s2, m, n);
+
+    return m+n-(2*lcs_len);
+} 
+```

@@ -88,3 +88,42 @@ int longestCommonSubstr (string s1, string s2, int n, int m){
     return ans;
 }
 ```
+
+### 2. Print LCS
+Given two sequences, print the longest subsequence present in both of them. LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
+
+```cpp
+string printLCS (string & s1, string & s2){
+    int n = s1.length(), m = s2.length();
+    vector<vector<int>> dp (n+1, vector<int> (m+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    /* --------------------- Printing Logic ----------------------- */
+
+    int i = n, j = m;
+    string lcs = "";
+
+    while(i>0 and j>0){
+
+        if(s1[i-1]==s2[j-1]){
+            lcs.push_back(s1[i-1]);
+            i--; j--;
+        }
+        else{
+            if(dp[i-1][j] > dp[i][j-1]) i--;
+            else j--;
+        }
+    }
+
+    reverse(lcs.begin(), lcs.end());
+    return lcs;
+}
+```

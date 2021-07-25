@@ -294,3 +294,41 @@ int longestPalindromeSubseq(string s) {
     return lcs (s, rev, n);
 }
 ```
+
+### 7. Minimum Insertion Steps to Make a String Palindrome
+Given a string s. In one step you can insert any character at any index of the string. Return the minimum number of steps to make s palindrome.
+
+Input: s = "mbadm"
+
+Output: 2
+
+Hint: Min Insertion == Min Deletion == len(s) - len(longest palindromic subsequence)
+
+```cpp
+int lcs (string & s1, string & s2, int n){
+    vector<vector<int>> dp (n+1, vector<int> (n+1, 0));
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max (dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    return dp[n][n];
+}
+
+int minInsertions(string s) {
+    int n = s.length();
+    string rev = s;
+    reverse(rev.begin(), rev.end());
+
+    int lps_len = lcs (s, rev, n);
+    return s.length() - lps_len;
+}
+```
+
+

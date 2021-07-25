@@ -458,3 +458,54 @@ int rod_cutting_max_profit (vector<int> & price){
     return solve (price, n, 0, n, dp);
 }
 ```
+
+### 2. Coin Change I (Find Minimum number of coins)
+You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.
+
+Input: coins = [1,2,5], amount = 11
+
+Output: 3
+
+```cpp
+int solve (vector<int> & coins, int n, int amount, int idx, vector<vector<int>> & dp){
+    if(idx==n) return -1;       // --> If we reached end It means we didn't found the way to exchange coins
+    if(amount==0) return 0;     // --> If amount becomes 0, that means we found the way to exchange
+
+    if(dp[idx][amount]!=INT_MIN) return dp[idx][amount];
+
+    /* If current coin val is lesser then or equal to amount, we have two choices */
+
+    if(coins[idx]<=amount){
+        int res1 = solve (coins, n, amount-coins[idx], idx, dp);    // --> Either include that coin
+        int res2 = solve (coins, n, amount, idx+1, dp);             // --> Or Not include that coin
+
+        if(res1==-1 and res2==-1)           // Case 1: If using both coices, we failed to exchange
+            dp[idx][amount] = -1;
+
+        else if(res1==-1 or res2==-1)       // Case 2: If either of one case is used for exchange
+            dp[idx][amount] = res1!=-1 ? res1+1 : res2;    
+
+        else                                // Case 3: If both cases leads to some solution then we will take min of both
+            dp[idx][amount] = min (res1+1, res2);
+
+        return dp[idx][amount];
+    }
+
+    /* Else we cannot include that coin so only one choice left */ 
+
+    else{
+        int res = solve (coins, n, amount, idx+1, dp);
+        return dp[idx][amount] = res;
+    }
+}
+
+
+int coinChange(vector<int>& coins, int amount) {
+    int n = coins.size();
+    vector<vector<int>> dp (n+1, vector<int> (amount+1, INT_MIN));
+
+    return solve (coins, n, amount, 0, dp);
+}
+```
+
+ 

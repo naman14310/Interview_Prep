@@ -508,4 +508,39 @@ int coinChange(vector<int>& coins, int amount) {
 }
 ```
 
- 
+### 3. Coin Change II (Find Max number of ways)
+You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0. You may assume that you have an infinite number of each kind of coin.
+
+Input: amount = 5, coins = [1,2,5]
+
+Output: 4
+
+Hint: Combination of unbounded knapsack and count subsetSum
+
+```cpp
+int solve (vector<int> & coins, int n, int amount, int idx, vector<vector<int>> & dp){
+    if(idx==n) return 0;
+    if(amount==0) return 1;
+
+    if(dp[idx][amount]!=INT_MIN) return dp[idx][amount];
+
+    if(coins[idx]<=amount){
+        int res1 = solve (coins, n, amount-coins[idx], idx, dp);
+        int res2 = solve (coins, n, amount, idx+1, dp);
+
+        return dp[idx][amount] = res1 + res2;
+    }
+    else{
+        int res = solve (coins, n, amount, idx+1, dp);
+        return dp[idx][amount] = res;
+    }
+}
+
+
+int change(int amount, vector<int>& coins) {
+    int n = coins.size();
+    vector<vector<int>> dp (n+1, vector<int> (amount+1, INT_MIN));
+
+    return solve (coins, n, amount, 0, dp);
+}
+```

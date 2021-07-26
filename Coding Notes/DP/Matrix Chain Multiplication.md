@@ -89,3 +89,82 @@ int minCut(string s) {
     return solve (s, 0, n-1, dp);
 }
 ```
+
+### 2. Boolean Parenthesization 
+Given a boolean expression S of length N with following symbols.
+```
+Symbols
+    'T' ---> true
+    'F' ---> false
+and following operators filled between symbols
+Operators
+    &   ---> boolean AND
+    |   ---> boolean OR
+    ^   ---> boolean XOR
+```
+Count the number of ways we can parenthesize the expression so that the value of expression evaluates to true.
+
+Input: N = 5, S = T^F|F
+
+Output: 2
+
+Hint: Just compute total true_count and false_count for each subproblem and compute total truth_cnts using them
+
+```cpp
+pair<int,int> find_temp_ans (int left_true, int left_false, int right_true, int right_false, char op){
+    int true_cnt, false_cnt;
+
+    if(op=='&'){
+        true_cnt = left_true * right_true;
+        false_cnt = (left_true * right_false) + (left_false * right_true) + (left_false * right_false);
+    }
+    else if(op=='|'){
+        true_cnt = (left_true * right_true) + (left_true * right_false) + (left_false * right_true);
+        false_cnt = left_false * right_false;
+    }
+    else{
+        true_cnt = (left_true * right_false) + (left_false * right_true);
+        false_cnt = (left_true * right_true) + (left_false * right_false);
+    }
+
+    return {true_cnt%1003, false_cnt%1003};
+}
+
+// --> pair of {count of True, count of False}
+
+pair<int, int> solve (string s, int i, int j, vector<vector<pair<int, int>>> & dp){
+
+    if(i==j){
+        if(s[i]=='T') return {1, 0};
+        else return {0,1};
+    }
+
+    if(dp[i][j].first!=-1)
+        return dp[i][j];
+
+
+    pair<int, int> ans = {0,0};
+
+    for(int k = i+1; k<j; k+=2){
+        auto left = solve (s, i, k-1, dp);
+        auto right = solve (s, k+1, j, dp);
+
+        auto temp = find_temp_ans (left.first, left.second, right.first, right.second, s[k]);
+        ans.first += temp.first;
+        ans.second += temp.second;
+    }
+
+    return dp[i][j] = ans;
+}
+
+
+int countWays(int n, string s){
+    vector<vector<pair<int, int>>> dp (n+1, vector<pair<int, int>> (n+1, {-1, -1}));
+
+    auto res = solve (s, 0, n-1, dp);
+    return res.first%1003;
+}
+```
+
+
+

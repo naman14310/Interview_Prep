@@ -14,7 +14,7 @@ Given a sequence of matrices, find the most efficient way to multiply these matr
 
 Cost Estimation: Let A,B be two matrices of given dimensions then cost will be,
 
-A=20*10, B=10*30 --> cost = 20*10*30
+A = 20 * 10, B = 10 * 30 --> cost = 20 * 10 * 30
 
 [Video Explaination](https://www.youtube.com/watch?v=kMK148J9qEE)
 

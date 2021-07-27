@@ -166,5 +166,62 @@ int countWays(int n, string s){
 }
 ```
 
+### 3. Scramble String
+We can scramble a string s to get a string t using the following algorithm:
+
+1. If the length of the string is 1, stop.
+2. If the length of the string is > 1, do the following:
+3. Split the string into two non-empty substrings at a random index, i.e., if the string is s, divide it to x and y where s = x + y.
+4. Randomly decide to swap the two substrings or to keep them in the same order. i.e., after this step, s may become s = x + y or s = y + x.
+5. Apply step 1 recursively on each of the two substrings x and y.
+
+Given two strings s1 and s2 of the same length, return true if s2 is a scrambled string of s1, otherwise, return false.
+
+Input: s1 = "great", s2 = "rgeat"
+
+Output: true
+
+Explaination: We have following two choices,
+
+Case 1. Without swap    -->     gr|eat      rg|eat
+
+Recurse for (part1 of s1, part1 of s2) and (part2 of s1, part2 of s2)
+
+Case 2. With swap       -->     gr|eat      rge|at 
+
+Recurse for (part1 of s1, part2 of s2) and (part2 of s1, part1 of s2)    
+
+```cpp
+bool solve (string s1, string s2, unordered_set<string> & vis){
+    int n = s1.length();
+    if(n==1) return s1==s2;
+
+    if(s1==s2) return true;
+
+    string key = s1 + "," + s2;
+    if(vis.find(key)!=vis.end()) return false;
+
+    for(int k=1; k<n; k++){
+
+        /* Case 1 : without swapping */
+
+        bool noswap = solve (s1.substr(0, k), s2.substr(0, k), vis) and solve (s1.substr(k, n-k), s2.substr(k, n-k), vis);
+
+        /* Case 2 : with swapping */
+
+        bool swap = solve (s1.substr(0, k), s2.substr(n-k, k), vis) and solve (s1.substr(k, n-k), s2.substr(0, n-k), vis);
+
+        if(swap or noswap)
+            return true;
+    }
+
+    vis.insert(key);
+    return false;
+}
 
 
+bool isScramble(string s1, string s2) {
+    unordered_set<string> vis;
+    return solve (s1, s2, vis);
+}
+```

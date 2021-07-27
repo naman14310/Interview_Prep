@@ -47,3 +47,48 @@ public:
     }
 };
 ```
+
+### 2. Count Square Submatrices with All Ones
+Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
+
+```
+Input: matrix =
+[
+  [0,1,1,1],
+  [1,1,1,1],
+  [0,1,1,1]
+]
+
+Output: 15
+```
+
+```cpp
+int countSquares(vector<vector<int>>& matrix) {
+    int row = matrix.size(), col = matrix[0].size();
+    int total_sqr_cnt = 0;
+
+    /* Iterate for every row and col except starting from 1 */
+
+    for(int i=1; i<row; i++){
+        for(int j=1; j<col; j++){
+
+            /* if matrix[i][j]==1 update it with min(top, left, top-left) + 1 */
+
+            if(matrix[i][j]==1)
+                matrix[i][j] = min(min(matrix[i-1][j], matrix[i][j-1]), matrix[i-1][j-1]) + 1;
+        }
+    }
+
+    /* Compute sum of the whole matrix and that will be our answer */
+    /* becoz number inside every cell indicates the cnt of sqrs that can be drawn by keeping that cell at bottom right */
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            total_sqr_cnt += matrix[i][j];
+        }
+    }
+
+    return total_sqr_cnt;
+}
+```

@@ -181,15 +181,15 @@ Input: s1 = "great", s2 = "rgeat"
 
 Output: true
 
+```
 Explaination: We have following two choices,
 
 Case 1. Without swap    -->     gr|eat      rg|eat
-
 Recurse for (part1 of s1, part1 of s2) and (part2 of s1, part2 of s2)
 
 Case 2. With swap       -->     gr|eat      rge|at 
-
 Recurse for (part1 of s1, part2 of s2) and (part2 of s1, part1 of s2)    
+```
 
 ```cpp
 bool solve (string s1, string s2, unordered_set<string> & vis){

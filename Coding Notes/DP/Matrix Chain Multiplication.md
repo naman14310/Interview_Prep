@@ -225,3 +225,48 @@ bool isScramble(string s1, string s2) {
     return solve (s1, s2, vis);
 }
 ```
+
+### 4. Super Egg Drop
+You are given e identical eggs and you have access to a building with n floors labeled from 1 to n. You know that there exists a floor f where 0 <= f <= n such that any egg dropped at a floor higher than f will break, and any egg dropped at or below floor f will not break. Each move, you may take an unbroken egg and drop it from any floor x. If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves. Return the minimum number of moves that you need to determine with certainty what the value of f is.
+
+```cpp
+int solve (int e, int f, vector<vector<int>> & dp){
+
+    /* 
+        Base Cond: If we have only 1 egg, then we need to check every floor one by one
+        or If there is only one floor left then we need only 1 chance to get critical floor
+    */
+
+    if(e==1 or f==1) return f;    
+
+    if(dp[e][f]!=-1) return dp[e][f];
+
+    int ans = f;
+
+    /* we will try on every possible floor */
+
+    for(int k=1; k<=f; k++){
+
+        /* We have two options at every floor */
+
+        /* option1 : If egg breaks from the curr floor, then it will also break from all above floors */
+
+        int egg_breaks = solve (e-1, k-1, dp); 
+
+        /* option2 : If egg not breaks from curr floor, then it will not break from any of the below floors */
+
+        int egg_not_breaks = solve (e, f-k, dp);
+
+        int temp = 1 + max(egg_breaks, egg_not_breaks);     // --> here we took max becoz we need to consider worst cases
+
+        ans = min(ans, temp);           //--> here we took min becoz we need to choose minimum moves from all worst cases
+    }
+
+    return dp[e][f] = ans;
+}
+
+int superEggDrop(int e, int f) {
+    vector<vector<int>> dp (e+1, vector<int> (f+1, -1));
+    return solve (e, f, dp);
+}
+```

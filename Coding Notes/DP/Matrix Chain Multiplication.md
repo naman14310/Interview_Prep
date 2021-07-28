@@ -270,3 +270,44 @@ int superEggDrop(int e, int f) {
     return solve (e, f, dp);
 }
 ```
+
+### 5. Partition Array for Maximum Sum
+Given an integer array arr, partition the array into (contiguous) subarrays of length at most k. After partitioning, each subarray has their values changed to become the maximum value of that subarray. Return the largest sum of the given array after partitioning.
+
+Input: arr = [1,15,7,9,2,5,10], k = 3
+
+Output: 84
+
+Explanation: arr becomes [15,15,15,9,10,10,10]
+
+```cpp
+int solve (vector<int>& arr, int i, int j, int subarr_size, vector<vector<int>>& dp){
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    /* Base condition is when we get subarray of size lesser then subarr_size*/
+
+    if(j-i+1 <= subarr_size){
+        int mx = 0;
+        for(int itr=i; itr<=j; itr++)
+            mx = max(mx, arr[itr]);
+
+        return mx*(j-i+1);
+    }
+
+    int ans = 0;
+
+    for(int k=i; k<j; k++){
+        int temp = solve (arr, i, k, subarr_size, dp) + solve (arr, k+1, j, subarr_size, dp);
+        ans = max(ans, temp);
+    }
+
+    return dp[i][j] = ans;
+}
+
+int maxSumAfterPartitioning(vector<int>& arr, int subarr_size) {
+    int n = arr.size();
+    vector<vector<int>> dp (n+1, vector<int> (n+1, -1));
+    return solve(arr, 0, n-1, subarr_size, dp);
+}
+```

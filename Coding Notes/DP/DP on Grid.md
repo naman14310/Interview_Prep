@@ -92,3 +92,55 @@ int countSquares(vector<vector<int>>& matrix) {
     return total_sqr_cnt;
 }
 ```
+
+## @ Problems on Exploring Paths 
+
+**How To Identify :** When there are chances to land on one cell repeatedly while exploring paths, then we can use DP. 
+
+### 1. Minimum Falling Path Sum
+Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix. A falling path starts at any element in the first row and chooses the element in the next row that is either directly below or diagonally left/right. 
+
+Input: matrix = [[2,1,3],[6,5,4],[7,8,9]]
+
+Output: 13
+
+```cpp
+bool isInside (int y, int col){
+    return y>=0 and y<col;
+}
+
+int solve (vector<vector<int>> & matrix, vector<vector<int>> & dp, int x, int y, int row, int col){
+    if(x==row-1) return matrix[x][y];
+
+    if(dp[x][y]!=-1) return dp[x][y];
+
+    int ans = INT_MAX;
+    int dy[] = {-1, 0, 1};
+
+    for(int i=0; i<3; i++){
+        int xnew = x+1;
+        int ynew = y+dy[i];
+
+        if(isInside(ynew, col)){
+            int temp = solve(matrix, dp, xnew, ynew, row, col);
+            ans = min(ans, temp);
+        }
+    }
+
+    ans += matrix[x][y];
+    return dp[x][y] = ans;
+}
+
+
+int minFallingPathSum(vector<vector<int>>& matrix) {
+    int row = matrix.size(), col = matrix[0].size();
+    vector<vector<int>> dp (row, vector<int> (col, -1));
+
+    int ans = INT_MAX;
+
+    for(int i=0; i<col; i++)
+        ans = min(ans, solve(matrix, dp, 0, i, row, col));
+
+    return ans;
+}
+```

@@ -34,3 +34,34 @@ vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
     return res;
 }
 ```
+
+### 2. Sum of Absolute Differences in a Sorted Array
+You are given an integer array nums sorted in non-decreasing order. Build and return an integer array result with the same length as nums such that result[i] is equal to the summation of absolute differences between nums[i] and all the other elements in the array.
+
+In other words, result[i] is equal to sum(|nums[i]-nums[j]|) where 0 <= j < nums.length and j != i (0-indexed).
+
+Input: nums = [2,3,5]
+
+Output: [4,3,5]
+
+```cpp
+vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> res(n, 0);
+    vector<int> csum(n, 0);
+    csum[0] = nums[0];
+
+    for(int i=1; i<n; i++)
+        csum[i] = csum[i-1] + nums[i];
+
+
+    for(int i=0; i<n; i++){
+        int left = 0, right = 0;
+
+        left = csum[i];
+        right = csum[n-1] - csum[i];
+        res[i] = ((i+1)*nums[i] - left) + (right - (n-i-1)*nums[i]);   
+    }
+    return res;
+}
+```

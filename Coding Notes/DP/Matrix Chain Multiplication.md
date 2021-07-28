@@ -311,3 +311,35 @@ int maxSumAfterPartitioning(vector<int>& arr, int subarr_size) {
     return solve(arr, 0, n-1, subarr_size, dp);
 }
 ```
+
+**Optimized approach**
+
+Instead of recursing for both side we can recurse for only one side by breaking k at every first possible subarray. (Somewhat similar to palindrome partitioning) 
+
+```cpp
+int solve (vector<int> & arr, int n, int i, int subarr_size, vector<int> & dp){
+    if(i==n) return 0;   // --> Base cond : If starting index i exceeds n, the return 0 
+
+    if(dp[i]!=-1) return dp[i];
+
+    int mx = 0;
+    int ans = 0;
+
+    for(int k=i; k<min(i+subarr_size, n); k++){
+        mx = max(mx, arr[k]);
+
+        int temp = mx*(k-i+1) + solve (arr, n, k+1, subarr_size, dp);
+        ans = max(temp, ans);
+    }
+
+    return dp[i] = ans;
+}
+
+
+int maxSumAfterPartitioning(vector<int>& arr, int k) {
+    int n = arr.size();
+    vector<int> dp (n, -1);
+    return solve (arr, n, 0, k, dp);
+}
+```
+

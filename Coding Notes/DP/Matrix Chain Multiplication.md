@@ -343,3 +343,56 @@ int maxSumAfterPartitioning(vector<int>& arr, int k) {
 }
 ```
 
+### 6. Minimum Cost Tree From Leaf Values
+Given an array arr of positive integers, consider all binary trees such that:
+1. Each node has either 0 or 2 children;
+2. The value of each non-leaf node is equal to the product of the largest leaf value in its left and right subtree respectively.
+
+Among all possible binary trees considered, return the smallest possible sum of the values of each non-leaf node.
+
+```
+Input: arr = [6,2,4]
+Output: 32
+Explanation:
+There are two possible trees.  The first has non-leaf node sum 36, and the second has non-leaf node sum 32.
+
+    24            24
+   /  \          /  \
+  12   4        6    8
+ /  \               / \
+6    2             2   4
+```
+
+```cpp
+/* rtype : pair of {sum, max_val} */
+
+pair<int,int> solve (vector<int>& arr, int i, int j, vector<vector<pair<int,int>>> & dp){
+
+    if(i==j) return {0, arr[i]};  // --> Base cond : When there is only one element left in arr    
+
+    if(dp[i][j].first!=-1) return dp[i][j];
+
+    pair<int,int> ans = {INT_MAX, INT_MAX};
+
+    for(int k=i; k<j; k++){
+        auto left = solve (arr, i, k, dp);
+        auto right = solve (arr, k+1, j, dp);
+
+        int lmax = left.second, rmax = right.second;
+        int temp = (lmax * rmax) + left.first + right.first;
+
+        if(temp<ans.first)
+            ans = {temp, max(lmax, rmax)};
+    }
+
+    return dp[i][j] = ans;
+}
+
+int mctFromLeafValues(vector<int>& arr) {
+    int n = arr.size();
+    vector<vector<pair<int,int>>> dp (n+1, vector<pair<int,int>> (n+1, {-1, -1}));
+
+    auto ans = solve (arr, 0, n-1, dp);
+    return ans.first;
+}
+```

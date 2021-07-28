@@ -48,3 +48,57 @@ bool stoneGame(vector<int>& piles) {
     return res.first > res.second;
 }
 ```
+
+### 2. Stone Game II
+Alice and Bob continue their games with piles of stones.  There are a number of piles arranged in a row, and each pile has a positive integer number of stones piles[i].  The objective of the game is to end with the most stones.  Alice and Bob take turns, with Alice starting first.  Initially, M = 1. On each player's turn, that player can take all the stones in the first X remaining piles, where 1 <= X <= 2M.  Then, we set M = max(M, X). The game continues until all the stones have been taken. Assuming Alice and Bob play optimally, return the maximum number of stones Alice can get.
+
+Input: piles = [2,7,9,4,4]
+
+Output: 10
+
+```cpp
+pair<int,int> solve (vector<int> & piles, int n, int idx, int M, bool alice, unordered_map<string, pair<int,int>> & dp){
+    if(idx==piles.size()) return {0,0};
+    
+    /* In this question, our answer will depend on 3 variables so we will consider all three of them */
+    
+    string key = to_string(idx) + "," + to_string(M) + "," + to_string(alice);
+    if(dp.find(key)!=dp.end()) return dp[key];
+
+    int score = 0;
+    pair<int,int> ans = {0,0};
+
+    for(int i=idx; i<min(n, idx+2*M); i++){
+        score += piles[i];
+
+        int x = i-idx+1;
+        int m = max(M, x);
+
+        auto res = solve (piles, n, i+1, m, !alice, dp);
+
+        if(alice){
+            res.first += score;
+
+            if(res.first > ans.first)
+                ans = res;
+        }
+        else{
+            res.second += score;
+
+            if(res.second > ans.second)
+                ans = res;
+        }
+    }
+
+    return dp[key] = ans;
+}
+
+
+int stoneGameII(vector<int>& piles) {
+    int n = piles.size();
+    unordered_map<string, pair<int,int>> dp;
+
+    auto res = solve (piles, n, 0, 1, true, dp);
+    return res.first;
+}
+```

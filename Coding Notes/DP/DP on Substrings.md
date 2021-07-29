@@ -98,3 +98,55 @@ string longestPalindrome(string s) {
     return solve (s, n, dp);
 }
 ```
+
+### 3. Count Palindromic Substrings
+Given a string s, return the number of palindromic substrings in it.
+
+Input: s = "abc"
+
+Output: 3
+
+Hint: Same as above, just use count instead of starting_idx and substr len
+
+```cpp
+int solve (string & s, int n, vector<vector<bool>> & dp){
+    int substr_size = 1;
+    int count = 0;
+
+    while(substr_size<=n){
+
+        for(int i=0; i<=n-substr_size; i++){
+            int j = i+substr_size-1;
+
+            if(s[i]==s[j]){
+
+                int start = i+1, end = j-1;
+
+                if(start>=end)
+                    dp[i][j] = true;
+
+                else if(dp[start][end])
+                    dp[i][j] = true;
+
+                else dp[i][j] = false;
+
+                if(dp[i][j])
+                    count++;
+            }  
+        }
+
+        substr_size++;
+    }
+
+    return count;
+}
+
+
+int countSubstrings(string s) {
+    int n = s.length();
+    if(n==1) return 1;
+
+    vector<vector<bool>> dp (n+1, vector<bool> (n+1, false));
+    return solve (s, n, dp);
+}
+```

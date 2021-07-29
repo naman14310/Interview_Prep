@@ -509,6 +509,43 @@ int maximalRectangle(vector<vector<char>>& matrix) {
 }
 ```
 
+#### 7. Number of Visible People in a Queue
+There are n people standing in a queue, and they numbered from 0 to n - 1 in left to right order. You are given an array heights of distinct integers where heights[i] represents the height of the ith person. A person can see another person to their right in the queue if everybody in between is shorter than both of them. More formally, the ith person can see the jth person if i < j and min(heights[i], heights[j]) > max(heights[i+1], heights[i+2], ..., heights[j-1]).
+
+Return an array answer of length n where answer[i] is the number of people the ith person can see to their right in the queue.
+
+![img](https://assets.leetcode.com/uploads/2021/05/29/queue-plane.jpg)
+
+Input: heights = [10,6,8,5,11,9]
+
+Output: [3,1,2,1,1,0]
+
+```cpp
+vector<int> canSeePersonsCount(vector<int>& heights) {
+    int n = heights.size();
+    vector<int> res (n, 0);
+
+    stack<int> stk;
+    stk.push(heights.back());
+
+    for(int i=n-2; i>=0; i--){
+
+        int cnt = 0;
+
+        while(!stk.empty() and stk.top()<heights[i]){
+            stk.pop();
+            cnt++;
+        }
+
+        if(!stk.empty()) cnt++; 
+
+        res[i] = cnt;
+        stk.push(heights[i]);
+    }
+
+    return res;
+}
+```
 
 ### @ Parenthesis Based Questions
 

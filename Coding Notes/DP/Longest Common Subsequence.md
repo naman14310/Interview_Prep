@@ -61,33 +61,7 @@ int longestCommonSubsequence(string s1, string s2) {
 }
 ```
 
-### 1. Longest Common Substring
-Given two strings. The task is to find the length of the longest common substring.
 
-Input: S1 = "ABCDGH", S2 = "ACDGHR"
-
-Output: 4
-
-```cpp
-int longestCommonSubstr (string s1, string s2, int n, int m){
-    vector<vector<int>> dp (n+1, vector<int> (m+1, 0));
-    int ans = 0;
-
-    for(int i=1; i<=n; i++){
-        for(int j=1; j<=m; j++){
-            
-            /* When curr_char of s1 == curr_char of s2, fill cell with 1 + top-left diagonal */
-            
-            if(s1[i-1]==s2[j-1])
-                dp[i][j] = 1 + dp[i-1][j-1];
-
-            ans = max(ans, dp[i][j]);       // --> Ans will be max value in dp table                     
-        }
-    }
-
-    return ans;
-}
-```
 
 ### 2. Print Longest Common Subsequence
 Given two sequences, print the longest subsequence present in both of them. LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.

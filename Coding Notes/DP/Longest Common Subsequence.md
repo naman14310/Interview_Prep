@@ -61,9 +61,7 @@ int longestCommonSubsequence(string s1, string s2) {
 }
 ```
 
-
-
-### 2. Print Longest Common Subsequence
+### 1. Print Longest Common Subsequence
 Given two sequences, print the longest subsequence present in both of them. LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
 
 ```cpp
@@ -102,7 +100,7 @@ string printLCS (string & s1, string & s2){
 }
 ```
 
-### 3. Shortest Common Supersequence
+### 2. Shortest Common Supersequence
 Given two strings s1 and s2 of lengths m and n respectively, find the length of the smallest string which has both, s1 and s2 as its sub-sequences.
 
 Input: s1 = abcd, s2 = xycd
@@ -134,7 +132,7 @@ int shortestCommonSupersequence(string s1, string s2, int m, int n){
 }
 ```
 
-### 4. Print Shortest Common Supersequence
+### 3. Print Shortest Common Supersequence
 Given two strings s1 and s2, return the shortest string that has both str1 and str2 as subsequences.  If multiple answers exist, you may return any of them.
 
 Input: str1 = "abac", str2 = "cab"
@@ -202,7 +200,7 @@ string shortestCommonSupersequence(string s1, string s2) {
 }
 ```
 
-### 5. Minimum number of deletions and insertions to transform one string into another
+### 4. Minimum number of deletions and insertions to transform one string into another
 Given two strings ‘s1’ and ‘s2’ of size m and n respectively. The task is to remove and insert the minimum number of characters from s1 to transform it into s2. It could be possible that the same character needs to be removed from one point of s1 and inserted to some another point.
 
 ![img](https://media.geeksforgeeks.org/wp-content/uploads/20200817135845/picture2-660x402.jpg)
@@ -234,7 +232,7 @@ int minOperations(string s1, string s2) {
 } 
 ```
 
-### 6. Longest Palindromic Subsequence
+### 5. Longest Palindromic Subsequence
 Given a string s, find the longest palindromic subsequence's length in s.
 
 Input: s = "bbbab"
@@ -269,7 +267,7 @@ int longestPalindromeSubseq(string s) {
 }
 ```
 
-### 7. Minimum Insertion Steps to Make a String Palindrome (Same as Min Deletion steps)
+### 6. Minimum Insertion Steps to Make a String Palindrome (Same as Min Deletion steps)
 Given a string s. In one step you can insert any character at any index of the string. Return the minimum number of steps to make s palindrome.
 
 Input: s = "mbadm"
@@ -305,7 +303,7 @@ int minInsertions(string s) {
 }
 ```
 
-### 8. Longest Repeating Subsequence
+### 7. Longest Repeating Subsequence
 Given a string, find the length of the longest repeating subsequence such that the two subsequences don’t have same string character at the same position, i.e., any i’th character in the two subsequences shouldn’t have the same index in the original string. 
 
 Input: str = "aabb"

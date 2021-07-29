@@ -1,4 +1,4 @@
-# Problems based on making choices at each index
+# Problems based on Decision Making
 
 ### 1. Count Sorted Vowel Strings
 Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted. A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1] in the alphabet.
@@ -81,5 +81,52 @@ int numTeams(vector<int>& rating) {
     int n = rating.size();
     vector<vector<vector<int>>> dp (n+1, vector<vector<int>> (3, vector<int> (3, -1)));
     return solve (rating, 0, 0, 0, 0, dp);
+}
+```
+
+### 3. Minimum Cost For Tickets
+You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365. Train tickets are sold in three different ways:
+
+1. a 1-day pass is sold for costs[0] dollars,
+2. a 7-day pass is sold for costs[1] dollars, and
+3. a 30-day pass is sold for costs[2] dollars.
+
+For example, if we get a 7-day pass on day 2, then we can travel for 7 days: 2, 3, 4, 5, 6, 7, and 8. Return the minimum number of dollars you need to travel every day in the given list of days.
+
+Input: days = [1,4,6,7,8,20], costs = [2,7,15]
+
+Output: 11
+
+```cpp
+int solve (vector<int>& days, vector<int>& costs, int idx, int n, int validity, vector<int>& dp){
+    if(idx==n) return 0;
+
+    if(days[idx]<=validity)
+        return solve (days, costs, idx+1, n, validity, dp);
+
+    if(dp[idx]!=-1) return dp[idx];
+
+    /* choice 1 : 1-day pass */
+
+    int c1 = costs[0] + solve (days, costs, idx+1, n, days[idx], dp);
+
+    /* choice 2 : 7-day pass */
+
+    int c2 = costs[1] + solve (days, costs, idx+1, n, days[idx]+6, dp);
+
+    /* choice 3 : 30-day pass */
+
+    int c3 = costs[2] + solve (days, costs, idx+1, n, days[idx]+29, dp);
+
+    int cost = min(min(c1, c2), c3);
+    return dp[idx] = cost;
+}
+
+
+int mincostTickets(vector<int>& days, vector<int>& costs) {
+    int n = days.size();
+    vector<int> dp (n+1, -1);
+
+    return solve (days, costs, 0, n, 0, dp);
 }
 ```

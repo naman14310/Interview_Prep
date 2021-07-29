@@ -1,4 +1,4 @@
-# Problems based on Decision Making
+# Problems based on Game Playing
 
 ## @ Game Theory
 

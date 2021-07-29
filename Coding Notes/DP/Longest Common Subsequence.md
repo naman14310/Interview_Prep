@@ -331,3 +331,48 @@ int LongestRepeatingSubsequence(string s){
     return dp[n][n];
 }
 ```
+
+### 8. Minimum ASCII Delete Sum for Two Strings
+Given two strings s1 and s2, return the lowest ASCII sum of deleted characters to make two strings equal.
+
+Input: s1 = "sea", s2 = "eat"
+
+Output: 231
+
+Hint: use memorized lcs with little variation, instead of adding 1 for length, add ascii val of curr char.
+
+```cpp
+int solve (string & s1, string & s2, int i, int j, vector<vector<int>> & dp){
+    if(i==s1.length() or j==s2.length()) return 0;
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    if(s1[i]==s2[j]){
+        int res = s1[i] + solve(s1, s2, i+1, j+1, dp); 
+        return dp[i][j] = res;
+    }
+    else{
+        int res1 = solve (s1, s2, i+1, j, dp);
+        int res2 = solve (s1, s2, i, j+1, dp);
+
+        return dp[i][j] = max(res1, res2);
+    }
+
+}
+
+
+int minimumDeleteSum(string s1, string s2) {
+    int totalSum = 0;
+    vector<vector<int>> dp (s1.length()+1, vector<int> (s2.length(), -1));
+
+    for(char ch : s1)
+        totalSum += ch;
+
+    for(char ch : s2)
+        totalSum += ch;
+
+    int max_lcs_sum = solve (s1, s2, 0, 0, dp);
+
+    return totalSum - (2*max_lcs_sum);
+}
+```

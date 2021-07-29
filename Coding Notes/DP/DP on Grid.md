@@ -51,6 +51,8 @@ public:
 ### 2. Count Square Submatrices with All Ones
 Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
 
+Time Complexity : O(n2)
+
 ```
 Input: matrix =
 [
@@ -92,6 +94,69 @@ int countSquares(vector<vector<int>>& matrix) {
     return total_sqr_cnt;
 }
 ```
+
+### 3. Count Submatrices With All Ones (Rectangles are also allowed)
+Given a rows * columns matrix mat of ones and zeros, return how many submatrices have all ones.
+
+Time Complexity : O(n3)
+
+```
+Input: mat = 
+[
+    [0,1,1,0],
+    [0,1,1,1],
+    [1,1,1,0]
+]
+
+Output: 24
+```
+
+```cpp
+int count_mat_start_from_cell (vector<vector<int>>& mat, vector<vector<int>>& rightOneCnt, int i, int j, int & row, int & col){
+    int cnt = 0;
+    int mn = col;
+
+    while(i<row){
+        mn = min (mn, rightOneCnt[i][j]);
+        cnt += mn; 
+        i++;
+    }
+
+    return cnt;
+}
+
+
+int numSubmat(vector<vector<int>>& mat) {
+    int row = mat.size(), col = mat[0].size();
+    vector<vector<int>> rightOneCnt (row, vector<int> (col, 0));
+
+    for(int i=0; i<row; i++){
+        for(int j=col-1; j>=0; j--){
+
+            if(mat[i][j]==0) continue;
+
+            if(j==col-1)
+                rightOneCnt[i][j] = 1;
+            else
+                rightOneCnt[i][j] = rightOneCnt[i][j+1]+1;
+        }
+    }
+
+    int total_submatrices = 0;
+
+    /* Iterate over mat and count all matrices starting from cell i,j one by one using above function */
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(mat[i][j]==1)
+                total_submatrices += count_mat_start_from_cell (mat, rightOneCnt, i, j, row, col);
+        }
+    }
+
+    return total_submatrices;
+}
+```
+
 
 ## @ Problems on Exploring Paths 
 

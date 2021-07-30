@@ -123,7 +123,6 @@ int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
 
         s1 = i==0 ? prefixSum[i+secondLen-1] : prefixSum[i+secondLen-1] - prefixSum[i-1];
         s2 = maxSubarrSum1[i+secondLen];
-
         ans = max(ans, s1+s2);
     }
 

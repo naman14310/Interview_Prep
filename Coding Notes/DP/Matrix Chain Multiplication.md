@@ -403,9 +403,7 @@ Input: expression = "2-1-1"
 
 Output: [0,2]
 
-Explanation:
-((2-1)-1) = 0,  
-(2-(1-1)) = 2
+Explanation: ((2-1)-1) = 0,  (2-(1-1)) = 2
 
 ```cpp
 int perform_operation (int num1, int num2, char op){

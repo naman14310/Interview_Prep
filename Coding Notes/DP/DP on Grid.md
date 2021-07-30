@@ -162,7 +162,51 @@ int numSubmat(vector<vector<int>>& mat) {
 
 **How To Identify :** When there are chances to land on one cell repeatedly while exploring paths, then we can use DP. 
 
-### 1. Minimum Falling Path Sum
+
+### 1. Minimum Path Sum
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path. You can only move either down or right at any point in time.
+
+![img](https://assets.leetcode.com/uploads/2020/11/05/minpath.jpg)
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x<row and y<col;
+}
+
+
+int solve (vector<vector<int>> & grid, int x, int y, int row, int col, vector<vector<int>> & dp){
+    if(x==row-1 and y==col-1) return grid[x][y]; 
+
+    if(dp[x][y]!=-1) return dp[x][y]; 
+
+    int ans = INT_MAX;
+
+    int dx[] = {1, 0};
+    int dy[] = {0, 1};
+
+    for(int i=0; i<2; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col))
+            ans = min(ans, solve(grid, xnew, ynew, row, col, dp));
+    }
+
+    ans += grid[x][y];
+    return dp[x][y] = ans;
+}
+
+
+int minPathSum(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    vector<vector<int>> dp (row, vector<int> (col, -1));
+
+    return solve (grid, 0, 0, row, col, dp);
+}
+```
+
+
+### 2. Minimum Falling Path Sum
 Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix. A falling path starts at any element in the first row and chooses the element in the next row that is either directly below or diagonally left/right. 
 
 Input: matrix = [[2,1,3],[6,5,4],[7,8,9]]

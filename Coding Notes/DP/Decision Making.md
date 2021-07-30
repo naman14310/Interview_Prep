@@ -148,13 +148,13 @@ int solve (vector<int> & prices, int n, int idx, int fee, bool buy, vector<vecto
 
     if(buy){
         int p1 = solve (prices, n, idx+1, fee, !buy, dp) - fee - prices[idx];       // --> Choice 1 : buy at current price
-        int p2 = solve (prices, n, idx+1, fee, buy, dp);                            // --> Choice 2 : Do Not but at current price
+        int p2 = solve (prices, n, idx+1, fee, buy, dp);                            // --> Choice 2 : Don't buy at current price
 
         return dp[idx][buy] = max(p1, p2);
     }
     else{
         int p1 = solve (prices, n, idx+1, fee, !buy, dp) + prices[idx];     // --> Choice 1 : Sell at current price
-        int p2 = solve (prices, n, idx+1, fee, buy, dp);                    // --> Choice 2 : Do Not sell at current price
+        int p2 = solve (prices, n, idx+1, fee, buy, dp);                    // --> Choice 2 : Don't sell at current price
 
         return dp[idx][buy] = max(p1, p2);
     }

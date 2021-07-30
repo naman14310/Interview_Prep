@@ -395,3 +395,91 @@ int mctFromLeafValues(vector<int>& arr) {
     return ans.first;
 }
 ```
+
+### 7. Different Ways to Add Parentheses
+Given a string expression of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. You may return the answer in any order (repeated answers should also be returned).
+
+Input: expression = "2-1-1"
+
+Output: [0,2]
+
+Explanation:
+((2-1)-1) = 0,  
+(2-(1-1)) = 2
+
+```cpp
+int perform_operation (int num1, int num2, char op){
+    if(op=='+') return num1+num2;
+    else if(op=='-') return num1-num2;
+    else return num1*num2;
+}
+
+
+vector<int> calculate (vector<int> & left, vector<int> & right, char op){
+    vector<int> v;
+
+    for(int num1 : left){
+        for(int num2 : right){
+            int ans = perform_operation (num1, num2, op);
+            v.push_back(ans);
+        }
+    }
+
+    return v;
+}
+
+
+bool baseCase (string & expression, int i, int j){
+    while(i<=j){
+        if(expression[i]=='+' or expression[i]=='-' or expression[i]=='*') return false;
+        i++;
+    }
+    return true;
+}
+
+
+vector<int> solve (string & expression, int i, int j, vector<vector<vector<int>>> & dp){
+
+    if(dp[i][j].size()!=0) return dp[i][j];     // --> Since datatype is vector, we will check it by size
+
+    /* baseCase function return true when no operator lies between i and j */
+
+    if(baseCase(expression, i, j)){
+        string num = expression.substr(i, j-i+1);
+        return {stoi(num)};
+    } 
+
+    vector<int> ans;
+
+    for(int k=i+1; k<j; k++){
+
+        /* We will only break at operator, so we'll continue if curr_char is not an operator */
+
+        if(expression[k]!='+' and expression[k]!='-' and expression[k]!='*') continue;
+
+        /* left and right are vectors of multiple solutions of subproblems */
+
+        auto left = solve (expression, i, k-1, dp);
+        auto right = solve (expression, k+1, j, dp);
+
+        /* We will compute temp by solving every left with every right (N2 loop) using calculate function */
+
+        auto temp = calculate (left, right, expression[k]);
+
+        ans.insert(ans.end(), temp.begin(), temp.end());   // --> and we will append all answer to the ans vector
+    }
+
+    return dp[i][j] = ans;
+}
+
+
+vector<int> diffWaysToCompute(string & expression) {
+    int n = expression.size();
+
+    /* Here we will store whole vector inside dp cell */
+
+    vector<vector<vector<int>>> dp (n+1, vector<vector<int>> (n+1, vector<int>()));
+
+    return solve (expression, 0, n-1, dp);
+}
+```

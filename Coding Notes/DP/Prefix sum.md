@@ -130,6 +130,50 @@ int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
 }
 ```
 
+### 4. Flip String to Monotone Increasing
+A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly none). You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0. Return the minimum number of flips to make s monotone increasing.
+
+Input: s = "00011000"
+
+Output: 2
+
+Hint: Precompute one cnt on left side of every index and zero cnt on right side of every index (including curr idx)
+
+```cpp
+int minFlipsMonoIncr(string s) {
+    int n = s.length();
+    int minFlip = n;
+
+    vector<int> oneCount (n+1, 0);      // --> keeps cnt of 1 on left side of idx without including curr idx
+    vector<int> zeroCount (n+1, 0);     // --> keeps cnt of 0 on right side of idx including curr idx
+
+    for(int i=n-1; i>=0; i--){
+        if(s[i]=='0')
+            zeroCount[i] = zeroCount[i+1]+1;
+        else
+            zeroCount[i] = zeroCount[i+1];
+    }
+
+    for(int i=1; i<=n; i++){
+        if(s[i-1]=='1')
+            oneCount[i] = oneCount[i-1] + 1;
+        else
+            oneCount[i] = oneCount[i-1];
+    }
+
+    /* So number of flips on each index = cnt of one on left side of idx + cnt of zero on right side if idx (including idx) */
+
+    /* Beware of corner cases, loop will run from 0 to n and not n-1 */
+
+    for(int i=0; i<=n; i++){
+        int flips = zeroCount[i]+oneCount[i];
+        minFlip = min(flips, minFlip);
+    }
+
+    return minFlip;
+}
+```
+
 ## @ Problems based on Range Queries
 
 ### 1. Corporate Flight Bookings

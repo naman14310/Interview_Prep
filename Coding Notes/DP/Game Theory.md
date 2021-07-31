@@ -102,3 +102,61 @@ int stoneGameII(vector<int>& piles) {
     return res.first;
 }
 ```
+
+### 3. Stone Game VII
+Alice and Bob take turns playing a game, with Alice starting first.
+
+There are n stones arranged in a row. On each player's turn, they can remove either the leftmost stone or the rightmost stone from the row and receive points equal to the sum of the remaining stones' values in the row. The winner is the one with the higher score when there are no stones left to remove.
+
+Bob found that he will always lose this game, so he decided to minimize the score's difference. Alice's goal is to maximize the difference in the score. Return the difference in Alice and Bob's score if they both play optimally.
+
+Input: stones = [5,3,1,4,2]
+
+Output: 6
+
+```cpp
+pair<int, int> solve (vector<int> & stones, int start, int end, bool alice, int totalSum, vector<vector<pair<int,int>>> & dp){
+    if (start>end) return {0, 0};
+
+    if(dp[start][end].first!=-1) return dp[start][end];
+
+    pair<int,int> ans;
+
+    auto res1 = solve (stones, start+1, end, !alice, totalSum-stones[start], dp);
+    auto res2 = solve (stones, start, end-1, !alice, totalSum-stones[end], dp);
+
+    if(alice){
+        res1.first += totalSum - stones[start];
+        res2.first += totalSum - stones[end];
+
+        /* Deciding criteria for Alice will be the maxDifference */ 
+
+        if(res1.first-res1.second > res2.first-res2.second) ans = res1;
+        else ans = res2;
+    }
+    else{
+        res1.second += totalSum - stones[start];
+        res2.second += totalSum - stones[end];
+
+        /* Deciding criteria for Bob will be the minDifference */ 
+
+        if(res1.first-res1.second < res2.first-res2.second) ans = res1;
+        else ans = res2;
+    }
+
+    return dp[start][end] = ans;
+}
+
+
+int stoneGameVII(vector<int>& stones) {
+    int n = stones.size();
+    vector<vector<pair<int,int>>> dp (n+1, vector<pair<int,int>> (n+1, {-1,-1}));
+    int totalSum = 0;
+
+    for(int stn : stones)
+        totalSum += stn;
+
+    auto res = solve (stones, 0, n-1, true, totalSum, dp);
+    return res.first - res.second;
+}
+```

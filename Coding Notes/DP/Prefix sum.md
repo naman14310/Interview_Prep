@@ -149,7 +149,6 @@ Output: [10,55,45,25,25]
     and subtract number of seats from v[right+1]
 
     After doing this for all queries, compute prefix sum and return the vector
-
 */
 
 vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {

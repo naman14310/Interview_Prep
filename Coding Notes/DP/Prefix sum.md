@@ -129,3 +129,42 @@ int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
     return ans;
 }
 ```
+
+## @ Problems based on Range Queries
+
+### 1. Corporate Flight Bookings
+There are n flights that are labeled from 1 to n. You are given an array of flight bookings bookings, where bookings[i] = [firsti, lasti, seatsi] represents a booking for flights firsti through lasti (inclusive) with seatsi seats reserved for each flight in the range.
+
+Return an array answer of length n, where answer[i] is the total number of seats reserved for flight i.
+
+Input: bookings = [[1,2,10],[2,3,20],[2,5,25]], n = 5
+
+Output: [10,55,45,25,25]
+
+```cpp
+/* 
+    Approach based on Rachit's Jain trick 
+
+    For every range query, just add number of seat to v[left] 
+    and subtract number of seats from v[right+1]
+
+    After doing this for all queries, compute prefix sum and return the vector
+
+*/
+
+vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
+    vector<int> v (n, 0);
+
+    for(auto b : bookings){
+        int start = b[0], end = b[1], seats = b[2];
+
+        v[start-1] += seats;    // --> Since Indexing is 0 based
+        if(end<n) v[end] -= seats;
+    }
+
+    for(int i=1; i<n; i++)
+        v[i] += v[i-1];
+
+    return v;
+}
+```

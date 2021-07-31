@@ -376,3 +376,39 @@ int minimumDeleteSum(string s1, string s2) {
     return totalSum - (2*max_lcs_sum);
 }
 ```
+
+### 9. Uncrossed Lines (Tricky)
+We write the integers of nums1 and nums2 (in the order they are given) on two separate horizontal lines. Now, we may draw connecting lines: a straight line connecting two numbers nums1[i] and nums2[j] such that:
+
+1. nums1[i] == nums2[j];
+2. The line we draw does not intersect any other connecting (non-horizontal) line.
+
+Note that a connecting lines cannot intersect even at the endpoints: each number can only belong to one connecting line. Return the maximum number of connecting lines we can draw in this way.
+
+![img](https://assets.leetcode.com/uploads/2019/04/26/142.png)
+
+Hint: Just return len of lcs of both arrays
+
+```cpp
+int lcs (vector<int> & nums1, vector<int> & nums2){
+    int m = nums1.size(), n = nums2.size();
+    vector<vector<int>> dp (m+1 , vector<int> (n+1, 0));
+
+    for(int i=1; i<=m; i++){
+        for(int j=1; j<=n; j++){
+
+            if(nums1[i-1]==nums2[j-1])
+                dp[i][j] = 1 + dp[i-1][j-1];
+            else
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    return dp[m][n];
+}
+
+
+int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+    return lcs (nums1, nums2);
+}
+```

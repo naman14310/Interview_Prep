@@ -16,7 +16,7 @@ Applications of Catalan Numbers:
 
 
 ### 1. Unique Binary Search Trees
-Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+Given an integer n, return the number of structurally unique BST's which has exactly n nodes of unique values from 1 to n.
 
 ![img](https://assets.leetcode.com/uploads/2021/01/18/uniquebstn3.jpg)
 

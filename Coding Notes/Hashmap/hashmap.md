@@ -130,7 +130,7 @@ Input: words = ["a","b","ba","bca","bda","bdca"]
 
 Output: 4
 
-Hint: Sort the input vector and. Iterate for all words from left to right. For every word, from every possible word by erasing all char at each index one by one, and found these word in map. Calculate the len of longest chain for curr word so far and insert it in the map.
+Hint: Sort the input vector by string length and Iterate for all words from left to right. For every word, from every possible word by erasing all char at each index one by one, and found these word in map. Calculate the len of longest chain for curr word so far and insert it in the map.
 
 ```cpp
 static bool comp (string & s1, string & s2){

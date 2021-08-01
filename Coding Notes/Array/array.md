@@ -555,6 +555,30 @@ int partitionDisjoint(vector<int>& nums) {
 }
 ```
 
+#### 16. Best Sightseeing Pair - O(n)|O(1)
+You are given an integer array values where values[i] represents the value of the ith sightseeing spot.  The score of a pair (i < j) of sightseeing spots is values[i] + values[j] + i - j. Return the maximum score of a pair of sightseeing spots.
+
+Input: values = [8,1,5,2,6]
+
+Output: 11
+
+Hint: Use variable max_score_on_right for storing max value of value[j]-j on right side for every index. 
+
+```cpp
+int maxScoreSightseeingPair(vector<int>& values) {
+	int n = values.size();
+	int max_score_on_right = values.back()-(n-1);
+	int ans = 0;
+
+	for(int i=n-2; i>=0; i--){
+		ans = max(ans, values[i]+i+max_score_on_right);
+		max_score_on_right = max(max_score_on_right, values[i]-i);
+	}
+
+	return ans;
+}
+```
+
 ## Hard
 
 #### 1. Trapping Rain Water

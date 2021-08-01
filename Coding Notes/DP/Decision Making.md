@@ -203,3 +203,49 @@ int maxProfit(vector<int>& prices, int fee) {
     return solve (prices, n, 0, fee, true, dp);    
 }
 ```
+
+### 6. Largest Sum of Averages
+You are given an integer array nums and an integer k. You can partition the array into at most k non-empty adjacent subarrays. The score of a partition is the sum of the averages of each subarray. Note that the partition must use every integer in nums, and that the score is not necessarily an integer. Return the maximum score you can achieve of all the possible partitions.
+
+Input: nums = [9,1,2,3,9], k = 3
+
+Output: 20.00000
+
+```cpp
+double solve (vector<int>& nums, int k, int idx, int n, vector<vector<double>> & dp){
+
+    if(dp[idx][k]!=-1) return dp[idx][k];
+
+    /* Base condition is when we want no further partition */
+
+    if(k==1){
+        double sum = 0;
+        for(int i=idx; i<n; i++)
+            sum += nums[i];
+
+        return sum/(n-idx);
+    }
+
+    double ans = 0;
+    double sum = 0;
+    int cnt = 0;
+
+    for(int i=idx; i<=n-k; i++){
+        sum += nums[i];
+        cnt++;
+
+        double temp = sum/cnt + solve (nums, k-1, i+1, n, dp);
+        ans = max(ans, temp);
+    }
+
+    return dp[idx][k] = ans;
+}
+
+
+double largestSumOfAverages(vector<int>& nums, int k) {
+    int n = nums.size();
+    vector<vector<double>> dp (n+1, vector<double> (k+1, -1));
+
+    return solve (nums, k, 0, n, dp);
+}
+```

@@ -84,7 +84,42 @@ int numTeams(vector<int>& rating) {
 }
 ```
 
-### 3. Minimum Cost For Tickets
+### 3. Integer Break
+Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers. Return the maximum product you can get.
+
+Input: n = 2
+
+Output: 1
+
+Explanation: 2 = 1 + 1, 1 × 1 = 1.
+
+Hint: Break it into two parts and solve recursively everytime
+
+```cpp
+int solve (int n, vector<int> & dp){
+    if(n==2) return 1;
+
+    if(dp[n]!=-1) return dp[n];
+
+    int ans = 0;
+
+    for(int i=1; i<n; i++){
+        int temp = i * max(n-i, solve(n-i, dp));
+        ans = max(ans, temp);
+    }
+
+    return dp[n] = ans;
+}
+
+
+int integerBreak(int n) {
+    vector<int> dp (n+1, -1);
+    return solve(n, dp);
+}
+```
+
+
+### 4. Minimum Cost For Tickets
 You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365. Train tickets are sold in three different ways:
 
 1. a 1-day pass is sold for costs[0] dollars,
@@ -131,7 +166,7 @@ int mincostTickets(vector<int>& days, vector<int>& costs) {
 }
 ```
 
-### 4. Best Time to Buy and Sell Stock with Transaction Fee
+### 5. Best Time to Buy and Sell Stock with Transaction Fee
 You are given an array prices where prices[i] is the price of a given stock on the ith day, and an integer fee representing a transaction fee. Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.
 
 Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).

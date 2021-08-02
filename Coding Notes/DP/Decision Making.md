@@ -166,7 +166,43 @@ int mincostTickets(vector<int>& days, vector<int>& costs) {
 }
 ```
 
-### 5. Best Time to Buy and Sell Stock with Transaction Fee
+### 5. Best Time to Buy and Sell Stock with Cooldown
+You are given an array prices where prices[i] is the price of a given stock on the ith day. Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times) with the following restrictions: After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
+
+Input: prices = [1,2,3,0,2]
+
+Output: 3
+
+```cpp
+int solve (vector<int> & prices, int idx, int n, bool buy, vector<vector<int>> & dp){
+    if(idx>=n) return 0;
+
+    if(dp[idx][buy]!=-1) return dp[idx][buy];
+
+    if(buy){
+        int p1 = solve(prices, idx+1, n, !buy, dp) - prices[idx];       // --> Buy
+        int p2 = solve(prices, idx+1, n, buy, dp);                      // --> No Buy
+
+        return dp[idx][buy] = max(p1, p2);
+    }
+    else{
+        int p1 = solve(prices, idx+2, n, !buy, dp) + prices[idx];       // --> Sell
+        int p2 = solve(prices, idx+1, n, buy, dp);                      // --> No sell
+
+        return dp[idx][buy] = max(p1, p2);
+    }
+
+}
+
+int maxProfit(vector<int>& prices) {
+    int n = prices.size();
+    vector<vector<int>> dp (n+1, vector<int> (2, -1));
+
+    return solve(prices, 0, n, true, dp);
+}
+```
+
+### 6. Best Time to Buy and Sell Stock with Transaction Fee
 You are given an array prices where prices[i] is the price of a given stock on the ith day, and an integer fee representing a transaction fee. Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.
 
 Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
@@ -204,7 +240,7 @@ int maxProfit(vector<int>& prices, int fee) {
 }
 ```
 
-### 6. Largest Sum of Averages
+### 7. Largest Sum of Averages
 You are given an integer array nums and an integer k. You can partition the array into at most k non-empty adjacent subarrays. The score of a partition is the sum of the averages of each subarray. Note that the partition must use every integer in nums, and that the score is not necessarily an integer. Return the maximum score you can achieve of all the possible partitions.
 
 Input: nums = [9,1,2,3,9], k = 3
@@ -250,7 +286,7 @@ double largestSumOfAverages(vector<int>& nums, int k) {
 }
 ```
 
-### 7. 2 Keys Keyboard
+### 8. 2 Keys Keyboard
 There is only one character 'A' on the screen of a notepad. You can perform two operations on this notepad for each step:
 1. Copy All: You can copy all the characters present on the screen (a partial copy is not allowed).
 2. Paste: You can paste the characters which are copied last time.
@@ -298,7 +334,7 @@ int minSteps(int n) {
 }
 ```
 
-### 8. Greatest Sum Divisible by Three
+### 9. Greatest Sum Divisible by Three
 Given an array nums of integers, we need to find the maximum possible sum of elements of the array such that it is divisible by three.
 
 Input: nums = [3,6,5,1,8]

@@ -544,3 +544,46 @@ int change(int amount, vector<int>& coins) {
     return solve (coins, n, amount, 0, dp);
 }
 ```
+
+### 4. Perfect Squares
+Given an integer n, return the least number of perfect square numbers that sum to n.
+
+Input: n = 12
+
+Output: 3
+
+Hint: Similar to Coin Change I
+
+```cpp
+int solve (vector<int> & sqrs, int n, int idx, int sum, vector<vector<int>> & dp){
+    if(sum==n) return 0;
+    if(idx==sqrs.size() or sum>n) return -1;
+
+    if(dp[idx][sum]!=INT_MIN) return dp[idx][sum];
+
+    auto res1 = solve (sqrs, n, idx, sum+sqrs[idx], dp);        // --> Include idx
+    auto res2 = solve (sqrs, n, idx+1, sum, dp);                // --> Not include idx
+
+    if(res1!=-1 and res2!=-1)
+        return dp[idx][sum] = min(res1+1, res2);
+
+    else if(res1!=-1)
+        return dp[idx][sum] = res1+1;
+
+    else if(res2!=-1)
+        return dp[idx][sum] = res2;
+
+    else return dp[idx][sum] = -1;
+}
+
+
+int numSquares(int n) {
+    vector<vector<int>> dp (n+1, vector<int> (n+1, INT_MIN));
+    vector<int> sqrs;
+
+    for(int i=1; i*i<=n; i++)
+        sqrs.push_back(i*i);
+
+    return solve (sqrs, n, 0, 0, dp);
+}
+```

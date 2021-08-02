@@ -297,3 +297,45 @@ int minSteps(int n) {
     return res.second;
 }
 ```
+
+### 8. Greatest Sum Divisible by Three
+Given an array nums of integers, we need to find the maximum possible sum of elements of the array such that it is divisible by three.
+
+Input: nums = [3,6,5,1,8]
+
+Output: 18
+
+```cpp
+pair<bool, int> solve (vector<int>&nums, int idx, int rem, vector<vector<pair<bool,int>>> & dp){
+    if(idx==nums.size()){
+        if(rem==0) return {true, 0};
+        else return {false, 0};
+    }
+
+    if(dp[idx][rem].second!=-1) return dp[idx][rem];
+
+    auto res1 = solve(nums, idx+1, (rem+nums[idx])%3, dp);          // --> Including idx
+    auto res2 = solve(nums, idx+1, rem, dp);                        // --> Not including idx
+
+    if(res1.first and res2.first)
+        return dp[idx][rem] = {true, max(nums[idx]+res1.second, res2.second)};
+
+    else if(res1.first)
+        return dp[idx][rem] = {true, nums[idx]+res1.second};
+
+    else if(res2.first)
+        return dp[idx][rem] = {true, res2.second};
+
+    else return dp[idx][rem] = {false, 0};
+}
+
+int maxSumDivThree(vector<int>& nums) {
+    int n = nums.size();
+    vector<vector<pair<bool,int>>> dp (n, vector<pair<bool,int>> (3, {true, -1}));
+
+    auto res = solve (nums, 0, 0, dp);
+
+    if(res.first) return res.second;
+    else return 0;
+}
+```

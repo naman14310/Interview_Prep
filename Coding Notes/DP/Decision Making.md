@@ -249,3 +249,51 @@ double largestSumOfAverages(vector<int>& nums, int k) {
     return solve (nums, k, 0, n, dp);
 }
 ```
+
+### 7. 2 Keys Keyboard
+There is only one character 'A' on the screen of a notepad. You can perform two operations on this notepad for each step:
+1. Copy All: You can copy all the characters present on the screen (a partial copy is not allowed).
+2. Paste: You can paste the characters which are copied last time.
+
+Given an integer n, return the minimum number of operations to get the character 'A' exactly n times on the screen.
+
+```cpp
+pair<bool,int> solve (int curr_count, int n, int buffer_count, vector<vector<pair<bool,int>>> & dp){
+    if(curr_count>n) return {false, 0};
+    if(curr_count==n) return {true, 0};
+
+    if(dp[curr_count][buffer_count].second!=-1) return dp[curr_count][buffer_count];
+
+    pair<bool, int> copy = {false, 0};
+    pair<bool, int> paste = {false, 0};
+
+    /* If number of A's on screen is same as number of A's in buffer, then no need to copy same thing again */
+
+    if(curr_count!=buffer_count)
+        copy = solve (curr_count, n, curr_count, dp);
+
+    /* If buffer count == 0 then we have nothing to paste on screen */
+
+    if(buffer_count > 0)
+        paste = solve (curr_count + buffer_count, n, buffer_count, dp);
+
+    if(copy.first and paste.first)
+        return dp[curr_count][buffer_count] = {true,min(copy.second, paste.second)+1};
+
+    else if(copy.first)
+        return dp[curr_count][buffer_count] = {true,copy.second+1};
+
+    else if(paste.first) 
+        return dp[curr_count][buffer_count] = {true,paste.second+1};
+
+    else return dp[curr_count][buffer_count] = {false, 0};
+}
+
+
+int minSteps(int n) {
+    vector<vector<pair<bool,int>>> dp (2*n, vector<pair<bool,int>> (2*n, {false, -1}));
+
+    auto res = solve (1, n, 0, dp);
+    return res.second;
+}
+```

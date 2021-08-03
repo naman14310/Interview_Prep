@@ -157,6 +157,62 @@ int numSubmat(vector<vector<int>>& mat) {
 }
 ```
 
+### 4. Largest 1-Bordered Square (Tricky)
+Given a 2D grid of 0s and 1s, return the number of elements in the largest square subgrid that has all 1s on its border, or 0 if such a subgrid doesn't exist in the grid.
+
+Input: grid = [[1,1,1],[1,0,1],[1,1,1]]
+
+Output: 9
+
+Hint: Store left_one_cnt and up_one_cnt for every cell.
+
+```cpp
+int largest1BorderedSquare(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    int ans = 0;
+
+    /* Every cell of dp table contains pair of {count_of_1_in_up, count_of _1_in_left} */
+
+    vector<vector<pair<int,int>>> dp (row, vector<pair<int,int>> (col, {0,0}));
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(grid[i][j]==0)
+                continue;
+
+            if(i==0 and j==0)
+                dp[0][0] = {1, 1};
+
+            else if(i==0)
+                dp[i][j] = {1, dp[i][j-1].second+1};
+
+            else if(j==0)
+                dp[i][j] = {dp[i-1][j].first+1, 1};
+
+            else
+                dp[i][j] = {dp[i-1][j].first+1, dp[i][j-1].second+1};
+
+            /* Treating cell i-j as bottom-right corner of square, check if it can form any sqr */
+
+            int mn = min(dp[i][j].first, dp[i][j].second);
+
+            while(mn>0){
+                int x = i-mn+1, y = j-mn+1;
+
+                if(dp[i][y].first >= mn and dp[x][j].second >= mn){
+                    ans = max(ans, mn);
+                    break;
+                }
+
+                mn--;
+            }
+        }
+    }
+
+    return ans*ans;
+}
+```
 
 ## @ Problems on Exploring Paths 
 

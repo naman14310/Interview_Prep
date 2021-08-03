@@ -375,3 +375,39 @@ int maxSumDivThree(vector<int>& nums) {
     else return 0;
 }
 ```
+
+### 10. Number of Dice Rolls With Target Sum
+You have d dice and each die has f faces numbered 1, 2, ..., f. Return the number of possible ways (out of fd total ways) modulo 109 + 7 to roll the dice so the sum of the face-up numbers equals target.
+
+Input: d = 2, f = 6, target = 7
+
+Output: 6
+
+```cpp
+int solve (int dice_count, int d, int f, int sum, int target, vector<vector<int>> & dp){
+    if(sum>target) return 0;
+
+    if(dice_count==d){  
+        if(sum==target) return 1;
+        else return 0;
+    } 
+
+    if(dp[dice_count][sum]!=-1) 
+        return dp[dice_count][sum];
+
+    int ans = 0;
+
+    for(int num=1; num<=f; num++){
+        int temp = solve (dice_count+1, d, f, sum+num, target, dp);
+        ans = (ans % 1000000007 + temp % 1000000007) % 1000000007;
+    }
+
+    return dp[dice_count][sum] = ans;
+}
+
+
+int numRollsToTarget(int d, int f, int target) {
+    vector<vector<int>> dp (d+1, vector<int> (target+1, -1));
+    return solve (0, d, f, 0, target, dp);
+}
+```

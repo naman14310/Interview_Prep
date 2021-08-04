@@ -436,7 +436,9 @@ int solve (vector<int> & nums, int target, vector<int> & dp){
     if(dp[target]!=-1) return dp[target];
 
     int ans = 0;
-
+    
+    /* Now we can choose any element in this place (Similar to permutations) */
+    
     for(int i=0; i<nums.size(); i++){
         if(nums[i]<=target)        
             ans += solve(nums, target-nums[i], dp);

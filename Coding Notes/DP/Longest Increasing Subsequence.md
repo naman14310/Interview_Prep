@@ -27,6 +27,7 @@ int lengthOfLIS(vector<int>& nums) {
 ```
 
 **Approach 2 : Binary Search (lower_bound) | O(nlogn)**
+-This will only give length of LIS
 
 ```cpp
 int lengthOfLIS(vector<int>& nums) {

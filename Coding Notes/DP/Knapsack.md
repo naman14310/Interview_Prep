@@ -361,6 +361,56 @@ int findTargetSumWays(vector<int>& v, int diff) {
 }
 ```
 
+### 7. Last Stone Weight II
+You are given an array of integers stones where stones[i] is the weight of the ith stone. We are playing a game with the stones. On each turn, we choose any two stones and smash them together. Suppose the stones have weights x and y with x <= y. The result of this smash is:
+1. If x == y, both stones are destroyed, and
+2. If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
+
+At the end of the game, there is at most one stone left. Return the smallest possible weight of the left stone. If there are no stones left, return 0.
+
+Input: stones = [2,7,4,1,8,1]
+
+Output: 1
+
+Hint: Similar to Minimum Subset sum difference
+
+```cpp
+/* Similar to Minimum Subset Sum Difference */
+
+int lastStoneWeightII(vector<int>& stones) {
+    int n = stones.size();
+
+    int sum = 0;
+    for(int s : stones)
+        sum += s;
+
+    vector<vector<bool>> dp (n+1, vector<bool> (sum+1, false));
+
+    for(int i=0; i<=n; i++){
+        for(int j=0; j<=sum; j++){
+
+            if(j==0) dp[i][j] = true;
+
+            else if(i==0) dp[i][j] = false;
+
+            else if(stones[i-1]>j)
+                dp[i][j] = dp[i-1][j];
+
+            else
+                dp[i][j] = dp[i-1][j] or dp[i-1][j-stones[i-1]];
+        }
+    }
+
+
+    for(int k=sum/2; k>0; k--){
+        if(dp[n][k])
+            return (sum-2*k);
+    }
+
+    return sum;    // --> If n==1 then return sum
+}
+```
+
 ------
 
 

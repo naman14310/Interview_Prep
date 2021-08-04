@@ -26,7 +26,47 @@ int rob(vector<int>& nums) {
 }
 ```
 
-### 2. Delete and Earn
+### 2. House Robber II (arranged in a circle)
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+Input: nums = [1,2,3,1]
+
+Output: 4
+
+```cpp
+/* 
+    Implement the house robber logic two times, 
+    one from [0 to n-2] and second for [1 to n-1] 
+    and return max of two 
+*/
+
+int house_robber(vector<int> & nums, int start, int end){
+    int len = nums.size()-1;
+    vector<int> dp (len, 0);
+
+    dp[0] = nums[start];
+    dp[1] = max(nums[start], nums[start+1]);
+
+    for(int i=start+2; i<=end; i++)
+        dp[i-start] = max(dp[i-start-2] + nums[i], dp[i-start-1]);
+
+    return dp[len-1];
+}
+
+int rob(vector<int>& nums) {
+    int n = nums.size();
+
+    if(n==1) return nums[0];
+    if(n==2) return max(nums[0], nums[1]);
+
+    int res1 = house_robber(nums, 0, n-2);
+    int res2 = house_robber(nums, 1, n-1);
+
+    return max(res1, res2);
+}
+```
+
+### 3. Delete and Earn
 You are given an integer array nums. You want to maximize the number of points you get by performing the following operation any number of times: Pick any nums[i] and delete it to earn nums[i] points. Afterwards, you must delete every element equal to nums[i] - 1 and every element equal to nums[i] + 1. Return the maximum number of points you can earn by applying the above operation some number of times.
 
 Input: nums = [3,4,2]

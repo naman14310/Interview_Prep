@@ -29,9 +29,10 @@ int deleteAndEarn(vector<int>& nums) {
 ## @ Problems on Ugly Numbers
 An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
 
-```
-We can find whether a number is ugly or not by using following code:
+### 1. Ugly Number I
+Find whether a number is ugly or not.
 
+```cpp
 bool isUgly(int n) {
     if(n<1) return false;
 
@@ -46,12 +47,12 @@ bool isUgly(int n) {
 }
 ```
 
-### 1. Ugly Number II
-An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
+### 2. Ugly Number II
+Given an integer n, return the nth ugly number.
 
 [Video Explaination](https://www.youtube.com/watch?v=78Yx7oLA43s)
 
-```
+```cpp
 int nthUglyNumber(int n) {
     vector<int> dp (n, 1);
 

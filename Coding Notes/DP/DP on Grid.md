@@ -316,7 +316,45 @@ int minFallingPathSum(vector<vector<int>>& matrix) {
 }
 ```
 
-### 3. Unique Paths
+### 3. Triangle
+Given a triangle array, return the minimum path sum from top to bottom. For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, you may move to either index i or index i + 1 on the next row.
+
+```
+Input: triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+Output: 11
+
+Explanation: The triangle looks like:
+   2
+  3 4
+ 6 5 7
+4 1 8 3
+```
+
+```cpp
+int solve (vector<vector<int>> & triangle, int i, int j, int n, vector<vector<int>> & dp){
+    if(i==n) return 0;
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    int ans = 0;
+
+    int res1 = solve(triangle, i+1, j, n, dp);
+    int res2 = solve(triangle, i+1, j+1, n, dp);
+
+    ans = min(res1, res2) + triangle[i][j];
+    return dp[i][j] = ans;
+}
+
+
+int minimumTotal(vector<vector<int>>& triangle) {
+    int n = triangle.size();
+    vector<vector<int>> dp (n+1, vector<int> (n+1, -1));
+
+    return solve (triangle, 0, 0, n, dp);
+}
+```
+
+### 4. Unique Paths
 A robot is located at the top-left corner of a m x n grid. The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid. How many possible unique paths are there?
 
 ```cpp

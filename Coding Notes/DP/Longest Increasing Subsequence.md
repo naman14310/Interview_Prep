@@ -1,6 +1,53 @@
 # Problems on LIS Pattern
 
-### 1. Longest Arithmetic Subsequence
+### 1. Longest Increasing Subsequence
+Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+**Approach 1 : Dynamic Programming | O(n2)**
+
+```cpp
+int lengthOfLIS(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> dp (n, 1);
+
+    int ans = 1;
+
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+
+            if(nums[j]<nums[i])
+                dp[i] = max(dp[i], dp[j]+1);
+
+            ans = max(ans, dp[i]);
+        }
+    }
+
+    return ans;
+}
+```
+
+**Approach 2 : Binary Search (lower_bound) | O(nlogn)**
+
+```cpp
+int lengthOfLIS(vector<int>& nums) {
+    vector<int> v;
+
+    for(int num : nums){
+    
+        if(v.empty() or num>v.back())
+            v.push_back(num);
+
+        else{
+            int idx = lower_bound(v.begin(), v.end(), num) - v.begin();
+            v[idx] = num;
+        }
+    }
+
+    return v.size();
+}
+```
+
+### 2. Longest Arithmetic Subsequence
 Given an array nums of integers, return the length of the longest arithmetic subsequence in nums. Recall that a sequence seq is arithmetic if seq[i+1] - seq[i] are all the same value (for 0 <= i < seq.length - 1).
 
 Input: nums = [9,4,7,2,10]
@@ -33,7 +80,7 @@ int longestArithSeqLength(vector<int>& nums) {
 }
 ```
 
-### 2. Length of Longest Fibonacci Subsequence
+### 3. Length of Longest Fibonacci Subsequence
 A sequence x1, x2, ..., xn is Fibonacci-like if:
 1. n >= 3
 2. xi + xi+1 == xi+2 for all i + 2 <= n

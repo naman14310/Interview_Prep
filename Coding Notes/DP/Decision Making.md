@@ -412,7 +412,7 @@ int numRollsToTarget(int d, int f, int target) {
 }
 ```
 
-### 11. Combination Sum IV (basially permutation sum)
+### 11. Combination Sum IV (basically permutation sum)
 Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target. Note that different sequences are counted as different combinations.
 ```
 Input: nums = [1,2,3], target = 4

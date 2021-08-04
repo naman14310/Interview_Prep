@@ -587,6 +587,35 @@ int findUnsortedSubarray(vector<int>& nums) {
 }
 ```
 
+#### 8. Contiguous Array (Tricky)
+Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
+
+Input: nums = [0,1,1,0,1,1,1]
+
+Output: 4
+
+Hint: Variation of largest subarray with sum 0.
+
+```cpp
+int findMaxLength(vector<int>& nums) {
+    int ans = 0, csum = 0;
+    unordered_map<int,int> mp;
+    mp[0] = -1;
+
+    for(int i=0; i<nums.size(); i++){
+
+        if(nums[i]==0) csum += -1;
+        else csum += 1;
+
+        if(mp.find(csum)!=mp.end())
+            ans = max(ans, i-mp[csum]);
+        else
+            mp[csum] = i;
+    }
+
+    return ans;
+}
+```
 
 ## @ Wave Sort
 

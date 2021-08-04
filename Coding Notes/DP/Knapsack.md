@@ -361,7 +361,7 @@ int findTargetSumWays(vector<int>& v, int diff) {
 }
 ```
 
-### 7. Last Stone Weight II
+### 7. Last Stone Weight II (Tricky)
 You are given an array of integers stones where stones[i] is the weight of the ith stone. We are playing a game with the stones. On each turn, we choose any two stones and smash them together. Suppose the stones have weights x and y with x <= y. The result of this smash is:
 1. If x == y, both stones are destroyed, and
 2. If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
@@ -410,6 +410,58 @@ int lastStoneWeightII(vector<int>& stones) {
     return sum;    // --> If n==1 then return sum
 }
 ```
+
+### 8. Ones and Zeroes
+You are given an array of binary strings strs and two integers m and n. Return the size of the largest subset of strs such that there are at most m 0's and n 1's in the subset.
+
+Input: strs = ["10","0001","111001","1","0"], m = 5, n = 3
+
+Output: 4
+
+Hint: Just apply knapsack property on two variables.
+
+```cpp
+int solve (vector<pair<int,int>> & v, int idx, int m, int n, vector<vector<vector<int>>> & dp){
+    if(idx==v.size()) return 0;
+
+    if(dp[idx][m][n]!=-1) 
+        return dp[idx][m][n];
+
+    if(v[idx].first<=m and v[idx].second<=n){
+
+        int res1 = 1 + solve (v, idx+1, m-v[idx].first, n-v[idx].second, dp);
+        int res2 = solve (v, idx+1, m, n, dp);
+
+        return dp[idx][m][n] = max(res1, res2);
+    }        
+
+    else{
+        int res = solve (v, idx+1, m, n, dp);
+        return dp[idx][m][n] = res;
+    }
+}
+
+
+int findMaxForm(vector<string>& strs, int m, int n) {
+    vector<pair<int,int>> v;
+
+    for(string s : strs){
+        int one_cnt = 0, zero_cnt = 0;
+
+        for(char ch : s){
+            if(ch=='0') zero_cnt++;
+            else one_cnt++;
+        }
+
+        v.push_back({zero_cnt, one_cnt});
+    }
+
+    vector<vector<vector<int>>> dp (v.size(), vector<vector<int>> (101, vector<int> (101, -1)));
+
+    return solve (v, 0, m, n, dp);
+}
+```
+
 
 ------
 

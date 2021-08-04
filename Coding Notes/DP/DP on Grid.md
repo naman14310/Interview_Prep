@@ -220,6 +220,84 @@ int largest1BorderedSquare(vector<vector<int>>& grid) {
 }
 ```
 
+### 5.  Largest Plus Sign
+Return the order of the largest axis-aligned plus sign of 1's contained in grid. If there is none, return 0.
+
+![img](https://assets.leetcode.com/uploads/2021/06/13/plus1-grid.jpg)
+
+Output: 2
+
+```cpp
+int orderOfLargestPlusSign(int n, vector<vector<int>>& mines) {
+    if(mines.size()==n*n) return 0;
+
+    vector<vector<int>> grid(n, vector<int> (n, 1));
+    vector<vector<int>> up (n, vector<int> (n, 0));
+    vector<vector<int>> down (n, vector<int> (n, 0));
+    vector<vector<int>> left (n, vector<int> (n, 0));
+    vector<vector<int>> right (n, vector<int> (n, 0));
+
+    for(auto p : mines)
+        grid[p[0]][p[1]] = 0;
+
+    /* Filling up matrix */
+
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            if(i==0)
+                up[i][j] = grid[i][j];
+            else
+                up[i][j] = grid[i][j]==0 ? 0 : 1 + up[i-1][j];
+        }
+    }
+
+    /* Filling down matrix */
+
+    for(int i=n-1; i>=0; i--){
+        for(int j=0; j<n; j++){
+            if(i==n-1)
+                down[i][j] = grid[i][j];
+            else
+                down[i][j] = grid[i][j]==0 ? 0 : 1 + down[i+1][j];
+        }
+    }
+
+    /* Filling left matrix */
+
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            if(j==0)
+                left[i][j] = grid[i][j];
+            else
+                left[i][j] = grid[i][j]==0 ? 0 : 1 + left[i][j-1];
+        }
+    }
+
+    /* Filling right matrix */
+
+    for(int i=0; i<n; i++){
+        for(int j=n-1; j>=0; j--){
+            if(j==n-1)
+                right[i][j] = grid[i][j];
+            else
+                right[i][j] = grid[i][j]==0 ? 0 : 1 + right[i][j+1];
+        }
+    }
+
+    int ans = 1;
+
+    for(int i=1; i<n-1; i++){
+        for(int j=1; j<n-1; j++){
+            int len = min({up[i][j], down[i][j], left[i][j], right[i][j]});
+            ans = max(ans, len);
+        }
+    }
+
+    return ans;
+}
+```
+
+
 ## @ Problems on Exploring Paths 
 
 **How To Identify :** When there are chances to land on one cell repeatedly while exploring paths, then we can use DP. 

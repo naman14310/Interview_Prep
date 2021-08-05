@@ -170,3 +170,46 @@ int bestTeamScore(vector<int>& scores, vector<int>& ages) {
     return solve (player, 0, 0, n, 0, dp);
 }
 ```
+
+**Approach 2 : Iterative DP (LIS Pattern)**
+
+```cpp
+/* sort by ages in ascending order and if ages are equal sort by their scores in ascending order */
+
+bool static comp (pair<int,int> & a, pair<int,int> & b){
+    if (a.second<b.second) return true;
+    else if(a.second==b.second and a.first<b.first) return true;
+    else return false;
+}
+
+
+int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+    int n = scores.size();
+    vector<pair<int,int>> player;
+
+    for(int i=0; i<n; i++)
+        player.push_back({scores[i], ages[i]});
+
+    sort(player.begin(), player.end(), comp);
+
+    vector<int> dp (n, 0);
+    for(int i=0; i<n; i++)
+        dp[i] = player[i].first;
+
+    int ans = dp[0];
+
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+
+            /* If score of curr_player is greater then score of prev_player then we can use that dp */
+
+            if(player[i].first>=player[j].first)
+                dp[i] = max(dp[i], dp[j]+player[i].first);
+
+            ans = max(ans, dp[i]);
+        }
+    }
+
+    return ans;
+}
+```

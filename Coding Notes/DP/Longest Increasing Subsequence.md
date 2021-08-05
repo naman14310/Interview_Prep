@@ -49,7 +49,53 @@ int lengthOfLIS(vector<int>& nums) {
 }
 ```
 
-### 2. Longest Arithmetic Subsequence
+### 2. Number of Longest Increasing Subsequence
+Given an integer array nums, return the number of longest increasing subsequences.
+
+Input: nums = [1,3,5,4,7]
+
+Output: 2
+
+Hint: Create one count array for storing count of lis so far at every index.
+
+```cpp
+int findNumberOfLIS(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> dp (n, 1);
+    vector<int> count (n, 1);
+
+    int lis = 1;
+
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+
+            if(nums[i]>nums[j]){
+
+                if(dp[j]+1 > dp[i]){
+                    count[i] = count[j];
+                    dp[i] = dp[j]+1;
+                }
+                else if(dp[j]+1 == dp[i])
+                    count[i] += count[j];
+
+            }
+
+            lis = max(lis, dp[i]);
+        }
+    }
+
+    int ans = 0;
+
+    for(int i=0; i<n; i++){
+        if(dp[i]==lis)
+            ans += count[i];
+    }
+
+    return ans;
+}
+```
+
+### 3. Longest Arithmetic Subsequence
 Given an array nums of integers, return the length of the longest arithmetic subsequence in nums. Recall that a sequence seq is arithmetic if seq[i+1] - seq[i] are all the same value (for 0 <= i < seq.length - 1).
 
 Input: nums = [9,4,7,2,10]
@@ -82,7 +128,7 @@ int longestArithSeqLength(vector<int>& nums) {
 }
 ```
 
-### 3. Length of Longest Fibonacci Subsequence
+### 4. Length of Longest Fibonacci Subsequence
 A sequence x1, x2, ..., xn is Fibonacci-like if:
 1. n >= 3
 2. xi + xi+1 == xi+2 for all i + 2 <= n
@@ -117,8 +163,8 @@ int lenLongestFibSubseq(vector<int>& arr) {
 }
 ```
 
-### 4. Best Team With No Conflicts
-You are the manager of a basketball team. For the upcoming tournament, you want to choose the team with the highest overall score. The score of the team is the sum of scores of all the players in the team. However, the basketball team is not allowed to have conflicts. A conflict exists if a younger player has a strictly higher score than an older player. A conflict does not occur between players of the same age. Given two lists, scores and ages, where each scores[i] and ages[i] represents the score and age of the ith player, respectively, return the highest overall score of all possible basketball teams.
+### 5. Best Team With No Conflicts
+A conflict exists if a younger player has a strictly higher score than an older player. A conflict does not occur between players of the same age. Given two lists, scores and ages, where each scores[i] and ages[i] represents the score and age of the ith player, respectively, return the highest overall score of all possible basketball teams.
 
 Input: scores = [4,5,6,5], ages = [2,1,2,1]
 

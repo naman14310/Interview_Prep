@@ -707,7 +707,6 @@ int wiggleMaxLength(vector<int>& nums) {
 
 	int prev = nums[0];
 	int pattern = 0;
-
 	int ans = 1;
 
 	for(int i=1; i<n; i++){

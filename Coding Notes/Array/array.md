@@ -727,7 +727,6 @@ int wiggleMaxLength(vector<int>& nums) {
 		}
 
 		prev = nums[i];    // --> prev will get updated everytime
-
 	}
 
 	return ans;

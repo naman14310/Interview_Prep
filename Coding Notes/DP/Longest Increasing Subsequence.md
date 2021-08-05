@@ -116,3 +116,57 @@ int lenLongestFibSubseq(vector<int>& arr) {
     return ans==2 ? 0 : ans;
 }
 ```
+
+### 4. Best Team With No Conflicts
+You are the manager of a basketball team. For the upcoming tournament, you want to choose the team with the highest overall score. The score of the team is the sum of scores of all the players in the team. However, the basketball team is not allowed to have conflicts. A conflict exists if a younger player has a strictly higher score than an older player. A conflict does not occur between players of the same age. Given two lists, scores and ages, where each scores[i] and ages[i] represents the score and age of the ith player, respectively, return the highest overall score of all possible basketball teams.
+
+Input: scores = [4,5,6,5], ages = [2,1,2,1]
+
+Output: 16
+
+**Approach 1 : Memorization**
+
+```cpp
+int solve (vector<pair<int,int>> & player, int minScore, int idx, int n, int prev, vector<vector<int>> & dp){
+    if(idx==n) return 0;
+
+    if(dp[idx][minScore]!=-1) return dp[idx][minScore];
+
+    if(player[idx].second==prev or player[idx].first >= minScore){
+
+        int res1 = solve(player, max(minScore, player[idx].first), idx+1, n, player[idx].second, dp) + player[idx].first; 
+        int res2 = solve(player, minScore, idx+1, n, prev, dp);
+
+        return dp[idx][minScore] = max(res1, res2);
+    }
+    else{
+
+        int res = solve(player, minScore, idx+1, n, prev, dp);
+        return dp[idx][minScore] = res;
+    }
+
+}
+
+
+/* sort by ages in ascending order and if ages are equal sort by their scores in ascending order */
+
+bool static comp (pair<int,int> & a, pair<int,int> & b){
+    if (a.second<b.second) return true;
+    else if(a.second==b.second and a.first<b.first) return true;
+    else return false;
+}
+
+
+int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+    int n = scores.size();
+    vector<pair<int,int>> player;
+    vector<vector<int>> dp (n, vector<int> (1000000, -1));
+
+    for(int i=0; i<n; i++)
+        player.push_back({scores[i], ages[i]});
+
+    sort(player.begin(), player.end(), comp);
+
+    return solve (player, 0, 0, n, 0, dp);
+}
+```

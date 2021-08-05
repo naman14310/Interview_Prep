@@ -48,7 +48,40 @@ public:
 };
 ```
 
-### 2. Count Square Submatrices with All Ones
+### 2. Maximal Square
+Given an m x n binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+
+![img](https://assets.leetcode.com/uploads/2020/11/26/max1grid.jpg)
+
+Output: 4
+
+```cpp
+int maximalSquare(vector<vector<char>>& matrix) {
+    int row = matrix.size(), col = matrix[0].size();
+    vector<vector<int>> dp (row, vector<int> (col, 0));
+
+    int ans = 0; 
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(matrix[i][j]=='0') continue;
+
+            if(i==0 or j==0)
+                dp[i][j] = 1;
+
+            else
+                dp[i][j] = min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]}) + 1;
+
+            ans = max(ans, dp[i][j]);
+        }
+    }
+
+    return ans*ans;
+}
+```
+
+### 3. Count Square Submatrices with All Ones
 Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
 
 Time Complexity : O(n2)
@@ -95,7 +128,7 @@ int countSquares(vector<vector<int>>& matrix) {
 }
 ```
 
-### 3. Count Submatrices With All Ones (Rectangles are also allowed)
+### 4. Count Submatrices With All Ones (Rectangles are also allowed)
 Given a rows * columns matrix mat of ones and zeros, return how many submatrices have all ones.
 
 Time Complexity : O(n3)
@@ -157,7 +190,7 @@ int numSubmat(vector<vector<int>>& mat) {
 }
 ```
 
-### 4. Largest 1-Bordered Square (Tricky)
+### 5. Largest 1-Bordered Square (Tricky)
 Given a 2D grid of 0s and 1s, return the number of elements in the largest square subgrid that has all 1s on its border, or 0 if such a subgrid doesn't exist in the grid.
 ```
 Input: grid = 
@@ -220,7 +253,7 @@ int largest1BorderedSquare(vector<vector<int>>& grid) {
 }
 ```
 
-### 5.  Largest Plus Sign
+### 6.  Largest Plus Sign
 Return the order of the largest axis-aligned plus sign of 1's contained in grid. If there is none, return 0.
 
 ![img](https://assets.leetcode.com/uploads/2021/06/13/plus1-grid.jpg)

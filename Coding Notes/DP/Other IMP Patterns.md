@@ -192,3 +192,48 @@ int nthSuperUglyNumber(int n, vector<int>& primes) {
     return dp[n-1];
 }
 ```
+
+## @ Problems on Word Break
+
+### 1. Word Break
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+
+Output: true
+
+```cpp
+bool solve (string s, int n, int idx, unordered_set<string> & dict, unordered_set<string> & dp){
+    if(idx==s.length()) return true;
+
+    string key = s.substr(idx, n-idx+1);
+    if(dp.find(key)!=dp.end()) return false;
+
+    string temp = "";
+
+    for(int i=idx; i<s.length(); i++){
+        temp.push_back(s[i]);
+
+        if(dict.find(temp)!=dict.end()){
+            bool res = solve(s, n, i+1, dict, dp);
+            if(res) return true;
+        }
+    }
+
+    dp.insert(key);
+    return false;
+}
+
+
+bool wordBreak(string s, vector<string>& wordDict) {
+    int n = s.length();
+    unordered_set<string> dict;
+
+    for(string w : wordDict)
+        dict.insert(w);
+
+    unordered_set<string> dp;
+
+    return solve (s, n, 0, dict, dp);
+}
+```

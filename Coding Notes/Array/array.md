@@ -687,4 +687,50 @@ int candy(vector<int>& ratings) {
 }
 ```
 
+#### 4.  Wiggle Subsequence (O(n) Approach)
+A wiggle sequence is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. Given an integer array nums, return the length of the longest wiggle subsequence of nums.
+
+Input: nums = [1,17,5,10,13,15,10,5,16,8]
+
+Output: 7
+
+```cpp
+/*
+	pattern = 0 --> neutral
+	pattern = 1 --> pos slope
+	pattern = -1 --> neg slope
+*/
+
+int wiggleMaxLength(vector<int>& nums) {
+	int n = nums.size();
+	if(n==1) return 1;
+
+	int prev = nums[0];
+	int pattern = 0;
+
+	int ans = 1;
+
+	for(int i=1; i<n; i++){
+
+		/* If curr pattern is increasing and prev pattern was not increasing, we will update the answer and pattern */ 
+
+		if(nums[i]>prev and pattern!=1){
+			ans++;
+			pattern = 1;
+		}
+
+		/* If curr pattern is decreasing and prev pattern was not decreasing, we will update the answer and pattern */ 
+
+		else if(nums[i]<prev and pattern!=-1){
+			ans++;
+			pattern = -1;
+		}
+
+		prev = nums[i];    // --> prev will get updated everytime
+
+	}
+
+	return ans;
+}
+```
 

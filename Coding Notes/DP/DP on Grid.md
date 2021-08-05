@@ -486,3 +486,48 @@ int uniquePaths(int m, int n) {
     return grid[m-1][n-1];
 }
 ```
+
+### 5. Out of Boundary Paths
+There is an m x n grid with a ball. The ball is initially at the position [startRow, startColumn]. You are allowed to move the ball to one of the four adjacent cells in the grid (possibly out of the grid crossing the grid boundary). You can apply at most maxMove moves to the ball. Given the five integers m, n, maxMove, startRow, startColumn, return the number of paths to move the ball out of the grid boundary. Since the answer can be very large, return it modulo 109 + 7.
+
+![img](https://assets.leetcode.com/uploads/2021/04/28/out_of_boundary_paths_1.png)
+
+Input: m = 2, n = 2, maxMove = 2, startRow = 0, startColumn = 0
+
+Output: 6
+
+```cpp
+bool isOut(int x, int y, int m, int n){
+    return x<0 or y<0 or x>=m or y>=n;    
+}
+
+
+int dfs (int x, int y, int m, int n, int moves, vector<vector<vector<int>>> & dp){
+
+    if(isOut(x, y, m, n)) return 1;
+    if(moves==0) return 0;
+
+    if(dp[x][y][moves]!=-1) return dp[x][y][moves];
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    int ans = 0;
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        ans = ((ans % 1000000007) + (dfs (xnew, ynew, m, n, moves-1, dp) % 1000000007)) % 1000000007;
+    }
+
+    return dp[x][y][moves] = ans;
+}
+
+
+int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+
+    vector<vector<vector<int>>> dp (m+1, vector<vector<int>> (n+1, vector<int> (maxMove+1, -1)));
+    return dfs (startRow, startColumn, m, n, maxMove, dp);
+}
+```

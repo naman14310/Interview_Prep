@@ -487,7 +487,48 @@ int uniquePaths(int m, int n) {
 }
 ```
 
-### 5. Out of Boundary Paths
+### 5. Unique Paths II (with obstacles)
+
+![img](https://assets.leetcode.com/uploads/2020/11/04/robot1.jpg)
+
+Input: obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
+
+Output: 2
+
+```cpp
+int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+    int row = obstacleGrid.size(), col = obstacleGrid[0].size();
+    
+    if(obstacleGrid[0][0]==1 or obstacleGrid[row-1][col-1]==1) 
+        return 0;
+
+    vector<vector<int>> dp (row, vector<int> (col, 0));
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(obstacleGrid[i][j]==1) continue;
+
+            else if(i==0 and j==0)
+                dp[i][j] = 1;
+
+            else if(i==0)
+                dp[i][j] = dp[i][j-1];
+
+            else if(j==0)
+                dp[i][j] = dp[i-1][j];
+
+            else
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+        }
+    }
+
+    return dp[row-1][col-1];
+}
+```
+
+
+### 6. Out of Boundary Paths
 There is an m x n grid with a ball. The ball is initially at the position [startRow, startColumn]. You are allowed to move the ball to one of the four adjacent cells in the grid (possibly out of the grid crossing the grid boundary). You can apply at most maxMove moves to the ball. Given the five integers m, n, maxMove, startRow, startColumn, return the number of paths to move the ball out of the grid boundary. Since the answer can be very large, return it modulo 109 + 7.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/28/out_of_boundary_paths_1.png)

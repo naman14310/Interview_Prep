@@ -452,3 +452,51 @@ int combinationSum4(vector<int>& nums, int target) {
     return solve (nums, target, dp);
 }
 ```
+
+### 12. Largest Divisible Subset
+Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
+1. answer[i] % answer[j] == 0, or
+2. answer[j] % answer[i] == 0
+
+Input: nums = [1,2,3,6,8,12,16,20,32]
+
+Output: [1,2,8,16,32]
+
+```cpp
+vector<int> solve (vector<int> & nums, int idx, int n, int prev, unordered_map<string,vector<int>> & dp){
+    if(idx==n) return {};
+
+    string key = to_string(idx) + "," + to_string(prev);
+    if(dp.find(key)!=dp.end()) return dp[key];
+
+    /* If curr number is divisible by prev (which is max so far) then we have a choice to add it in curr subset */ 
+
+    if(nums[idx] % prev==0){
+
+        vector<int> res1 = solve (nums, idx+1, n, nums[idx], dp); 
+        vector<int> res2 = solve (nums, idx+1, n, prev, dp);
+
+        if(res1.size()+1 > res2.size()){
+            res1.insert(res1.begin(), nums[idx]);
+            return dp[key] = res1;
+        }
+        else return dp[key] = res2;
+    }
+
+    /* Else we cannot add curr number to subset */
+
+    else{
+        vector<int> res = solve (nums, idx+1, n, prev, dp);
+        return dp[key] = res;
+    }
+}
+
+vector<int> largestDivisibleSubset(vector<int>& nums) {
+    int n = nums.size();
+    sort(nums.begin(), nums.end());            // --> we will do sorting to arrange all numbers in ascending order
+
+    unordered_map<string, vector<int>> dp;
+
+    return solve (nums, 0, n, 1, dp);
+}
+```

@@ -260,3 +260,33 @@ bool canJump(vector<int>& nums) {
     return false;
 }
 ```
+
+### 2. Jump Game II
+Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps.
+
+Input: nums = [2,3,0,1,4]
+
+Output: 2
+
+**Approach 1 : DP - O(n2)**
+
+```cpp
+int jump(vector<int>& nums) {
+    int n = nums.size();
+
+    vector<int> dp (n, INT_MAX);
+    dp[0] = 0;
+
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+
+            if(j+nums[j]>=i)
+                dp[i] = min (dp[i], dp[j]+1);
+
+        }
+    }
+
+    return dp[n-1];
+}
+```
+

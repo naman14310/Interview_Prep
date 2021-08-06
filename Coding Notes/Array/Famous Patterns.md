@@ -341,14 +341,20 @@ int maxSubarraySumCircular(vector<int>& nums) {
 
     int maxSum = maxSum_subarray(nums);
     int minSum = minSum_subarray(nums);
-
+    
+    /* 
+        Boundary Case : If maxSum turns out to be negative that means whole array is negative, 
+        In this case, we will return the smallest negative value (i.e. close to zero)
+        Hence, we will simply return maxSum
+    */
+    
     if(maxSum<0)
         return maxSum;
 
     for(int num : nums)
         totalSum += num;
 
-    return max(maxSum, totalSum-minSum);
+    return max(maxSum, totalSum-minSum);        // --> return max between (normal kadane sum, circular kadane sum)
 }
 ```
 

@@ -719,7 +719,7 @@ int longestMountain(vector<int>& arr) {
 	}
 
 	for(int i=0; i<n; i++){
-		if(inc[i]>1 and dec[i]>1)                   // --> Will only consider as a mountain when it has its both arms
+		if(inc[i]>1 and dec[i]>1)           // --> Will only consider as a mountain when it has its both arms
 			ans = max(ans, inc[i]+dec[i]-1);
 	}
 

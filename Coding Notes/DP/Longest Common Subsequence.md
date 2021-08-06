@@ -412,3 +412,48 @@ int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
     return lcs (nums1, nums2);
 }
 ```
+
+### 10. Interleaving String
+Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
+
+![img](https://assets.leetcode.com/uploads/2020/09/02/interleave.jpg)
+
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+
+Output: true
+
+```cpp
+bool solve (string & s1, string & s2, string & s3, int i, int j, int k, vector<vector<int>> & dp){
+    if(k==s3.length()) return true;
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    bool res1 = false, res2 = false;
+
+    if(i<s1.length() and s1[i]==s3[k]){
+        res1 = solve(s1, s2, s3, i+1, j, k+1, dp);
+
+        if(res1) 
+            return dp[i][j] = true;
+    }
+
+
+    if(j<s2.length() and s2[j]==s3[k]){
+        res2 = solve(s1, s2, s3, i, j+1, k+1, dp);
+
+        if(res2) 
+            return dp[i][j] = res2;
+    }
+
+    return dp[i][j] = false;
+}
+
+
+bool isInterleave(string s1, string s2, string s3) {
+    if(s3.length()!=s1.length()+s2.length())
+        return false;
+
+    vector<vector<int>> dp (s1.length()+1, vector<int> (s2.length()+1, -1));
+    return solve(s1, s2, s3, 0, 0, 0, dp);
+}
+```

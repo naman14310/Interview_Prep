@@ -687,7 +687,47 @@ int candy(vector<int>& ratings) {
 }
 ```
 
-#### 4.  Wiggle Subsequence (O(n) Approach)
+#### 4. Longest Mountain in Array
+An array arr is a mountain array if and only if arr.length >= 3 and, There exists some index i (0-indexed) with 0 < i < arr.length - 1 such that:
+1. arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+2. arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+
+Given an integer array arr, return the length of the longest subarray, which is a mountain. Return 0 if there is no mountain subarray.
+
+Input: arr = [2,1,4,7,3,2,5]
+
+Output: 5
+
+```cpp
+int longestMountain(vector<int>& arr) {
+	int n = arr.size();
+	if(n<3) return 0;
+
+	int ans = 0;
+
+	vector<int> inc (n, 1);
+	vector<int> dec (n, 1);
+
+	for(int i=1; i<n; i++){   
+		if(arr[i]>arr[i-1]) 
+			inc[i] = 1+inc[i-1];
+	}    
+
+	for(int i=n-2; i>=0; i--){
+		if(arr[i]>arr[i+1]) 
+			dec[i] = 1+dec[i+1];
+	}
+
+	for(int i=0; i<n; i++){
+		if(inc[i]>1 and dec[i]>1)                   // --> Will only consider as a mountain when it has its both arms
+			ans = max(ans, inc[i]+dec[i]-1);
+	}
+
+	return ans;
+}
+```
+
+#### 5.  Wiggle Subsequence (O(n) Approach)
 A wiggle sequence is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. Given an integer array nums, return the length of the longest wiggle subsequence of nums.
 
 Input: nums = [1,17,5,10,13,15,10,5,16,8]

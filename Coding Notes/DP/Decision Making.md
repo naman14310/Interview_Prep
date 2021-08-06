@@ -503,7 +503,6 @@ int minSumOfLengths(vector<int>& arr, int target) {
     mp[0] = -1;
 
     int csum = 0;
-    int mn = n, mn2 = n;
 
     /* for avoiding full overlapping, next subarr should start after first so prev will store the start of first subarr */
 

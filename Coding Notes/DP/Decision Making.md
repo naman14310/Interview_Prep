@@ -453,4 +453,78 @@ int combinationSum4(vector<int>& nums, int target) {
 }
 ```
 
+### 12. Find Two Non-overlapping Sub-arrays Each With Target Sum
+Given an array of integers arr and an integer target. You have to find two non-overlapping sub-arrays of arr each with a sum equal target. Return the minimum sum of the lengths of the two required sub-arrays, or return -1 if you cannot find such two sub-arrays.
 
+Input: arr = [3,1,1,1,5,1,2,1], target = 3
+
+Output: 3
+
+```cpp
+/* Memorization for finding two intervals (representing end points of subarrays) with min total sum */
+
+int solve (vector<pair<int,int>> subarr, int idx, int n, int cnt, int prev, unordered_map<string,int> & dp){
+    if(cnt==2) return 0;
+    if(idx==n) return -1;
+
+    string key = to_string(idx) + "," + to_string(cnt) + "," + to_string(prev);
+    if(dp.find(key)!=dp.end()) return dp[key];
+
+    if(subarr[idx].first>prev){
+
+        int res1 = solve (subarr, idx+1, n, cnt+1, subarr[idx].second, dp); 
+        int res2 = solve (subarr, idx+1, n, cnt, prev, dp);
+
+        if(res1==-1 and res2==-1) 
+            return dp[key] = -1;
+
+        else if(res1==-1) 
+            return dp[key] = res2;
+
+        else if(res2==-1)
+            return dp[key] = res1 + subarr[idx].second - subarr[idx].first + 1;
+
+        else  
+            return dp[key] = min(res1 + subarr[idx].second - subarr[idx].first + 1, res2);
+    }
+
+    else{
+        int res = solve (subarr, idx+1, n, cnt, prev, dp);
+        return dp[key] = res;
+    }
+
+}
+
+
+int minSumOfLengths(vector<int>& arr, int target) {
+    int n = arr.size();
+
+    unordered_map<int,int> mp;
+    mp[0] = -1;
+
+    int csum = 0;
+    int mn = n, mn2 = n;
+
+    /* for avoiding full overlapping, next subarr should start after first so prev will store the start of first subarr */
+
+    int prev = INT_MIN;    
+    vector<pair<int,int>> subarrs;
+
+    for(int i=0; i<n; i++){
+        csum += arr[i];
+        int diff = csum - target;
+
+        if(mp.find(diff)!=mp.end() and mp[diff]>prev){
+            int subArr_len = i-mp[diff];
+            subarrs.push_back({mp[diff]+1, i});         // --> insert endpoint of subarray in form of interval
+
+            prev = mp[diff];       // --> update prev everytime when we find subarr
+        }
+
+        mp[csum] = i;
+    }
+
+    unordered_map<string,int> dp;
+    return solve (subarrs, 0, subarrs.size(), 0, -1, dp);
+}
+```

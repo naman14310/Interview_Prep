@@ -268,7 +268,7 @@ Input: nums = [2,3,0,1,4]
 
 Output: 2
 
-**Approach 1 : DP - O(n2)**
+**Approach 1 : DP - O(n2) | O(n)**
 
 ```cpp
 int jump(vector<int>& nums) {
@@ -287,6 +287,31 @@ int jump(vector<int>& nums) {
     }
 
     return dp[n-1];
+}
+```
+
+**Approach 2 : Greedy - O(n) | O(1)**
+
+```cpp
+int jump(vector<int>& nums) {
+    int n = nums.size();
+
+    int steps = 0;
+    int begin = 0, end = 0, farthest = 0;
+
+    for(int i=0; i<n-1; i++){
+
+        farthest = max(farthest, i+nums[i]);
+
+        /* If we reached to the end of prev jump, then we need to increment jump steps and update end to farthest */
+
+        if(i==end){
+            end = farthest;
+            steps++;
+        }
+    }
+
+    return steps;
 }
 ```
 

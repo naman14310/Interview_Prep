@@ -794,6 +794,105 @@ int celebrity(vector<vector<int> >& matrix, int n) {
 }
 ```
 
+#### 3. Sum of Subarray Minimums (Too Tricky)
+Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 109 + 7.
+
+Input: arr = [3,1,2,4]
+
+Output: 17
+
+**Approach 1 : Two Nested Loops - O(n2)**
+
+```cpp
+/* Total subarrays in an array of len n = n*(n+1)/2 */
+
+int sumSubarrayMins(vector<int>& arr) {
+    int n = arr.size();
+    int sum = 0;
+    int mod = 1000000007;
+
+    for(int i=0; i<n; i++){
+        int mn = arr[i];
+
+        for(int j=i; j<n; j++){
+            mn = min(mn, arr[j]);
+            sum = ((sum%mod) + (mn%mod)) % mod;
+        }
+    }
+
+    return sum;
+}
+```
+
+**Approach 2 : Monotonic stack and concept of Subarrays - O(n)**
+```cpp
+/* 
+    Intuition : For every element at index i, find the nearest left element and nearest right element 
+    This will become the range of subarray in which this element will contribute as min to whole sum
+
+    Count of total subarrs in which any element i will occur as min = (NSL+1)*(NSR+1)
+*/
+
+
+int sumSubarrayMins(vector<int>& arr) {
+    int n = arr.size();
+    int sum = 0;
+    int M = 1000000007;
+
+    stack<int> stk;
+    vector<int> left (n, 0);
+    vector<int> right (n, 0);
+
+    /* Filling left */
+
+    stk.push(0);
+
+    for(int i=1; i<n; i++){
+
+        while(!stk.empty() and arr[stk.top()]>arr[i])
+            stk.pop();
+
+        /* We only need max numbers between arr[i] and NSL */
+
+        if(stk.empty()) left[i] = i;
+        else left[i] = i-stk.top()-1;
+
+        stk.push(i);
+    }
+
+    stk = stack<int>();          // --> This will reintialize stk with empty container and act as clear() method
+
+    /* Filling Right */
+
+    stk.push(n-1);
+
+    for(int i=n-2; i>=0; i--){
+
+        /* ALERT : While filing right, use equals to sign (which was not in left) for handling duplicates */
+
+        while(!stk.empty() and arr[stk.top()]>=arr[i])          
+            stk.pop();
+
+        /* We only need max numbers between arr[i] and NSR */
+
+        if(stk.empty()) right[i] = n-i-1;
+        else right[i] = stk.top()-i-1;
+
+        stk.push(i);
+    }
+
+
+    for(int i=0; i<n; i++){
+
+        long total_occurance = ((left[i]+1)%M * (right[i]+1)%M)%M;
+        long contribution = ((total_occurance%M) * (arr[i]%M))%M;
+
+        sum = ((sum%M) + (contribution%M)) % M; 
+    }
+
+    return sum;
+}
+```
 
 ## Hard
 

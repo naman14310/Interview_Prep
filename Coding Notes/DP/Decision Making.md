@@ -460,6 +460,8 @@ Input: arr = [3,1,1,1,5,1,2,1], target = 3
 
 Output: 3
 
+**Approach 1 : Memorization**
+
 ```cpp
 /* Memorization for finding two intervals (representing end points of subarrays) with min total sum */
 
@@ -525,5 +527,70 @@ int minSumOfLengths(vector<int>& arr, int target) {
 
     unordered_map<string,int> dp;
     return solve (subarrs, 0, subarrs.size(), 0, -1, dp);
+}
+```
+
+**Approach 2 : Iterative DP**
+
+```cpp
+int solve (vector<pair<int,int>> & subarr, int n){
+    int ans = INT_MAX;
+    unordered_map<int,int> mp;                  // --> will store pair of {start, end}
+    vector<int> dp (n+1, INT_MAX);              // --> will store minLength of subarrs on right of every index
+
+    for(auto p : subarr)
+        mp[p.first] = p.second;
+
+    /* Fill dp by checking every index i in the map */
+
+    for(int i=n-1; i>=0; i--){
+        dp[i] = dp[i+1];
+
+        if(mp.find(i)!=mp.end())
+            dp[i] = min(dp[i], mp[i]-i+1);
+    }
+
+    /* Iterating start of every subarr and find minlen on its right in dp and update minSum of both */
+
+    for(auto p : mp){
+        int curr_subarr_len = p.second-p.first+1;
+
+        if(dp[p.second+1]!=INT_MAX)
+            ans = min (ans, curr_subarr_len + dp[p.second+1]);
+    }
+
+    return ans==INT_MAX ? -1 : ans;
+}
+
+
+int minSumOfLengths(vector<int>& arr, int target) {
+    int n = arr.size();
+
+    unordered_map<int,int> mp;
+    mp[0] = -1;
+
+    int csum = 0;
+    int mn = n, mn2 = n;
+
+    /* for avoiding full overlapping, next subarr should start after first so prev will store the start of first subarr */
+
+    int prev = INT_MIN;    
+    vector<pair<int,int>> subarrs;
+
+    for(int i=0; i<n; i++){
+        csum += arr[i];
+        int diff = csum - target;
+
+        if(mp.find(diff)!=mp.end() and mp[diff]>prev){
+            int subArr_len = i-mp[diff];
+            subarrs.push_back({mp[diff]+1, i});
+
+            prev = mp[diff];       // --> update prev everytime when we find subarr
+        }
+
+        mp[csum] = i;
+    }
+
+    return solve (subarrs, n);
 }
 ```

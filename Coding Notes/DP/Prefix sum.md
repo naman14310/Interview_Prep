@@ -174,6 +174,79 @@ int minFlipsMonoIncr(string s) {
 }
 ```
 
+### 5. Longest Well-Performing Interval
+We are given hours, a list of the number of hours worked per day for a given employee. A day is considered to be a tiring day if and only if the number of hours worked is (strictly) greater than 8. A well-performing interval is an interval of days for which the number of tiring days is strictly larger than the number of non-tiring days. Return the length of the longest well-performing interval.
+
+Input: hours = [9,9,6,0,6,6,9]
+
+Output: 3
+
+**Approach 1 : Using Prefix Sum - O(n2)**
+
+```cpp
+int longestWPI(vector<int>& hours) {
+    int n = hours.size();
+
+    hours[0] = hours[0]>8 ? 1 : -1;
+
+    /* Replace values greater then 8 with 1 and others with -1 and compute their cummulative sum */ 
+
+    for(int i=1; i<n; i++)
+        hours[i] = hours[i-1] + (hours[i]>8 ? 1 : -1);
+
+    int ans = 0;
+
+    for(int i=0; i<n; i++){
+        for(int j=i; j<n; j++){
+
+            int tired_cnt = i>0 ? hours[j]-hours[i-1] : hours[j]; 
+            if(tired_cnt>0)
+                ans = max(ans, j-i+1);
+        }
+    }
+
+    return ans;
+}
+```
+
+**Approach 2 : Optimized prefix sum using Hashmap - O(n)**
+
+```cpp
+int longestWPI(vector<int>& hours) {
+    int n = hours.size();
+
+    unordered_map<int, int> mp;         // --> map of pairs {csum, index}
+    mp[0] = -1;        
+
+    int csum = 0;
+    int ans = 0; 
+
+    for(int i=0; i<n; i++){
+
+        csum += hours[i]>8 ? 1 : -1;
+
+        /* If till now csum > 0 then it means that subarr till this index is WPI */
+
+        if(csum>0)
+            ans = max(ans, i+1);
+
+        else{
+            int gain = csum-1;          // --> gain is csum-1 becoz till that index our subarray will be surely WPI
+
+            if(mp.find(gain)!=mp.end())
+                ans = max(ans, i-mp[gain]);
+        }
+
+        /* If curr csum does not exist in map then insert it */
+
+        if(mp.find(csum)==mp.end())
+            mp[csum] = i;
+    }
+
+    return ans;
+}
+```
+
 ## @ Problems based on Range Queries
 
 ### 1. Corporate Flight Bookings

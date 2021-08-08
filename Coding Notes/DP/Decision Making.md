@@ -594,3 +594,57 @@ int minSumOfLengths(vector<int>& arr, int target) {
     return solve (subarrs, n);
 }
 ```
+
+### 13. Valid Parenthesis String
+Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid. The following rules define a valid string:
+1. Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+2. Any right parenthesis ')' must have a corresponding left parenthesis '('.
+3. Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+4. '*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
+
+Input: s = "(*))"
+
+Output: true
+
+```cpp
+bool solve (string & s, int idx, int n, int br_cnt, vector<vector<int>> & dp){
+
+    /* 
+        Following are the two Base Conditions:
+        1. If br_cnt<0 that means we got extra ')' bracket, hence return false
+        2. If idx==n that means we reached at the end 
+           so if br_cnt==0 that means string is balanced hence return true else return false
+    */
+
+    if(br_cnt<0) return false;
+    if(idx==n) return br_cnt==0;
+
+    if(dp[idx][br_cnt]!=-1) return dp[idx][br_cnt];
+
+    /* If curr char is '(', we will increase the br_cnt and recurse */
+
+    if(s[idx]=='(')
+        return dp[idx][br_cnt] = solve (s, idx+1, n, br_cnt+1, dp);
+
+    /* If curr char is ')', we will decrease the br_cnt and recurse */
+
+    else if(s[idx]==')')
+        return dp[idx][br_cnt] = solve (s, idx+1, n, br_cnt-1, dp);
+
+    /* If curr char is '*', we have following 3 choices */
+
+    else{
+        bool res1 = solve(s, idx+1, n, br_cnt+1, dp);           // --> choice 1 : consider it as '('
+        bool res2 = solve(s, idx+1, n, br_cnt-1, dp);           // --> choice 2 : consider it as ')'
+        bool res3 = solve(s, idx+1, n, br_cnt, dp);             // --> choice 3 : consider it as ''
+
+        return dp[idx][br_cnt] = res1 or res2 or res3;
+    }
+}
+
+bool checkValidString(string s) {
+    int n = s.length();
+    vector<vector<int>> dp (n, vector<int> (n, -1));
+    return solve (s, 0, n, 0, dp);
+}
+```

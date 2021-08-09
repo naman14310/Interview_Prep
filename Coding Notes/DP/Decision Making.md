@@ -648,3 +648,56 @@ bool checkValidString(string s) {
     return solve (s, 0, n, 0, dp);
 }
 ```
+
+### 14. Decode Ways
+To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
+1. "AAJF" with the grouping (1 1 10 6)
+2. "KJF" with the grouping (11 10 6)
+
+Note that the grouping (1 11 06) is invalid because "06" cannot be mapped into 'F' since "6" is different from "06". Given a string s containing only digits, return the number of ways to decode it.
+
+Input: s = "226"
+
+Output: 3
+
+```cpp
+int solve (string & s, int idx, int n, vector<int> & dp){
+    if(idx==n) return 1;
+    if(s[idx]=='0') return 0;       // --> Single 0 can't exist so it will become invalid case
+
+    if(dp[idx]!=-1) return dp[idx];
+
+    int ans = 0;
+
+    /* If curr char is 1 we have two choices either to consider one char or consider two at a time */
+
+    if(s[idx]=='1'){
+        ans += solve(s, idx+1, n, dp);
+
+        if(idx!=n-1)
+            ans += solve(s, idx+2, n, dp);            
+    }
+
+    /* If curr char is 2 then also we have two choices if next char is less then 6 */
+
+    else if(s[idx]=='2'){
+        ans += solve(s, idx+1, n, dp);
+
+        if(idx!=n-1 and s[idx+1] <= '6')
+            ans += solve(s, idx+2, n, dp);
+    }
+
+    /* Else we have only one choice */
+
+    else ans += solve (s, idx+1, n, dp);
+
+    return dp[idx] = ans;
+}
+
+
+int numDecodings(string s) {
+    int n = s.length();
+    vector<int> dp (n, -1);
+    return solve (s, 0, n, dp);
+}
+```

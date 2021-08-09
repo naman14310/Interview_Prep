@@ -247,6 +247,46 @@ int longestWPI(vector<int>& hours) {
 }
 ```
 
+### 6. Ways to Split Array Into Three Subarrays
+A split of an integer array is good if:
+1. The array is split into three non-empty contiguous subarrays - named left, mid, right.
+2. The sum of the elements in left is less than or equal to the sum of the elements in mid, and the sum of the elements in mid is less than or equal to the sum of the elements in right.
+
+Return the number of good ways to split nums. As the number may be too large, return it modulo 10^9 + 7.
+
+**Approach 1 : Simple Prefix Sum - O(n2)**
+
+```cpp
+int getSum (vector<int> & nums, int i, int j){
+    if(i>0) return nums[j] - nums[i-1];
+    else return nums[j];
+}
+
+int waysToSplit(vector<int>& nums) {
+    int n = nums.size();
+    int M = 1000000007; 
+
+    for(int i=1; i<n; i++)
+        nums[i] += nums[i-1]; 
+
+    int ans = 0;
+
+    for(int i=0; i<n-1; i++){
+        for(int j=i+1; j<n; j++){
+
+            int sum1 = getSum(nums, 0, i), sum2 = getSum(nums, i+1, j), sum3 = getSum(nums, j+1, n-1);
+
+            if(sum1<=sum2 and sum2<=sum3) 
+                ans = (ans%M + 1)%M;
+
+            else if(sum1>=sum2+sum3) break;
+        }
+    }
+
+    return ans;
+}
+```
+
 ## @ Problems based on Range Queries
 
 ### 1. Corporate Flight Bookings

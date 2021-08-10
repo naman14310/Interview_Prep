@@ -427,7 +427,43 @@ int minFallingPathSum(vector<vector<int>>& matrix) {
 }
 ```
 
-### 3. Triangle
+### 3. Maximum Number of Points with Cost
+You are given an m x n integer matrix points (0-indexed). Starting with 0 points, you want to maximize the number of points you can get from the matrix. To gain points, you must pick one cell in each row. Picking the cell at coordinates (r, c) will add points[r][c] to your score. For every two adjacent rows r and r + 1 (where 0 <= r < m - 1), picking cells at coordinates (r, c1) and (r + 1, c2) will subtract abs(c1 - c2) from your score. Return the maximum number of points you can achieve.
+
+![img](https://assets.leetcode.com/uploads/2021/07/12/screenshot-2021-07-12-at-13-40-26-diagram-drawio-diagrams-net.png)
+
+Input: points = [[1,2,3],[1,5,1],[3,1,1]]
+
+Output: 9
+
+```cpp
+long long solve (vector<vector<int>>& points, int r, int prev_c, int row, int col, vector<vector<int>> & dp){
+    if(r==row) return 0;
+
+    if(r>0 and dp[r][prev_c]!=-1) return dp[r][prev_c];
+
+    long long ans = 0;
+
+    for(int i=0; i<col; i++){
+        long long temp = points[r][i] + solve (points, r+1, i, row, col, dp);
+        if(r>0) temp -= abs(prev_c - i);
+
+        ans = max(ans, temp);
+    }
+
+    return dp[r][prev_c] = ans;
+}
+
+
+long long maxPoints(vector<vector<int>>& points) {
+    int row = points.size(), col = points[0].size();
+    vector<vector<int>> dp (row, vector<int> (col, -1));
+
+    return solve (points, 0, 0, row, col, dp);
+}
+```
+
+### 4. Triangle
 Given a triangle array, return the minimum path sum from top to bottom. For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, you may move to either index i or index i + 1 on the next row.
 
 ```
@@ -465,7 +501,7 @@ int minimumTotal(vector<vector<int>>& triangle) {
 }
 ```
 
-### 4. Unique Paths
+### 5. Unique Paths
 A robot is located at the top-left corner of a m x n grid. The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid. How many possible unique paths are there?
 
 ```cpp
@@ -487,7 +523,7 @@ int uniquePaths(int m, int n) {
 }
 ```
 
-### 5. Unique Paths II (with obstacles)
+### 6. Unique Paths II (with obstacles)
 
 ![img](https://assets.leetcode.com/uploads/2020/11/04/robot1.jpg)
 
@@ -528,7 +564,7 @@ int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
 ```
 
 
-### 6. Out of Boundary Paths
+### 7. Out of Boundary Paths
 There is an m x n grid with a ball. The ball is initially at the position [startRow, startColumn]. You are allowed to move the ball to one of the four adjacent cells in the grid (possibly out of the grid crossing the grid boundary). You can apply at most maxMove moves to the ball. Given the five integers m, n, maxMove, startRow, startColumn, return the number of paths to move the ball out of the grid boundary. Since the answer can be very large, return it modulo 109 + 7.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/28/out_of_boundary_paths_1.png)

@@ -139,6 +139,8 @@ Output: 2
 
 Hint: Precompute one cnt on left side of every index and zero cnt on right side of every index (including curr idx)
 
+**Approach 1 : O(n) | O(n)**
+
 ```cpp
 int minFlipsMonoIncr(string s) {
     int n = s.length();
@@ -171,6 +173,30 @@ int minFlipsMonoIncr(string s) {
     }
 
     return minFlip;
+}
+```
+
+**Approach 2 : O(n) | O(1)**
+
+```cpp
+int minFlipsMonoIncr(string & s) {
+    int n = s.length();
+    int zero_cnt = count(s.begin(), s.end(), '0');
+
+    int one_cnt = 0;
+    int flips = zero_cnt;
+
+    for(int i=0; i<n; i++){
+
+        if(s[i]=='1')
+            one_cnt++;
+        else
+            zero_cnt--;
+
+        flips = min(flips, one_cnt+zero_cnt);
+    }
+
+    return flips;
 }
 ```
 

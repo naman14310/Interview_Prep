@@ -313,7 +313,7 @@ int waysToSplit(vector<int>& nums) {
 }
 ```
 
-**Approach 2 : Prefix Sum + Binary Search**
+**Approach 2 : Prefix Sum + Binary Search - O(nlogn)**
 
 ```cpp
 /* 

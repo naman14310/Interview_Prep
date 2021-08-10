@@ -484,7 +484,57 @@ int maxLen(int A[], int n){
 }
 ```
 
-#### 5. Subarray Product Less Than K (Tricky)
+#### 5. Make Sum Divisible by P
+Given an array of positive integers nums, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by p. It is not allowed to remove the whole array. Return the length of the smallest subarray that you need to remove, or -1 if it's impossible.
+
+Input: nums = [6,3,5,2], p = 9
+
+Output: 2
+
+```cpp
+int minSubarray(vector<int>& nums, int p) {
+    long long n = nums.size();
+
+    /* Find total sum of all numbers */
+
+    long long sum = 0;
+    for(int num : nums)
+        sum += num;
+
+    /* If sum < p we need to remove whole array which is not permissible hence return -1 */
+
+    if(sum<p) return -1;
+
+    /* If rem==0 that means on removing 0 elements we get the desired res so return 0 */
+
+    long long rem = sum%p;
+    if(rem==0) return 0;
+
+    /* Else We need to find a subarray whose remainder equals to sum % p */
+
+    unordered_map<long long,long long> mp;
+    mp[0] = -1;
+
+    long long csum = 0;
+    long long ans = n;
+
+    for(int i=0; i<n; i++){
+        csum += nums[i];
+        long long r = csum % p;
+
+        int target = (r-rem+p) % p;         // --> This line is additional to subarray sum divisible by k
+
+        if(mp.find(target)!=mp.end())
+            ans = min(ans, i-mp[target]);
+
+        mp[r] = i;
+    }
+
+    return ans==n ? -1 : ans;
+}
+```
+
+#### 6. Subarray Product Less Than K (Tricky)
 Count and print the number of (contiguous) subarrays where the product of all the elements in the subarray is less than k.
 
 Hint: Everytime when we add new no. to existing subarray, and if product of new subarray is less then k => then it will add R-L+1 subarray to our answer.
@@ -517,7 +567,7 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
 }
 ```
 
-#### 6. Number of Subarrays with Bounded Maximum
+#### 7. Number of Subarrays with Bounded Maximum
 Return the number of (contiguous, non-empty) subarrays such that the value of the maximum array element in that subarray is at least left and at most right.
 
 Approach: Count all valid subarrays ending at an index i, where 0 <= i < n. For a  particular element we can have 3 cases:
@@ -548,7 +598,7 @@ int numSubarrayBoundedMax(vector<int>& nums, int left, int right) {
 }
 ```
 
-#### 7. Arithmetic Slices
+#### 8. Arithmetic Slices
 An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. Given an integer array nums, return the number of arithmetic subarrays of nums.
 
 Hint: Find count of equal common differences. If count is n then it gives n*(n-1)/2 subarrays.
@@ -572,7 +622,7 @@ int numberOfArithmeticSlices(vector<int>& A) {
 }
 ```
 
-#### 8. Shortest Unsorted Continuous Subarray
+#### 9. Shortest Unsorted Continuous Subarray
 Given an integer array nums, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order.Return the shortest such subarray and output its length.
 
 Approach:
@@ -624,7 +674,7 @@ int findUnsortedSubarray(vector<int>& nums) {
 }
 ```
 
-#### 9. Contiguous Array (Tricky)
+#### 10. Contiguous Array (Tricky)
 Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
 
 Input: nums = [0,1,1,0,1,1,1]

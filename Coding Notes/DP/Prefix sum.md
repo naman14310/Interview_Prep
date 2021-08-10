@@ -313,6 +313,88 @@ int waysToSplit(vector<int>& nums) {
 }
 ```
 
+**Approach 2 : Prefix Sum + Binary Search**
+
+```cpp
+/* 
+    Let i and j be two pointers which splits the array into 3 parts. 
+
+    Condition for splitting: nums[i] <= nums[j]-nums[i] <= nums.back() - nums[j];
+
+    which can be simplified to -
+    1. nums[j] >= 2*nums[i]                     --> (condition for left boundary of j)  
+    2. nums[j] <= (nums.back() + nums[i]) / 2   --> (condition for right boundary of j)
+*/
+
+
+/* function to calculate left boundary for j */
+
+int getLeftBoundary (vector<int> & nums, int start, int end, int i, int n){
+    int bound = n;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(nums[mid] < 2*nums[i])
+            start = mid+1;
+
+        else{
+            bound = mid;
+            end = mid-1;
+        }
+    }
+
+    return bound;
+}
+
+
+/* Function to calculate right boundary for j */
+
+int getRightBoundary (vector<int> & nums, int start, int end, int i, int n){
+    int bound = i;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(nums[mid] > (nums[n-1] + nums[i])/2)
+            end = mid-1;
+
+        else{
+            bound = mid;
+            start = mid+1;
+        }
+    }
+
+    return bound;
+}
+
+
+int waysToSplit(vector<int>& nums) {
+    int n = nums.size();
+    int M = 1000000007; 
+
+    /* Computing prefix sum */
+
+    for(int i=1; i<n; i++)
+        nums[i] += nums[i-1]; 
+
+    int ans = 0;
+
+    /* for every i, compute leftBoundary and rightBoundary of j such that it satisfies the conditions */
+
+    for(int i=0; i<n-2; i++){
+
+        int leftBoundary = getLeftBoundary(nums, i+1, n-2, i, n);
+        int rightBoundary = getRightBoundary(nums, i+1, n-2, i, n);
+
+        if(rightBoundary>=leftBoundary)
+            ans = (ans%M + (rightBoundary - leftBoundary + 1)%M)%M;
+    }
+
+    return ans;
+}
+```
+
 ## @ Problems based on Range Queries
 
 ### 1. Corporate Flight Bookings

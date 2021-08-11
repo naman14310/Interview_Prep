@@ -352,3 +352,31 @@ bool canReach(string s, int minJump, int maxJump) {
     return solve (s, minJump, maxJump, 0, n, dp);
 }
 ```
+
+**Approach 2 : Iterative DP + Sliding window - O(n)**
+
+```cpp
+bool canReach(string s, int minJump, int maxJump) {
+    int n = s.length(); 
+
+    vector<bool> dp (n, false);
+    dp[0] = true;
+
+    int cnt = 0;                    // --> will store cnt of zeros in sliding window
+
+    for(int i=minJump; i<n; i++){
+
+        if(dp[i-minJump]) 
+            cnt++;
+
+        if(i-maxJump-1>=0 and dp[i-maxJump-1])
+            cnt--;
+
+        /* If s[i]==0 and cnt>0, it means that we have atleast one pos in window to jump at curr index i */
+
+        if(s[i]=='0' and cnt>0) dp[i] = true;    
+    }
+
+    return dp[n-1];
+}
+```

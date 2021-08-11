@@ -86,7 +86,63 @@ int minSwapsCouples(vector<int>& row) {
 }
 ```
 
-#### 3. Print Anagrams Together
+#### 3. Array of Doubled Pairs
+Given an array of integers arr of even length, return true if and only if it is possible to reorder it such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <= i < len(arr) / 2.
+
+Input: arr = [4,-2,2,-4]
+
+Output: true
+
+```cpp
+bool canReorderDoubled(vector<int>& arr) {
+    int n = arr.size();
+    sort(arr.begin(), arr.end());       // --> sort the array 
+
+    unordered_map<int,vector<int>> freq;
+    vector<bool> done (n, false);
+
+    /* Insert all nums in hashmap with their indexes after sorting */
+
+    for(int i=0; i<n; i++)
+        freq[arr[i]].push_back(i);
+
+    /* Iterate for every num and find if its pair (2*num) exist or not */
+
+    for(int i=0; i<n; i++){
+        if(done[i]) continue;       // --> If num is already used as pair then continue
+
+        int num = arr[i];
+
+        /* Else found out its pair */
+
+        if(freq.find(2*num)!=freq.end()){
+
+            /* One by one pop out indexes from end of pair's vector till we get any unused index */
+
+            while(!freq[2*num].empty() and done[freq[2*num].back()])
+                freq[2*num].pop_back();
+
+            /* If that vector becomes empty we will simply continue */
+
+            if(freq[2*num].empty()) continue;
+
+            /* Else mark both the indexed to be true (used) */
+
+            done[i] = true;
+            done[freq[2*num].back()] = true;
+        }
+    }
+
+    /* If we found any unused number then return false else return true */
+
+    for(bool d : done)
+        if(!d) return false;
+
+    return true;
+}
+```
+
+#### 4. Print Anagrams Together
 Given an array of strings, return all groups of strings that are anagrams. The groups must be created in order of their appearance in the original array.
 
 Input: words[] = {no,on,is}
@@ -118,7 +174,7 @@ vector<vector<string> > Anagrams(vector<string>& string_list) {
 }
 ```
 
-#### 4. Longest String Chain
+#### 5. Longest String Chain
 You are given an array of words where each word consists of lowercase English letters. wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB.
 
 For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".

@@ -315,3 +315,40 @@ int jump(vector<int>& nums) {
 }
 ```
 
+### 3. Jump Game VII
+You are given a 0-indexed binary string s and two integers minJump and maxJump. In the beginning, you are standing at index 0, which is equal to '0'. You can move from index i to index j if the following conditions are fulfilled:
+1. i + minJump <= j <= min(i + maxJump, s.length - 1), and
+2. s[j] == '0'.
+
+Return true if you can reach index s.length - 1 in s, or false otherwise.
+
+Input: s = "011010", minJump = 2, maxJump = 3
+
+Output: true
+
+**Approach 1 : Memorization**
+
+```cpp
+bool solve (string & s, int minJump, int maxJump , int idx, int n, vector<int> & dp){
+    if(idx==n-1) return true;
+
+    if(dp[idx]!=-1) return dp[idx];
+
+    for(int i=idx+minJump; i<=min(n-1, idx+maxJump); i++){
+        if(s[i]=='0'){
+            bool res = solve (s, minJump, maxJump, i, n, dp);
+            if(res) return dp[idx] = true;
+        }    
+    }    
+
+    return dp[idx] = false;
+}
+
+
+bool canReach(string s, int minJump, int maxJump) {
+    int n = s.length();
+    vector<int> dp (n, -1);
+
+    return solve (s, minJump, maxJump, 0, n, dp);
+}
+```

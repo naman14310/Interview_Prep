@@ -358,6 +358,72 @@ int maxSubarraySumCircular(vector<int>& nums) {
 }
 ```
 
+#### 4. K-Concatenation Maximum Sum (Tricky)
+Given an integer array arr and an integer k, modify the array by repeating it k times. For example, if arr = [1, 2] and k = 3 then the modified array will be [1, 2, 1, 2, 1, 2]. Return the maximum sub-array sum in the modified array. Note that the length of the sub-array can be 0 and its sum in that case is 0. As the answer can be very large, return the answer modulo 109 + 7.
+
+Input: arr = [1,-2,1], k = 5
+
+Output: 2
+
+```cpp
+int M = 1000000007;
+
+/* It will simply return max Subarray sum using Kadane's algorithm */
+
+int maxsumSubarray (vector<int> & arr){
+    int tempSum = arr[0], maxSum = arr[0];
+
+    for(int i=1; i<arr.size(); i++){
+        tempSum = max ((tempSum+arr[i])%M, arr[i]%M);
+        maxSum = max (tempSum, maxSum);
+    }
+
+    return maxSum;
+}
+
+/* It will return max Suffix (of 1st array) + Prefix (of 2nd array) sum using Kadane on two concatenated vectors */ 
+
+int maxPrefixSuffixSum (vector<int> & arr){
+    vector<int> double_arr = arr;
+    double_arr.insert(double_arr.end(), arr.begin(), arr.end());
+
+    int maxPSsum = maxsumSubarray (double_arr);
+    return maxPSsum;
+}
+
+
+int kConcatenationMaxSum(vector<int>& arr, int k) {
+    long long totalSum = 0;
+    int res = 0;
+
+    for(int num : arr)
+        totalSum = (totalSum%M + num%M)%M;
+
+    int KadaneSum = maxsumSubarray(arr);
+    int maxPS = maxPrefixSuffixSum(arr);
+
+    /* If k=1 return simple Kadane Sum */
+
+    if(k==1) res = KadaneSum%M;
+
+    /* 
+        Else we have 2 cases : Either totalSum is positive is negative 
+
+        1. If totalSum < 0 --> return max(KadaneSum, maxPrefixSuffix)
+        2. if totalSum >=0 --> return maxPrefixSuffix + (k-2) * totalSum
+
+    */
+
+    else if(totalSum<0)
+        res = max(KadaneSum%M, maxPS%M);
+
+    else
+        res = (maxPS + (totalSum%M * (k-2)%M )%M ) % M;
+
+    return max(res%M,0);      // --> return max(res,0) because we can also return empty subarray
+}
+```
+
 ## @ Problems with Subarrays
 
 #### 1. Subarray Sum Equals K (Tricky)

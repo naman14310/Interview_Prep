@@ -608,3 +608,68 @@ int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
     return dfs (startRow, startColumn, m, n, maxMove, dp);
 }
 ```
+
+### 8. Cherry Pickup II
+Given a rows x cols matrix grid representing a field of cherries. Each cell in grid represents the number of cherries that you can collect. You have two robots that can collect cherries for you, Robot #1 is located at the top-left corner (0,0) , and Robot #2 is located at the top-right corner (0, cols-1) of the grid.
+
+Return the maximum number of cherries collection using both robots  by following the rules below:
+1. From a cell (i,j), robots can move to cell (i+1, j-1) , (i+1, j) or (i+1, j+1).
+2. When any robot is passing through a cell, It picks it up all cherries, and the cell becomes an empty cell (0).
+3. When both robots stay on the same cell, only one of them takes the cherries.
+4. Both robots cannot move outside of the grid at any moment.
+5. Both robots should reach the bottom row in the grid.
+
+![img](https://assets.leetcode.com/uploads/2020/04/29/sample_1_1802.png)
+
+```cpp
+bool isInside(int y, int col){
+    return y>=0 and y<col;
+}
+
+/* 
+    x   --> x pos of both robots will be same
+    y1  --> y pos of robot 1
+    y2  --> y pos of robot 2
+
+*/
+
+int solve (vector<vector<int>>& grid, int x, int y1, int y2, int row, int col, vector<vector<vector<int>>> & dp ){
+
+    if(x==row-1){
+        int ans = grid[x][y1] + grid[x][y2];
+        if(y1==y2) ans -= grid[x][y1];
+        return ans;
+    }
+
+    if(dp[x][y1][y2]!=-1) return dp[x][y1][y2];
+
+    int ans = 0;
+    int dy[] = {-1, 0, 1};
+
+    for(int i=0; i<3; i++){
+        int yn1 = y1 + dy[i]; 
+        if(!isInside(yn1, col)) continue;
+
+        for(int j=0; j<3; j++){
+            int yn2 = y2 + dy[j]; 
+            if(!isInside(yn2, col)) continue;
+
+            int res = solve (grid, x+1, yn1, yn2, row, col, dp);
+            ans = max(ans, res);
+        }
+    }
+
+    ans += grid[x][y1] + grid[x][y2];
+    if(y1==y2) ans -= grid[x][y1];      // --> If both robots comes to the same cell, then remove the extra overlapped cherry
+
+    return dp[x][y1][y2] = ans;
+}
+
+
+int cherryPickup(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    vector<vector<vector<int>>> dp (row, vector<vector<int>> (col, vector<int> (col, -1)));
+
+    return solve (grid, 0, 0, col-1, row, col, dp);
+}
+```

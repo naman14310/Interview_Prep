@@ -103,7 +103,114 @@ int stoneGameII(vector<int>& piles) {
 }
 ```
 
-### 3. Stone Game VII
+### 3. Stone Game III
+There are several stones arranged in a row, and each stone has an associated value which is an integer given in the array stoneValue. Alice and Bob take turns, with Alice starting first. On each player's turn, that player can take 1, 2 or 3 stones from the first remaining stones in the row. The score of each player is the sum of values of the stones taken. The score of each player is 0 initially.
+
+The objective of the game is to end with the highest score, and the winner is the player with the highest score and there could be a tie. The game continues until all the stones have been taken. Assume Alice and Bob play optimally. Return "Alice" if Alice will win, "Bob" if Bob will win or "Tie" if they end the game with the same score.
+
+Input: values = [1,2,3,7]
+
+Output: "Bob"
+
+```cpp
+/* This function will return index of mx_score from temp vector according to the player's chance */ 
+
+int getMaxScore_idx (vector<pair<int,int>> & temp, bool alice){
+
+    if(alice){
+        int mx_score = temp[0].first;
+        int mx_idx = 0;
+
+        for(int i=1; i<temp.size(); i++){
+            if(temp[i].first > mx_score){
+                mx_score = temp[i].first;
+                mx_idx = i; 
+            }
+        }
+
+        return mx_idx;
+    }
+    else{
+        int mx_score = temp[0].second;
+        int mx_idx = 0;
+
+        for(int i=1; i<temp.size(); i++){
+            if(temp[i].second > mx_score){
+                mx_score = temp[i].second;
+                mx_idx = i; 
+            }
+        }
+
+        return mx_idx;
+    }
+}
+
+
+pair<int,int> solve (vector<int>& stoneValue, int n, int idx, bool alice, vector<vector<pair<int,int>>> & dp){
+    if(idx>=n) return {0,0};
+
+    if(dp[idx][alice].first!=-1) return dp[idx][alice];
+
+    pair<int,int> ans = {0,0};
+    vector<pair<int,int>> temp;
+
+    /* Iterating for all choices using for loop and saving each result in temp vector */
+
+    for(int i=idx; i<min(idx+3, n); i++){
+
+        auto res = solve (stoneValue, n, i+1, !alice, dp);
+        temp.push_back(res);
+    }
+
+
+    /* If curr player is alice, then she will choose the score according to her mx score */
+
+    if(alice){
+
+        for(int i=0; i<temp.size(); i++){
+            for(int j=0; j<=i; j++)
+                temp[i].first += stoneValue[idx+j];
+        }
+
+        int mx_idx = getMaxScore_idx (temp, alice);
+        ans = temp[mx_idx];
+    }
+
+    /* If curr player is bob, then he will choose the score according to his mx score */
+
+    else{
+
+        for(int i=0; i<temp.size(); i++){
+            for(int j=0; j<=i; j++)
+                temp[i].second += stoneValue[idx+j];
+        }
+
+        int mx_idx = getMaxScore_idx (temp, alice);
+        ans = temp[mx_idx];
+    }
+
+    return dp[idx][alice] = ans;
+}
+
+
+string stoneGameIII(vector<int>& stoneValue) {
+    int n = stoneValue.size();
+    vector<vector<pair<int,int>>> dp (n, vector<pair<int,int>> (2, {-1, -1}));
+
+    auto score = solve (stoneValue, n, 0, true, dp);
+
+    if(score.first>score.second)
+        return "Alice";
+
+    else if(score.first<score.second)
+        return "Bob";
+
+    else return "Tie";
+}
+```
+
+
+### 4. Stone Game VII
 Alice and Bob take turns playing a game, with Alice starting first.
 
 There are n stones arranged in a row. On each player's turn, they can remove either the leftmost stone or the rightmost stone from the row and receive points equal to the sum of the remaining stones' values in the row. The winner is the one with the higher score when there are no stones left to remove.
@@ -161,7 +268,7 @@ int stoneGameVII(vector<int>& stones) {
 }
 ```
 
-### 4. Maximum Score from Performing Multiplication Operations (Tricky)
+### 5. Maximum Score from Performing Multiplication Operations (Tricky)
 You are given two integer arrays nums and multipliers of size n and m respectively, where n >= m. You begin with a score of 0. You want to perform exactly m operations. On the ith operation (1-indexed), you will:
 1. Choose one integer x from either the start or the end of the array nums.
 2. Add multipliers[i] * x to your score.

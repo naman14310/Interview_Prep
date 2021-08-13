@@ -48,7 +48,58 @@ public:
 };
 ```
 
-### 2. Maximal Square
+### 2. Number of Submatrices That Sum to Target (Tricky)
+Given a matrix and a target, return the number of non-empty submatrices that sum to target.
+
+![img](https://assets.leetcode.com/uploads/2020/09/02/mate1.jpg)
+
+Input: matrix = [[0,1,0],[1,1,1],[0,1,0]], target = 0
+
+Output: 4
+
+```cpp
+int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
+    int row = matrix.size(), col = matrix[0].size();
+    int ans = 0;
+
+    /* Calculating prefix sum of each row */
+
+    for(int i=0; i<row; i++)
+        for(int j=1; j<col; j++)
+            matrix[i][j] += matrix[i][j-1]; 
+
+    /* Iterating on all pairs of cols and count all submatrices bounded by those cols which sums to target */ 
+
+    for(int j=0; j<col; j++){
+        for(int k=j; k<col; k++){
+
+            /* 
+                compute sum of each row between col j and k using precomputed rowwise prefix sum 
+                and treat them as single entity.
+            */
+
+            int csum = 0;
+            unordered_map<int,int> mp;
+            mp[0] = 1;
+
+            for(int i=0; i<row; i++){
+
+                csum += j==0 ? matrix[i][k] : matrix[i][k]-matrix[i][j-1];
+                int diff = csum-target;
+
+                if(mp.find(diff)!=mp.end())
+                    ans += mp[diff];
+
+                mp[csum]++;
+            }
+        }            
+    }
+
+    return ans;
+}
+```
+
+### 3. Maximal Square
 Given an m x n binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
 
 ![img](https://assets.leetcode.com/uploads/2020/11/26/max1grid.jpg)
@@ -81,7 +132,7 @@ int maximalSquare(vector<vector<char>>& matrix) {
 }
 ```
 
-### 3. Count Square Submatrices with All Ones
+### 4. Count Square Submatrices with All Ones
 Given a m * n matrix of ones and zeros, return how many square submatrices have all ones.
 
 Time Complexity : O(n2)
@@ -128,7 +179,7 @@ int countSquares(vector<vector<int>>& matrix) {
 }
 ```
 
-### 4. Count Submatrices With All Ones (Rectangles are also allowed)
+### 5. Count Submatrices With All Ones (Rectangles are also allowed)
 Given a rows * columns matrix mat of ones and zeros, return how many submatrices have all ones.
 
 Time Complexity : O(n3)
@@ -190,7 +241,7 @@ int numSubmat(vector<vector<int>>& mat) {
 }
 ```
 
-### 5. Largest 1-Bordered Square (Tricky)
+### 6. Largest 1-Bordered Square (Tricky)
 Given a 2D grid of 0s and 1s, return the number of elements in the largest square subgrid that has all 1s on its border, or 0 if such a subgrid doesn't exist in the grid.
 ```
 Input: grid = 
@@ -253,7 +304,7 @@ int largest1BorderedSquare(vector<vector<int>>& grid) {
 }
 ```
 
-### 6.  Largest Plus Sign
+### 7.  Largest Plus Sign
 Return the order of the largest axis-aligned plus sign of 1's contained in grid. If there is none, return 0.
 
 ![img](https://assets.leetcode.com/uploads/2021/06/13/plus1-grid.jpg)

@@ -481,3 +481,77 @@ vector<int> diffWaysToCompute(string & expression) {
     return solve (expression, 0, n-1, dp);
 }
 ```
+
+### 8. Burst Balloons (Tricky)
+You are given n balloons, indexed from 0 to n - 1. You are asked to burst all the balloons. If you burst the ith balloon, you will get nums[i - 1] * nums[i] * nums[i + 1] coins. If i - 1 or i + 1 goes out of bounds of the array, then treat it as if there is a balloon with a 1 painted on it. Return the maximum coins you can collect by bursting the balloons wisely.
+
+Input: nums = [1,5]
+
+Output: 10
+
+**Approach:** 
+
+If we choose the kth balloon to be the first one to be burst, we can't make the subproblems independent. Let's try the other way round. We choose the kth balloon as the last one to be burst. Now the subproblems will become independent since (k - 1)th balloon and (k + 1)th balloon won't need each other in order to calculate the answer. 
+
+Now for each k starting from i to j, we choose the kth balloon to be the last one to be burst and calculate the profit by solving the subproblems recursively. Whichever choice of k gives us the best answer, we store it and return.
+
+Important point to be noted here is that the balloons in the range (i, k - 1) and (k + 1, j) will be burst BEFORE kth balloon. So, when we burst the kth balloon, the profit will be nums[i - 1] * nums[k] * nums[j + 1] PROVIDED that index i - 1 and j + 1 are valid.
+
+[Explained Solution](https://leetcode.com/problems/burst-balloons/discuss/892552/For-those-who-are-not-able-to-understand-any-solution-WITH-DIAGRAM)
+
+![img](https://assets.leetcode.com/users/images/1bafbe44-cb85-4ade-adb5-54ee5095baea_1602579692.7557607.png)
+
+```cpp
+int solve (vector<int> & nums, int i, int j, int n, vector<vector<int>> & dp){
+
+    if(i>j) return 0;  // --> If no balloon left, return 0
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    /* 
+        If i==j, then only one balloon left in this window, 
+        so return it by multiplying it with the left outer and right outer val
+    */
+
+    if(i==j){
+        int l = i-1 >= 0 ? nums[i-1] : 1;
+        int r = j+1 < n ? nums[j+1] : 1;
+
+        return dp[i][j] = nums[i]*l*r;
+    } 
+
+    int ans = 0;
+
+    /* 
+        One by one iterate over all the balloons inside this window 
+        and treat them as last balloon of that window
+
+        Now since it is last balloon all its adjacent balloons inside this window are already bursted
+        So, left outer balloon and right outer balloon outside the window will now become adjacent
+        hence multiply their cost and solve recursively
+
+    */
+
+    for(int k=i; k<=j; k++){
+
+        int l = i-1 >= 0 ? nums[i-1] : 1;
+        int r = j+1 < n ? nums[j+1] : 1;
+
+        int left = solve (nums, i, k-1, n, dp);
+        int right = solve (nums, k+1, j, n, dp);
+
+        int temp = left + right + (nums[k]*l*r);
+        ans = max(ans, temp);
+    }
+
+    return dp[i][j] = ans;
+}
+
+
+int maxCoins(vector<int>& nums) {
+    int n = nums.size();
+    vector<vector<int>> dp (n, vector<int> (n, -1));
+
+    return solve (nums, 0, n-1, n, dp);
+}
+```

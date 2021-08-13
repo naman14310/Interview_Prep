@@ -209,8 +209,55 @@ string stoneGameIII(vector<int>& stoneValue) {
 }
 ```
 
+### 4. Stone Game IV
+Initially, there are n stones in a pile. On each player's turn, that player makes a move consisting of removing any non-zero square number of stones in the pile. Also, if a player cannot make a move, he/she loses the game. Given a positive integer n. Return True if and only if Alice wins the game otherwise return False, assuming both players play optimally with Alice starting first.
 
-### 4. Stone Game VII
+Input: n = 4
+
+Output: true
+
+```cpp
+/*
+    Our function will return:
+    True if Alice wins 
+    False if Bob wins
+*/
+
+
+bool solve (int n, vector<int> & sqrs, bool alice, vector<vector<int>> & dp){
+
+    if(dp[n][alice]!=-1) return dp[n][alice];
+
+    for(int i=0; i<sqrs.size(); i++){
+        if(sqrs[i]>n) return !alice;
+        if(sqrs[i]==n) return alice;
+
+        bool res = solve (n-sqrs[i], sqrs, !alice, dp);
+
+        if(alice and res)
+            return dp[n][alice] = true;
+
+        if(!alice and !res) 
+            return dp[n][alice] = false;
+    }
+
+    return dp[n][alice] = alice ? false : true;
+}
+
+
+bool winnerSquareGame(int n) {
+    vector<int> sqrs;
+    vector<vector<int>> dp (n+1, vector<int> (2, -1));
+
+    for(int i=1; i*i<=n; i++)
+        sqrs.push_back(i*i);
+
+    return solve (n, sqrs, true, dp);
+}
+```
+
+
+### 5. Stone Game VII
 Alice and Bob take turns playing a game, with Alice starting first.
 
 There are n stones arranged in a row. On each player's turn, they can remove either the leftmost stone or the rightmost stone from the row and receive points equal to the sum of the remaining stones' values in the row. The winner is the one with the higher score when there are no stones left to remove.
@@ -268,7 +315,7 @@ int stoneGameVII(vector<int>& stones) {
 }
 ```
 
-### 5. Maximum Score from Performing Multiplication Operations (Tricky)
+### 6. Maximum Score from Performing Multiplication Operations (Tricky)
 You are given two integer arrays nums and multipliers of size n and m respectively, where n >= m. You begin with a score of 0. You want to perform exactly m operations. On the ith operation (1-indexed), you will:
 1. Choose one integer x from either the start or the end of the array nums.
 2. Add multipliers[i] * x to your score.

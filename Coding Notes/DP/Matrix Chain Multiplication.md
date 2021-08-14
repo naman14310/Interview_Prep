@@ -600,3 +600,43 @@ int minCost(int n, vector<int>& cuts) {
     return solve (cuts, 0, n, 0, len-1, dp);
 }
 ```
+
+### 10. Palindrome Partitioning IV
+Given a string s, return true if it is possible to split the string s into three non-empty palindromic substrings. Otherwise, return false.
+
+Input: s = "abcbdd"
+
+Output: true
+
+```cpp
+bool isPalindrome (string & s, int i, int j){
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
+    return true;
+}
+
+
+bool solve (string & s, int n, int idx, int cnt, vector<vector<int>> & dp){
+    if(dp[idx][cnt]!=-1) return false;
+
+    if(cnt==1) return dp[idx][cnt] = isPalindrome(s, idx, n-1);
+
+    for(int k=idx; k<n-cnt+1; k++){
+        if(isPalindrome(s, idx, k)){
+            bool res = solve (s, n, k+1, cnt-1, dp);
+            if(res) return true;
+        }
+    }
+
+    return dp[idx][cnt] = false;
+}
+
+
+bool checkPartitioning(string s) {
+    int n = s.length();
+    vector<vector<int>> dp (n+1, vector<int> (4, -1));
+    return solve (s, n, 0, 3, dp);      // For this question cnt is 3
+}
+```

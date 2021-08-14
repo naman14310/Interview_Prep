@@ -555,3 +555,48 @@ int maxCoins(vector<int>& nums) {
     return solve (nums, 0, n-1, n, dp);
 }
 ```
+
+### 9. Minimum Cost to Cut a Stick
+Given a wooden stick of length n units. Given an integer array cuts where cuts[i] denotes a position you should perform a cut at. You should perform the cuts, you can change the order of the cuts as you wish. The cost of one cut is the length of the stick to be cut, the total cost is the sum of costs of all cuts. Return the minimum total cost of the cuts.
+
+Input: n = 7, cuts = [1,3,4,5]
+
+Output: 16
+
+![img](https://assets.leetcode.com/uploads/2020/07/23/e1.jpg)
+
+```cpp
+/* 
+    Here i and j are the endpoints of stick (used for calculating cost at every state by computing stick len) 
+    whereas start and end are pointers to mark the boundaries over cuts vector
+*/
+
+int solve (vector<int> & cuts, int i, int j, int start, int end, vector<vector<int>> & dp){
+
+    if(start>end) return 0;     // --> Base condition is when no cutpoints left
+
+    if(dp[start][end]!=-1) return dp[start][end];
+
+    int ans = INT_MAX;
+
+    for(int k=start; k<=end; k++){
+
+        int temp = solve(cuts, i, cuts[k], start, k-1, dp) + solve(cuts, cuts[k], j, k+1, end, dp) + j-i;
+        ans = min(ans, temp);
+    }
+
+    return dp[start][end] = ans;
+}
+
+
+int minCost(int n, vector<int>& cuts) {
+    int len = cuts.size();
+
+    /* We sort the cuts vector so we can easily itearte for cut points for any part of the stick */
+
+    sort(cuts.begin(), cuts.end());   
+
+    vector<vector<int>> dp (len, vector<int> (len, -1));
+    return solve (cuts, 0, n, 0, len-1, dp);
+}
+```

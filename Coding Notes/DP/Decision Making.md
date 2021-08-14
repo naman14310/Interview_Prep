@@ -744,3 +744,82 @@ int minDifficulty(vector<int>& jobDifficulty, int d) {
     return solve (jobDifficulty, n, 0, d, dp);
 }
 ```
+
+
+### 16. Allocate Mailboxes (Tricky)
+Given the array houses and an integer k. where houses[i] is the location of the ith house along a street, your task is to allocate k mailboxes in the street. Return the minimum total distance between each house and its nearest mailbox.
+
+![img](https://assets.leetcode.com/uploads/2020/05/07/sample_11_1816.png)
+
+Input: houses = [1,4,8,10,20], k = 3
+
+Output: 5
+
+Hint: Mailbox should be placed at Median house so as to minimize the cost.
+
+```cpp
+
+/* 
+    Problem Breakup
+    ---------------
+
+    We need to divide whole array into k subarrays such that every subarray is a cluster
+    of closely situated houses having 1 mailbox between them
+
+    Now For placing 1 mailbox in a subarray, 
+    we should place it at the median house to minimize the whole cost
+
+    Hint: Precompute one cost matrix for stroring cost values of placing mailboxes 
+    at median of every possible subarray (or interval)
+
+*/
+
+
+/* Use partion into k subarrays logic for placing mailboxes and use cost of placing from cost matrix */
+
+int solve (vector<int> & houses, int n, int idx, int k, vector<vector<int>> & cost, vector<vector<int>> & dp){
+    if(k==1) return cost[idx][n-1];
+
+    if(dp[idx][k]!=-1) return dp[idx][k];
+
+    int ans = INT_MAX;
+
+    /* We can use all k mailboxes so we will check cost till n-k+1 houses for placing curr mailbox */ 
+
+    for(int i=idx; i<n-k+1; i++){
+        int temp = cost[idx][i] + solve (houses, n, i+1, k-1, cost, dp);
+        ans = min(ans, temp);
+    }
+
+    return dp[idx][k] = ans;
+}
+
+
+int minDistance(vector<int>& houses, int k) {
+    int n = houses.size();     
+    if(k==n) return 0;
+
+    sort(houses.begin(), houses.end());
+
+    vector<vector<int>> cost (n, vector<int> (n, 0));
+
+    /* Filling cost of placing mail box in median point of every interval in cost matrix */
+
+    for(int i=0; i<n; i++){
+        for(int j=i; j<n; j++){
+
+            int median = i+(j-i+1)/2;
+            int mailbox = houses[median];
+            int c = 0;
+
+            for(int k=i; k<=j; k++)
+                c += abs(houses[k]-mailbox);    
+
+            cost[i][j] = c;
+        }
+    }
+
+    vector<vector<int>> dp (n+1, vector<int> (k+1, -1));    // --> For avoiding overlapping computations
+    return solve (houses, n, 0, k, cost, dp);
+}
+```

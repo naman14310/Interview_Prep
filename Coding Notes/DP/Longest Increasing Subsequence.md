@@ -482,3 +482,73 @@ int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& pro
     return ans;
 }
 ```
+
+**Approach 3 : DP + Binary Search**
+
+Hint: Calculate maxprofit so far for every endTime and and run binary search to find maxprofit before starting curr Job
+
+```cpp
+struct job{
+    int stime, etime, profit; 
+    job(int st, int et, int p){
+        stime = st; etime = et;
+        profit = p;
+    }
+};
+
+
+static bool comp(job j1, job j2){
+    return j1.etime < j2.etime; 
+}
+
+
+int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+    int n = profit.size();
+    vector<job> jobs;
+
+    for(int i=0; i<n; i++){
+        job jb (startTime[i], endTime[i], profit[i]);
+        jobs.push_back(jb);
+    }
+
+    /* Sort jobs according to their ending time */
+
+    sort(jobs.begin(), jobs.end(), comp);
+
+    vector<pair<int,int>> dp;       // --> vector of pair {endTime, profit}
+
+    dp.push_back({jobs[0].etime, jobs[0].profit});
+
+    /* Since jobs vector is sorted by endtime, we can use binary search to find max profit so far */
+
+    for(int i=1; i<n; i++){
+
+        /* 
+            start and end defines the range of binary search as we need to find max profit 
+            before the start time of current job
+        */
+
+        int start = 0, end = i-1;
+        int maxProfit = 0;
+
+        while(start<=end){
+            int mid = start + (end-start)/2;
+
+            if(dp[mid].first <= jobs[i].stime){
+                maxProfit = dp[mid].second;
+                start = mid+1;
+            }
+            else
+                end = mid-1;
+        }
+
+        /* Max profit =  max (profit including this job, profit with incuding this job so far) */
+
+        maxProfit = max({maxProfit+jobs[i].profit, dp.back().second});
+
+        dp.push_back({jobs[i].etime, maxProfit});
+    }
+
+    return dp.back().second;
+}
+```

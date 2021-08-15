@@ -823,3 +823,70 @@ int minDistance(vector<int>& houses, int k) {
     return solve (houses, n, 0, k, cost, dp);
 }
 ```
+
+### 17. Maximum Profit in Job Scheduling
+We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i]. You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range. If you choose a job that ends at time X you will be able to start another job that starts at time X.
+
+![img](https://assets.leetcode.com/uploads/2019/10/10/sample22_1584.png)
+
+Input: startTime = [1,2,3,4,6], endTime = [3,5,10,6,9], profit = [20,20,100,70,60]
+
+Output: 150
+
+```cpp
+struct job{
+    int stime, etime, profit; 
+    job(int st, int et, int p){
+        stime = st; etime = et;
+        profit = p;
+    }
+};
+
+
+static bool comp(job j1, job j2){
+    return j1.stime < j2.stime; 
+}
+
+
+int solve (vector<job> & jobs, int n, int idx, int prev, unordered_map<string, int> & dp){
+    if(idx==n) return 0;
+
+    string key = to_string(idx) + "," + to_string(prev);
+    if(dp.find(key)!=dp.end()) return dp[key];
+
+    /* If stime of current job is >= prev (etime of prev job) then we can either choose it or leave it */
+
+    if(jobs[idx].stime >= prev){
+
+        int p1 = solve (jobs, n, idx+1, jobs[idx].etime, dp) + jobs[idx].profit;
+        int p2 = solve (jobs, n, idx+1, prev, dp);
+
+        return dp[key] = max(p1, p2);
+    }
+
+    /* Else we can't choose the current job due to overlapping interval */
+
+    else{
+        int p = solve (jobs, n, idx+1, prev, dp);
+        return dp[key] = p;
+    }
+}
+
+
+int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+    int n = profit.size();
+    vector<job> jobs;
+
+    for(int i=0; i<n; i++){
+        job jb (startTime[i], endTime[i], profit[i]);
+        jobs.push_back(jb);
+    }
+
+    /* Sort jobs according to their starting time and then use memoization to find subset that yeild best profit */
+
+    sort(jobs.begin(), jobs.end(), comp);
+
+    unordered_map<string, int> dp;
+    return solve (jobs, n, 0, 0, dp);
+}
+```

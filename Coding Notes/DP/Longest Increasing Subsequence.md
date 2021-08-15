@@ -1,5 +1,8 @@
 # Problems on LIS Pattern
 
+**Identification:** 
+Whenever there is a need to use prev variable in recursive code so that next element should be either greater or smaller then that prev variable then that question can be solved by using LIS approach.
+
 ### 1. Longest Increasing Subsequence
 Given an integer array nums, return the length of the longest strictly increasing subsequence.
 
@@ -350,5 +353,132 @@ vector<int> largestDivisibleSubset(vector<int>& nums) {
     }
 
     return res;
+}
+```
+
+### 7. Maximum Profit in Job Scheduling (Tricky)
+We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i]. You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range. If you choose a job that ends at time X you will be able to start another job that starts at time X.
+
+![img](https://assets.leetcode.com/uploads/2019/10/10/sample22_1584.png)
+
+Input: startTime = [1,2,3,4,6], endTime = [3,5,10,6,9], profit = [20,20,100,70,60]
+
+Output: 150
+
+**Approach 1 : Memorization**
+
+```cpp
+struct job{
+    int stime, etime, profit; 
+    job(int st, int et, int p){
+        stime = st; etime = et;
+        profit = p;
+    }
+};
+
+
+static bool comp(job j1, job j2){
+    return j1.stime < j2.stime; 
+}
+
+
+int solve (vector<job> & jobs, int n, int idx, int prev, unordered_map<string, int> & dp){
+    if(idx==n) return 0;
+
+    string key = to_string(idx) + "," + to_string(prev);
+    if(dp.find(key)!=dp.end()) return dp[key];
+
+    /* If stime of current job is >= prev (etime of prev job) then we can either choose it or leave it */
+
+    if(jobs[idx].stime >= prev){
+
+        int p1 = solve (jobs, n, idx+1, jobs[idx].etime, dp) + jobs[idx].profit;
+        int p2 = solve (jobs, n, idx+1, prev, dp);
+
+        return dp[key] = max(p1, p2);
+    }
+
+    /* Else we can't choose the current job due to overlapping interval */
+
+    else{
+        int p = solve (jobs, n, idx+1, prev, dp);
+        return dp[key] = p;
+    }
+}
+
+
+int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+    int n = profit.size();
+    vector<job> jobs;
+
+    for(int i=0; i<n; i++){
+        job jb (startTime[i], endTime[i], profit[i]);
+        jobs.push_back(jb);
+    }
+
+    /* Sort jobs according to their starting time and then use memoization to find subset that yeild best profit */
+
+    sort(jobs.begin(), jobs.end(), comp);
+
+    unordered_map<string, int> dp;
+    return solve (jobs, n, 0, 0, dp);
+}
+```
+
+**Approach 2 : Iterative LIS Pattern**
+
+```cpp
+struct job{
+    int stime, etime, profit; 
+    job(int st, int et, int p){
+        stime = st; etime = et;
+        profit = p;
+    }
+};
+
+
+static bool comp(job j1, job j2){
+    return j1.etime < j2.etime; 
+}
+
+
+int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+    int n = profit.size();
+    vector<job> jobs;
+
+    for(int i=0; i<n; i++){
+        job jb (startTime[i], endTime[i], profit[i]);
+        jobs.push_back(jb);
+    }
+
+    /* Sort jobs according to their ending time */
+
+    sort(jobs.begin(), jobs.end(), comp);
+
+    vector<int> dp (n, 0);
+
+    /* 
+        Fill dp vector by profit of each individual jobs 
+        (this will indicate profit of each job when they are the only one to be executed)
+    */
+
+    for(int i=0; i<n; i++)
+        dp[i] = jobs[i].profit;
+
+    int ans = dp[0];
+
+    /* Simply use LIS pattern to find the max profit that can be achieved before executing curr job */
+
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+
+            if(jobs[j].etime <= jobs[i].stime)
+                dp[i] = max(dp[i], jobs[i].profit+dp[j]);
+
+            ans = max(ans, dp[i]); 
+        }
+    }
+
+    return ans;
 }
 ```

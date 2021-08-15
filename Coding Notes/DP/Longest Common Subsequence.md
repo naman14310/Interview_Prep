@@ -457,3 +457,86 @@ bool isInterleave(string s1, string s2, string s3) {
     return solve(s1, s2, s3, 0, 0, 0, dp);
 }
 ```
+
+### 11. Edit Distance
+Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word:
+1. Insert a character
+2. Delete a character
+3. Replace a character
+
+Input: word1 = "intention", word2 = "execution"
+
+Output: 5
+
+**Approach 1 : Using Memorization**
+
+```cpp
+int solve (string & s1, string & s2, int i, int j, vector<vector<int>> & dp){
+
+    /* 
+        Base Cases:
+        when one string gets empty, we need to insert all remaining char of second string
+        hence simply return that char count
+    */
+
+    if(i==s1.length()) return s2.length()-j;
+
+    if(j==s2.length()) return s1.length()-i;
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    /* Now if curr char of both strings are equal rescurse for next part on both strings */
+
+    if(s1[i]==s2[j]){
+        int res = solve (s1, s2, i+1, j+1, dp);
+        return dp[i][j] = res;
+    }
+
+    /* Else we have following 3 choices */
+
+    else{
+
+        int res1 = solve (s1, s2, i, j+1, dp);          // --> case 1 : Insert
+        int res2 = solve (s1, s2, i+1, j, dp) ;         // --> case 2 : Delete
+        int res3 = solve (s1, s2, i+1, j+1, dp);        // --> case 3 : Replace
+
+        return dp[i][j] = min({res1, res2, res3}) + 1;
+    }
+}
+
+
+int minDistance(string word1, string word2) {
+    int len1 = word1.length(), len2 = word2.length();
+    vector<vector<int>> dp (len1, vector<int> (len2, -1));
+
+    return solve (word1, word2, 0, 0, dp);
+}
+```
+
+**Approach 2 : Bottom Up (Tabulation)**
+
+```cpp
+int minDistance(string word1, string word2) {
+    int len1 = word1.length(), len2 = word2.length();
+    vector<vector<int>> dp (len1+1, vector<int> (len2+1, 0));
+
+    for(int i=0; i<=len1; i++){
+        for(int j=0; j<=len2; j++){
+
+            if(i==0)
+                dp[i][j] = j;
+
+            else if(j==0)
+                dp[i][j] = i;
+
+            else if (word1[i-1]==word2[j-1])
+                dp[i][j] = dp[i-1][j-1];
+
+            else
+                dp[i][j] = min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]}) + 1;
+        }
+    } 
+
+    return dp[len1][len2];
+}
+```

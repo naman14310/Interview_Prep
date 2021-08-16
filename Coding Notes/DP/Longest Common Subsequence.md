@@ -458,7 +458,51 @@ bool isInterleave(string s1, string s2, string s3) {
 }
 ```
 
-### 11. Edit Distance
+### 11. Distinct Subsequences
+Given two strings s and t, return the number of distinct subsequences of s which equals t.
+
+Input: s = "rabbbit", t = "rabbit"
+
+Output: 3
+
+Explanation: As shown below, there are 3 ways you can generate "rabbit" from S.
+
+rabbbit, rabbbit, rabbbit
+
+```cpp
+int solve (string & s, string & t, int i, int j, vector<vector<int>> & dp){
+    if(j==t.length()) return 1;
+    if(i==s.length()) return 0;
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    /* If curr char of both strings are equal then we have two cases */
+
+    if(s[i]==t[j]){    
+        int res1 = solve (s, t, i+1, j+1, dp);          // --> Either consider it to be in subsequence
+        int res2 = solve (s, t, i+1, j, dp);            // --> Else do not consider it to be in subsequence
+
+        return dp[i][j] = res1 + res2;
+    }
+
+    /* Else we can't consider that char and recurse for rest part of the s */
+
+    else{
+        int res = solve (s, t, i+1, j, dp);
+        return dp[i][j] = res;
+    }
+}
+
+
+int numDistinct(string s, string t) {
+    int slen = s.length(), tlen = t.length();
+    vector<vector<int>> dp (slen, vector<int> (tlen, -1));
+    return solve (s, t, 0, 0, dp);
+}
+```
+
+
+### 12. Edit Distance
 Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word:
 1. Insert a character
 2. Delete a character

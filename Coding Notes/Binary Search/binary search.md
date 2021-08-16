@@ -659,6 +659,58 @@ int findPages(int arr[], int n, int m)
 }
 ```
 
+#### 7. Split Array Largest Sum
+Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
+
+Input: nums = [7,2,5,10,8], m = 2
+
+Output: 18
+
+```cpp
+bool isValid (vector<int> & nums, int mid, int m){
+    int i=0, sum=0;
+    int cnt = 1;
+
+    while(i<nums.size()){
+        if(sum+nums[i]>mid){
+            sum=0;
+            cnt++;
+        }
+        else{
+            sum += nums[i];
+            i++;
+        }
+    }
+
+    return cnt<=m;
+}
+
+
+int binarySearch (vector<int> & nums, int start, int end, int m){
+    int ans = end;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(isValid(nums, mid, m)){
+            ans = mid;
+            end = mid-1;
+        }
+        else
+            start = mid+1;
+    }
+
+    return ans;
+}
+
+
+int splitArray(vector<int>& nums, int m) {
+    int start = *max_element(nums.begin(), nums.end());
+    int end = accumulate(nums.begin(), nums.end(), 0);
+
+    return binarySearch (nums, start, end, m);
+}
+```
 
 ## @ Binary Search on Matrix
 

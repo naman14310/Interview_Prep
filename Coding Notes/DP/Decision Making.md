@@ -824,3 +824,52 @@ int minDistance(vector<int>& houses, int k) {
 }
 ```
 
+### 17. Frog Jump
+A frog is crossing a river. The frog can jump on a stone, but it must not jump into the water. Given a list of stones' positions (in units) in sorted ascending order, determine if the frog can cross the river by landing on the last stone. Initially, the frog is on the first stone and assumes the first jump must be 1 unit. If the frog's last jump was k units, its next jump must be either k - 1, k, or k + 1 units. The frog can only jump in the forward direction.
+
+Input: stones = [0,1,3,5,6,8,12,17]
+
+Output: true
+
+```cpp
+bool solve (vector<int> & stones, int n, int idx, int prev, unordered_set<string> & vis){
+    if(idx==n-1) return true;
+
+    string key = to_string(idx) + "," + to_string(prev);
+    if(vis.find(key)!=vis.end()) return false;
+
+    for(int i=idx+1; i<n; i++){
+
+        if(stones[i]-stones[idx]==prev-1){
+            bool res = solve (stones, n, i, stones[i]-stones[idx], vis);
+            if(res) return true;
+        }
+
+        else if(stones[i]-stones[idx]==prev){
+            bool res = solve (stones, n, i, stones[i]-stones[idx], vis);
+            if(res) return true;
+        }
+
+        else if(stones[i]-stones[idx]==prev+1){
+            bool res = solve (stones, n, i, stones[i]-stones[idx], vis);
+            if(res) return true;
+        }
+
+        else if(stones[i]-stones[idx]>prev+1)
+            break;
+    }
+
+    vis.insert(key);
+    return false;
+}
+
+
+bool canCross(vector<int>& stones) {
+    int n = stones.size();
+    if(n==1) return true;
+    if(stones[1]!=1) return false;
+
+    unordered_set<string> vis;
+    return solve (stones, n, 1, 1, vis);
+}
+```

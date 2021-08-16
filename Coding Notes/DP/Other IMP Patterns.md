@@ -375,8 +375,39 @@ int minTaps(int n, vector<int>& ranges) {
 }
 ```
 
+### 4. Video Stitching
+You are given a series of video clips. These video clips can be overlapping with each other and have varying lengths. Each video clip is described by an array clips where clips[i] = [starti, endi] indicates that the ith clip started at starti and ended at endi.We can cut these clips into segments freely. For example, a clip [0, 7] can be cut into segments [0, 1] + [1, 3] + [3, 7].
 
-### 4. Jump Game VII
+Return the minimum number of clips needed so that we can cut the clips into segments that cover the entire sporting event [0, time]. If the task is impossible, return -1.
+
+Hint: Use same concept as above
+
+```cpp
+int videoStitching(vector<vector<int>>& clips, int time) {
+    int reach = 0; 
+    int clips_required = 0;
+
+    while(reach<time){
+        int farthest = reach;
+
+        for(int i=0; i<clips.size(); i++){
+
+            if(clips[i][0]<=reach and clips[i][1]>farthest)
+                farthest = clips[i][1];
+        }
+
+        if(farthest==reach) return -1;
+
+        reach = farthest;
+        clips_required++;
+    }
+
+    return clips_required;
+}
+```
+
+
+### 5. Jump Game VII
 You are given a 0-indexed binary string s and two integers minJump and maxJump. In the beginning, you are standing at index 0, which is equal to '0'. You can move from index i to index j if the following conditions are fulfilled:
 1. i + minJump <= j <= min(i + maxJump, s.length - 1), and
 2. s[j] == '0'.

@@ -660,7 +660,59 @@ int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
 }
 ```
 
-### 8. Cherry Pickup II
+### 8. Longest Increasing Path in a Matrix
+Given an m x n integers matrix, return the length of the longest increasing path in matrix. From each cell, you can either move in four directions: left, right, up, or down. You may not move diagonally or move outside the boundary 
+
+![img](https://assets.leetcode.com/uploads/2021/01/05/grid1.jpg)
+
+Output: 4
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+int solve (vector<vector<int>> & matrix, vector<vector<int>> & dp, int x, int y, int row, int col){
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1, 0, -1};
+
+    if(dp[x][y]!=-1) return dp[x][y];
+
+    int ans = 1;
+
+    for(int i=0; i<4; i++){
+        int xnew = x+dx[i];
+        int ynew = y+dy[i];
+
+        if(isInside(xnew, ynew, row, col) and matrix[xnew][ynew] > matrix[x][y])
+            ans = max(ans, 1+solve(matrix, dp, xnew, ynew, row, col));
+    }
+
+    return dp[x][y] = ans;
+}
+
+
+int longestIncreasingPath(vector<vector<int>>& matrix) {
+    int row = matrix.size(), col = matrix[0].size();
+    vector<vector<int>> dp (row, vector<int> (col, -1));
+
+    int ans = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            ans = max(ans, solve(matrix, dp, i, j, row, col));
+        }
+    }
+
+    return ans;
+}
+```
+
+
+### 9. Cherry Pickup II
 Given a rows x cols matrix grid representing a field of cherries. Each cell in grid represents the number of cherries that you can collect. You have two robots that can collect cherries for you, Robot #1 is located at the top-left corner (0,0) , and Robot #2 is located at the top-right corner (0, cols-1) of the grid.
 
 Return the maximum number of cherries collection using both robots  by following the rules below:

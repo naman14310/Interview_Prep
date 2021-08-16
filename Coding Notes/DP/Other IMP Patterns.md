@@ -315,7 +315,68 @@ int jump(vector<int>& nums) {
 }
 ```
 
-### 3. Jump Game VII
+### 3. Minimum Number of Taps to Open to Water a Garden (Tricky)
+There is a one-dimensional garden on the x-axis. The garden starts at the point 0 and ends at the point n. There are n + 1 taps located at points [0, 1, ..., n] in the garden. Given an integer n and an integer array ranges of length n + 1 where ranges[i] (0-indexed) means the i-th tap can water the area [i - ranges[i], i + ranges[i]] if it was open. Return the minimum number of taps that should be open to water the whole garden, If the garden cannot be watered return -1.
+
+Input: n = 7, ranges = [1,2,1,0,2,1,0,1]
+
+Output: 3
+
+```cpp
+/*      
+        Let n = 4, ranges = [2, 2, 0, 1, 0]             
+
+
+        2       2       0       1       0               |       Ranges
+                                                        |                    
+        x--------------->                               |       [-2, 2]
+        <-------x--------------->                       |       [-1, 3]
+                        x                               |          x
+                        <-------x------->               |       [2, 4]
+                                        x               |          x
+
+
+        x represents every tap at index i
+        and line represents the range of every tap
+*/
+
+
+int minTaps(int n, vector<int>& ranges) {
+
+    int reach = 0;
+    int taps_required = 0;
+    int idx = 0;
+
+    while(reach<n){
+
+        /* Search for the tap whose range starts before the curr reach and go more farthest from all others */
+
+        int farthest = reach;
+
+        for(int i=idx; i<=n; i++){
+
+            if(i-ranges[i]<=reach and i+ranges[i]>farthest){
+                farthest = i+ranges[i];
+                idx = i;                // --> we will only chk for tap which are ahead when we updated farthest
+            }
+        }
+
+        /* If value of farthest does not increase that means we can't go more farther to right using these taps */
+
+        if(farthest==reach) return -1;
+
+        /* Else update our reach and increment taps_required */
+
+        reach = farthest;
+        taps_required++;
+    }
+
+    return taps_required;
+}
+```
+
+
+### 4. Jump Game VII
 You are given a 0-indexed binary string s and two integers minJump and maxJump. In the beginning, you are standing at index 0, which is equal to '0'. You can move from index i to index j if the following conditions are fulfilled:
 1. i + minJump <= j <= min(i + maxJump, s.length - 1), and
 2. s[j] == '0'.

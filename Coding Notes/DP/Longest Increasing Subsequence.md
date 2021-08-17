@@ -263,7 +263,43 @@ int bestTeamScore(vector<int>& scores, vector<int>& ages) {
 }
 ```
 
-### 6. Largest Divisible Subset (Tricky)
+### 6. Russian Doll Envelopes
+You are given a 2D array of integers envelopes where envelopes[i] = [wi, hi] represents the width and the height of an envelope. One envelope can fit into another if and only if both the width and height of one envelope are greater than the other envelope's width and height. Return the maximum number of envelopes you can Russian doll (i.e., put one inside the other). You cannot rotate an envelope.
+
+Input: envelopes = [[5,4],[6,4],[6,7],[2,3]]
+
+Output: 3
+
+```cpp
+int maxEnvelopes(vector<vector<int>>& envelopes) {
+    int n = envelopes.size();
+    vector<pair<int,int>> evp;
+
+    for(auto e : envelopes)
+        evp.push_back({e[0], e[1]});
+
+    /* Sort above vector by weight and height in ascending order */
+
+    sort(evp.begin(), evp.end());
+
+    int ans = 1;
+    vector<int> dp (n, 1);
+
+    for(int i=1; i<n; i++){
+        for(int j=0; j<i; j++){
+
+            if(evp[j].first<evp[i].first and evp[j].second<evp[i].second)
+                dp[i] = max(dp[i], dp[j]+1);
+
+            ans = max(ans, dp[i]);
+        }
+    }
+
+    return ans;
+}
+```
+
+### 7. Largest Divisible Subset (Tricky)
 Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
 1. answer[i] % answer[j] == 0, or
 2. answer[j] % answer[i] == 0
@@ -356,7 +392,7 @@ vector<int> largestDivisibleSubset(vector<int>& nums) {
 }
 ```
 
-### 7. Maximum Profit in Job Scheduling (Tricky)
+### 8. Maximum Profit in Job Scheduling (Tricky)
 We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i]. You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range. If you choose a job that ends at time X you will be able to start another job that starts at time X.
 
 ![img](https://assets.leetcode.com/uploads/2019/10/10/sample22_1584.png)

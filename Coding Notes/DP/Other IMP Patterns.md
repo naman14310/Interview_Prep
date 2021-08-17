@@ -233,7 +233,53 @@ bool wordBreak(string s, vector<string>& wordDict) {
         dict.insert(w);
 
     unordered_set<string> dp;
+    return solve (s, n, 0, dict, dp);
+}
+```
 
+### 2. Word Break II
+Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in any order. Same word in the dictionary may be reused multiple times in the segmentation.
+
+Input: s = "catsanddog", wordDict = ["cat","cats","and","sand","dog"]
+
+Output: ["cats and dog","cat sand dog"]
+
+```cpp
+vector<string> solve (string & s, int n, int idx, unordered_set<string> & dict, unordered_map<string, vector<string>> & dp){
+    if(idx==n) return vector<string>();
+
+    string key = s.substr(idx, n-idx+1);
+    if(dp.find(key)!=dp.end()) return dp[key];
+
+    vector<string> v;
+    string temp = "";
+
+    for(int i=idx; i<n; i++){
+        temp.push_back(s[i]);
+
+        if(dict.find(temp)!=dict.end()){
+            if(i==n-1) 
+                v.push_back(temp);
+            else{
+                auto res = solve (s, n, i+1, dict, dp);
+                for(string str : res)
+                    v.push_back(temp + " " + str);
+            }
+        }
+    }
+
+    return dp[key] = v;
+}
+
+
+vector<string> wordBreak(string s, vector<string>& wordDict) {
+    int n = s.length();
+
+    unordered_set<string> dict;
+    for(string w : wordDict)
+        dict.insert(w);
+
+    unordered_map<string, vector<string>> dp;
     return solve (s, n, 0, dict, dp);
 }
 ```

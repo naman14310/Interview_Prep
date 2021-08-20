@@ -518,3 +518,46 @@ bool canReach(string s, int minJump, int maxJump) {
     return dp[n-1];
 }
 ```
+
+## @ Stock Buy-Sell
+
+### 1. Best Time to Buy and Sell Stock IV
+You are given an integer array prices where prices[i] is the price of a given stock on the ith day, and an integer k. Find the maximum profit you can achieve. You may complete at most k transactions. You must sell the stock before you buy again.
+
+Input: k = 2, prices = [3,2,6,5,0,3]
+
+Output: 7
+
+```cpp
+int solve (vector<int> & prices, int n, int idx, int k, bool buySell, vector<vector<vector<int>>> & dp){
+    if(idx==n or k==0) return 0;
+
+    if(dp[idx][k][buySell]!=INT_MIN) return dp[idx][k][buySell];
+
+    /* If buySell==true, means we already have one stock to sell */
+
+    if(buySell){
+        int sell = solve (prices, n, idx+1, k-1, false, dp) + prices[idx];
+        int nosell = solve (prices, n, idx+1, k, true, dp);
+
+        return dp[idx][k][buySell] = max(sell, nosell);
+    }
+
+    /* Else we can either buy stock at price[idx] or leave it */
+
+    else{
+        int buy = solve (prices, n, idx+1, k, true, dp) - prices[idx];
+        int nobuy = solve (prices, n, idx+1, k, false, dp);
+
+        return dp[idx][k][buySell] = max(buy, nobuy);
+    }
+}
+
+
+int maxProfit(int k, vector<int>& prices) {
+    int n = prices.size();
+    vector<vector<vector<int>>> dp (n+1, vector<vector<int>> (k+1, vector<int> (2, INT_MIN)));
+
+    return solve (prices, n, 0, k, false, dp);
+}
+```

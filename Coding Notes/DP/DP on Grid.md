@@ -924,3 +924,46 @@ int cherryPickup(vector<vector<int>>& grid) {
     return solve (grid, 0, 0, col-1, row, col, dp);
 }
 ```
+
+### 11. Dungeon Game
+The demons captured princess in the bottom-right corner of a dungeon. Our knight was initially at top-left room. The knight has an initial health point represented by a positive integer. If at any point his health point drops to 0 or below, he dies immediately.
+
+Some of the rooms are guarded by demons (represented by negative integers), so the knight loses health upon entering these rooms, other rooms are either empty (represented as 0) or contain magic orbs that increase the knight's health (represented by positive integers).
+
+The knight can move only rightward or downward in each step. Return the knight's minimum initial health so that he can rescue the princess.
+
+![img](https://assets.leetcode.com/uploads/2021/03/13/dungeon-grid-1.jpg)
+
+Output: 7
+
+```cpp
+int calculateMinimumHP(vector<vector<int>>& dungeon) {
+    int row = dungeon.size(), col = dungeon[0].size();
+
+    vector<vector<int>> dp (row, vector<int>(col, 0));
+    dp[row-1][col-1] = dungeon[row-1][col-1] < 0 ? dungeon[row-1][col-1] : 0;
+
+    /* we will start filling dp table in bottom-up manner */
+
+    for(int i=row-1; i>=0; i--){
+        for(int j=col-1; j>=0; j--){
+            if(i==row-1 and j==col-1) continue;
+
+            if(i==row-1)
+                dp[i][j] = dp[i][j+1] + dungeon[i][j];
+
+            else if(j==col-1)
+                dp[i][j] = dp[i+1][j] + dungeon[i][j];
+
+            else
+                dp[i][j] = max(dp[i+1][j], dp[i][j+1]) + dungeon[i][j];
+
+            /* If dp val becomes positive then make it zero, becoz we can't use powerup in reverse direction */
+
+            if(dp[i][j]>0) dp[i][j] = 0;
+        }
+    }
+
+    return abs(dp[0][0]) + 1;
+}
+```

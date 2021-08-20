@@ -771,8 +771,96 @@ int longestIncreasingPath(vector<vector<int>>& matrix) {
 }
 ```
 
+### 9. Cherry Pickup
+You are given an n x n grid representing a field of cherries, each cell is one of three possible integers.
+1. 0 means the cell is empty, so you can pass through,
+2. 1 means the cell contains a cherry that you can pick up and pass through, or
+3. -1 means the cell contains a thorn that blocks your way.
 
-### 9. Cherry Pickup II
+Return the maximum number of cherries you can collect by following the rules below:
+
+1. Starting at the position (0, 0) and reaching (n - 1, n - 1) by moving right or down through valid path cells (cells with value 0 or 1).
+2. After reaching (n - 1, n - 1), returning to (0, 0) by moving left or up through valid path cells.
+3. When passing through a path cell containing a cherry, you pick it up, and the cell becomes an empty cell 0.
+4. If there is no valid path between (0, 0) and (n - 1, n - 1), then no cherries can be collected.
+
+![img](https://assets.leetcode.com/uploads/2020/12/14/grid.jpg)
+
+Output: 5
+
+```cpp
+/* 
+    Total cherries in path from [0,0] to [n-1, n-1] + Total cherries in path from [n-1, n-1]
+    is EQUAL to
+    Two robots moving from [0,0] to [n-1, n-1] and pick maximum number of cherries
+
+    x1, y1 are the coordinates for Robot 1 and x2, y2 are the coordinates for Robot2
+    Now Since they are taking 1 step at a time, 
+
+    So, x1 + y1 = x2 + y2   ==>  y2 = x1 + y1 - x2
+    Hence we can reduce 4D-dp to 3D-dp for optimization
+
+*/
+
+
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+int solve (vector<vector<int>> & grid, int x1, int y1, int x2, int row, int col, bool & path_found, vector<vector<vector<int>>> & dp){
+
+    /* Since both robots will reach destination at the same time so checking base case for robot 1 will be suffice */
+
+    if(x1==row-1 and y1==col-1){
+        path_found = true;
+        return grid[x1][y1];
+    } 
+
+    if(dp[x1][y1][x2]!=-1) return dp[x1][y1][x2];
+
+    int ans = 0;
+    int y2 = x1 + y1 - x2;
+
+    int dx[] = {0, 1};
+    int dy[] = {1, 0};
+
+    /* For robot 1 */
+
+    for(int i=0; i<2; i++){
+        int xn1 = x1 + dx[i];
+        int yn1 = y1 + dy[i];
+
+        /* For robot 2 */
+
+        for(int j=0; j<2; j++){
+            int xn2 = x2 + dx[j];
+            int yn2 = y2 + dy[j];
+
+            if (isInside(xn1, yn1, row, col) and isInside(xn2, yn2, row, col) and grid[xn1][yn1]!=-1 and grid[xn2][yn2]!=-1)
+                ans = max(ans, solve(grid, xn1, yn1, xn2, row, col, path_found, dp));
+        }
+    }
+
+    /* If both robots lands at same cell then add that cell only one time else add that cell two time */
+
+    ans += x1==x2 ? grid[x1][y1]  : grid[x1][y1] + grid[x2][y2];    
+
+    return dp[x1][y1][x2] = ans;
+}
+
+int cherryPickup(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    bool path_found = false;
+
+    vector<vector<vector<int>>> dp (row, vector<vector<int>> (col, vector<int> (row, -1)));
+
+    int ans = solve (grid, 0, 0, 0, row, col, path_found, dp);
+    return path_found ? ans : 0;
+}
+```
+
+### 10. Cherry Pickup II
 Given a rows x cols matrix grid representing a field of cherries. Each cell in grid represents the number of cherries that you can collect. You have two robots that can collect cherries for you, Robot #1 is located at the top-left corner (0,0) , and Robot #2 is located at the top-right corner (0, cols-1) of the grid.
 
 Return the maximum number of cherries collection using both robots  by following the rules below:

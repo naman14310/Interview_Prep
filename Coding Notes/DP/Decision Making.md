@@ -976,3 +976,73 @@ bool isMatch(string s, string p) {
     return solve (s, p, 0, 0, ' ', dp);
 }
 ```
+
+### 19. Wildcard Matching
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+1. '?' Matches any single character.
+2. '*' Matches any sequence of characters (including the empty sequence).
+3. The matching should cover the entire input string (not partial).
+
+Input: s = "adceb", p = "*a*b"
+Output: true
+
+Input: s = "acdcb", p = "a*c?b"
+Output: false
+
+```cpp
+bool solve (string & s, string & p, int i, int j, vector<vector<int>> & dp){
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+
+    /* ---------------------------- Base Cases ----------------------------*/
+
+    if(i==s.length()){
+
+        if(j==p.length()) 
+            return true;
+
+        else if(p[j]=='*') 
+            return dp[i][j] = solve (s, p, i, j+1, dp);
+
+        else return 
+            false;
+    }    
+
+    else if (j==p.length()) return false;
+
+    /* --------------------------------------------------------------------*/
+
+
+    if(p[j]=='?' or p[j]==s[i])
+        return dp[i][j] = solve (s, p, i+1, j+1, dp);
+
+
+    else if(p[j]=='*'){
+
+        /* Case 1 : Matching 0 characters */
+
+        bool res = solve (s, p, i, j+1, dp);
+
+        /* Case 2 : Matching exactly 1 character */
+
+        bool res2 = solve (s, p, i+1, j+1, dp);
+
+        /* Case 3 : Matching more then 1 character */
+
+        bool res3 = solve (s, p, i+1, j, dp);
+
+        return dp[i][j] = res or res2 or res3;
+    }
+
+
+    else return false;
+}
+
+
+bool isMatch(string s, string p) {
+
+    vector<vector<int>> dp (s.length()+1, vector<int> (p.length()+1, -1));
+    return solve (s, p, 0, 0, dp);
+}
+```

@@ -770,6 +770,38 @@ int findMaxLength(vector<int>& nums) {
 }
 ```
 
+#### 11. Shortest Subarray with Sum at Least K
+Given an integer array nums and an integer k, return the length of the shortest non-empty subarray of nums with a sum of at least k. If there is no such subarray, return -1.
+
+**Approach 1: Brute Force - O(n2)**
+
+```cpp
+/* Brute Force Solution - O(n2) */
+
+int shortestSubarray(vector<int>& nums, int k) {
+
+    /* Calculating prefixSum */
+
+    for(int i=1; i<nums.size(); i++)
+        nums[i]+=nums[i-1];
+
+    int ans = INT_MAX;
+
+    for(int j=0; j<nums.size(); j++){
+        for(int i=0; i<=j; i++){
+
+            int sum = i==0 ? nums[j] : nums[j] - nums[i-1];
+
+            if(sum>=k and j-i+1 < ans)
+                ans = j-i+1;
+        }
+    }
+
+    return ans==INT_MAX ? -1 : ans;
+}
+```
+
+
 ## @ Wave Sort
 
 #### 1. Wiggle Sort 1

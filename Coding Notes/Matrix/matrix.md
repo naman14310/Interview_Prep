@@ -227,3 +227,39 @@ vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
         return res;
 }
 ```
+
+#### 6. Maximum Matrix Sum
+You are given an n x n integer matrix. You can do the following operation any number of times:
+1. Choose any two adjacent elements of matrix and multiply each of them by -1.
+2. Two elements are considered adjacent if and only if they share a border.
+
+Your goal is to maximize the summation of the matrix's elements. Return the maximum sum of the matrix's elements using the operation mentioned above.
+
+![img](https://assets.leetcode.com/uploads/2021/07/16/pc79-q2ex2.png)
+
+Hint: If the number of negative signs is even, the answer is the sum of the absolute value of all elements. If it is odd, we will have to minus 2 times the number with smallest absolute value.
+
+```cpp
+    long long maxMatrixSum(vector<vector<int>>& matrix) {
+        int row = matrix.size(), col = matrix[0].size();
+        
+        int mn = INT_MAX;
+        int neg_cnt = 0;
+        long long sum = 0;
+        
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                
+                if(matrix[i][j]<0) neg_cnt++;
+                
+                mn = min(mn, abs(matrix[i][j]));
+                sum += abs(matrix[i][j]);
+            }
+        }
+        
+        if(neg_cnt%2==0)
+            return sum;
+        
+        else return sum-(2*mn);
+    }
+```

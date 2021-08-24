@@ -20,7 +20,7 @@ There are two major component in this project, i.e. Tracker and Peer.
 
 Tracker file stores the metadata and information about all groups, users and files, basically a mapping between groups, files and users. I've used only one tracker, but we can use more the one tracker to make it fault Tolerant. To make the system robust, we will maintain persistent data structures in a txt file or noSQL databases (as data will be stored in JSON like structures) so that whenever both trackers go down, we can restore the information when trackers are up again.
 
-![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/tracker.png)
+![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/images/tracker.png)
 
 
 **2. Peer**
@@ -29,7 +29,7 @@ A client can either download or share a file with its peers. Whenever a client s
 
 Whenever any peer wants to download a file, it asks the tracker for the list of all the peers that share that file. Once it gets the list of peers, it downloads unique parts of the file from different peers, keeping that in mind that the whole file is not downloaded from a single peer (Why? So that one peer does not have too much load). Here Peice Selection Algo came into picture. As soon as a piece of file gets downloaded it should be available for sharing. 
 
-![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/Peer%20architecture.png)
+![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/images/Peer%20architecture.png)
 
 
 ## Piece Selection Algorithm 
@@ -43,7 +43,7 @@ Piece Selection Algorithm plays an important role in deciding which chunk should
 4. If there are multiple seeders available then pick seeder with less load vector.  
 5. Do this for all chunks and initiate parallel downloading through multithreading.
 
-![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/piece%20selection.png)
+![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/images/piece%20selection.png)
 
 
 ## Optimizations that can be done

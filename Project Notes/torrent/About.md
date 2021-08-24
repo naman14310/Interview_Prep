@@ -1,5 +1,8 @@
 # P2P File Sharer (Mini-Torrent)
 
+[Project Link](https://github.com/naman14310/Torrent_Peer2Peer_File_Sharing_System)
+
+
 ## Brief Introduction
 
 This project is based on the concept of Torrent which is basically a peer to peer file sharing network. The user has functionalities like sharing a file, downloading a file, removing a file in a group they belongs to. Download will be parallel with multiple chunks from multiple peers. 
@@ -43,3 +46,13 @@ Piece Selection Algorithm plays an important role in deciding which chunk should
 ![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/piece%20selection.png)
 
 
+## Optimizations that can be done
+
+1. We are not updating seeder's list dynamically, while downloading is going on. 
+Solution: Whenever any seeder leaves the room, is should update the seeder's list on tracker and tracker should push that seeder's list on the client peer so that chunk can be downloaded from some other seeder. 
+
+2. Some peers may have more processing power or bandwidth compared to other peers. Can design a system such that those peers receive more piece requests.
+
+3. To make system more robust, we will maintain persistent data structures in a txt file or noSQL databases (as data will be stored in JSON like structures) so that whenever both trackers go down, we can restore the information when trackers are up again.
+
+4. We will work on UI part.

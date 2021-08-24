@@ -61,7 +61,7 @@ Solution: Whenever any seeder leaves the room, is should update the seeder's lis
 
 ## Interview Questions
 
-### Q1. What is the advantage of P2P architecture?
+#### Q1. What is the advantage of P2P architecture?
 
 1. Peer can download multiple chunks from multiple peers simultaneously.
 2. Peer can download chunks from another peer which is currently downloading the same file.
@@ -69,68 +69,68 @@ Solution: Whenever any seeder leaves the room, is should update the seeder's lis
 
 <br/>
 
-### Q2. What are the challenges in sending and receiving files in this system?
+#### Q2. What are the challenges in sending and receiving files in this system?
 
 Client (Peer) should be able to download multiple files simultaneously. Seeder should be able to take download request concurrently. Each file had to be downloaded in a separate thread. Handling and Synchronising multiple threads created many challenges for me.
 
 <br/>
 
-### Q3. How did you synchronise multiple threads.
+#### Q3. How did you synchronise multiple threads.
 
 While receiving the chunks from multiple seeders, I've used mutex locks to obtain synchronization.
 
 <br/>
 
-### Q4. What are the problems you have faced while implementing project?
+#### Q4. What are the problems you have faced while implementing project?
 
 1. Implementing Piece Selection algorithm was a real challenge to me. I've created nested data structure --> map of {groupId, map of {fileName, seederList for each chunk} } to efficiently represent the information.   
 2. Synchronising multiple threads using locks and mutexes was also a tough task.
 
 <br/>
 
-### Q5. Why is synchronization between trackers needed. How did you synchronize tracker?
+#### Q5. Why is synchronization between trackers needed. How did you synchronize tracker?
 
 Synchronisation between tracker is needed to maintain the consistency of the system. We can achieve it by storing data into persistent data structures like text files or NoSql Databases (MongoDb) so that whenever both trackers go down, we can restore the information when trackers are up again.
 
 <br/>
 
-### Q6. How do you verify that the chunk received is correct ?
+#### Q6. How do you verify that the chunk received is correct ?
 
 By computing SHA1 (Secure Hashing Algorithm) of every chunk at senders and receivers end. The SHA1 string will uniquely identify each chunk and each file.
 
 <br/>
 
-### Q7. Which system calls are used in your code ?
+#### Q7. Which system calls are used in your code ?
 1. Pthread for multithreading 
 2. Mutex for synchronising multiple threads
 
 <br/>
 
-### Q8. How would you implement this system without tracker ?
+#### Q8. How would you implement this system without tracker ?
 
 By using Distributed hash tables like pastry and chord. A distributed hash table (DHT) is a decentralized storage system that provides lookup and storage schemes similar to a hash table, storing key-value pairs. Each node in a DHT is responsible for keys along with the mapped values. Any node can efficiently retrieve the value associated with a given key.
 
 <br/>
 
-### Q9. What happens when a download fails ?
+#### Q9. What happens when a download fails ?
 
 The code was written inside the try-catch block, so if in case download fails and control flow reaches inside catch block, that thread will get terminated and this information will be sent to the tracker and seeder list will get updated accordingly. We will also notify user, and user need to again issue the download file command to get whole file in their machine. Since other chunks are downloaded successfully (and information gets updated in tracker), we only need to download the chunk which is not present.
 
 <br/>
 
-### Q10. Does Bittorrent use TCP, or does it also use UDP ?
+#### Q10. Does Bittorrent use TCP, or does it also use UDP ?
 
 Bittorrent is P2P sharing platform. It uses TCP as its transport protocol and uses UDP for control packets. 
 
 <br/>
 
-### Q11. What protocol, sockets uses for communication ?
+#### Q11. What protocol, sockets uses for communication ?
 
 TCP
 
 <br/>
 
-### Q12. What is SHA, and What is SHA used for ?
+#### Q12. What is SHA, and What is SHA used for ?
 
 SHA stands for secure hashing algorithm. SHA is a modified version of MD5 and used for hashing data. SHA works in such a way even if a single character of the message changed, then it will generate a different hash.
 
@@ -138,19 +138,19 @@ Primary reason to use SHAs is the uniqueness of all the hash digests. If SHA-2 i
 
 <br/>
 
-### Q13. What is difference between hashing and encryption ?
+#### Q13. What is difference between hashing and encryption ?
 
 The only difference between hashing and encryption is that hashing is one-way, meaning once the data is hashed, the resulting hash digest cannot be cracked, unless a brute force attack is used.
 
 <br/>
 
-### Q14. As a user what will I see in the user interface?
+#### Q14. As a user what will I see in the user interface?
 
 As a user, you get a terminal based menu driven program which will give you options for different commands.
 
 <br/>
 
-### Q15. Explain the working of actual bittorrent software.
+#### Q15. Explain the working of actual bittorrent software.
 
 BitTorrent is a peer-to-peer protocol, which means that the computers in a BitTorrent “swarm” transfer data between each other without the need for a central server. A computer joins a BitTorrent swarm by loading .torrent file into a BitTorrent client.
 

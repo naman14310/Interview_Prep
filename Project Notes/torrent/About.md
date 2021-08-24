@@ -24,7 +24,7 @@ Tracker file stores the metadata and information about all groups, users and fil
 
 A client can either download or share a file with its peers. Whenever a client shares a file it informs the tracker about it which in turn updates its seeder list. After that the client starts acting like a server for its peers that want to download the file.
 
-Whenever any peer wants to download a file, it asks the tracker for the list of all the peers that share that file. Once it gets the list of peers, it downloads unique parts of the file from different peers, keeping that in mind that the whole file is not downloaded from a single peer (Why? So that one peer does not have too much load). Here Peice Selection Algo came into picture.
+Whenever any peer wants to download a file, it asks the tracker for the list of all the peers that share that file. Once it gets the list of peers, it downloads unique parts of the file from different peers, keeping that in mind that the whole file is not downloaded from a single peer (Why? So that one peer does not have too much load). Here Peice Selection Algo came into picture. As soon as a piece of file gets downloaded it should be available for sharing. 
 
 ![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/Peer%20architecture.png)
 

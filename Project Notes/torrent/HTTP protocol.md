@@ -81,4 +81,15 @@ In HTTP/1.0, the connection is closed after a single request or response pair. I
 
 Session state is also known as Stateless state. HTTP is a stateless protocol. In the session state, the client and server just know about each other only during the current request. If the connection is closed, and two computers want to connect again, they need to provide information to each other as a new connection, and the connection is handled as the very first one.
 
+<br>
+
+#### 4. What is URI?
+
+A Uniform Resource Identifier (URI) is a type of identifier that is used to identify either the source or destination of hypertext data.
+
+<br>
+
+#### 5. What are Idempotent methods?
+
+If an identical request is made multiple times and the results have been the same, then this method is called Idempotent. And the PUT and DELETE methods are known as Idempotent Methods.
 

@@ -44,4 +44,4 @@ TLS is the evolved version of SSL. HTTPS is an implementation of TLS encryption 
 
 In TLS 1.2 we encrypt the data using some key at client side and same key will also be needed to decrypt that data. Now we before sending the encrypted data, we need to send the key to the server side. So we encrypt the key with server's public key (which can only be decrypted by server's private key as per assymmetric key cryptography). And then it transmit data to the server.
 
-In TLS 1.3, Diffie Helman Key exchange algorithm is used to provide security while exchanging the key between client and server.
+In TLS 1.3, Diffie Helman Key exchange algorithm is used to provide more security.

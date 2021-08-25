@@ -75,6 +75,6 @@ Asynchronous transfers are generally faster than synchronous transfers. This is 
 
 <br>
 
-#### Q7. What are well knwon ports ?
+#### Q7. What are well known ports ?
 
 Servers implementing specific services (such as telnet, ftp) listen to well-known ports. All ports below 1024 are considered well knwon.

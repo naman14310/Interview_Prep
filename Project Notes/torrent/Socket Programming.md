@@ -2,6 +2,12 @@
 
 Socket programming is a way of connecting two nodes on a network to communicate with each other. One socket(node) listens on a particular port at an IP, while other socket reaches out to the other to form a connection. Server forms the listener socket while client reaches out to the server.
 
+![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/images/socket.jpeg)
+
+<br>
+
+## Socket Architecture
+
 ![img](https://media.geeksforgeeks.org/wp-content/uploads/Socket-Programming-in-C-C-.jpg)
 
 #### Stages for server:
@@ -23,9 +29,11 @@ Socket programming is a way of connecting two nodes on a network to communicate 
 
 2. Connect (The connect() system call connects the socket referred to by the file descriptor sockfd to the address specified by addr. Server’s address and port is specified in addr)
 
+<br>
 
 -----
 
+<br>
 
 ## Interview Questions
 
@@ -37,7 +45,7 @@ Socket programming is a way of connecting two nodes on a network to communicate 
 
 #### Q2. What does a socket consists of ?
 
-A socket is a combination of IP address and Port Number
+A socket is defined as an endpoint for communication. It is a combination of IP address and Port Number.
 
 <br>
 
@@ -64,3 +72,9 @@ The send, receive, and reply operations may be synchronous or asynchronous. A sy
 #### Q6. Which is faster synchronous or asynchronous ?
 
 Asynchronous transfers are generally faster than synchronous transfers. This is because they do not take up time prior to the transfer to coordinate their efforts. However, because of this, more errors tend to occur in asynchronous transfers. Asynchronous programming is event-driven. You start an operation, but you don't know when it will end
+
+<br>
+
+#### Q7. What are well knwon ports ?
+
+Servers implementing specific services (such as telnet, ftp) listen to well-known ports. All ports below 1024 are considered well knwon.

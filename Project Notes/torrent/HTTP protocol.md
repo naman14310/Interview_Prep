@@ -83,19 +83,35 @@ Session state is also known as Stateless state. HTTP is a stateless protocol. In
 
 <br>
 
-#### 4. What is HTTP Long polling ?
+#### 4. What is HTTP Short polling ?
+
+A lot of requests are processed as they come to the server, creating a lot of traffic. Below is an example of short polling.
+ 
+```
+00:00:00 C-> Is the cake ready? 
+00:00:01 S-> No, wait.
+00:00:01 C-> Is the cake ready?
+00:00:02 S-> No, wait.
+00:00:02 C-> Is the cake ready? 
+00:00:03 S-> Yeah. Have some lad.
+00:00:03 C-> Is the other cake ready?
+```
+
+<br>
+
+#### 5. What is HTTP Long polling ?
 
 With HTTP long-polling, the client continually polls the server requesting for new information. The server hold the request open until any new data is available, and responds with the new information once available. In essence, the client is constantly polling the server to see if the database has changed state. As soon as the client receives that new information, it can immediately send another request and the operation is continually repeated.
 
 <br>
 
-#### 5. What is URI?
+#### 6. What is URI?
 
 A Uniform Resource Identifier (URI) is a type of identifier that is used to identify either the source or destination of hypertext data.
 
 <br>
 
-#### 6. What are Idempotent methods?
+#### 7. What are Idempotent methods?
 
 If an identical request is made multiple times and the results have been the same, then this method is called Idempotent. And the PUT and DELETE methods are known as Idempotent Methods.
 

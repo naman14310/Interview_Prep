@@ -107,17 +107,42 @@ With HTTP long-polling, the client continually polls the server requesting for n
 
 #### 6. What is Periodic polling ?
 
-There’s a predefined time gap between two requests. This is an improved/managed version of polling. You can reduce server consumption by increasing the time gap between two requests. But if you need to be notified with no delay when the server event happens, this is not a good option.
+There’s a predefined time gap between two requests. This is an improved version of polling. You can reduce server consumption by increasing the time gap between two requests. But if you need to be notified with no delay when the server event happens, this is not a good option.
 
 <br>
 
-#### 7. What is URI?
+#### 7. What is HTTP Streaming ?
+
+The client makes an HTTP request, and the server trickles out a response of indefinite length (it’s like polling infinitely). It can be an alternative to WebSockets. The only issue with streaming is that, Intermediaries can interrupt the connection e.g. timeout, intermediaries serving other requests in a round-robin manner.
+
+```
+00:00:00 CLIENT-> I need cakes 
+00:00:01 SERVER-> Cake-1 is in process.
+00:00:02 SERVER-> Have cake-1.
+00:00:02 SERVER-> Wait for cake-2.
+00:00:03 SERVER-> Cake-2 is in process.
+00:00:04 SERVER-> Have cake-2.
+00:00:04 SERVER-> Wait for cake-3.
+00:00:05 CLIENT-> Enough, I'm full.
+```
+
+<br>
+
+#### 8. What is SSE (Server Sent Events / EventSource) ?
+
+SSE connections can only push data to the browser. Communication is carried out from server to browser only, browsers can only subscribe to data updates originated by the server, but cannot send any data to the server. It is used in push notifications, twitter updates, cricket score updates etc.
+
+<br>
+
+#### 9. What is HTTP/2 Server Push ?
+
+A mechanism for a server to proactively push assets (stylesheets, scripts, media) to the client cache in advance. It is used in Social media feeds, single-page apps etc.
+
+<br>
+
+#### 10. What is URI?
 
 A Uniform Resource Identifier (URI) is a type of identifier that is used to identify either the source or destination of hypertext data.
 
-<br>
 
-#### 8. What are Idempotent methods?
-
-If an identical request is made multiple times and the results have been the same, then this method is called Idempotent. And the PUT and DELETE methods are known as Idempotent Methods.
 

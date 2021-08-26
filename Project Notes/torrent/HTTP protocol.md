@@ -105,13 +105,19 @@ With HTTP long-polling, the client continually polls the server requesting for n
 
 <br>
 
-#### 6. What is URI?
+#### 6. What is Periodic polling ?
+
+There’s a predefined time gap between two requests. This is an improved/managed version of polling. You can reduce server consumption by increasing the time gap between two requests. But if you need to be notified with no delay when the server event happens, this is not a good option.
+
+<br>
+
+#### 7. What is URI?
 
 A Uniform Resource Identifier (URI) is a type of identifier that is used to identify either the source or destination of hypertext data.
 
 <br>
 
-#### 7. What are Idempotent methods?
+#### 8. What are Idempotent methods?
 
 If an identical request is made multiple times and the results have been the same, then this method is called Idempotent. And the PUT and DELETE methods are known as Idempotent Methods.
 

@@ -78,3 +78,11 @@ Asynchronous transfers are generally faster than synchronous transfers. This is 
 #### Q7. What are well known ports ?
 
 Servers implementing specific services (such as telnet, ftp) listen to well-known ports. All ports below 1024 are considered well knwon.
+
+<br>
+
+#### Q8. What is the difference between sockets and websockets ?
+
+WebSockets typically run from browsers connecting to Application Server over a protocol similar to HTTP that runs over TCP/IP. So they are primarily for Web Applications that require a permanent connection to its server. Websockets use sockets in their implementation.
+
+On the other hand, plain sockets are more powerful and generic. They run over TCP/IP but they are not restricted to browsers or HTTP protocol. They could be used to implement any kind of communication.

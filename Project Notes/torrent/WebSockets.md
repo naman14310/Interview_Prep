@@ -29,3 +29,11 @@ The real-world applications for WebSockets are endless, including chatting apps,
 2. Full duplex communication.
 3. Very low latency. 
 4. Limited HTTP overhead (like headers, cookies, etc.) making the speed at which data transfers happen much faster
+
+<br>
+
+**WebSockets Secure (wss)**
+
+We strongly prefer the secure wss:// protocol over the insecure ws:// transport. Like HTTPS, WSS (WebSockets over SSL/TLS) is encrypted, thus protecting against man-in-the-middle attacks.
+
+Note: wss connects on https only whereas ws connects on http

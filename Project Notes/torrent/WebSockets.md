@@ -10,7 +10,7 @@ Long Polling involves making an HTTP request to a server and then holding the co
 
 **Websockets are the solution. How ?**
 
-Websockets allow a long-held single TCP socket connection to be established between the client and server, allowing for for bi-directional, full duplex, messages to be instantly distributed. This is done with minimal overhead resulting in a low latency connection.
+Websockets allow a long-held single TCP socket connection to be established between the client and server, allowing for the bi-directional, full duplex, messages to be instantly distributed. This is done with minimal overhead resulting in a low latency connection.
 
 A request to a WebSocket connection is sent to the server from a client (or multiple clients) through a process called the WebSocket handshake, which starts with the client sending a regular HTTP request to the server. Part of this request includes an Upgrade header, which indicates to the server that the the client is trying to make a WebSocket connection. This request is called a WebSocket handshake.
 

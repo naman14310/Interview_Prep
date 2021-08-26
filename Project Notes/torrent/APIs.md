@@ -48,9 +48,9 @@ REST API is used where data demands are not continuous and stateless. For exampl
 
 ### When to use Websocket and when to use REST ?
 
-REST is more versatile and can deliver almost all the available resources provided by us. It works great when data needs are ad-hoc, however, it is not useful when data delivery needs to be super fast (like more than 100 requests a second) and continuous. 
+REST is more versatile and can deliver almost all the available resources provided by us. It is not useful when data delivery needs to be super fast (like more than 100 requests a second) and continuous. REST is great for occasional communications.
 
-WebSocket is ideal when no rates need to be missed in delivery and speed is of the essence. Websockets are ideal in scenarios with higher loads.
+Websockets are ideal in scenarios with higher loads. WebSockets are a great choice for handling long-lived bidirectional data streaming in a near real-time manner, Using WebSockets is a considerable investment, hence it is an overkill for occasional connections.
 
 <br>
 

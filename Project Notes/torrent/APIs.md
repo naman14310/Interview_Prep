@@ -40,6 +40,12 @@ Eg: fetching a specific Twitter user, using Twitter’s RESTful API, will requir
 
 <br>
 
+### What purposes is REST API used for ?
+
+REST API is used where data demands are not continuous and stateless. For example, requesting live data when your application needs it or requesting historical timeseries data to display a chart. 
+
+<br>
+
 ### REST Constraints
 
 In order for an API to be RESTful, it has to follow 5 constraints:

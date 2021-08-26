@@ -140,9 +140,13 @@ A mechanism for a server to proactively push assets (stylesheets, scripts, media
 
 <br>
 
-#### 10. What is URI?
+#### 10. What are advantages of web sockets over HTTP ?
 
-A Uniform Resource Identifier (URI) is a type of identifier that is used to identify either the source or destination of hypertext data.
+WebSockets allow both the server and the client to push messages at any time. WebSocket solves a few issues with HTTP:
+
+1. Bi-directional protocol : either client/server can send a message to the other party (In HTTP, the request is always initiated by the client and the response is processed by the server, making HTTP a uni-directional protocol)
+
+2. Full-duplex communication : client and server can talk to each other independently at the same time.
 
 
 

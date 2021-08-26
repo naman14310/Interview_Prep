@@ -84,4 +84,8 @@ Between the client who requests a representation of a resource’s state, and th
 
 This means that the data the server sends contain information about whether or not the data is cacheable. If the data is cacheable, it might contain some sort of a version number. The version number is what makes caching possible: since the client knows which version of the data it already has (from a previous response), the client can avoid requesting the same data again and again. 
 
+<br> 
 
+### WebHooks
+
+If your servers need to communicate frequently and/or bidirectionally, go for WebSockets. If your servers communicate occasionally, use REST calls. If your servers need to communicate unidirectionally on an event trigger, then go for webhooks. 

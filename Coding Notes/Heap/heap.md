@@ -8,6 +8,7 @@
 
 `priority_queue<int, vector<int>, greater<int>> minheap;`
 
+<br>
 
 #### 1. Sort a nearly sorted (or K sorted) array
 Given an array of n elements, where each element is at most k away from its target position. Sort the array.
@@ -63,7 +64,36 @@ int lastStoneWeight(vector<int>& stones) {
 }
 ```
 
-#### 3. Sort Characters By Frequency
+#### 3. Top K Frequent Elements
+Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+```cpp
+vector<int> topKFrequent(vector<int>& nums, int k) {
+
+    unordered_map<int,int> mp;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > minheap;
+    vector<int> res;
+
+    for(int n : nums)
+        mp[n]++;
+
+    for(auto p : mp){
+        minheap.push({p.second, p.first});
+
+        if(minheap.size()>k)
+            minheap.pop();
+    }
+
+    while(!minheap.empty()){
+        auto p = minheap.top(); minheap.pop();
+        res.push_back(p.second);
+    }
+
+    return res;
+}
+```
+
+#### 4. Sort Characters By Frequency
 Given a string s, sort it in decreasing order based on the frequency of characters, and return the sorted string.
 
 Input: s = "tree"
@@ -92,7 +122,7 @@ string frequencySort(string s) {
 }
 ```
 
-#### 4. K Closest Points to Origin
+#### 5. K Closest Points to Origin
 Given an array of points where points[i] = [xi, yi] and an integer k, return the k closest points to the origin (0, 0). You may return the answer in any order. 
 
 ```

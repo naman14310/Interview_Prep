@@ -277,3 +277,50 @@ string longestDiverseString(int a, int b, int c) {
     return s;
 }
 ```
+
+#### 9. Top K Frequent Words
+Given an array of strings words and an integer k, return the k most frequent strings. Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+Input: words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4
+
+Output: ["the","is","sunny","day"]
+
+```cpp
+/* 
+    user defined comparator for set and priority queues will be defined like this 
+    REMEMBER : Use opposite sign
+*/
+
+struct comp{
+  bool operator()(pair<int, string> p1, pair<int, string> p2){
+      if(p1.first>p2.first) return true;         
+      if(p1.first==p2.first and p1.second < p2.second) return true;
+      return false;
+  }  
+};
+
+
+vector<string> topKFrequent(vector<string>& words, int k) {
+    unordered_map<string, int> mp;
+    priority_queue<pair<int, string>, vector<pair<int, string>>, comp> minheap;
+    vector<string> res;
+
+    for(string s : words)
+        mp[s]++;
+
+    for(auto p : mp){
+        minheap.push({p.second, p.first});
+
+        if(minheap.size()>k)
+            minheap.pop();
+    }
+
+    while(!minheap.empty()){
+        res.push_back(minheap.top().second);
+        minheap.pop();
+    }
+
+    reverse(res.begin(), res.end());
+    return res;
+}
+```

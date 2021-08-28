@@ -149,3 +149,43 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
     return res;
 }
 ```
+
+#### 6. Car Pooling
+There is a car with capacity empty seats. The vehicle only drives east. You are given the integer capacity and an array trips where trip[i] = [numPassengersi, fromi, toi] indicates that the ith trip has numPassengersi passengers and the locations to pick them up and drop them off are fromi and toi respectively. The locations are given as the number of kilometers due east from the car's initial location.
+
+Return true if it is possible to pick up and drop off all passengers for all the given trips, or false otherwise.
+
+Input: trips = [[3,2,7],[3,7,9],[8,3,9]], capacity = 11
+
+Output: true
+
+Hint : Use heap to keep track of seat occupancy at each intant. Before giving seats to new passengers, pop all passengers from the heap whose endTime less then startTime of new passengers.
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+    return v1[1]<=v2[1];
+}
+
+bool carPooling(vector<vector<int>>& trips, int capacity) {
+    int n = trips.size();
+    sort(trips.begin(), trips.end(), comp);
+
+    priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>> > occupied;      // --> pair {end_location, num_passengers}
+
+    for(int i=0; i<n; i++){
+        int num_passengers = trips[i][0], start_loc = trips[i][1], end_loc = trips[i][2];
+
+        while(!occupied.empty() and occupied.top().first <= start_loc){
+            capacity += occupied.top().second;
+            occupied.pop();
+        }
+
+        if(capacity < num_passengers) return false;
+
+        occupied.push({end_loc, num_passengers});
+        capacity -= num_passengers;
+    }
+
+    return true;
+}
+```

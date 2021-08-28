@@ -151,7 +151,7 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
 ```
 
 #### 6. Car Pooling
-There is a car with capacity empty seats. The vehicle only drives east. You are given the integer capacity and an array trips where trip[i] = [numPassengersi, fromi, toi] indicates that the ith trip has numPassengersi passengers and the locations to pick them up and drop them off are fromi and toi respectively. The locations are given as the number of kilometers due east from the car's initial location.
+You are given the integer capacity and an array trips where trip[i] = [numPassengersi, fromi, toi] indicates that the ith trip has numPassengersi passengers and the locations to pick them up and drop them off are fromi and toi respectively. The locations are given as the number of kilometers due east from the car's initial location.
 
 Return true if it is possible to pick up and drop off all passengers for all the given trips, or false otherwise.
 
@@ -189,3 +189,30 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
     return true;
 }
 ```
+
+#### 7. Seat Reservation Manager
+Design a system that manages the reservation state of n seats that are numbered from 1 to n. Implement the SeatManager class:
+1. SeatManager(int n) Initializes a SeatManager object that will manage n seats numbered from 1 to n. All seats are initially available.
+2. int reserve() Fetches the smallest-numbered unreserved seat, reserves it, and returns its number.
+3. void unreserve(int seatNumber) Unreserves the seat with the given seatNumber.
+
+```cpp
+priority_queue<int, vector<int>, greater<int>> minheap;
+
+SeatManager(int n) {
+    for(int i=1; i<=n; i++)
+        minheap.push(i);
+}
+
+int reserve() {
+    int seat = minheap.top();
+    minheap.pop();
+    
+    return seat;
+}
+
+void unreserve(int seatNumber) {
+    minheap.push(seatNumber);
+}
+```
+

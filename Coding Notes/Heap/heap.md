@@ -62,3 +62,60 @@ int lastStoneWeight(vector<int>& stones) {
     return maxHeap.top();
 }
 ```
+
+#### 3. Sort Characters By Frequency
+Given a string s, sort it in decreasing order based on the frequency of characters, and return the sorted string.
+
+Input: s = "tree"
+
+Output: "eert"
+
+```cpp
+string frequencySort(string s) {
+    unordered_map<char, int> mp;
+    priority_queue<pair<int,char>> maxheap;
+    string res = "";
+
+    for(char ch : s)
+        mp[ch]++;
+
+    for(auto p : mp)
+        maxheap.push({p.second, p.first});
+
+    while(!maxheap.empty()){
+        auto p = maxheap.top(); maxheap.pop();
+        for(int i=0; i<p.first; i++)
+            res.push_back(p.second);
+    }
+
+    return res;
+}
+```
+
+#### 4. K Closest Points to Origin
+Given an array of points where points[i] = [xi, yi] and an integer k, return the k closest points to the origin (0, 0). You may return the answer in any order. 
+
+```
+vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+
+    priority_queue<pair<int, pair<int,int>>> maxheap;
+    vector<vector<int>> res;
+
+    for(auto p : points){
+        int x = p[0], y = p[1];
+        int dist = x*x + y*y;
+
+        maxheap.push({dist, {x, y}});
+
+        if(maxheap.size()>k)
+            maxheap.pop();
+    }
+
+    while(!maxheap.empty()){
+        auto p = maxheap.top(); maxheap.pop();
+        res.push_back({p.second.first, p.second.second});
+    }
+
+    return res;
+}
+```

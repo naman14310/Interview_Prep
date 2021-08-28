@@ -216,3 +216,64 @@ void unreserve(int seatNumber) {
 }
 ```
 
+#### 8. Longest Happy String
+A string is called happy if it does not have any of the strings 'aaa', 'bbb' or 'ccc' as a substring. Given three integers a, b and c, return any string s, which satisfies following conditions:
+
+1. s is happy and longest possible.
+2. s contains at most a occurrences of the letter 'a', at most b occurrences of the letter 'b' and at most c occurrences of the letter 'c'.
+3. s will only contain 'a', 'b' and 'c' letters.
+4. If there is no such string s return the empty string "".
+
+Input: a = 1, b = 1, c = 7
+
+Output: "ccaccbcc"
+
+Hint: Use most frequent char at every instant which satisfies the condition.
+
+```cpp
+string longestDiverseString(int a, int b, int c) {
+
+    priority_queue<pair<int,char>> maxheap;
+
+    if(a>0) maxheap.push({a, 'a'});
+    if(b>0) maxheap.push({b, 'b'});
+    if(c>0) maxheap.push({c, 'c'});
+
+    char prev = '#';
+    int cnt = 0;
+    string s = "";
+
+    while(!maxheap.empty()){
+        auto p = maxheap.top(); maxheap.pop();
+
+        if(p.second==prev) {
+            cnt++;
+            if(cnt==3){
+                if(maxheap.empty()) return s;
+
+                auto p2 = maxheap.top(); maxheap.pop();
+                s.push_back(p2.second);
+                prev = p2.second;
+                cnt = 1;
+
+                if(p2.first>1) maxheap.push({p2.first-1, p2.second});   
+                maxheap.push(p);
+            }
+            else{
+                s.push_back(p.second);
+                if(p.first>1) maxheap.push({p.first-1, p.second});   
+            }
+        }
+        
+        else{
+            s.push_back(p.second);
+            prev = p.second;
+            cnt = 1;
+
+            if(p.first>1) maxheap.push({p.first-1, p.second});   
+        }
+    }
+
+    return s;
+}
+```

@@ -368,7 +368,7 @@ int leastInterval(vector<char>& tasks, int cooldown_period) {
             auto task = maxheap.top(); maxheap.pop();
             mp[task.second]--;
 
-            /* If that task is still remaining then push it into minheap for cooldown period */
+            /* If freq of curr task > 0 push it into minheap for cooldown period */
 
             if(mp[task.second]>0)
                 minheap.push({time, task.second});

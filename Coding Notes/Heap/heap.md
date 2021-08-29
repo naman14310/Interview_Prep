@@ -426,7 +426,9 @@ int leastInterval(vector<char>& tasks, int cooldown_period) {
 }
 ```
 
-#### 11. Furthest Building You Can Reach
+<br>
+
+#### 11. Furthest Building You Can Reach (Tricky)
 You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
 
 While moving from building i to building i+1 (0-indexed),

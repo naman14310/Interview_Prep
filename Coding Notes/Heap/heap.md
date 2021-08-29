@@ -37,6 +37,8 @@ vector<int> sort_k_sorted_array(vector<int> & v, int k){
 }
 ```
 
+<br>
+
 #### 2. Last Stone Weight
 You are given an array of integers stones where stones[i] is the weight of the ith stone. On each turn, we choose the heaviest two stones and smash them together. 
 1. If x == y, both stones are destroyed, and
@@ -63,6 +65,8 @@ int lastStoneWeight(vector<int>& stones) {
     return maxHeap.top();
 }
 ```
+
+<br>
 
 #### 3. Top K Frequent Elements
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
@@ -93,6 +97,8 @@ vector<int> topKFrequent(vector<int>& nums, int k) {
 }
 ```
 
+<br>
+
 #### 4. Sort Characters By Frequency
 Given a string s, sort it in decreasing order based on the frequency of characters, and return the sorted string.
 
@@ -122,7 +128,58 @@ string frequencySort(string s) {
 }
 ```
 
-#### 5. K Closest Points to Origin
+<br>
+
+#### 5. Top K Frequent Words
+Given an array of strings words and an integer k, return the k most frequent strings. Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+Input: words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4
+
+Output: ["the","is","sunny","day"]
+
+```cpp
+/* 
+    user defined comparator for set and priority queues will be defined like this 
+    REMEMBER : Use opposite sign
+*/
+
+struct comp{
+  bool operator()(pair<int, string> p1, pair<int, string> p2){
+      if(p1.first>p2.first) return true;         
+      if(p1.first==p2.first and p1.second < p2.second) return true;
+      return false;
+  }  
+};
+
+
+vector<string> topKFrequent(vector<string>& words, int k) {
+    unordered_map<string, int> mp;
+    priority_queue<pair<int, string>, vector<pair<int, string>>, comp> minheap;
+    vector<string> res;
+
+    for(string s : words)
+        mp[s]++;
+
+    for(auto p : mp){
+        minheap.push({p.second, p.first});
+
+        if(minheap.size()>k)
+            minheap.pop();
+    }
+
+    while(!minheap.empty()){
+        res.push_back(minheap.top().second);
+        minheap.pop();
+    }
+
+    reverse(res.begin(), res.end());
+    return res;
+}
+```
+
+<br>
+
+#### 6. K Closest Points to Origin
 Given an array of points where points[i] = [xi, yi] and an integer k, return the k closest points to the origin (0, 0). You may return the answer in any order. 
 
 ```
@@ -150,7 +207,9 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
 }
 ```
 
-#### 6. Car Pooling
+<br>
+
+#### 7. Car Pooling
 You are given the integer capacity and an array trips where trip[i] = [numPassengersi, fromi, toi] indicates that the ith trip has numPassengersi passengers and the locations to pick them up and drop them off are fromi and toi respectively. The locations are given as the number of kilometers due east from the car's initial location.
 
 Return true if it is possible to pick up and drop off all passengers for all the given trips, or false otherwise.
@@ -190,31 +249,7 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 }
 ```
 
-#### 7. Seat Reservation Manager
-Design a system that manages the reservation state of n seats that are numbered from 1 to n. Implement the SeatManager class:
-1. SeatManager(int n) Initializes a SeatManager object that will manage n seats numbered from 1 to n. All seats are initially available.
-2. int reserve() Fetches the smallest-numbered unreserved seat, reserves it, and returns its number.
-3. void unreserve(int seatNumber) Unreserves the seat with the given seatNumber.
-
-```cpp
-priority_queue<int, vector<int>, greater<int>> minheap;
-
-SeatManager(int n) {
-    for(int i=1; i<=n; i++)
-        minheap.push(i);
-}
-
-int reserve() {
-    int seat = minheap.top();
-    minheap.pop();
-    
-    return seat;
-}
-
-void unreserve(int seatNumber) {
-    minheap.push(seatNumber);
-}
-```
+<br>
 
 #### 8. Longest Happy String
 A string is called happy if it does not have any of the strings 'aaa', 'bbb' or 'ccc' as a substring. Given three integers a, b and c, return any string s, which satisfies following conditions:
@@ -278,54 +313,9 @@ string longestDiverseString(int a, int b, int c) {
 }
 ```
 
-#### 9. Top K Frequent Words
-Given an array of strings words and an integer k, return the k most frequent strings. Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+<br>
 
-Input: words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4
-
-Output: ["the","is","sunny","day"]
-
-```cpp
-/* 
-    user defined comparator for set and priority queues will be defined like this 
-    REMEMBER : Use opposite sign
-*/
-
-struct comp{
-  bool operator()(pair<int, string> p1, pair<int, string> p2){
-      if(p1.first>p2.first) return true;         
-      if(p1.first==p2.first and p1.second < p2.second) return true;
-      return false;
-  }  
-};
-
-
-vector<string> topKFrequent(vector<string>& words, int k) {
-    unordered_map<string, int> mp;
-    priority_queue<pair<int, string>, vector<pair<int, string>>, comp> minheap;
-    vector<string> res;
-
-    for(string s : words)
-        mp[s]++;
-
-    for(auto p : mp){
-        minheap.push({p.second, p.first});
-
-        if(minheap.size()>k)
-            minheap.pop();
-    }
-
-    while(!minheap.empty()){
-        res.push_back(minheap.top().second);
-        minheap.pop();
-    }
-
-    reverse(res.begin(), res.end());
-    return res;
-}
-```
-
-#### 10. Task Scheduler (Tricky)
+#### 9. Task Scheduler (Tricky)
 Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.
 
 Hint: Use Two heaps, one to fetch task with max freq and other for keeping track of forbidden tasks till cooldown period

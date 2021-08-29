@@ -19,6 +19,8 @@ int peakIndexInMountainArray(vector<int>& arr) {
     return -1;
 }
 ```
+
+<br>
   
 #### 2. Find Smallest Letter Greater Than Target
   
@@ -38,7 +40,9 @@ char nextGreatestLetter(vector<char>& letters, char target) {
     return ans=='#' ? letters[0] : ans;
 }
 ```
-  
+
+<br>
+
 #### 3. Sqrt(x) using Binary Search
   
 ```cpp
@@ -59,6 +63,9 @@ int mySqrt(int x) {
     return ans;
 }
 ```
+
+<br>
+
 ## Medium
 
 #### 1. Find Minimum in Rotated Sorted Array (Same as No. of times a sorted array is rotated)
@@ -78,6 +85,8 @@ int findMin(vector<int>& nums) {
 }
 ```
 
+<br>
+
 #### 2. Find Minimum in Rotated Sorted Array II (Repeating values)
 
 ```cpp
@@ -94,6 +103,8 @@ int findMin(vector<int>& nums) {
     return nums[start];
 }
 ```
+
+<br>
 
 #### 3. Search in Rotated Sorted Array (Values are distinct)
 
@@ -128,6 +139,8 @@ int search(vector<int>& nums, int target) {
     else return binarySearch(nums, pos, n-1, target);
 }
 ```
+
+<br>
 
 #### 4. Search in Rotated Sorted Array II (Values can be repeating)
 
@@ -172,6 +185,8 @@ bool search(vector<int>& nums, int target) {
 }
 ```
 
+<br>
+
 #### 5. Longest Increasing Subsequence (NlogN approach using Binary Search)
 
 PS: It will only give correct Length but not correct sequence.
@@ -196,6 +211,8 @@ int lengthOfLIS(vector<int>& nums) {
     return len;
 }
 ```
+
+<br>
 
 #### 6. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
 
@@ -244,7 +261,7 @@ vector<int> searchRange(vector<int>& nums, int target) {
 }
 ```
 
-
+<br>
 
 #### 7. Pow(x, n) (Fast exponentiation using Binary Search)
 
@@ -272,6 +289,8 @@ double myPow(double x, int n) {
     }
 }
 ```
+
+<br>
 
 #### 8. Find the missing number in Arithmetic Progression
 Given an array that represents elements of arithmetic progression in order. One element is missing in the progression, find the missing number.
@@ -306,6 +325,8 @@ int findMissing(int arr[], int n) {
     return findMissingUtil(arr, 0, n - 1, diff);
 }
 ```
+
+<br>
 
 #### 9. Search in a Infinite Sorted Array (IMP for interview)
 
@@ -346,6 +367,8 @@ int main(){
 }
 ```
 
+<br>
+
 #### 10.  Minimum Difference element in sorted array
 
 ```cpp
@@ -363,6 +386,61 @@ int binarySearch(vector<int> & v, int val){
     return abs(v[start]-val) < abs(v[end]-val) ? v[start] : v[end];
 }
 ```
+
+<br>
+
+#### 11. Find K Closest Elements
+Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order. An integer a is closer to x than an integer b if:
+1. |a - x| < |b - x|, or
+2. |a - x| == |b - x| and a < b
+
+```cpp
+vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+    int n = arr.size();
+    deque<int> dq;
+    vector<int> res;
+
+    int lb = lower_bound(arr.begin(), arr.end(), x) - arr.begin();
+    int i = lb-1, j = lb;  
+
+    /* Simply push smaller value to deque and move i and j accordingly */ 
+
+    while(k--){
+
+        if(i<0){
+            dq.push_back(arr[j]);
+            j++;
+        }
+
+        else if(j==n){
+            dq.push_front(arr[i]);
+            i--;
+        }
+
+        else{
+
+            if(abs(arr[i]-x)<=abs(arr[j]-x)){
+                dq.push_front(arr[i]);
+                i--;
+            }
+            else{
+                dq.push_back(arr[j]);
+                j++;
+            }
+        }
+    }
+
+
+    while(!dq.empty()){
+        res.push_back(dq.front());
+        dq.pop_front();
+    }
+
+    return res;
+}
+```
+
+<br>
 
 ## @ Binary Search on Answer (Tricky Questions)
 
@@ -411,6 +489,8 @@ int shipWithinDays(vector<int>& weights, int D) {
 }
 ```
 
+<br>
+
 #### 2. Koko Eating Bananas 
 Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
 
@@ -448,6 +528,8 @@ int minEatingSpeed(vector<int>& piles, int h) {
     return binarySearch(piles, low, high, h);
 }
 ```
+
+<br>
 
 #### 3. Minimum Number of Days to Make m Bouquets 
 Given an integer array bloomDay, an integer m and an integer k. We need to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
@@ -513,6 +595,8 @@ int minDays(vector<int>& bloomDay, int m, int k) {
 }
 ```
 
+<br>
+
 #### 4. Find the Smallest Divisor Given a Threshold
 Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, divide all the array by it, and sum the division's result. Find the smallest divisor such that the result mentioned above is less than or equal to threshold. Each result of the division is rounded to the nearest integer greater than or equal to that element. (For example: 7/3 = 3 and 10/2 = 5).
 
@@ -550,6 +634,8 @@ int smallestDivisor(vector<int>& nums, int threshold) {
     return binarySearch(nums, low, high, threshold);
 }
 ```
+
+<br>
 
 #### 5. Sum of Mutated Array Closest to Target
 Given an integer array arr and a target value target, return the integer value such that when we change all the integers larger than value in the given array to be equal to value, the sum of the array gets as close as possible (in absolute difference) to target. In case of a tie, return the minimum such integer.
@@ -599,6 +685,8 @@ int findBestValue(vector<int>& arr, int target) {
     return binarySearch(arr, low, high, target, mindiff);
 }
 ```
+
+<br>
 
 #### 6. Allocate minimum number of pages
 You are given N number of books. Every ith book has Ai number of pages.You have to allocate books to M number of students. The task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value. Each book will be allocated to exactly one student. Each student has to be allocated at least one book.
@@ -659,6 +747,8 @@ int findPages(int arr[], int n, int m)
 }
 ```
 
+<br>
+
 #### 7. Split Array Largest Sum
 Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
 
@@ -712,6 +802,8 @@ int splitArray(vector<int>& nums, int m) {
 }
 ```
 
+<br>
+
 ## @ Binary Search on Matrix
 
 #### 1. Search a 2D Matrix II
@@ -730,6 +822,8 @@ bool searchMatrix(vector<vector<int>>& matrix, int target) {
     return false;
 }
 ```
+
+<br>
 
 #### 2. Kth Smallest Element in a Sorted Matrix (Binary Search on Answer)
 Given an n x n matrix where each of the rows and columns are sorted in ascending order, return the kth smallest element in the matrix.
@@ -775,6 +869,8 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
 }
 ```
 
+<br>
+
 #### 3. Median in a row-wise sorted Matrix
 
 [Video Solution](https://www.youtube.com/watch?v=_4rxBuhyLXw)
@@ -814,6 +910,8 @@ int median(vector<vector<int>> &matrix, int r, int c){
 }
 ```
 
+<br>
+
 #### 4. Row with max 1s (Best approach - O(m+n))
 Given a boolean 2D array of n x m dimensions where each row is sorted. Find the 0-based index of the first row that has the maximum number of 1's.
 
@@ -837,6 +935,8 @@ int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
    return ans;
 }
 ```
+
+<br>
 
 ## Hard
 

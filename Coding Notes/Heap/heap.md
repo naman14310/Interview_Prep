@@ -428,7 +428,60 @@ int leastInterval(vector<char>& tasks, int cooldown_period) {
 
 <br>
 
-#### 11. Furthest Building You Can Reach (Tricky)
+#### 11. The Number of the Smallest Unoccupied Chair (Tricky)
+There is a party where n friends numbered from 0 to n - 1 are attending. There is an infinite number of chairs in this party that are numbered from 0 to infinity. When a friend arrives at the party, they sit on the unoccupied chair with the smallest number.
+
+For example, if chairs 0, 1, and 5 are occupied when a friend comes, they will sit on chair number 2. When a friend leaves the party, their chair becomes unoccupied at the moment they leave. 
+
+You are given a 0-indexed 2D integer array times where times[i] = [arrivali, leavingi], indicating the arrival and leaving times of the ith friend respectively, and an integer targetFriend. All arrival times are distinct. Return the chair number that the friend numbered targetFriend will sit on.
+
+Input: times = [[1,4],[2,3],[4,6]], targetFriend = 1
+
+Output: 1
+
+```cpp
+static bool comp (vector<int> v1, vector<int> v2){
+    return v1[0]<v2[0];
+}
+
+int smallestChair(vector<vector<int>>& times, int targetFriend) {
+    int target_friend_arrival = times[targetFriend][0];
+
+    sort(times.begin(), times.end(), comp);
+
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int, int>>> booked;            //--> {endTime, chairNumber}
+    priority_queue<int, vector<int>, greater<int>> free_slot;
+
+    bool isTarget = false;
+
+    for(int i=0; i<times.size(); i++){
+
+        if(times[i][0]==target_friend_arrival) isTarget = true;
+        int chair;
+
+        while(!booked.empty() and booked.top().first<=times[i][0]){
+            free_slot.push(booked.top().second);
+            booked.pop();
+        }
+
+        if(free_slot.empty())
+            chair = booked.size();
+        else{
+            chair = free_slot.top();
+            free_slot.pop();
+        }
+
+        if(isTarget) return chair;
+        else booked.push({times[i][1], chair});
+    }
+
+    return 0;
+}
+```
+
+<br>
+
+#### 12. Furthest Building You Can Reach (Tricky)
 You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
 
 While moving from building i to building i+1 (0-indexed),
@@ -479,7 +532,7 @@ int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
 
 <br>
 
-#### 12. Find K Pairs with Smallest Sums (Too Tricky)
+#### 13. Find K Pairs with Smallest Sums (Too Tricky)
 You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u, v) which consists of one element from the first array and one element from the second array. Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
 
 Input: nums1 = [1,7,11], nums2 = [2,4,6], k = 3

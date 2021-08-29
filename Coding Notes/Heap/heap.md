@@ -324,3 +324,59 @@ vector<string> topKFrequent(vector<string>& words, int k) {
     return res;
 }
 ```
+
+#### 10. Task Scheduler (Tricky)
+Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.
+
+Hint: Use Two heaps, one to fetch task with max freq and other for keeping track of forbidden tasks till cooldown period
+
+```cpp
+int leastInterval(vector<char>& tasks, int cooldown_period) {
+
+    unordered_map<char, int> mp;    // --> for storing frequency of each task
+
+    /* maxheap will contain task sorted by their freq -->  pair of {freq, char} */
+
+    priority_queue<pair<int, char>> maxheap;  
+
+    /* minheap will store forbidden tasks till cooldown period --> pair of {prev_time, char} */
+
+    priority_queue<pair<int, char>, vector<pair<int, char>>, greater<pair<int, char>> > minheap;       
+
+
+    for(char ch : tasks)
+        mp[ch]++;
+
+    for(auto p : mp)
+        maxheap.push({p.second, p.first});
+
+    int time = 0;
+
+    while(!maxheap.empty() or !minheap.empty()){
+
+        /* pop all tasks from minheap whose cooldown period gets over and push them to maxheap */
+
+        while(!minheap.empty() and minheap.top().first+cooldown_period<time){
+            auto ch = minheap.top().second; minheap.pop();
+            maxheap.push({mp[ch], ch});
+        }
+
+
+        /* pop one task with highest freq from maxheap and allocate to cpu */
+
+        if(!maxheap.empty()){
+            auto task = maxheap.top(); maxheap.pop();
+            mp[task.second]--;
+
+            /* If that task is still remaining then push it into minheap for cooldown period */
+
+            if(mp[task.second]>0)
+                minheap.push({time, task.second});
+        }
+
+        time++;
+    }
+
+    return time;
+}
+```

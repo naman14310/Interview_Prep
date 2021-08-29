@@ -488,7 +488,7 @@ Output: [[1,2],[1,4],[1,6]]
 
 [GFG Link](https://www.geeksforgeeks.org/find-k-pairs-smallest-sums-two-arrays/)
 
-**Approach 1 : Using maxheap - O(n1*n2*logk)**
+**Approach 1 : Using maxheap - O(n1 * n2 * logk)**
 
 ```cpp
 vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {

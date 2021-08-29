@@ -315,10 +315,65 @@ string longestDiverseString(int a, int b, int c) {
 
 <br>
 
-#### 9. Task Scheduler (Tricky)
+#### 9. Reorganize String
+Given a string s, rearrange the characters of s so that any two adjacent characters are not the same. Return any possible rearrangement of s or return "" if not possible.
+
+Input: s = "aab"
+
+Output: "aba"
+
+Hint: Try to place max freq char as early as possible such that no two adjacent are same.
+
+```cpp
+string reorganizeString(string s) {
+    string res = "";
+
+    unordered_map<char, int> mp;
+    for(char ch : s)
+        mp[ch]++;
+
+    priority_queue<pair<int,char>> maxheap;         // --> maxheap of pair {freq, char}
+
+    for(auto p : mp)
+        maxheap.push({p.second, p.first});
+
+    while(!maxheap.empty()){
+        auto p1 = maxheap.top(); maxheap.pop();
+
+        if(maxheap.empty()){
+
+            if(p1.first==1){
+                res.push_back(p1.second);
+                return res;
+            }
+            else return "";
+        }
+
+        auto p2 = maxheap.top(); maxheap.pop();
+
+        res.push_back(p1.second);
+        res.push_back(p2.second);
+
+        if(p1.first>1) maxheap.push({p1.first-1, p1.second});
+        if(p2.first>1) maxheap.push({p2.first-1, p2.second});
+    }
+
+    return res;
+}
+```
+
+<br>
+
+#### 10. Task Scheduler (Tricky)
 Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.
 
-Hint: Use Two heaps, one to fetch task with max freq and other for keeping track of forbidden tasks till cooldown period
+Input: tasks = ["A","A","A","B","B","B"], n = 2
+
+Output: 8
+
+Explanation: A -> B -> idle -> A -> B -> idle -> A -> B. There is at least 2 units of time between any two same tasks.
+
+Hint: Use Two heaps, one to fetch task with max freq and other for keeping track of forbidden tasks till cooldown period.
 
 ```cpp
 int leastInterval(vector<char>& tasks, int cooldown_period) {

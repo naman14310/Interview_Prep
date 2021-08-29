@@ -425,3 +425,52 @@ int leastInterval(vector<char>& tasks, int cooldown_period) {
     return time;
 }
 ```
+
+#### 11. Furthest Building You Can Reach
+You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
+
+While moving from building i to building i+1 (0-indexed),
+1. If the current building's height is greater than or equal to the next building's height, you do not need a ladder or bricks.
+2. If the current building's height is less than the next building's height, you can either use one ladder or (h[i+1] - h[i]) bricks.
+
+Return the furthest building index (0-indexed) you can reach if you use the given ladders and bricks optimally.
+
+Input: heights = [4,2,7,6,9,14,12], bricks = 5, ladders = 1
+
+Output: 4
+
+Hint: Think upto when we can use ladders, and if jumps crosses number of ladders, use bricks for minimum jumps taken so far and save those ladder for future.
+
+```cpp
+int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+    int n = heights.size();
+
+    priority_queue<int, vector<int>, greater<int>> minheap;     // --> It will store all jumps taken so far
+
+    for(int i=0; i<n-1; i++){
+        int diff = heights[i+1] - heights[i];
+
+        if(diff<=0) continue;       // --> If next building is smaller, we will simply continue
+
+        minheap.push(diff);
+
+        /* 
+            If numbers of jumps taken exceeds ladder count, then 
+            take out the min jump from heap, and use bricks for it     
+        */
+
+        if(minheap.size()>ladders){
+            int minjump = minheap.top(); minheap.pop();
+
+            /* If jump require more bricks, then we can't go further hence we will simply return i */
+
+            if(minjump > bricks) return i;
+
+            bricks -= minjump;
+        }
+
+    }
+
+    return n-1;
+}
+```

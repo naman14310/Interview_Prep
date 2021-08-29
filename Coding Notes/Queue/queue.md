@@ -353,3 +353,51 @@ int maxResult(vector<int>& nums, int k) {
     return best_score[0];
 }
 ```
+
+#### 10. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit (Very Tricky)
+Given an array of integers nums and an integer limit, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to limit.
+
+Input: nums = [10,1,2,4,7,2], limit = 5
+
+Output: 4 
+
+Hint: Use two deques with similar logic to sliding window maximum (second deque is for sliding window minimum)
+
+```cpp
+/* LOGIC : similar to sliding window maximum */
+
+int longestSubarray(vector<int>& nums, int limit) {
+
+    deque<int> maxDq;       // --> will track max element of window
+    deque<int> minDq;       // --> will track min element of window
+
+    int i=0, j=0;
+    int ans = 1;
+
+    while(j<nums.size()){
+        int curr = nums[j];
+
+        while(!maxDq.empty() and nums[maxDq.back()]<=curr)
+            maxDq.pop_back();
+
+        maxDq.push_back(j);
+
+        while(!minDq.empty() and nums[minDq.back()]>=curr)
+            minDq.pop_back();
+
+        minDq.push_back(j);
+
+        while(abs(nums[maxDq.front()] - nums[minDq.front()]) > limit){
+            if(maxDq.front()==i) maxDq.pop_front();
+            if(minDq.front()==i) minDq.pop_front();
+
+            i++;
+        }
+
+        ans = max(ans, j-i+1);
+        j++;
+    }
+
+    return ans;
+}
+```

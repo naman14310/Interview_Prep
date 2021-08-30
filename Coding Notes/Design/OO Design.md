@@ -1,4 +1,4 @@
-# Problem on Object Oriented Design (OOD)
+# Problems on Object Oriented Design (OOD)
 
 ### 1. Design Twitter
 

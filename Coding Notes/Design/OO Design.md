@@ -21,7 +21,6 @@ public:
     
     Twitter() {
         time = 0;
-        
     }
     
 

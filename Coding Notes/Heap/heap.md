@@ -481,7 +481,66 @@ int smallestChair(vector<vector<int>>& times, int targetFriend) {
 
 <br>
 
-#### 12. Furthest Building You Can Reach (Tricky)
+#### 12. Maximum Number of Events That Can Be Attended (Tricky)
+Given an array of events where events[i] = [startDayi, endDayi]. Every event i starts at startDayi and ends at endDayi. You can attend an event i at any day d where startTimei <= d <= endTimei. Notice that you can only attend one event at any time d. Return the maximum number of events you can attend.
+
+Input: events= [[1,2],[2,3],[3,4],[1,2]]
+
+Output: 4
+
+Hint: Sort events increased by start time. Minheap keeps the current open events. Iterate from the day 1 to day 100000, Each day, we add new events starting on day d to minheap. Also we remove the events that are already closed. Then we greedily attend the event that ends soonest.
+
+```cpp
+
+/* Time Complexity : O(d+nlogn) where d is range of days */
+
+static bool comp (vector<int> v1, vector<int> v2){
+    return v1[0]<v2[0];
+}
+
+
+int maxEvents(vector<vector<int>>& events) {
+    int n = events.size();
+    sort(events.begin(), events.end(), comp);                   // --> sort events by their startDay
+
+    priority_queue<int, vector<int>, greater<int>> minheap;     // --> minheap of (endDays)
+
+    int i=0;        // --> will iterate on events 
+    int cnt = 0;
+
+    /* Iterate for every day */
+
+    for(int day=1; day<=100000; day++){
+
+        /* push all events in minheap that will start on current day */
+
+        while(i<n and events[i][0]==day){
+            minheap.push(events[i][1]);
+            i++;
+        }
+
+        /* pop all events whose deadline gets over */
+
+        while(!minheap.empty() and minheap.top()<day)
+            minheap.pop();
+
+        /* pop one event with minimum deadline from minheap and increament cnt */
+
+        if(!minheap.empty()){
+            minheap.pop();
+            cnt++;
+        }
+
+        if(i==n and minheap.empty()) break;     
+    }
+
+    return cnt;
+}
+```
+
+<br>
+
+#### 13. Furthest Building You Can Reach (Tricky)
 You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
 
 While moving from building i to building i+1 (0-indexed),
@@ -532,7 +591,7 @@ int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
 
 <br>
 
-#### 13. Find K Pairs with Smallest Sums (Too Tricky)
+#### 14. Find K Pairs with Smallest Sums (Too Tricky)
 You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u, v) which consists of one element from the first array and one element from the second array. Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
 
 Input: nums1 = [1,7,11], nums2 = [2,4,6], k = 3

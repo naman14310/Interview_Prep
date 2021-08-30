@@ -611,3 +611,45 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
     return res;
 }
 ```
+
+**Approach 3 : Using index array with MinHeap - O(k * logn1)** 
+
+Hint: Similar to approach 2, just use minheap in place of loop for finding minsum pair everytime.
+
+```cpp
+vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+
+    vector<vector<int>> res;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> > minheap;      // --> pair {sum, idx1}
+    vector<int> index2 (nums1.size(), 0);
+
+    /* push sum of every pair of all elements of nums1 with 0th element of nums2 in minheap */
+
+    for(int i=0; i<nums1.size(); i++){
+        int sum = nums1[i] + nums2[0];
+        minheap.push({sum, i});
+    }
+
+    /* Iterate till we get k smallest sums or minheap becomes empty */
+
+    while(k-- and !minheap.empty()){
+
+        /* pop pair with min sum from min heap */
+
+        auto p = minheap.top(); minheap.pop();
+        int idx = p.second;
+        res.push_back({nums1[idx], nums2[index2[idx]]});
+
+        /* increment index2 for that idx1 and push it again into the heap */
+
+        index2[idx]++;
+
+        if(index2[idx]<nums2.size()){
+            int sum = nums1[idx] + nums2[index2[idx]];
+            minheap.push({sum, idx});
+        }
+    }
+
+    return res;
+}
+```

@@ -712,3 +712,69 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
     return res;
 }
 ```
+
+<br>
+
+#### 15. Find Median from Data Stream (**IMP**)
+
+[Explaination](https://www.youtube.com/watch?v=1LkOrc-Le-Y)
+
+Approach:
+1. Divide whole stream of array in two parts.
+2. First part will be stored in maxheap
+3. Second part will be stored in minheap
+4. If number of elements are odd --> Median lies in either top of maxheap or minheap whoever has more elements
+5. If numbers of elements are even --> Both heaps will have equal elements and Median will be equals to (maxheap.top() + minheap.top())/2
+
+```cpp
+class MedianFinder {
+public:
+    
+
+    priority_queue<int> maxheap;                                // --> for storing 1st half stream
+    priority_queue<int, vector<int>, greater<int>> minheap;     // --> for storing 2nd half stream     
+    
+    
+    MedianFinder() {
+        
+    }
+    
+    
+    void addNum(int num) {
+        
+        /* If num is less then largest element of first half, we will push it into maxheap */
+        
+        if(!maxheap.empty() and num<=maxheap.top())
+            maxheap.push(num);
+        
+        /* Else we will push it into minheap */
+            
+        else minheap.push(num);
+        
+        /* After pushing, balance both the heaps */
+        
+        if(maxheap.size()>minheap.size()+1){
+            minheap.push(maxheap.top());
+            maxheap.pop();
+        }
+        else if(minheap.size()>maxheap.size()+1){
+            maxheap.push(minheap.top());
+            minheap.pop();
+        }
+        
+    }
+    
+    
+    double findMedian() {
+        
+        if(maxheap.size()>minheap.size())               
+            return maxheap.top();
+        
+        else if(minheap.size()>maxheap.size())
+            return minheap.top();
+        
+        else
+            return (minheap.top() + maxheap.top())/2.0;
+    }
+};
+```

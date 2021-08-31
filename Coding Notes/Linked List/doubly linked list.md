@@ -1,6 +1,6 @@
 # Doubly Linked list
 
-#### 1. Implement doubly linkedlist and create a Header file 
+### 1. Implement doubly linkedlist and create a Header file 
 
 ```cpp
 #include<bits/stdc++.h>
@@ -161,7 +161,9 @@ class doubly_linkedlist{
 
 ```
 
-#### 2. Reverse a Doubly Linked List 
+<br>
+
+### 2. Reverse a Doubly Linked List 
 
 Hint: Use two pointers, curr and next (prev is not required)
 
@@ -183,12 +185,13 @@ Node* reverseDLL(Node * head){
 }
 ```
 
-#### 3. Reverse a doubly linked list in groups of given size k
+<br>
+
+### 3. Reverse a doubly linked list in groups of given size k
 
 Approach:
 1. First reverse only next pointers of doubly linked list
 2. Then traverse whole linked list using next pointers and reset the prev pointers accordingly
-
 
 
 ```cpp

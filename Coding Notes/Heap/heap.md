@@ -10,7 +10,7 @@
 
 <br>
 
-#### 1. Sort a nearly sorted (or K sorted) array
+### 1. Sort a nearly sorted (or K sorted) array
 Given an array of n elements, where each element is at most k away from its target position. Sort the array.
 
 ```cpp
@@ -39,7 +39,7 @@ vector<int> sort_k_sorted_array(vector<int> & v, int k){
 
 <br>
 
-#### 2. Last Stone Weight
+### 2. Last Stone Weight
 You are given an array of integers stones where stones[i] is the weight of the ith stone. On each turn, we choose the heaviest two stones and smash them together. 
 1. If x == y, both stones are destroyed, and
 2. If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
@@ -68,7 +68,7 @@ int lastStoneWeight(vector<int>& stones) {
 
 <br>
 
-#### 3. Top K Frequent Elements
+### 3. Top K Frequent Elements
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
 ```cpp
@@ -99,7 +99,7 @@ vector<int> topKFrequent(vector<int>& nums, int k) {
 
 <br>
 
-#### 4. Sort Characters By Frequency
+### 4. Sort Characters By Frequency
 Given a string s, sort it in decreasing order based on the frequency of characters, and return the sorted string.
 
 Input: s = "tree"
@@ -130,7 +130,7 @@ string frequencySort(string s) {
 
 <br>
 
-#### 5. Top K Frequent Words
+### 5. Top K Frequent Words (using Customized Comparator)
 Given an array of strings words and an integer k, return the k most frequent strings. Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
 
 Input: words = ["the","day","is","sunny","the","the","the","sunny","is","is"], k = 4
@@ -179,7 +179,7 @@ vector<string> topKFrequent(vector<string>& words, int k) {
 
 <br>
 
-#### 6. K Closest Points to Origin
+### 6. K Closest Points to Origin
 Given an array of points where points[i] = [xi, yi] and an integer k, return the k closest points to the origin (0, 0). You may return the answer in any order. 
 
 ```
@@ -209,7 +209,7 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
 
 <br>
 
-#### 7. Car Pooling
+### 7. Car Pooling
 You are given the integer capacity and an array trips where trip[i] = [numPassengersi, fromi, toi] indicates that the ith trip has numPassengersi passengers and the locations to pick them up and drop them off are fromi and toi respectively. The locations are given as the number of kilometers due east from the car's initial location.
 
 Return true if it is possible to pick up and drop off all passengers for all the given trips, or false otherwise.
@@ -251,7 +251,7 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 
 <br>
 
-#### 8. Longest Happy String
+### 8. Longest Happy String
 A string is called happy if it does not have any of the strings 'aaa', 'bbb' or 'ccc' as a substring. Given three integers a, b and c, return any string s, which satisfies following conditions:
 
 1. s is happy and longest possible.
@@ -315,7 +315,7 @@ string longestDiverseString(int a, int b, int c) {
 
 <br>
 
-#### 9. Reorganize String
+### 9. Reorganize String
 Given a string s, rearrange the characters of s so that any two adjacent characters are not the same. Return any possible rearrangement of s or return "" if not possible.
 
 Input: s = "aab"
@@ -364,7 +364,9 @@ string reorganizeString(string s) {
 
 <br>
 
-#### 10. Task Scheduler (Tricky)
+## Hard and Tricky Problems
+
+### 1. Task Scheduler (Tricky)
 Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.
 
 Input: tasks = ["A","A","A","B","B","B"], n = 2
@@ -428,7 +430,7 @@ int leastInterval(vector<char>& tasks, int cooldown_period) {
 
 <br>
 
-#### 11. The Number of the Smallest Unoccupied Chair (Tricky)
+### 2. The Number of the Smallest Unoccupied Chair (Tricky)
 There is a party where n friends numbered from 0 to n - 1 are attending. There is an infinite number of chairs in this party that are numbered from 0 to infinity. When a friend arrives at the party, they sit on the unoccupied chair with the smallest number.
 
 For example, if chairs 0, 1, and 5 are occupied when a friend comes, they will sit on chair number 2. When a friend leaves the party, their chair becomes unoccupied at the moment they leave. 
@@ -481,7 +483,7 @@ int smallestChair(vector<vector<int>>& times, int targetFriend) {
 
 <br>
 
-#### 12. Maximum Number of Events That Can Be Attended (Tricky)
+### 3. Maximum Number of Events That Can Be Attended (Tricky)
 Given an array of events where events[i] = [startDayi, endDayi]. Every event i starts at startDayi and ends at endDayi. You can attend an event i at any day d where startTimei <= d <= endTimei. Notice that you can only attend one event at any time d. Return the maximum number of events you can attend.
 
 Input: events= [[1,2],[2,3],[3,4],[1,2]]
@@ -540,7 +542,7 @@ int maxEvents(vector<vector<int>>& events) {
 
 <br>
 
-#### 13. Furthest Building You Can Reach (Tricky)
+### 4. Furthest Building You Can Reach (Tricky)
 You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
 
 While moving from building i to building i+1 (0-indexed),
@@ -591,7 +593,7 @@ int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
 
 <br>
 
-#### 14. Find K Pairs with Smallest Sums (Too Tricky)
+### 5. Find K Pairs with Smallest Sums (Too Tricky)
 You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u, v) which consists of one element from the first array and one element from the second array. Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
 
 Input: nums1 = [1,7,11], nums2 = [2,4,6], k = 3
@@ -715,7 +717,7 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 
 <br>
 
-#### 15. Find Median from Data Stream (**IMP**)
+### 6. Find Median from Data Stream (**IMP**)
 
 [Explaination](https://www.youtube.com/watch?v=1LkOrc-Le-Y)
 
@@ -777,4 +779,109 @@ public:
             return (minheap.top() + maxheap.top())/2.0;
     }
 };
+```
+
+### 7. Trapping Rain Water II (Damn Hard!)
+Given an m x n integer matrix heightMap representing the height of each unit cell in a 2D elevation map, return the volume of water it can trap after raining.
+
+```
+Input: 
+
+heightMap = 
+[[1,4,3,1,3,2],
+[3,2,1,3,2,4],
+[2,3,3,2,3,1]]
+
+Output: 4
+```
+
+![img](https://assets.leetcode.com/uploads/2021/04/08/trap1-3d.jpg)
+
+[Explaination with Visualization](https://leetcode.com/problems/trapping-rain-water-ii/discuss/1138028/Python3Visualization-BFS-Solution-With-Explanation)
+
+```cpp
+struct cell{
+    int height, x, y;
+    cell(int h, int x, int y){
+        height = h;
+        this->x = x;
+        this->y = y;
+    }
+};
+
+
+struct comp{
+
+    /* REMEMBER : use opp sign in customized comparators of heap and set | Here we use '>' for minheap */
+
+    bool operator()(cell c1, cell c2){
+        return c1.height > c2.height;
+    }  
+};
+
+
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+int trapRainWater(vector<vector<int>>& heightMap) {
+    int row = heightMap.size(), col = heightMap[0].size();
+
+    priority_queue<cell, vector<cell>, comp> minheap;               // --> minheap of cell (height, x, y)
+    vector<vector<bool>> vis (row, vector<bool> (col, false));      // --> vis matrix
+    
+
+    /* Initially insert all four boundary cells to min heap */
+
+    for(int j=0; j<col; j++){
+        minheap.push(cell(heightMap[0][j], 0, j));
+        vis[0][j] = true;
+
+        minheap.push(cell(heightMap[row-1][j], row-1, j));
+        vis[row-1][j] = true;
+    }
+
+    for(int i=1; i<row-1; i++){
+        minheap.push(cell(heightMap[i][0], i, 0));
+        vis[i][0] = true;
+
+        minheap.push(cell(heightMap[i][col-1], i, col-1));
+        vis[i][col-1] = true;
+    }
+
+    /* ------------------------------------------------------ */
+
+    int water = 0;
+    int level = 0;      // --> it will store the max level upto water can be filled in curr cell 
+
+    int dx[] = {0, 1, 0, -1};
+    int dy[] = {1, 0, -1, 0};
+
+    /* Iterate till heap becomes empty and pop cell with min height one by one */
+
+    while(!minheap.empty()){
+        cell c = minheap.top(); minheap.pop();
+        level = max(level, c.height);               // --> update level after popping each element
+
+        for(int i=0; i<4; i++){
+            int xnew = c.x + dx[i];
+            int ynew = c.y + dy[i];
+
+            /* If nbr cell is inside and not vis and its height is less then level then water can be trapped here */
+
+            if(isInside(xnew, ynew, row, col) and !vis[xnew][ynew]){
+                if(heightMap[xnew][ynew]<level)
+                    water += level - heightMap[xnew][ynew];
+
+                /* Push nbr to the minheap and mark it as vis */
+
+                minheap.push(cell(heightMap[xnew][ynew], xnew, ynew));
+                vis[xnew][ynew] = true;
+            }
+        }
+    }
+
+    return water;
+}
 ```

@@ -930,3 +930,134 @@ int trapRainWater(vector<vector<int>>& heightMap) {
     return water;
 }
 ```
+
+<br>
+
+### 9. Sliding Window Median
+You are given an integer array nums and an integer k. There is a sliding window of size k which is moving from the very left of the array to the very right.Each time the sliding window moves right by one position. Return the median array for each window in the original array.
+
+```
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Output: [1.00000,-1.00000,-1.00000,3.00000,5.00000,6.00000]
+
+Explanation: 
+Window position                Median
+---------------                -----
+[1  3  -1] -3  5  3  6  7        1
+ 1 [3  -1  -3] 5  3  6  7       -1
+ 1  3 [-1  -3  5] 3  6  7       -1
+ 1  3  -1 [-3  5  3] 6  7        3
+ 1  3  -1  -3 [5  3  6] 7        5
+ 1  3  -1  -3  5 [3  6  7]       6
+```
+
+Hint: Use median of data stream concept and use two heaps to store running median. 
+
+```cpp
+void balance_heaps (priority_queue<int> & maxheap, priority_queue<int, vector<int>, greater<int>> & minheap){
+
+    if(maxheap.size() > minheap.size()+1){
+        minheap.push(maxheap.top());
+        maxheap.pop();
+    }
+    else if(minheap.size() > maxheap.size()+1){
+        maxheap.push(minheap.top());
+        minheap.pop(); 
+    }
+}
+
+
+void insert (priority_queue<int> & maxheap, priority_queue<int, vector<int>, greater<int>> & minheap, int val){
+
+    if(maxheap.empty() and minheap.empty())
+        maxheap.push(val);
+
+    else if(maxheap.empty()) 
+        minheap.push(val);
+
+    else if(minheap.empty()) 
+        maxheap.push(val);
+
+    else if(val<=maxheap.top())
+        maxheap.push(val);
+        
+    else
+        minheap.push(val);
+
+    balance_heaps (maxheap, minheap);
+}
+
+
+void remove (priority_queue<int> & maxheap, priority_queue<int, vector<int>, greater<int>> & minheap, int val){
+
+    if(!maxheap.empty() and val<=maxheap.top()){
+        vector<int> temp;
+        while(!maxheap.empty()){
+
+            if(maxheap.top()==val){
+                maxheap.pop();
+                break;
+            }
+
+            temp.push_back(maxheap.top());
+            maxheap.pop();
+        }
+
+        for(int t : temp) 
+            maxheap.push(t);
+    }
+    else{
+        vector<int> temp;
+        while(!minheap.empty()){
+
+            if(minheap.top()==val){
+                minheap.pop();
+                break;
+            }
+
+            temp.push_back(minheap.top());
+            minheap.pop();
+        }
+
+        for(int t : temp) 
+            minheap.push(t);
+    }
+
+    balance_heaps (maxheap, minheap);
+}
+
+
+double get_median (priority_queue<int> & maxheap, priority_queue<int, vector<int>, greater<int>> & minheap){
+    if (maxheap.size() > minheap.size()) return maxheap.top();
+    else if (maxheap.size() < minheap.size()) return minheap.top();
+    else{
+        long long a = maxheap.top();
+        long long b = minheap.top();
+        return (a+b)/2.0;
+    } 
+}
+
+
+vector<double> medianSlidingWindow(vector<int>& nums, int k) {
+
+    vector<double> res;
+    priority_queue<int> maxheap;
+    priority_queue<int, vector<int>, greater<int>> minheap;
+
+    int i=0;
+
+    for( ; i<k; i++)
+        insert(maxheap, minheap, nums[i]);
+
+    res.push_back(get_median(maxheap, minheap));
+
+    for( ; i<nums.size(); i++){
+        remove(maxheap, minheap, nums[i-k]);
+        insert(maxheap, minheap, nums[i]);
+        res.push_back(get_median(maxheap, minheap));
+    }
+
+    return res;
+}
+```
+

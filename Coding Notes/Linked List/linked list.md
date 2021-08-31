@@ -1,8 +1,9 @@
 # Linked List
 
+
 ## Easy
 
-#### 1. Reverse a linked list
+### 1. Reverse a linked list
 
 **Iterative**
 ```cpp
@@ -37,7 +38,9 @@ ListNode* reverseList(ListNode* head) {
   }
 ```
 
-#### 2. Middle of a Linked list (slow and fast pointer)
+<br>
+
+### 2. Middle of a Linked list (slow and fast pointer)
 
 ```cpp
 ListNode* middleNode(ListNode* head) {
@@ -51,7 +54,9 @@ ListNode* middleNode(ListNode* head) {
 }
 ```
 
-#### 3. Delete Node in a Linked List
+<br>
+
+### 3. Delete Node in a Linked List
 Write a function to delete a node in a singly-linked list. You will not be given access to the head of the list, instead you will be given access to the node to be deleted directly. It is guaranteed that the node to be deleted is not a tail node in the list.
 
 Hint: Copy next node to current node
@@ -63,7 +68,9 @@ void deleteNode(ListNode* node) {
 }
 ```
 
-#### 4. Merge Two Sorted Lists
+<br>
+
+### 4. Merge Two Sorted Lists
 
 ```cpp
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
@@ -81,7 +88,9 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
 }
 ```
 
-#### 5. Remove Duplicates from Sorted List
+<br>
+
+### 5. Remove Duplicates from Sorted List (Remove Duplicate Copies) 
 
 ```cpp
 ListNode* deleteDuplicates(ListNode* head) {
@@ -99,8 +108,9 @@ ListNode* deleteDuplicates(ListNode* head) {
 }
 ```
 
-#### 6. Remove Duplicates from Sorted List II
-Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+<br>
+
+### 6. Remove Duplicates from Sorted List II (Remove Duplicates Completely leaving only Unique)
 
 ![img](https://assets.leetcode.com/uploads/2021/01/04/linkedlist2.jpg)
 
@@ -139,7 +149,9 @@ ListNode* deleteDuplicates(ListNode* head) {
 }
 ```
 
-#### 7. Remove duplicates from an unsorted linked list
+<br>
+
+### 7. Remove duplicates from an unsorted linked list
 
 ```cpp
 Node * removeDuplicates( Node *head) {
@@ -166,7 +178,9 @@ Node * removeDuplicates( Node *head) {
 }
 ```
 
-#### 8. Remove Linked List Elements
+<br>
+
+### 8. Remove Linked List Elements
 Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
 
 ```cpp
@@ -195,7 +209,9 @@ ListNode* removeElements(ListNode* head, int val) {
 }
 ```
 
-#### 9. Intersection of Two Linked Lists
+<br>
+
+### 9. Intersection of Two Linked Lists
 
 ```cpp
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
@@ -219,7 +235,9 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 }
 ```
 
-#### 10. Linked List Cycle (Floyds cycle detection algo)
+<br>
+
+### 10. Linked List Cycle (Floyds cycle detection algo)
 
 ```cpp
 bool hasCycle(ListNode *head) {
@@ -236,7 +254,9 @@ bool hasCycle(ListNode *head) {
 }
 ```
 
-#### 11. Linked List Cycle II (return the node where the cycle begins)
+<br>
+
+### 11. Linked List Cycle II (return the node where the cycle begins)
 
 Approach:
 
@@ -275,7 +295,9 @@ ListNode *detectCycle(ListNode *head) {
 
 Note: For removing cycle, check for the condition temp1->next==temp2->next. Whenever it occurs, store NULL in temp2->next;
 
-#### 12. Palindrome Linked List
+<br>
+
+### 12. Palindrome Linked List
 
 ```cpp
 ListNode* reverseSecondHalf(ListNode* mid){
@@ -322,7 +344,9 @@ bool isPalindrome(ListNode* head) {
 }
 ```
 
-#### 13. Swapping Nodes in a Linked List (first and kth last node)
+<br>
+
+### 13. Swapping Nodes in a Linked List (first and kth last node)
 You are given the head of a linked list, and an integer k. Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
 
 ![img](https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg)
@@ -349,7 +373,9 @@ ListNode* swapNodes(ListNode* head, int k) {
 }
 ```
 
-#### 14. Remove Nth Node From End of List
+<br>
+
+### 14. Remove Nth Node From End of List
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
 ```cpp
@@ -375,7 +401,9 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
 }
 ```
 
-#### 15. Odd Even Linked List
+<br>
+
+### 15. Odd Even Linked List
 Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)
@@ -407,9 +435,11 @@ ListNode* oddEvenList(ListNode* head) {
 }
 ```
 
+<br>
+
 ## Medium
 
-#### 1. Swap Nodes in Pairs (without modifying the values)
+### 1. Swap Nodes in Pairs (without modifying the values)
 
 ![img](https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg)
 
@@ -427,7 +457,9 @@ ListNode* swapPairs(ListNode* head) {
 }
 ```
 
-#### 2. Sort List
+<br>
+
+### 2. Sort List
 
 Hint: Use divide and conquer approach
 
@@ -471,7 +503,9 @@ ListNode* sortList(ListNode* head) {
 }
 ```
 
-#### 3. Partition list
+<br>
+
+### 3. Partition list
 Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.
 
 ![img](https://assets.leetcode.com/uploads/2021/01/04/partition.jpg)
@@ -497,55 +531,9 @@ ListNode *partition(ListNode *head, int x) {
 }
 ```
 
-**Inplace solution**
+<br>
 
-Approach:
-
-1. Use two pointers to traverse
-2. Left pointer is points the location where node lesser then x will be inserted
-3. Right pointer iterates over the whole linked list, find nodes >= x, removes them, copy their data to newNode and attach that newNode in left pointer's pos.
-
-```cpp
-void insertAtPos(ListNode* pos, ListNode* newNode){
-    newNode->next = pos->next;
-    pos->next = newNode;
-}
-
-void insertAtBegin(ListNode* &head, ListNode* newNode){
-    newNode->next = head;
-    head = newNode;
-}
-
-ListNode* partition(ListNode* head, int x) {
-    if(!head or !head->next) return head;
-    ListNode* temp1 = head->val<x ? head : NULL;
-
-    while(temp1 and temp1->val<x and temp1->next and temp1->next->val<x)
-        temp1 = temp1->next;
-
-    ListNode* temp2 = temp1 ? temp1 : head;
-    while(temp2 and temp2->next){
-        if(temp2->next->val < x){
-            ListNode* newNode = new ListNode(temp2->next->val);
-            temp2->next = temp2->next->next;
-
-            if(temp1){
-                insertAtPos(temp1, newNode);
-                temp1 = temp1->next;
-            }
-            else{
-                insertAtBegin(head, newNode);
-                temp1 = head;
-            }
-        }
-        else temp2 = temp2->next;
-    }
-
-    return head;
-}
-```
-
-#### 4. Copy List with Random Pointer (Tricky)
+### 4. Copy List with Random Pointer (Tricky)
 
 Approach:
 
@@ -600,7 +588,9 @@ Node* copyRandomList(Node* head) {
 }
 ```
 
-#### 5. Reorder List (Cyclic)
+<br>
+
+### 5. Reorder List (Cyclic)
 
 ![img](https://assets.leetcode.com/uploads/2021/03/09/reorder2-linked-list.jpg)
 
@@ -654,7 +644,9 @@ void reorderList(ListNode* head) {
 }
 ```
 
-#### 6. Reverse Linked List II
+<br>
+
+### 6. Reverse Linked List II
 Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return the reversed list.
 
 ![img](https://assets.leetcode.com/uploads/2021/02/19/rev2ex2.jpg)
@@ -698,7 +690,10 @@ ListNode* reverseBetween(ListNode* head, int left, int right) {
     return head;
 }
 ```
-#### 7. Add Two Numbers
+
+<br>
+
+### 7. Add Two Numbers
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 
 ```cpp
@@ -767,7 +762,9 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 }
 ```
 
-#### 8. Rotate List
+<br>
+
+### 8. Rotate List
 Given the head of a linked list, rotate the list to the right by k places.
 
 ```cpp
@@ -798,7 +795,9 @@ ListNode* rotateRight(ListNode* head, int k) {
 }
 ```
 
-#### 9. Remove Zero Sum Consecutive Nodes from Linked List (Tricky)
+<br>
+
+### 9. Remove Zero Sum Consecutive Nodes from Linked List (Tricky)
 Given the head of a linked list, we repeatedly delete consecutive sequences of nodes that sum to 0 until there are no such sequences. After doing so, return the head of the final linked list.  You may return any such answer.
 
 Input: head = [1,2,-3,3,1]
@@ -857,7 +856,9 @@ ListNode* removeZeroSumSublists(ListNode* head) {
 }
 ```
 
-#### 10. Flattening a Linked List 
+<br>
+
+### 10. Flattening a Linked List 
 Given a Linked List of size N, where every node represents a sub-linked-list and contains two pointers:
 
 (i) a next pointer to the next node,
@@ -880,6 +881,7 @@ Input:
 30               45
 
 Output: 5-> 7-> 8- > 10 -> 19-> 20-> 22-> 28-> 30-> 35-> 40-> 45-> 50
+
 
 Node* merge(Node* l1, Node* l2){
     if(!l1) return l2;
@@ -920,7 +922,9 @@ Node *flatten(Node *root){
 }
 ```
 
-#### 11. Sort a linked list of 0s, 1s and 2s by changing links
+<br>
+
+### 11. Sort a linked list of 0s, 1s and 2s by changing links
 
 Hint: To avoid many null checks, we use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
 
@@ -960,7 +964,9 @@ Node* segregate(Node *head) {
 }
 ```
 
-#### 12. Delete nodes having greater value on right
+<br>
+
+### 12. Delete nodes having greater value on right
 Given a singly linked list, remove all the nodes which have a greater value on its following nodes.
 
 **Method 1: Recursive approach**
@@ -1018,9 +1024,11 @@ Node *compute(Node *head){
 }
 ```
 
+<br>
+
 ### @ Problems on Conversion of Linked List to Trees and vice versa
 
-#### 1. Convert Sorted List to Binary Search Tree
+### 1. Convert Sorted List to Binary Search Tree
 
 ![img](https://assets.leetcode.com/uploads/2020/08/17/linked.jpg)
 
@@ -1055,9 +1063,11 @@ TreeNode* sortedListToBST(ListNode* head) {
 }
 ```
 
+<br>
+
 ## Hard
 
-#### 1. Merge k Sorted Lists
+### 1. Merge k Sorted Lists
 
 Approach: 
 
@@ -1096,7 +1106,9 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 }
 ```
 
-#### 2. Reverse Nodes in k-Group
+<br>
+
+### 2. Reverse Nodes in k-Group
 
 Hint : Use recursion
 

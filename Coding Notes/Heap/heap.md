@@ -781,7 +781,52 @@ public:
 };
 ```
 
-### 7. Trapping Rain Water II (Damn Hard!)
+<br>
+
+### 7. Merge k Sorted Lists (**IMP**)
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it. 
+
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+
+Output: [1,1,2,3,4,4,5,6]
+
+```cpp
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+    ListNode* dummy = new ListNode(0);
+    ListNode* temp = dummy;
+
+    priority_queue< pair<int,ListNode*>, vector<pair<int,ListNode*>>, greater<pair<int,ListNode*>> > minheap;
+
+    /* Initially insert heads of all linked list to minheap */
+
+    for(auto ptr : lists)
+        if(ptr) minheap.push({ptr->val, ptr});
+
+    /* 
+        Iterate till heap becomes empty 
+        pop minVal everytime and append it to ans by creating newNode 
+        If next node exists for poped node, then push its next node to min heap
+    */
+
+    while(!minheap.empty()){
+        auto p = minheap.top(); minheap.pop();    
+
+        temp->next = new ListNode(p.first);
+        temp = temp->next;
+
+        if(p.second->next)
+            minheap.push({p.second->next->val, p.second->next});
+    }
+
+    ListNode* head = dummy->next;
+    return head;
+}
+```
+
+<br>
+
+### 8. Trapping Rain Water II (Damn Hard!)
 Given an m x n integer matrix heightMap representing the height of each unit cell in a 2D elevation map, return the volume of water it can trap after raining.
 
 ```

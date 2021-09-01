@@ -542,7 +542,62 @@ int maxEvents(vector<vector<int>>& events) {
 
 <br>
 
-### 4. Furthest Building You Can Reach (Tricky)
+### 4. Course Schedule III
+You are given an array courses where courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi. You will start on the 1st day and you cannot take two or more courses simultaneously. Return the maximum number of courses that you can take.
+
+Input : [[7,17],[3,12],[10,20],[9,10],[5,20],[10,19],[4,18]]
+
+Output: 4
+
+```cpp
+static bool comp (pair<int,int> p1, pair<int,int> p2){
+    return p1.second < p2.second;
+}
+
+
+int scheduleCourse(vector<vector<int>>& courses) {
+
+    vector<pair<int,int>> v;
+    for(auto c : courses)
+        v.push_back({c[0], c[1]});
+
+    sort(v.begin(), v.end(), comp);         // --> sort all courses based on their lastDay
+
+    priority_queue<int> maxheap;            // --> will store duration of courses taken so far
+    int timeStamp = 0;
+
+    /* Iterate for all courses */
+
+    for(int i=0; i<v.size(); i++){
+        int duration = v[i].first, lastDay = v[i].second;
+
+        /* If we can take curr course without any clash then push it in maxheap and update timeStamp */
+
+        if(timeStamp + duration <= lastDay){
+            maxheap.push(duration);
+            timeStamp += duration;
+        }
+
+        /* 
+            Else if we've taken any course earlier whose duration is greater then curr_course
+            then replacing curr_course with that earlier course of higher duration (will be on the top of maxheap)
+            will be more beneficial for us.
+        */
+
+        else if (!maxheap.empty() and maxheap.top() > duration){
+            timeStamp = timeStamp - maxheap.top() + duration;
+            maxheap.pop();
+            maxheap.push(duration);
+        }
+    }
+
+    return maxheap.size();
+}
+```
+
+<br>
+
+### 5. Furthest Building You Can Reach (Tricky)
 You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
 
 While moving from building i to building i+1 (0-indexed),
@@ -593,7 +648,7 @@ int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
 
 <br>
 
-### 5. Find K Pairs with Smallest Sums (Too Tricky)
+### 6. Find K Pairs with Smallest Sums (Too Tricky)
 You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u, v) which consists of one element from the first array and one element from the second array. Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
 
 Input: nums1 = [1,7,11], nums2 = [2,4,6], k = 3
@@ -717,7 +772,7 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 
 <br>
 
-### 6. Find Median from Data Stream (**IMP**)
+### 7. Find Median from Data Stream (**IMP**)
 
 [Explaination](https://www.youtube.com/watch?v=1LkOrc-Le-Y)
 
@@ -783,7 +838,7 @@ public:
 
 <br>
 
-### 7. Merge k Sorted Lists (**IMP**)
+### 8. Merge k Sorted Lists (**IMP**)
 You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it. 
 
 Input: lists = [[1,4,5],[1,3,4],[2,6]]

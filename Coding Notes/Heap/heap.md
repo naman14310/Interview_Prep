@@ -879,3 +879,49 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 }
 ```
 
+<br>
+
+### 9. Minimum Number of Refueling Stops
+A car travels from a starting position to a destination which is target miles east of the starting position. The gas stations are represented as an array stations where stations[i] = [positioni, fueli] indicates that the ith gas station is positioni miles east of the starting position and has fueli liters of gas.
+
+The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car. Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.
+
+Note that if the car reaches a gas station with 0 fuel left, the car can still refuel there. If the car reaches the destination with 0 fuel left, it is still considered to have arrived.
+
+Input: target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]
+
+Output: 2
+
+```cpp
+int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+    priority_queue<int> maxheap;                // --> will store all fuel stations that we left behind
+
+    int i=0;
+    int cnt=0;
+
+    while(i<stations.size()){
+
+        if(startFuel >= stations[i][0]){
+            maxheap.push(stations[i][1]);
+            i++;
+        }
+        else{
+            if(maxheap.empty()) return -1;
+
+            startFuel += maxheap.top();
+            maxheap.pop();
+            cnt++;
+        }
+    }
+
+    while(startFuel<target){
+        if(maxheap.empty()) return -1;
+
+        startFuel += maxheap.top();
+        maxheap.pop();    
+        cnt++;
+    }
+
+    return cnt;
+}
+```

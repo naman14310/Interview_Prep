@@ -1,8 +1,10 @@
 # Arrays
 
+<br>
+
 ## Easy
 
-#### 1. Duplicate Zeros
+### 1. Duplicate Zeros
 Given a fixed length array arr of integers, duplicate each occurrence of zero, shifting the remaining elements to the right. Note that elements beyond the length of the original array are not written.
 
 Hint: Start shifting from back
@@ -32,7 +34,9 @@ void duplicateZeros(vector<int>& arr) {
 }
 ```
 
-#### 2. Minimum Moves to Equal Array Elements II
+<br>
+
+### 2. Minimum Moves to Equal Array Elements II
 Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
 
 Hint: Convert each no. to median
@@ -51,8 +55,12 @@ int minMoves2(vector<int>& nums) {
 }
 ```
 
-#### 3. Partition Array Into Three Parts With Equal Sum (Prefix Sum)
+<br>
+
+### 3. Partition Array Into Three Parts With Equal Sum (Prefix Sum)
 Given an array of integers arr, return true if we can partition the array into three non-empty parts with equal sums.
+
+Hint: Compute Prefix sum, iterate it and find sum, (2 * sum) and (3 * sum)
 
 ```cpp
 bool canThreePartsEqualSum(vector<int>& arr) {
@@ -81,7 +89,9 @@ bool canThreePartsEqualSum(vector<int>& arr) {
 }
 ```
 
-#### 4. Least Greater Element
+<br>
+
+### 4. Least Greater Element
 Replace every element with the least greater element on its right
 
 Hint: Iterate from right to left and use Set data structure
@@ -105,16 +115,20 @@ vector<int> leastGreaterElement(vector<int> &arr) {
         s.insert(val);
     }
     
-	return arr;
+    return arr;
 }
 ```
 
-#### 5. Find Pivot Index (Left sum == Right sum)
+<br>
+
+### 5. Find Pivot Index (Left sum == Right sum)
 Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
 
 Input: nums = [2,1,-1]
 
 Output: 0
+
+Hint: Find totalSum and then start iterating from left to right computing lsum on the go. For each lsum compute rsum using (sum-lsum-nums[i]). If both lsum and rsum are equal return i.
 
 ```cpp
 int pivotIndex(vector<int>& nums) {
@@ -136,9 +150,34 @@ int pivotIndex(vector<int>& nums) {
 }
 ```
 
+<br>
+
+
+### 6. Global and Local Inversions
+You are given an integer array nums of length n which represents a permutation of all the integers in the range [0, n - 1]. 
+1. The number of global inversions is the number of the different pairs (i, j) where: 0 <= i < j < n and nums[i] > nums[j]
+2. The number of local inversions is the number of indices i where: 0 <= i < n - 1 and nums[i] > nums[i + 1]
+
+Return true if the number of global inversions is equal to the number of local inversions.
+
+```cpp
+bool isIdealPermutation(vector<int>& A) {
+    bool flag = false;
+	
+    for(int i=0; i<A.size(); i++){
+        if(abs(A[i]-i)>1) 
+			return false;
+    }
+  
+    return true;
+}
+```
+
+<br>
+
 ## Medium
 
-#### 1. Product of Array Except Self
+### 1. Product of Array Except Self
 Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
 
 Hint: Create left and right array to store cummulative product of all left elements and right elements in array.
@@ -162,7 +201,9 @@ vector<int> productExceptSelf(vector<int>& nums) {
 }
 ```
 
-#### 2. Beautiful Arrangement II
+<br>
+
+### 2. Beautiful Arrangement II
 Given two integers n and k, construct a list answer that contains n different positive integers ranging from 1 to n and obeys the following requirement: Suppose this list is answer = [a1, a2, a3, ... , an], then the list [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] has exactly k distinct integers.
 
 Hint: Fill in cyclic pattern
@@ -187,7 +228,9 @@ vector<int> constructArray(int n, int k) {
 }
 ```
 
-#### 3. Pairs of Songs With Total Durations Divisible by 60
+<br>
+
+### 3. Pairs of Songs With Total Durations Divisible by 60
 You are given a list of songs where the ith song has a duration of time[i] seconds. Return the number of pairs of songs for which their total duration in seconds is divisible by 60. Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0.
 
 Hint: Play with remainders
@@ -205,99 +248,74 @@ int numPairsDivisibleBy60(vector<int>& time) {
 }
 ```
 
-#### 4. Advantage Shuffle
-Given two arrays A and B of equal size, the advantage of A with respect to B is the number of indices i for which A[i] > B[i]. Return any permutation of A that maximizes its advantage with respect to B.
+<br>
 
-Input: A = [2,7,11,15], B = [1,10,4,11]
-Output: [2,11,7,15]
-
-Approach: Sort both the arrays (B with its index). Iterate over A. if A[i] is just greater then B[i] then store it at index of B[i]. Otherwise, store it at an empty place from the end.
-
-```cpp
-static bool mysort(pair<int,int> a, pair<int,int> b){
-    if(a.first>b.first) return true;
-    return false;
-}
-
-vector<int> advantageCount(vector<int>& A, vector<int>& B) {
-    vector<pair<int,int>> v;
-    for(int i=0; i<B.size(); i++)
-        v.push_back({B[i], i});
-
-    vector<int> res(A.size(), 0);
-
-    sort(A.begin(), A.end());
-    sort(v.begin(), v.end(), mysort);
-
-    int i=0, j=A.size()-1;
-
-    for(int k=0; k<A.size(); k++){
-        int pos = v[k].second;
-        if(A[j]>v[k].first){
-            res[pos] = A[j];
-            j--;
-        }
-        else{
-            res[pos] = A[i];
-            i++;
-        }
-    }
-    return res;
-}
-```
-
-#### 5. Sort Colors (Dutch National Flag algo - 3 pointer solution)
+### 5. Sort Colors (Dutch National Flag algo - 3 pointer solution)
 Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
 
 Hint: Settle 0 at the left end, 2 at the right end => 1 will automatically settle at middle.
 
 ```cpp
 void sortColors(vector<int>& nums) {
-    int low = 0, mid = 0, high = nums.size()-1;
-    while(mid<=high){
-        if(nums[mid]==0){
-        //swap low and mid
-            int temp = nums[low];
-            nums[low] = nums[mid];
-            nums[mid] = temp;
-            low++;
-            mid++;
-        }
-        else if(nums[mid]==2){
-        // swap high and mid
-            int temp = nums[high];
-            nums[high] = nums[mid];
-            nums[mid] = temp;
-            high--;
-        }
-        else mid++;
-    }
+	int low=0, mid=0, high=nums.size()-1;
+
+	while(mid<=high){
+
+		if(nums[mid]==0 and mid!=low){
+			swap(nums[low], nums[mid]);
+			low++;
+		}
+		else if(nums[mid]==2){
+			swap(nums[high], nums[mid]);
+			high--; 
+		}
+		else
+			mid++;
+	}
 }
 ```
 
-#### 6. Global and Local Inversions
-You are given an integer array nums of length n which represents a permutation of all the integers in the range [0, n - 1].
-The number of global inversions is the number of the different pairs (i, j) where:
-0 <= i < j < n and nums[i] > nums[j]
-The number of local inversions is the number of indices i where:
-0 <= i < n - 1 and nums[i] > nums[i + 1]
-Return true if the number of global inversions is equal to the number of local inversions.
+<br>
+
+### 6. Array Nesting
+You are given an integer array nums of length n where nums is a permutation of the numbers in the range [0, n - 1]. You should build a set s[k] = {nums[k], nums[nums[k]], nums[nums[nums[k]]], ... } subjected to the following rule:
+1. The first element in s[k] starts with the selection of the element nums[k] of index = k.
+2. The next element in s[k] should be nums[nums[k]], and then nums[nums[nums[k]]], and so on.
+3. We stop adding right before a duplicate element occurs in s[k].
+
+Return the longest length of a set s[k].
+
+Input: nums = [5,4,0,3,1,6,2]
+
+Hint: Update vis index in nums to -1 and avoid using extra array for vis purpose.
+
+Output: 4
 
 ```cpp
-bool isIdealPermutation(vector<int>& A) {
-    bool flag = false;
-    for(int i=0; i<A.size(); i++){
-        if(abs(A[i]-i)>1){
-            flag = true;
-            break;
-        }
-    }
-    if(flag) return false;
-    return true;
+int traverse (vector<int> & nums, int val){
+	if(nums[val]==-1) return 0;
+
+	int next = nums[val];
+	nums[val]=-1;
+
+	return 1 + traverse(nums, next);
+}
+
+int arrayNesting (vector<int>& nums){
+	int ans = 1;
+
+	for(int i=0; i<nums.size(); i++){
+		if(nums[i]!=-1)
+			ans = max(ans, traverse(nums, i));
+	}
+
+	return ans;
 }
 ```
 
-#### 7. Rotate Array (Awesome 3 line reverse logic)
+<br>
+
+### 7. Rotate Array (Awesome 3 line reverse logic)
 
 ```cpp
 /* ROTATE RIGHT */
@@ -321,7 +339,9 @@ void rotate_left(vector<int>& nums, int k) {
 
 ```
 
-#### 8. Next Permutation
+<br>
+
+### 8. Next Permutation
 
 Approach:
 1. Iterate from right to left and find rightmost flipped bit (i.e. nums[i]>nums[i-1]) and assign its index to pos
@@ -353,8 +373,9 @@ void nextPermutation(vector<int>& nums) {
 }
 ```
 
+<br>
 
-#### 9. 4Sum II
+### 9. 4Sum II
 Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that: 0 <= i, j, k, l < n and nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
 
 Hint: Use two hashmaps for storing sum of A[i]+B[i] and C[i]+D[i]
@@ -368,13 +389,13 @@ int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
 
     for(int i=0; i<len; i++){
         for(int j=0; j<len; j++){
-                mp1[A[i]+B[j]]++;
+			mp1[A[i]+B[j]]++;
         }
     }
     for(int i=0; i<len; i++){
         for(int j=0; j<len; j++){
-                mp2[C[i]+D[j]]++;
-            }
+			mp2[C[i]+D[j]]++;
+		}
     }
     for(auto p1 : mp1){
         int nsum = -1*p1.first;
@@ -386,7 +407,9 @@ int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
 }
 ```
 
-#### 10. Increasing Triplet Subsequence
+<br>
+
+### 10. Increasing Triplet Subsequence
 Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
 
 Hint: Maintain two variables for storing smallest and second smallest elements so far.
@@ -409,7 +432,9 @@ bool increasingTriplet(vector<int>& nums) {
 }
 ```
 
-#### 11. Smallest Range II (Tricky)
+<br>
+
+### 11. Smallest Range II (Tricky)
 Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
 
 [Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173495/Actual-explanation-for-people-who-don't-understand-(I-hope))
@@ -430,7 +455,9 @@ int smallestRangeII(vector<int>& A, int k) {
 }
 ```
 
-#### 12. Sum of Absolute Differences in a Sorted Array (Prefix Sum)
+<br>
+
+### 12. Sum of Absolute Differences in a Sorted Array (Prefix Sum)
 You are given an integer array nums sorted in non-decreasing order. Build and return an integer array result with the same length as nums such that result[i] is equal to the summation of absolute differences between nums[i] and all the other elements in the array.
 
 Hint: Calculate prefix sum. Find left sum and right sum for every index i and calculate results.
@@ -456,8 +483,12 @@ vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
 }
 ```
 
-#### 13. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
+<br>
+
+### 13. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
 Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
+
+Hint: Run a while loop till we get all zeros. decrement all odd numbers by one, now all numbers becomes even, divide all by 2. Repeat these steps to get all zeros in min steps.
 
 ```cpp
 bool terminate(vector<int> v){
@@ -492,19 +523,23 @@ int minOperations(vector<int>& nums) {
 }
 ```
 
-#### 14. Find Permutation
+<br>
+
+### 14. Find Permutation
 Given a positive integer n and a string s consisting only of letters D or I, you have to find any permutation of first n positive integer that satisfy the given input string. D means the next number is smaller, while I means the next number is greater.
 
 Input 1: n = 3, s = ID
 
 Return: [1, 3, 2]
 
+Hint: If next number in greater ('I') then full current smallest possible and if next number is smaller ('D') then fill current largest possible.
+
 ```cpp
 vector<int> Solution::findPerm(const string A, int B) {
     int curr_smallest = 1;
     int curr_largest = B;
-    
     vector<int> ans;
+	
     for(int i=0; i<A.size(); i++){
         
         if(A[i]=='I'){
@@ -522,7 +557,9 @@ vector<int> Solution::findPerm(const string A, int B) {
 }
 ```
 
-#### 15. Partition Array into Disjoint Intervals
+<br>
+
+### 15. Partition Array into Disjoint Intervals
 Given an array nums, partition it into two (contiguous) subarrays left and right so that:
 
 1. Every element in left is less than or equal to every element in right.
@@ -555,8 +592,10 @@ int partitionDisjoint(vector<int>& nums) {
 }
 ```
 
-#### 16. Best Sightseeing Pair - O(n)|O(1)
-You are given an integer array values where values[i] represents the value of the ith sightseeing spot.  The score of a pair (i < j) of sightseeing spots is values[i] + values[j] + i - j. Return the maximum score of a pair of sightseeing spots.
+<br>
+
+### 16. Best Sightseeing Pair - O(n)|O(1)
+You are given an integer array values where values[i] represents the value of the ith sightseeing spot. The score of a pair (i < j) of sightseeing spots is values[i] + values[j] + i - j. Return the maximum score of a pair of sightseeing spots.
 
 Input: values = [8,1,5,2,6]
 
@@ -579,9 +618,11 @@ int maxScoreSightseeingPair(vector<int>& values) {
 }
 ```
 
+<br>
+
 ## Hard
 
-#### 1. Trapping Rain Water
+### 1. Trapping Rain Water
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
 
 ![TRP](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)
@@ -617,7 +658,9 @@ int trap(vector<int>& height) {
 }
 ```
 
-#### 2. Longest Consecutive Sequence (Tricky)
+<br>
+
+### 2. Longest Consecutive Sequence (Tricky)
 Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
 
 Hint: Create hashmap and find all those nums whose nums-1 doesn't exist in the hashmap. 
@@ -650,7 +693,9 @@ int longestConsecutive(vector<int>& nums) {
 }
 ```
 
-#### 3. Candy
+<br>
+
+### 3. Candy
 There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings. You are giving candies to these children subjected to the following requirements:
 
 1. Each child must have at least one candy.
@@ -687,7 +732,9 @@ int candy(vector<int>& ratings) {
 }
 ```
 
-#### 4. Longest Mountain in Array
+<br>
+
+### 4. Longest Mountain in Array
 An array arr is a mountain array if and only if arr.length >= 3 and, There exists some index i (0-indexed) with 0 < i < arr.length - 1 such that:
 1. arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
 2. arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
@@ -727,7 +774,9 @@ int longestMountain(vector<int>& arr) {
 }
 ```
 
-#### 5.  Wiggle Subsequence (O(n) Approach)
+<br>
+
+### 5.  Wiggle Subsequence (O(n) Approach) - Tricky
 A wiggle sequence is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. Given an integer array nums, return the length of the longest wiggle subsequence of nums.
 
 Input: nums = [1,17,5,10,13,15,10,5,16,8]

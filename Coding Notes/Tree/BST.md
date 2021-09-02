@@ -778,7 +778,7 @@ pair<TreeNode*, TreeNode*> flatten(TreeNode* root){
     
     if(!root->left and !root->right) return {root, root};
     
-    /* Case 2 : No Right child */    
+    /* Case 2 : No Left child */    
     
     else if(!root->left){
         auto right = flatten(root->right);
@@ -786,7 +786,7 @@ pair<TreeNode*, TreeNode*> flatten(TreeNode* root){
         return {root, right.second};
     }
 
-    /* Case 3 : No left child */
+    /* Case 3 : No Right child */
     
     else if(!root->right){
         auto left = flatten(root->left);

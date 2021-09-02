@@ -6,6 +6,7 @@
 Given two arrays A and B of equal size, the advantage of A with respect to B is the number of indices i for which A[i] > B[i]. Return any permutation of A that maximizes its advantage with respect to B.
 
 Input: A = [2,7,11,15], B = [1,10,4,11]
+
 Output: [2,11,7,15]
 
 Approach: Sort both the arrays (B with its index). Iterate over A. if A[i] is just greater then B[i] then store it at index of B[i]. Otherwise, store it at an empty place from the end.

@@ -434,24 +434,43 @@ bool increasingTriplet(vector<int>& nums) {
 
 <br>
 
-### 11. Smallest Range II (Tricky)
+### 11. Smallest Range - O(nlogn)
 Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
 
-[Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173495/Actual-explanation-for-people-who-don't-understand-(I-hope))
+Input: nums = [1,3,6], k = 3
+
+Output: 3
+
+[Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173377/C%2B%2BJavaPython-Add-0-or-2-*-K)
 
 ```cpp
-int smallestRangeII(vector<int>& A, int k) {
-    if(A.size()==1) return 0;
-    sort(A.begin(), A.end());
-    int ans = INT_MAX;
-    
-    for(int i=0; i<A.size()-1; i++){
-        int a = min(A[0]+k, A[i+1]-k);
-        int b = max(A[i]+k, A[A.size()-1]-k);
-        ans = min(ans, abs(a-b));
-    }
-    ans = min(ans, A[A.size()-1]-A[0]);
-    return ans;
+int smallestRangeII(vector<int>& nums, int k) {
+	int n = nums.size();
+	sort(nums.begin(), nums.end());
+
+	/* Instead of adding +k and -k to elements, we will add 0 and 2*k to elements */
+
+	int ans = nums[n-1] - nums[0];      // --> This will be the max possible difference
+
+	/* 
+		Now we will iterate from left to right and start adding 2*k 
+		so as to minimize the differences between max and min 
+	*/
+
+	for(int i=0; i<n-1; i++){
+
+		/* Since we incremented curr_val so it can be the candidate to become max */
+
+		int mx = max(nums[n-1], nums[i]+(2*k));     
+
+		/* Since we incremented all prev elements before i, so nums[0]+(2*k) and nums[i+1] are the candidates for min */
+
+		int mn = min(nums[i+1], nums[0]+(2*k));
+
+		ans = min(ans, mx-mn);
+	}
+
+	return ans;
 }
 ```
 

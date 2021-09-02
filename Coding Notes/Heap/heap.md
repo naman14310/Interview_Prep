@@ -925,3 +925,49 @@ int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
     return cnt;
 }
 ```
+
+<br>
+
+### 10. Construct Target Array With Multiple Sums
+You are given an array target of n integers. From a starting array arr consisting of n 1's, you may perform the following procedure :
+1. let x be the sum of all elements currently in your array.
+2. choose index i, such that 0 <= i < n and set the value of arr at index i to x.
+3. You may repeat this procedure as many times as needed.
+
+Return true if it is possible to construct the target array from arr, otherwise, return false.
+
+Input: target = [9,3,5]
+
+Output: true
+
+```cpp
+bool isPossible(vector<int>& target) {       
+
+    if(target.size()==1) return target[0]==1? true : false;
+    priority_queue<int> maxHeap;
+
+    long sum = 0;
+    for(int i : target){
+        sum += i;
+        maxHeap.push(i);
+    } 
+
+    while(maxHeap.top()>1){
+        long largest = maxHeap.top(); maxHeap.pop();
+        long second_largest = maxHeap.top();
+        long restSum = sum-largest;
+
+        // n = number of subtraction to get largest below 2nd largest element. max(1, ..) denotes the case where largest and largest_2 are equal
+
+        long n = max(1l, (largest - second_largest)/restSum);
+        largest -= (restSum * n);
+
+        if(largest<1) return false;
+
+        sum = restSum + largest;
+        maxHeap.push(largest);   
+    }
+    
+    return true;
+}
+```

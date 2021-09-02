@@ -940,6 +940,8 @@ Input: target = [9,3,5]
 
 Output: true
 
+Hint: Think in reverse
+
 ```cpp
 bool isPossible(vector<int>& target) {       
 

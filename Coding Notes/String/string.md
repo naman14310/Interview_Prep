@@ -4,7 +4,7 @@ Some important string functions:
 
 1. [find()](https://www.geeksforgeeks.org/string-find-in-cpp/) - find subtring in given string
 2. [Tokenization](https://www.geeksforgeeks.org/tokenizing-a-string-cpp/) - same as python split()
-3. [iswalnum()] - checks if the given wide character is an alphanumeric character or not
+3. [iswalnum()](https://www.geeksforgeeks.org/iswalnum-function-in-c-stl/) - checks if the given wide character is an alphanumeric character or not
 4. [isalpha() and isdigit()](https://www.tutorialspoint.com/isalpha-and-isdigit-in-c-cplusplus) - check that a character is an alphabet or digit
 5. [transform()](https://www.programiz.com/cpp-programming/library-function/cctype/toupper) - performs a transformation on given array/string.
 

@@ -337,7 +337,75 @@ int longestPalindrome(string s) {
 
 ## Medium
 
-#### 1. Delete Operation for Two Strings (LCS Variation)
+#### 1. Minimum Add to Make Parentheses Valid
+You are given a parentheses string s. In one move, you can insert a parenthesis at any position of the string. Return the minimum number of moves required to make s valid.
+
+Input: s = "()))(("
+
+Output: 4
+
+**Two Pass solution - O(N) | O(1)**
+
+```cpp
+int minAddToMakeValid(string s) {
+    int n = s.length();
+    int bcnt = 0;
+    int moves = 0;
+
+    /* Iterate from left to right and cnt extra ')' brackets */
+
+    for(int i=0; i<n; i++){
+
+        if(s[i]=='(') bcnt++;
+
+        if(s[i]==')'){
+            if(bcnt>0) bcnt--;
+            else moves++;
+        }
+    }
+
+    bcnt = 0;
+
+    /* Iterate from right to left and cnt extra '(' brackets */
+
+    for(int i=n-1; i>=0; i--){
+
+        if(s[i]==')') bcnt++;
+
+        if(s[i]=='('){
+            if(bcnt>0) bcnt--;
+            else moves++;
+        }
+    }
+
+    return moves;
+}
+```
+
+**One Pass Solution - O(N) | O(1)**
+
+```cpp
+int minAddToMakeValid(string s) {
+    int n = s.length();
+    int left = 0, right = 0;
+
+    for(int i=0; i<n; i++){
+
+        if(s[i]=='(') right++;
+
+        if(s[i]==')'){
+            if(right>0) right--;
+            else left++;
+        }
+    }
+
+    return left+right;
+}
+```
+
+<br>
+
+#### 2. Delete Operation for Two Strings (LCS Variation)
 Given two strings word1 and word2, return the minimum number of steps required to make word1 and word2 the same.
 
 ```cpp

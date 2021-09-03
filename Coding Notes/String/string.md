@@ -1,5 +1,15 @@
 # String
 
+Some important string functions:
+
+1. [find()](https://www.geeksforgeeks.org/string-find-in-cpp/) - find subtring in given string
+2. [Tokenization](https://www.geeksforgeeks.org/tokenizing-a-string-cpp/) - same as python split()
+3. [iswalnum()] - checks if the given wide character is an alphanumeric character or not
+4. [isalpha() and isdigit()](https://www.tutorialspoint.com/isalpha-and-isdigit-in-c-cplusplus) - check that a character is an alphabet or digit
+5. [transform()](https://www.programiz.com/cpp-programming/library-function/cctype/toupper) - performs a transformation on given array/string.
+
+<br>
+
 ## Easy
 
 #### 1. Search All (Find method)
@@ -7,9 +17,9 @@ Implement a function that return all occurances of subtring in a given string
 
 ```cpp
 vector<int> stringSearch(string big,string small){
-    //store the occurrences in the result vector
     vector<int> result;
     int index = 0;
+    
     while(true){
         index = big.find(small, index);
         if(index==-1) break;
@@ -20,6 +30,8 @@ vector<int> stringSearch(string big,string small){
     return result;
 }
 ```
+
+<br>
 
 #### 2. Tokenize string (stringstream)
 
@@ -41,6 +53,8 @@ int main(){
   return 0;
 }
 ```
+
+<br>
 
 #### 3. Run Length Encoding
 
@@ -68,6 +82,8 @@ string compressString(const string &str){
   return res;
 }
 ```
+
+<br>
 
 #### 4. String Normalization
 Convert given string to Camelcase
@@ -97,6 +113,8 @@ string normalize(const string &sentence) {
 }
 ```
 
+<br>
+
 #### 5. Palindrome break
 Convert a given palindromic string containing characters a and b to non palindrome (which is lexicographically smallest) by replacing only one character.
 
@@ -116,6 +134,8 @@ string breakPalindrome(string s) {
   return s;    
 }
 ```
+
+<br>
 
 #### 6. Remove Palindromic Subsequences (Tricky)
 You are given a string s consisting only of letters 'a' and 'b'. In a single step you can remove one palindromic subsequence from s. Return the minimum number of steps to make the given string empty.
@@ -140,6 +160,8 @@ int removePalindromeSub(string s) {
     else return 2;
 }
 ```
+
+<br>
 
 #### 7. Count Binary Substrings
 Give a binary string s, return the number of non-empty substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively. Substrings that occur multiple times are counted the number of times they occur.
@@ -178,6 +200,8 @@ int countBinarySubstrings(string s) {
     return ans;
 }
 ```
+
+<br>
 
 #### 8. Roman to Integer
 
@@ -243,40 +267,9 @@ int romanToInt(string s) {
 }
 ```
 
-#### 9. Longest Common Prefix
+<br>
 
-```cpp
-string longestCommonPrefix(vector<string>& strs) {
-    if(strs.size()<1) return "";
-    
-    string ans = "";
-    bool flag = false;
-    
-    for(int i=0; i<=200; i++){
-        string temp = ans;
-
-        if(i<strs[0].length())
-        temp.push_back(strs[0][i]);
-
-        for(auto s : strs){
-            if(i>=s.length()){
-                flag=true;
-                break;
-            } 
-            else if(s[i]!=temp[i]){
-                flag=true;
-                break;
-            } 
-        }
-
-        if(flag) break;
-        ans = temp;
-    }
-    return ans;
-}
-```
-
-#### 10. Rotate String (Smart Solution)
+#### 9. Rotate String (Smart Solution)
 We are given two strings, s and goal. A shift on s consists of taking string s and moving the leftmost character to the rightmost position. For example, if s = 'abcde', then it will be 'bcdea' after one shift on s. Return true if and only if s can become goal after some number of shifts on s.
 
 ```cpp
@@ -287,7 +280,9 @@ bool rotateString(string s, string goal) {
 }
 ```
 
-#### 11. Repeated Substring Pattern (Tricky)
+<br>
+
+#### 10. Repeated Substring Pattern (Tricky)
 Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.
 
 Input: s = "abab"
@@ -307,33 +302,42 @@ bool repeatedSubstringPattern(string s) {
 }
 ```
 
-## Medium
+<br>
 
-#### 1. Group Anagrams (Using Hashmap)
-Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+#### 11. Longest Palindrome
+Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
 
-Hint: Use sorted words to make key for hashmap
+Input: s = "abccccdd"
+
+Output: 7
+
+Hint: Count how many letters appear an odd number of times. Because we can use all letters, except for each odd-count letter we must leave one, except one of them we can use.
 
 ```cpp
-vector<vector<string>> groupAnagrams(vector<string>& strs) {
-    unordered_map<string, vector<string>> mp;
-    for(int i=0; i<strs.size(); i++){
-        string s = strs[i];
+int longestPalindrome(string s) {
 
-        string srt = s;
-        sort(srt.begin(), srt.end());
+    unordered_map<char, int> mp;
+    int oddFreq = 0;
 
-        mp[srt].push_back(s);
-    }
-    vector<vector<string>> res;
-    for(auto p : mp){
-        res.push_back(p.second);
-    }
-    return res;
+    for(char ch : s)
+        mp[ch]++;
+
+    /* Count all char with odd freq */
+
+    for(auto p : mp)
+        if(p.second%2 != 0) oddFreq++;
+
+    if(oddFreq>0) oddFreq--;        // --> becoz we can use one single char at middle of the palindrome
+
+    return s.length()-oddFreq;
 }
 ```
 
-#### 2. Delete Operation for Two Strings (LCS Variation)
+<br>
+
+## Medium
+
+#### 1. Delete Operation for Two Strings (LCS Variation)
 Given two strings word1 and word2, return the minimum number of steps required to make word1 and word2 the same.
 
 ```cpp

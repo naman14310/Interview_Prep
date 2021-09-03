@@ -1,8 +1,8 @@
 # Matrix
 
-## Medium
+<br>
 
-#### 1. Sort the matrix Diagonally
+### 1. Sort the matrix Diagonally
 
 ![matrix](https://assets.leetcode.com/uploads/2020/01/21/1482_example_1_2.png)
 
@@ -49,7 +49,9 @@ vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
     }
 ```
 
-#### 2. Rotate Image
+<br>
+
+### 2. Rotate Image
 
 ```cpp
 /*
@@ -85,7 +87,9 @@ void anti_rotate(vector<vector<int> > &matrix) {
 }
 ```
 
-#### 3. Spiral Matrix
+<br>
+
+### 3. Spiral Matrix
 
 ![matrix](https://assets.leetcode.com/uploads/2020/11/13/spiral1.jpg)
 
@@ -135,7 +139,9 @@ void anti_rotate(vector<vector<int> > &matrix) {
     }
 ```
 
-#### 4. Set Matrix Zeroes
+<br>
+
+### 4. Set Matrix Zeroes
 Given an m x n matrix. If an element is 0, set its entire row and column to 0. Do it in-place.
 
 ![matrix](https://assets.leetcode.com/uploads/2020/08/17/mat2.jpg)
@@ -194,7 +200,9 @@ Hint: Use first row and first col as auxillary vectors to mark 0 for whole cols 
     }
 ```
 
-#### 5. Rotating the Box
+<br>
+
+### 5. Rotating the Box
 You are given an m x n matrix of characters box representing a side-view of a box. Each cell of the box is one of the following:
 
 1. A stone '#'
@@ -228,7 +236,9 @@ vector<vector<char>> rotateTheBox(vector<vector<char>>& box) {
 }
 ```
 
-#### 6. Maximum Matrix Sum
+<br>
+
+### 6. Maximum Matrix Sum
 You are given an n x n integer matrix. You can do the following operation any number of times:
 1. Choose any two adjacent elements of matrix and multiply each of them by -1.
 2. Two elements are considered adjacent if and only if they share a border.
@@ -240,26 +250,80 @@ Your goal is to maximize the summation of the matrix's elements. Return the maxi
 Hint: If the number of negative signs is even, the answer is the sum of the absolute value of all elements. If it is odd, we will have to minus 2 times the number with smallest absolute value.
 
 ```cpp
-    long long maxMatrixSum(vector<vector<int>>& matrix) {
-        int row = matrix.size(), col = matrix[0].size();
-        
-        int mn = INT_MAX;
-        int neg_cnt = 0;
-        long long sum = 0;
-        
-        for(int i=0; i<row; i++){
-            for(int j=0; j<col; j++){
-                
-                if(matrix[i][j]<0) neg_cnt++;
-                
-                mn = min(mn, abs(matrix[i][j]));
-                sum += abs(matrix[i][j]);
-            }
+long long maxMatrixSum(vector<vector<int>>& matrix) {
+    int row = matrix.size(), col = matrix[0].size();
+
+    int mn = INT_MAX;
+    int neg_cnt = 0;
+    long long sum = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(matrix[i][j]<0) neg_cnt++;
+
+            mn = min(mn, abs(matrix[i][j]));
+            sum += abs(matrix[i][j]);
         }
-        
-        if(neg_cnt%2==0)
-            return sum;
-        
-        else return sum-(2*mn);
     }
+
+    if(neg_cnt%2==0)
+        return sum;
+
+    else return sum-(2*mn);
+}
+```
+
+<br>
+
+### 7. Score After Flipping Matrix
+You are given an m x n binary matrix grid. A move consists of choosing any row or column and toggling each value in that row or column. Every row of the matrix is interpreted as a binary number, and the score of the matrix is the sum of these numbers. Return the highest possible score after making any number of moves (including zero moves).
+
+![img](https://assets.leetcode.com/uploads/2021/07/23/lc-toogle1.jpg)
+
+Output: 39
+
+```cpp
+int matrixScore(vector<vector<int>>& grid) {
+    int row = grid.size(), col = grid[0].size();
+    int ans = 0;
+
+    /* Since 1st col is of high priority, so at first set all bits of first col 1 flipping their rows */
+
+    for(int i=0; i<row; i++){
+        if(grid[i][0]==0){
+            for(int j=0; j<col; j++)
+                grid[i][j] = !grid[i][j];
+        }   
+    }
+
+    /* Then one by one iterate for each col --> if zero_cnt > one_cnt then flip col bits else continue */
+
+    for(int j=1; j<col; j++){
+        int zcnt = 0;
+
+        for(int i=0; i<row; i++)
+            if(grid[i][j]==0) zcnt++;
+
+        if(zcnt>row/2){
+            for(int i=0; i<row; i++)
+                grid[i][j] = !grid[i][j];
+        }
+    }
+
+    /* Compute ans */
+
+    for(int i=0; i<row; i++){
+        int num = 0;
+
+        for(int j=0; j<col; j++){
+            num = num<<1;
+            num += grid[i][j];
+        }
+
+        ans += num;
+    }
+
+    return ans;
+}
 ```

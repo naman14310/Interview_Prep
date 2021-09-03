@@ -9,6 +9,11 @@ Input: nums = [3,-1,0,2], k = 3
 
 Output: 6
 
+Approach:
+1. sort the numbers in ascending order
+2. flip all the negative numbers, as long as k > 0
+3. find the sum of the new array (with flipped numbers if any) and keep track of the minimum number. If k is remaining, then apply operation on that smallest num.
+
 ```cpp
 int largestSumAfterKNegations(vector<int>& nums, int k) {
     int n = nums.size();

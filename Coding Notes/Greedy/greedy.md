@@ -4,6 +4,10 @@ Mostly Used Data Structures and Algos : Sorting & Heaps
 
 <br>
 
+## @ Sorting based problems
+
+<br>
+
 #### 1. Maximize Sum Of Array After K Negations
 Given an integer array nums and an integer k, modify the array by choosing an index i and replace nums[i] with -nums[i]. You should apply this process exactly k times. You may choose the same index i multiple times. Return the largest possible sum of the array after modifying it in this way.
 
@@ -95,6 +99,71 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
             i++;
         }
     }
+    return res;
+}
+```
+
+<br>
+
+#### 3. Queue Reconstruction by Height
+You are given an array of people. Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi. Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue.
+
+Input: people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+
+Output: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+
+Approach: 
+1. Sort based on height in ascending order. If height is equal, then sort based on K in descending order.
+2. Iterate over sorted input array and place one person at their correct pos in each iteration.
+3. We need to fill from left but, for placing ith person, we need to leave k blank spaces on the left side of its posn.
+
+```cpp
+/*  
+    Sort logic:
+    sort vector based on height in ascending order,
+    BUT, if heights are equal, give preference to person whose k is greater
+
+    --> [4,6] comes before [5,2]
+    --> [5,2] comes before [5,0]
+
+*/
+
+
+static bool comp (vector<int> & v1, vector<int> & v2){
+    if(v1[0]<v2[0]) return true;
+    else if(v1[0]==v2[0] and v1[1]>v2[1]) return true;
+    else return false;
+}
+
+
+vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+    int n = people.size();
+    vector<vector<int>> res (n, {-1, -1});
+
+    sort(people.begin(), people.end(), comp);    
+
+    /* Iterate on sorted vector */
+
+    for(auto p : people){
+        int k = p[1];           // --> we need leave k blank position before placing curr person
+
+        /* Hence iterate from 0 to n and leave k spaces and place curr person on the (k+1)th empty space */
+
+        int i=0;
+        while(i<n){
+
+            if(res[i][0]==-1){
+                if(k==0){
+                    res[i] = p;
+                    break;
+                } 
+                else k--;
+            }
+            
+            i++;
+        }
+    }
+
     return res;
 }
 ```

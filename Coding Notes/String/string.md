@@ -335,6 +335,32 @@ int longestPalindrome(string s) {
 
 <br>
 
+#### 12. Construct K Palindrome Strings
+Given a string s and an integer k. You should construct k non-empty palindrome strings using all the characters in s. Return True if you can use all the characters in s to construct k palindrome strings or False otherwise.
+
+Input: s = "aabababccdsb", k = 3
+
+Output: true
+
+Hint: Just cnt number of char with odd freq.
+
+```cpp
+bool canConstruct(string s, int k) {
+    unordered_map<char, int> mp;
+    for(char ch : s)
+        mp[ch]++;
+
+    int odd_cnt = 0;
+    
+    for(auto p : mp)
+        if(p.second % 2 != 0) odd_cnt++;
+
+    return odd_cnt<=k and s.length()>=k;
+}
+```
+
+<br>
+
 ## Medium
 
 #### 1. Minimum Add to Make Parentheses Valid

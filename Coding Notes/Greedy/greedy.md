@@ -1,5 +1,7 @@
 # Greedy Problems
 
+Mostly Used Data Structures and Algos : Sorting & Heaps
+
 <br>
 
 #### 1. Maximize Sum Of Array After K Negations
@@ -93,6 +95,45 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
             i++;
         }
     }
+    return res;
+}
+```
+
+<br>
+
+## @ Jump Game Pattern (Flag-Race approach)
+
+#### 1. Partition Labels
+You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part. Return a list of integers representing the size of these parts.
+
+Input: s = "ababcbacadefegdehijhklij"
+
+Output: [9,7,8]
+
+```cpp
+vector<int> partitionLabels(string s) {
+    int n = s.length();
+    vector<int> res;
+
+    unordered_map<char, int> mp;        // --> map of {char, end_pos}
+
+    for(int i=0; i<n; i++)
+        mp[s[i]] = i;
+
+    int prev = -1;                      // --> points to the end of prev partition (initially -1)
+    int end = 0;
+
+    for(int i=0; i<n; i++){
+
+        end = max(end, mp[s[i]]);       // update end (or maxreach) everytime
+
+        if(i==end){
+            int partition_len = i-prev;
+            res.push_back(partition_len);
+            prev = i;
+        }
+    }
+
     return res;
 }
 ```

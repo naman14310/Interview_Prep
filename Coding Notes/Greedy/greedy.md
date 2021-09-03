@@ -8,7 +8,7 @@ Mostly Used Data Structures and Algos : Sorting & Heaps
 
 <br>
 
-#### 1. Maximize Sum Of Array After K Negations
+### 1. Maximize Sum Of Array After K Negations
 Given an integer array nums and an integer k, modify the array by choosing an index i and replace nums[i] with -nums[i]. You should apply this process exactly k times. You may choose the same index i multiple times. Return the largest possible sum of the array after modifying it in this way.
 
 Input: nums = [3,-1,0,2], k = 3
@@ -58,7 +58,7 @@ int largestSumAfterKNegations(vector<int>& nums, int k) {
 
 <br>
 
-#### 2. Advantage Shuffle
+### 2. Advantage Shuffle
 Given two arrays A and B of equal size, the advantage of A with respect to B is the number of indices i for which A[i] > B[i]. Return any permutation of A that maximizes its advantage with respect to B.
 
 Input: A = [2,7,11,15], B = [1,10,4,11]
@@ -105,7 +105,7 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
 
 <br>
 
-#### 3. Queue Reconstruction by Height
+### 3. Queue Reconstruction by Height
 You are given an array of people. Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi. Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue.
 
 Input: people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
@@ -172,7 +172,7 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
 
 ## @ Jump Game Pattern (Flag-Race approach)
 
-#### 1. Partition Labels
+### 1. Partition Labels
 You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part. Return a list of integers representing the size of these parts.
 
 Input: s = "ababcbacadefegdehijhklij"

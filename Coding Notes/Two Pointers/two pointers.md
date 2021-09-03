@@ -2,7 +2,7 @@
 
 ## Easy
 
-### 1. Move Zeroes
+#### 1. Move Zeroes
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 Hint: Use two pointers from left to right. Left pointer to keep track for rightmost non zero index. Right pointer to iterate array.
 
@@ -27,7 +27,7 @@ void moveZeroes(vector<int>& nums) {
 
 <br>
 
-### 2. Remove Element
+#### 2. Remove Element
 Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 
 ```cpp
@@ -48,7 +48,7 @@ int removeElement(vector<int>& nums, int val) {
 
 <br>
 
-### 3. Remove Duplicates from Sorted Array
+#### 3. Remove Duplicates from Sorted Array
 Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
 
 ```cpp
@@ -73,7 +73,7 @@ int removeDuplicates(vector<int>& nums) {
 
 <br>
 
-### 4. Remove Duplicates from Sorted Array II
+#### 4. Remove Duplicates from Sorted Array II
 Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.
 
 ```cpp
@@ -105,7 +105,7 @@ int removeDuplicates(vector<int>& nums) {
 
 <br>
 
-### 5. Merge Sorted Array
+#### 5. Merge Sorted Array
 Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
 
 ```cpp
@@ -134,7 +134,7 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 
 <br>
 
-### 6. Intersection of Two Arrays II
+#### 6. Intersection of Two Arrays II
 Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
 
 ```cpp
@@ -162,7 +162,7 @@ vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
 
 <br>
 
-### 7. Backspace String Compare
+#### 7. Backspace String Compare
 Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
 ```cpp
@@ -208,7 +208,7 @@ bool backspaceCompare(string s, string t) {
 
 <br>
 
-### 8. Squares of a Sorted Array 
+#### 8. Squares of a Sorted Array 
 Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
 
 ```cpp
@@ -235,7 +235,7 @@ vector<int> sortedSquares(vector<int>& nums) {
 
 <br>
 
-### 9. Is Subsequence
+#### 9. Is Subsequence
 Given two strings s and t, check if s is a subsequence of t.
 
 ```cpp
@@ -281,7 +281,52 @@ bool isSubsequence(string s, string t) {
 
 <br>
 
-### 10. Container With Most Water
+#### 10. Valid Palindrome II
+Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+
+```cpp
+bool validPalindrome(string s) {
+    int n = s.length();
+    if(n<3) return true;
+
+    int i=0, j=n-1;
+
+    while(i<j){
+
+        /* When we found the 1st unmatched pair, two cases arises */
+
+        if(s[i]!=s[j]){
+
+            /* Case 1 : skip ith character and check for rest */
+
+            int i1 = i+1, j1 = j;
+
+            while(i1<j1 and s[i1]==s[j1]){
+                i1++; j1--;
+            }
+
+            /* Case 2 : skip jth character and check for rest */
+
+            int i2 = i, j2 = j-1;
+
+            while(i2<j2 and s[i2]==s[j2]){
+                i2++; j2--;
+            }
+
+            return i1>=j1 or i2>=j2;       // --> if in any of the cases, ptr crosses each other, string will be palindrome
+        }
+
+        i++; j--;
+
+    }
+
+    return true;
+}
+```
+
+<br>
+
+#### 11. Container With Most Water
 
 ```cpp
 int maxArea(vector<int>& height) {
@@ -301,7 +346,7 @@ int maxArea(vector<int>& height) {
 
 ## Medium
 
-### 1. 3Sum (Remove Duplicates)
+#### 1. 3Sum (Remove Duplicates)
 Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
 => Notice that the solution set must not contain duplicate triplets.
 
@@ -340,7 +385,7 @@ vector<vector<int>> threeSum(vector<int>& nums) {
 
 <br>
 
-### 2. 3Sum With Multiplicity (Tricky)
+#### 2. 3Sum With Multiplicity (Tricky)
 Given an integer array arr, and an integer target, return the number of tuples i, j, k such that i < j < k and arr[i] + arr[j] + arr[k] == target. As the answer can be very large, return it modulo 109 + 7.
 
 Approach:
@@ -382,7 +427,7 @@ int threeSumMulti(vector<int>& arr, int target) {
 
 <br>
 
-### 3. 3Sum Closest
+#### 3. 3Sum Closest
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. 
 
 ```cpp
@@ -410,7 +455,7 @@ int threeSumClosest(vector<int>& nums, int target) {
 
 <br>
 
-### 4. Count triplets with sum smaller than X
+#### 4. Count triplets with sum smaller than X
 
 ```cpp
 long long countTriplets(long long arr[], int n, long long sum){
@@ -433,7 +478,7 @@ long long countTriplets(long long arr[], int n, long long sum){
 
 <br>
 
-### 5. Boats to Save People
+#### 5. Boats to Save People
 You are given an array people where people[i] is the weight of the ith person, and an infinite number of boats where each boat can carry a maximum weight of limit. Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most limit. Return the minimum number of boats to carry every given person.
 
 ```cpp
@@ -455,7 +500,7 @@ int numRescueBoats(vector<int>& people, int limit) {
 
 <br>
 
-### 6. Max Number of K-Sum Pairs (Two sum in other words)
+#### 6. Max Number of K-Sum Pairs (Two sum in other words)
 You are given an integer array nums and an integer k. In one operation, you can pick two numbers from the array whose sum equals k and remove them from the array.
 Return the maximum number of operations you can perform on the array.
 
@@ -482,7 +527,7 @@ int maxOperations(vector<int>& nums, int k) {
 
 <br>
 
-### 7. Valid Triangle Number
+#### 7. Valid Triangle Number
 Given an integer array nums, return the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle.
 
 Theorem: In a triangle, the length of any side is less than the sum of the other two sides.
@@ -518,7 +563,7 @@ int triangleNumber(vector<int>& nums) {
 
 <br>
 
-### 8. 4Sum
+#### 8. 4Sum
 Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
 1. 0 <= a, b, c, d < n
 2. a, b, c, and d are distinct.
@@ -573,7 +618,7 @@ vector<vector<int>> fourSum(vector<int>& nums, int target) {
 
 ## Hard
 
-### 1. Trapping Rain Water (Best approach using two pointers) - O(n) | O(1)
+#### 1. Trapping Rain Water (Best approach using two pointers) - O(n) | O(1)
 
 [Video Solution](https://www.youtube.com/watch?v=C8UjlJZsHBw)
 

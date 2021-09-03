@@ -59,7 +59,10 @@ Input: A = [2,7,11,15], B = [1,10,4,11]
 
 Output: [2,11,7,15]
 
-Approach: Sort both the arrays (B with its index). Iterate over A. if A[i] is just greater then B[i] then store it at index of B[i]. Otherwise, store it at an empty place from the end.
+Approach: 
+1. Sort both the arrays (B with its index). 
+2. Iterate over A. if A[i] is just greater then B[i] then store it at index of B[i]. 
+3. Otherwise, store it at an empty place from the end.
 
 ```cpp
 static bool mysort(pair<int,int> a, pair<int,int> b){

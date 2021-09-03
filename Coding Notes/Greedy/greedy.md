@@ -2,7 +2,52 @@
 
 <br>
 
-### 1. Advantage Shuffle
+#### 1. Maximize Sum Of Array After K Negations
+Given an integer array nums and an integer k, modify the array by choosing an index i and replace nums[i] with -nums[i]. You should apply this process exactly k times. You may choose the same index i multiple times. Return the largest possible sum of the array after modifying it in this way.
+
+Input: nums = [3,-1,0,2], k = 3
+
+Output: 6
+
+```cpp
+int largestSumAfterKNegations(vector<int>& nums, int k) {
+    int n = nums.size();
+    sort(nums.begin(), nums.end());
+
+    int i=0;
+    int sm_idx = 0;        // --> stores the index of smallest element processed so far 
+
+    while(k>0){
+
+        /* update sm_idx if absolute val of current element formed is new smallest */
+
+        if(i<n and nums[sm_idx] > abs(nums[i]))
+                sm_idx = i;
+
+        if(i<n and nums[i]<0){
+            nums[i] = abs(nums[i]);
+            i++; k--;
+        }
+
+        else{
+
+            /* If k is odd, we need to flip the sign of smallest number (for even, do nothing) */
+
+            if(k%2!=0) nums[sm_idx] *= -1;
+
+            break;
+        }
+
+    }
+
+    int sum = accumulate(nums.begin(), nums.end(), 0);
+    return sum;
+}
+```
+
+<br>
+
+#### 2. Advantage Shuffle
 Given two arrays A and B of equal size, the advantage of A with respect to B is the number of indices i for which A[i] > B[i]. Return any permutation of A that maximizes its advantage with respect to B.
 
 Input: A = [2,7,11,15], B = [1,10,4,11]

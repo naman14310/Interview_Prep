@@ -616,6 +616,53 @@ vector<vector<int>> fourSum(vector<int>& nums, int target) {
 
 <br>
 
+#### 9. Sort Array By Parity II (Inplace)
+Given an array of integers nums, half of the integers in nums are odd, and the other half are even. Sort the array so that whenever nums[i] is odd, i is odd, and whenever nums[i] is even, i is even. Return any answer array that satisfies this condition.
+
+Input: nums = [4,2,5,7]
+
+Output: [4,5,2,7]
+
+```cpp
+vector<int> sortArrayByParityII(vector<int>& nums) {
+
+    int i=0;
+
+    while(i<nums.size()){
+
+        if((i%2==0 and nums[i]%2==0) or (i%2==1 and nums[i]%2==1))
+            i++;
+
+        else{
+
+            int j = i+1;
+
+            while(j<nums.size()){
+
+                if(i%2==0 and j%2==1 and nums[j]%2==0){
+                    swap(nums[i], nums[j]);
+                    break;
+                }
+
+                else if(i%2==1 and j%2==0 and nums[j]%2==1){
+                    swap(nums[i], nums[j]);
+                    break;
+                }
+
+                else j++;
+            }
+
+            i++;
+        }
+
+    }
+
+    return nums;
+}
+```
+
+<br>
+
 ## Hard
 
 #### 1. Trapping Rain Water (Best approach using two pointers) - O(n) | O(1)

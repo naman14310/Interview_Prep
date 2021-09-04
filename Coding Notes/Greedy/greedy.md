@@ -6,7 +6,6 @@ Mostly Used Data Structures and Algos : Sorting & Heaps
 
 ## @ Sorting based problems
 
-<br>
 
 ### 1. Maximize Sum Of Array After K Negations
 Given an integer array nums and an integer k, modify the array by choosing an index i and replace nums[i] with -nums[i]. You should apply this process exactly k times. You may choose the same index i multiple times. Return the largest possible sum of the array after modifying it in this way.

@@ -973,3 +973,53 @@ bool isPossible(vector<int>& target) {
     return true;
 }
 ```
+
+<br>
+
+### 11. Divide Array in Sets of K Consecutive Numbers
+Given an array of integers nums and a positive integer k, find whether it is possible to divide this array into sets of k consecutive numbers. Return true if it is possible. Otherwise, return false.
+
+Input: nums = [1,2,3,3,4,4,5,6], k = 4
+
+Output: true
+
+Hint: Always start making set with smallest possible number present. 
+
+```cpp
+bool isPossibleDivide(vector<int>& nums, int k) {
+    if(nums.size()%k != 0) return false;
+
+    priority_queue<int, vector<int>, greater<int>> minheap;
+    unordered_map<int, int> mp;
+
+    for(auto n : nums)
+        mp[n]++;
+
+    for(auto p : mp)
+        minheap.push(p.first);
+
+    while(!minheap.empty()){
+        int prev = -1;
+        vector<int> temp;
+
+        for(int i=0; i<k; i++){
+            if(minheap.empty()) return false;
+            if(prev!=-1 and minheap.top() != prev+1) return false;
+
+            int num = minheap.top(); minheap.pop();
+
+            if(mp[num]>1){
+                temp.push_back(num);
+                mp[num]--;
+            }
+
+            prev = num;
+        }
+
+        for(auto num : temp) 
+            minheap.push(num);
+    }
+
+    return true;
+}
+```

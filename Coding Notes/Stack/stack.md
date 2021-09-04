@@ -1,5 +1,6 @@
 # Stack
 
+<br>
 
 ## Easy
 
@@ -75,6 +76,8 @@ bool empty() {
     else return false;
 }
 ```
+
+<br>
 
 #### 2. Min Stack (Tricky)
 Hint: Use two stacks. One for storing elements in order. Second for storing min element so far.
@@ -152,6 +155,8 @@ int getMin() {
 }
 ```
 
+<br>
+
 #### 3. Validate Stack Sequences
 Given two sequences pushed and popped with distinct values, return true if and only if this could have been the result of a sequence of push and pop operations on an initially empty stack.
 
@@ -180,6 +185,8 @@ bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
     return false;
 }
 ```
+
+<br>
 
 #### 4. Evaluate Reverse Polish Notation
 Input: tokens = ["4","13","5","/","+"]
@@ -212,6 +219,8 @@ int evalRPN(vector<string>& tokens) {
 }
 ```
 
+<br>
+
 #### 5. Insert at the end of Stack without using any Data structure
 
 Hint : Use recursion
@@ -230,6 +239,8 @@ void insert_at_end(stack<int> & stk, int val){
 }
 ```
 
+<br>
+
 #### 6. Reverse a stack without using any Data structure
 
 ```cpp
@@ -244,6 +255,8 @@ void reverse_stack(stack<int> & stk){
     insert_at_end(stk, item);   // Use above function for insert_at_end()
 }
 ```
+
+<br>
 
 
 ## Medium
@@ -271,6 +284,8 @@ vector<int> dailyTemperatures(vector<int>& T) {
     return res;
 }
 ```
+
+<br>
 
 #### 2. Find the Most Competitive Subsequence (Very Tricky)
 Given an integer array nums and a positive integer k, return the most competitive subsequence of nums of size k. An array's subsequence is a resulting sequence obtained by erasing some (possibly zero) elements from the array. We define that a subsequence a is more competitive than a subsequence b (of the same length) if in the first position where a and b differ, subsequence a has a number less than the corresponding number in b. For example, [1,3,4] is more competitive than [1,3,5] because the first position they differ is at the final number, and 4 is less than 5.
@@ -305,6 +320,8 @@ vector<int> mostCompetitive(vector<int>& nums, int k) {
     return res;  
 }
 ```
+
+<br>
 
 #### 3. Remove K Digits (Very Tricky)
 Given string num representing a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
@@ -354,6 +371,8 @@ string removeKdigits(string num, int k) {
 }
 ```
 
+<br>
+
 #### 4. Stock span problem 
 
 Hint : Push indexes instead of actual elements
@@ -378,6 +397,8 @@ vector <int> calculateSpan(int price[], int n){
     return res;
 }
 ```
+
+<br>
 
 #### 5. Largest Rectangle in Histogram 
 Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
@@ -431,6 +452,8 @@ int largestRectangleArea(vector<int>& heights) {
     return maxArea;
 }
 ```
+
+<br>
 
 #### 6. Largest Rectangle in Binary Matrix
 
@@ -509,6 +532,8 @@ int maximalRectangle(vector<vector<char>>& matrix) {
 }
 ```
 
+<br>
+
 #### 7. Number of Visible People in a Queue
 There are n people standing in a queue, and they numbered from 0 to n - 1 in left to right order. You are given an array heights of distinct integers where heights[i] represents the height of the ith person. A person can see another person to their right in the queue if everybody in between is shorter than both of them. More formally, the ith person can see the jth person if i < j and min(heights[i], heights[j]) > max(heights[i+1], heights[i+2], ..., heights[j-1]).
 
@@ -547,6 +572,8 @@ vector<int> canSeePersonsCount(vector<int>& heights) {
 }
 ```
 
+<br>
+
 ### @ Parenthesis Based Questions
 
 #### 1. Valid Parentheses
@@ -579,6 +606,8 @@ bool isValid(string s) {
     else return false;
 }
 ```
+
+<br>
 
 #### 2. Minimum Remove to Make Valid Parentheses
 
@@ -624,6 +653,8 @@ string minRemoveToMakeValid(string s) {
     return s2;
 }
 ```
+
+<br>
 
 #### 3. Longest Valid Parenthesis (Very Tricky)
 Given a string consisting of opening and closing parenthesis, find the length of the longest valid parenthesis substring.
@@ -675,6 +706,8 @@ int longestValidParentheses(string s) {
 }
 ```
 
+<br>
+
 #### 4. Score of Parentheses (Tricky)
 Given a balanced parentheses string s, compute the score of the string based on the following rule:
 1. () has score 1
@@ -719,6 +752,8 @@ int scoreOfParentheses(string s) {
 }
 ```
 
+<br>
+
 ### @ Hard to guess as Stack
 
 #### 1. Remove All Adjacent Duplicates in String II
@@ -757,7 +792,65 @@ string removeDuplicates(string s, int k) {
 }
 ```
 
-#### 2. The Celebrity Problem
+<br>
+
+#### 2. Remove Duplicate Letters (Smallest Subsequence of Distinct Characters)
+Given a string s, remove duplicate letters so that every letter appears once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+
+Input: s = "bcabc"
+
+Output: "abc"
+
+```cpp
+string removeDuplicateLetters(string s) {
+
+    unordered_map<char, int> mp;     // --> will store running freq of each char
+    stack<char> stk;
+    vector<bool> vis (26, false);
+
+    string ans = "";
+
+    for(char ch : s)
+        mp[ch]++;
+
+    /* one by one iterate for all chars */
+
+    for(char ch : s){
+
+        /* If some char is all vis (i.e already present is stk), decrement the freq and continue */
+
+        if(vis[ch-'a']){
+            mp[ch]--;       // --> don't forget to decrement freq before continue
+            continue;
+        } 
+
+        /* pop till stk.top() is lexically greater then curr char and its freq >=1 and also mark it unvisited */
+
+        while(!stk.empty() and stk.top()>ch and mp[stk.top()]>=1){
+            vis[stk.top()-'a'] = false;
+            stk.pop();
+        }
+
+        /* push curr char to stk, decrement freq and mark it vis */
+
+        stk.push(ch);
+        mp[ch]--;
+        vis[ch-'a'] = true;
+    }
+
+    while(!stk.empty()){
+        ans.push_back(stk.top());
+        stk.pop();
+    }
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+```
+
+<br>
+
+#### 3. The Celebrity Problem
 A celebrity is a person who is known to all but does not know anyone at a party. If you go to a party of N people, find if there is a celebrity in the party or not.
 
 Approach: 
@@ -794,7 +887,7 @@ int celebrity(vector<vector<int> >& matrix, int n) {
 }
 ```
 
-#### 3. Sum of Subarray Minimums (Too Tricky)
+#### 4. Sum of Subarray Minimums (Too Tricky)
 Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 10^9 + 7.
 
 Input: arr = [3,1,2,4]
@@ -893,6 +986,8 @@ int sumSubarrayMins(vector<int>& arr) {
     return sum;
 }
 ```
+
+<br>
 
 ## Hard
 

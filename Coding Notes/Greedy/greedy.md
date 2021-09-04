@@ -215,6 +215,45 @@ int twoCitySchedCost(vector<vector<int>>& costs) {
 
 <br>
 
+## Problems on Intervals
+
+### 1. Maximum Length of Pair Chain
+You are given an array of n pairs pairs where pairs[i] = [lefti, righti] and lefti < righti. A pair p2 = [c, d] follows a pair p1 = [a, b] if b < c. A chain of pairs can be formed in this fashion. Return the length longest chain which can be formed.
+
+Input: pairs = [[1,2],[2,3],[3,4]]
+
+Output: 2
+
+Hint: Sort by pairs.second in ascending order
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+    return v1[1]<v2[1];
+}
+
+
+int findLongestChain(vector<vector<int>>& pairs) {
+    int n = pairs.size();
+    sort(pairs.begin(), pairs.end(), comp);     // --> Sort on the basis of pair[1] in ascending order
+
+    int prev = pairs[0][1];
+    int cnt = 1;
+
+    for(int i=1; i<n; i++){
+
+        if(pairs[i][0]>prev){
+            cnt++;
+            prev = pairs[i][1];
+        }
+
+    }
+
+    return cnt;
+}
+```
+
+<br>
+
 ## @ Jump Game Pattern (Flag-Race approach)
 
 ### 1. Partition Labels

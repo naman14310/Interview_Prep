@@ -105,7 +105,7 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
 
 <br>
 
-### 3. Queue Reconstruction by Height
+### 3. Queue Reconstruction by Height (Tricky)
 You are given an array of people. Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi. Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue.
 
 Input: people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
@@ -165,6 +165,52 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
     }
 
     return res;
+}
+```
+
+<br>
+
+### 4. Two City Scheduling (Tricky)
+A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti. Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
+
+Input: costs = [[10,20],[30,200],[400,50],[30,20]]
+
+Output: 110
+
+Hint: To minimize the total cost, we should fly the person with the maximum saving to A, and with the minimum - to B.
+
+Example: [30, 100], [40, 90], [50, 50], [70, 50] --> Savings: 70, 50, 0, -20.
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+
+    return (v1[0]-v1[1]) > (v2[0]-v2[1]);
+}
+
+int twoCitySchedCost(vector<vector<int>>& costs) {
+
+    /* 
+        Saving[i] = costs[i][0] - costs[i][1]
+        So, greater saving means, it is better to travel B
+        and, lesser saving means, it is better to travel A 
+
+        Hense, Sort the vector in descending order of savings
+    */
+
+    sort(costs.begin(), costs.end(), comp);    
+
+    /* Now since, vector is sorted in descending order of savings, allot first n to B and next n to A */
+
+    int minCost = 0;
+    int n = costs.size()/2;
+
+    for(int i=0; i<n; i++)
+        minCost += costs[i][1];
+
+    for(int i=n; i<costs.size(); i++)
+        minCost += costs[i][0];
+
+    return minCost;
 }
 ```
 

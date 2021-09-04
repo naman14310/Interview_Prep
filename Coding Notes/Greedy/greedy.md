@@ -251,3 +251,28 @@ vector<int> partitionLabels(string s) {
     return res;
 }
 ```
+
+<br>
+
+### 2. Max Chunks To Make Sorted
+You are given an integer array arr of length n that represents a permutation of the integers in the range [0, n - 1]. We split arr into some number of chunks (i.e., partitions), and individually sort each chunk. After concatenating them in same order as they present, the result should equal the sorted array. Return the largest number of chunks we can make to sort the array.
+
+Input: arr = [2,0,1,4,3,5]
+
+Output: 3
+
+```cpp
+int maxChunksToSorted(vector<int>& arr) {
+    int end = 0;
+    int chunks = 0;
+
+    for(int i=0; i<arr.size(); i++){    
+        end = max(end, arr[i]);
+
+        if(i==end) 
+            chunks++;
+    }
+
+    return chunks;
+}
+```

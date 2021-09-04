@@ -983,6 +983,8 @@ Input: nums = [1,2,3,3,4,4,5,6], k = 4
 
 Output: true
 
+Explanation: Array can be divided into [1,2,3,4] and [3,4,5,6].
+
 Hint: Always start making set with smallest possible number present. 
 
 ```cpp

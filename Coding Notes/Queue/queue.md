@@ -1,5 +1,7 @@
 # Queue
 
+<br>
+
 #### 1. Design Circular Queue
 
 ```cpp
@@ -57,6 +59,8 @@ public:
     }
 };
 ```
+
+<br>
 
 #### 2. Implement Queue using Stacks
 
@@ -118,6 +122,8 @@ bool empty() {
 }
 ```
 
+<br>
+
 #### 3. Reverse Queue using Recursion
 
 ```cpp
@@ -132,6 +138,8 @@ void reverse(queue<int> & q){
     q.push(x);
 }
 ```
+
+<br>
 
 #### 4. Reverse First K elements of Queue 
 
@@ -168,6 +176,8 @@ queue<int> modifyQueue(queue<int> q, int k){
     return q;
 }
 ```
+
+<br>
 
 #### 5. Interleave the first half of the queue with second half
 
@@ -223,7 +233,16 @@ queue<int> interleave_two_halves(queue<int> & q){
 }
 ```
 
+<br>
+
 #### 6. Circular Tour (IMP)
+Suppose there is a circle. There are N petrol pumps on that circle. You will be given two sets of data.
+1. The amount of petrol that every petrol pump has.
+2. Distance from that petrol pump to the next petrol pump.
+
+Find a starting point where the truck can start to get through the complete circle without exhausting its petrol in between.
+
+Hint: The gas stations we already visited will not be further checked for starting point.
 
 [Video Explaination](https://www.youtube.com/watch?v=zcnVaVJkLhY)
 
@@ -248,6 +267,8 @@ int tour(petrolPump p[],int n){
    return -1;
 }
 ```
+
+<br>
 
 #### 7. First non-repeating character in a stream (GFG)
 Given an input stream of A of n characters consisting only of lower case alphabets. The task is to find the first non repeating character, each time a character is inserted to the stream. If there is no such character then append '#' to the answer.
@@ -277,6 +298,8 @@ string FirstNonRepeating(string A){
     return ans;
 }
 ```
+
+<br>
 
 #### 8. Sliding window Maximum (using Dequeue)
 
@@ -312,6 +335,8 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     return ans;
 }
 ```
+
+<br>
 
 #### 9. Jump Game VI (using Deque)
 You are given a 0-indexed integer array nums and an integer k. You are initially standing at index 0. In one move, you can jump at most k steps forward without going outside the boundaries of the array. That is, you can jump from index i to any index in the range [i + 1, min(n - 1, i + k)] inclusive. You want to reach the last index of the array (index n - 1). Your score is the sum of all nums[j] for each index j you visited in the array. Return the maximum score you can get.
@@ -353,6 +378,8 @@ int maxResult(vector<int>& nums, int k) {
     return best_score[0];
 }
 ```
+
+<br>
 
 #### 10. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit (Very Tricky)
 Given an array of integers nums and an integer limit, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to limit.

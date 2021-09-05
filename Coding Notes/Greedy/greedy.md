@@ -135,6 +135,60 @@ int minIncrementForUnique(vector<int>& nums) {
 
 <br>
 
+### 4. Most Profit Assigning Work
+You have n jobs and m workers. You are given three arrays: difficulty, profit, and worker where:
+1. difficulty[i] and profit[i] are the difficulty and the profit of the ith job, and
+2. worker[j] is the ability of jth worker (i.e., the jth worker can only complete a job with difficulty at most worker[j]).
+
+Every worker can be assigned at most one job, but one job can be completed multiple times. Return the maximum profit we can achieve after assigning the workers to the jobs.
+
+Input: difficulty = [2,4,6,8,10], profit = [10,20,30,40,50], worker = [4,5,6,7]
+
+Output: 100
+
+Hint: Sort jobs by profit and then difficulty in descending order. Sort workers in descending order.
+
+```cpp
+int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+    int n = profit.size();
+    vector<pair<int,int>> jobs;
+
+    for(int i=0; i<n; i++)
+        jobs.push_back({profit[i], difficulty[i]});
+
+    /* sort jobs by profit and then by difficulty in descending order */
+
+    sort(jobs.begin(), jobs.end(), greater<pair<int,int>>());      
+
+    /* sort workers by descending order */
+
+    sort(worker.begin(), worker.end(), greater<int>());
+
+    int i=0;
+    int p = 0;
+
+    /* 
+        Now iterate for every worker and increment i untill he has ability to do job 
+        Since, all remaining workers have lesser ability then curr, so we will not
+        recheck prev left jobs for others.
+    */
+
+    for(auto w : worker){
+
+        while(w<jobs[i].second and i<n)
+            i++;
+
+        if(i==n) break;
+
+        p += jobs[i].first;
+    }
+
+    return p;
+}
+```
+
+<br>
+
 
 ## @ Problems on Intervals
 

@@ -83,7 +83,8 @@ void quicksort(vector<int> & v, int start, int end){
 
 <br>
 
-### 3. Quick Select (Variation of Quick sort for finding Kth smallest/largest element in array without sorting)
+### 3. Quick Select
+Variation of Quick sort for finding Kth smallest/largest element in array without sorting
 
 **Time Complexity : O(n2) (worst case, Rare) | O(n) (avg case)**
 

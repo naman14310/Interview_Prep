@@ -466,10 +466,6 @@ Input: s = "cba", k = 1
 
 Output: "acb"
 
-Input: s = "baaca", k = 3
-
-Output: "aaabc"
-
 [Explaination](https://leetcode.com/problems/orderly-queue/discuss/165878/C%2B%2BJavaPython-Sort-String-or-Rotate-String)
 
 ```cpp

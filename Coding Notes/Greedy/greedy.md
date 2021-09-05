@@ -364,6 +364,8 @@ int maxChunksToSorted(vector<int>& arr) {
 }
 ```
 
+<br>
+
 ### 3. Video Stitching
 You are given a series of video clips. Each video clip is described by an array clips where clips[i] = [starti, endi]. We can cut these clips into segments freely. For example, a clip [0, 7] can be cut into segments [0, 1] + [1, 3] + [3, 7]. Return the minimum number of clips needed so that we can cut the clips into segments that cover the entire sporting event [0, time]. If the task is impossible, return -1.
 

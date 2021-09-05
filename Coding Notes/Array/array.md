@@ -680,6 +680,79 @@ Hint: At each digit, if there is a larger digit that occurs later, we want the s
 
 <br>
 
+### 18. Maximum Length of Subarray With Positive Product
+Given an array of integers nums, find the maximum length of a subarray where the product of all its elements is positive. Return the maximum length of a subarray with positive product (Zero not considered).
+
+Input: nums = [-1,-2,-3,0,1]
+
+Output: 2
+
+Hint: If negative signs are even, then whole subarray will give positive product. Else we have two choices, Either take subarray after first neg sign, or Or take subarray before last neg sign.
+
+```cpp
+    int getTempAns (int first_neg_idx, int last_neg_idx, int neg_cnt, int prev, int i){
+        
+        /* If negative sign are even, then we can take whole subarray */
+        
+        if(neg_cnt%2==0) return i-prev;
+        
+        /* Else we have two choices */
+        
+        int after_first_neg = i-first_neg_idx-1;        // --> Either take subarray after first neg sign
+        int before_last_neg = last_neg_idx-prev;        // --> Or take subarray before last neg sign
+        
+        return max(after_first_neg, before_last_neg);
+    }
+    
+    
+    int getMaxLen(vector<int>& nums) {
+        int n = nums.size();
+        
+        int i=0;
+        int ans = 0;
+
+        int first_neg_idx = -1;
+        int last_neg_idx = -1;
+        int neg_cnt = 0;
+        int prev = 0;
+        
+        /* Iterate for all numbers */
+        
+        while(i<n){
+            
+            /* If curr_num is neg then update first and last neg index and increment neg_cnt */
+            
+            if(nums[i]<0){
+                
+                if(first_neg_idx==-1)
+                    first_neg_idx = i;
+                
+                last_neg_idx = i;
+                neg_cnt++;
+            }
+            
+            /* Else if curr_cum is zero, process prev subarray and reset variables for next subarray */
+            
+            else if(nums[i]==0){
+                ans = max(ans, getTempAns(first_neg_idx, last_neg_idx, neg_cnt, prev, i));
+                
+                first_neg_idx = -1;
+                last_neg_idx = -1;
+                neg_cnt = 0;
+                prev = i+1;
+            }
+            
+            i++;
+        }
+        
+        ans = max(ans, getTempAns(first_neg_idx, last_neg_idx, neg_cnt, prev, i));
+
+        return ans;
+    }
+```
+
+<br>
+
 ## Hard
 
 ### 1. Trapping Rain Water

@@ -1,5 +1,7 @@
 # HashMap (Unordered Map)
 
+<br>
+
 #### 1. Number of Matching Subsequences
 Given a string s and an array of strings words, return the number of words[i] that is a subsequence of s.
 
@@ -43,6 +45,8 @@ int numMatchingSubseq(string s, vector<string>& words) {
 }
 ```
 
+<br>
+
 #### 2. Couples Holding Hands
 There are n couples sitting in 2n seats. The people and seats are represented by an integer array row where row[i] is the ID of the person sitting in the ith seat. The couples are numbered in order, the first couple being (0, 1), the second couple being (2, 3), and so on with the last couple being (2n - 2, 2n - 1).
 Return the minimum number of swaps so that every couple is sitting side by side.
@@ -85,6 +89,8 @@ int minSwapsCouples(vector<int>& row) {
     return swap;
 }
 ```
+
+<br>
 
 #### 3. Array of Doubled Pairs
 Given an array of integers arr of even length, return true if and only if it is possible to reorder it such that arr[2 * i + 1] = 2 * arr[2 * i] for every 0 <= i < len(arr) / 2.
@@ -142,6 +148,8 @@ bool canReorderDoubled(vector<int>& arr) {
 }
 ```
 
+<br>
+
 #### 4. Print Anagrams Together
 Given an array of strings, return all groups of strings that are anagrams. The groups must be created in order of their appearance in the original array.
 
@@ -174,13 +182,12 @@ vector<vector<string> > Anagrams(vector<string>& string_list) {
 }
 ```
 
+<br>
+
 #### 5. Longest String Chain
-You are given an array of words where each word consists of lowercase English letters. wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB.
+You are given an array of words. wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB.For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
 
-For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
-A word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a predecessor of word3, and so on. A single word is trivially a word chain with k == 1.
-
-Return the length of the longest possible word chain with words chosen from the given list of words.
+A word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a predecessor of word3, and so on. A single word is trivially a word chain with k == 1. Return the length of the longest possible word chain with words chosen from the given list of words.
 
 Input: words = ["a","b","ba","bca","bda","bdca"]
 

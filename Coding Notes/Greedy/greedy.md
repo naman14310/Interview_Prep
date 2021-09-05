@@ -176,7 +176,44 @@ int findLongestChain(vector<vector<int>>& pairs) {
 
 <br>
 
-### 2. Minimum Number of Arrows to Burst Balloons
+### 2. Non-overlapping Intervals
+Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
+
+Output: 1
+
+Hint: Minimum remove for overlapping interval = n - longest_chain_pair_len (above question)
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+    return v1[1]<v2[1];
+}
+
+
+int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+    int n = intervals.size();
+
+    sort(intervals.begin(), intervals.end(), comp);
+
+    int prev = intervals[0][1];
+    int longest_chain_len = 1;
+
+    for(int i=1; i<n; i++){
+
+        if(intervals[i][0]>=prev){
+            prev = intervals[i][1];
+            longest_chain_len++;
+        }    
+    }
+
+    return n - longest_chain_len;
+}
+```
+
+<br>
+
+### 3. Minimum Number of Arrows to Burst Balloons
 There are some spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end coordinates of the horizontal diameter. 
 An arrow can be shot up from different points along the x-axis. A balloon with xstart and xend bursts by an arrow shot at x if xstart ≤ x ≤ xend. Given an array points where points[i] = [xstart, xend], return the minimum number of arrows that must be shot to burst all balloons.
 
@@ -220,7 +257,7 @@ int findMinArrowShots(vector<vector<int>>& points) {
 
 <br>
 
-### 3. Queue Reconstruction by Height (Tricky)
+### 4. Queue Reconstruction by Height (Tricky)
 You are given an array of people. Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi. Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue.
 
 Input: people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
@@ -285,7 +322,7 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
 
 <br>
 
-### 4. Two City Scheduling (Tricky)
+### 5. Two City Scheduling (Tricky)
 A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti. Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
 
 Input: costs = [[10,20],[30,200],[400,50],[30,20]]

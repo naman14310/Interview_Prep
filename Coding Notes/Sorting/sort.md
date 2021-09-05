@@ -128,7 +128,9 @@ int search(vector<int> & v, int k){
 
 <br>
 
-### 4. CountSort ( gives O(n) Time complexity in some cases )
+### 4. CountSort 
+
+**gives O(n) Time complexity in some cases**
 
 [Video](https://www.youtube.com/watch?v=pEJiGC-ObQE)
 

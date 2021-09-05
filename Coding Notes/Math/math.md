@@ -1,5 +1,7 @@
 # Math
 
+<br>
+
 ## Easy
 
 #### 1. Missing Number 
@@ -14,6 +16,8 @@ int missingNumber(vector<int>& nums) {
     return total_sum - sum;
 }
 ```
+
+<br>
 
 #### 2. Happy Number (Floyds Cycle Algo)
 Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process:
@@ -47,6 +51,8 @@ bool isHappy(int n) {
 }
 ```
 
+<br>
+
 #### 3. Power of Three 
 Given an integer n, return true if it is a power of three. Otherwise, return false.
 
@@ -68,6 +74,8 @@ bool isPowerOfThree(int n) {
 }
 ```
 
+<br>
+
 #### 4. Factorial Trailing Zeroes
 Given an integer n, return the number of trailing zeroes in n!.
 
@@ -81,6 +89,8 @@ int trailingZeroes(int n) {
     return ans;
 }
 ```
+
+<br>
 
 #### 5. Count Primes (Sieve of Eratosthenes)
 Count the number of prime numbers less than a non-negative number, n.
@@ -105,6 +115,9 @@ int countPrimes(int n) {
     return count;
 }
 ```
+
+<br>
+
 
 ## Medium
 
@@ -146,6 +159,8 @@ bool reorderedPowerOf2(int N) {
 }
 ```
 
+<br>
+
 #### 2. Broken Calculator (Think in Reverse)
 On a broken calculator that has a number showing on its display, we can perform two operations:
 
@@ -172,6 +187,8 @@ int brokenCalc(int X, int Y) {
 }
 ```
 
+<br>
+
 #### 3. Perfect Squares (Lagrange's Four Square theorem)
 Given an integer n, return the least number of perfect square numbers that sum to n.
 
@@ -197,6 +214,8 @@ int numSquares(int n) {
 } 
 ```
 
+<br>
+
 #### 4. Bulb Switcher (Puzzle)
 There are n bulbs that are initially off. You first turn on all the bulbs, then you turn off every second bulb. On the third round, you toggle every third bulb (turning on if it's off or turning off if it's on). For the ith round, you toggle every i bulb. For the nth round, you only toggle the last bulb. Return the number of bulbs that are on after n rounds.
 
@@ -207,6 +226,8 @@ int bulbSwitch(int n) {
     return int(sqrt(n));
 }
 ```
+
+<br>
 
 #### 5. Partitioning Into Minimum Number Of Deci-Binary Numbers
 A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100 are deci-binary, while 112 and 3001 are not. Given a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that they sum up to n.

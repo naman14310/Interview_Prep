@@ -235,36 +235,66 @@ queue<int> interleave_two_halves(queue<int> & q){
 
 <br>
 
-#### 6. Circular Tour (IMP)
-Suppose there is a circle. There are N petrol pumps on that circle. You will be given two sets of data.
-1. The amount of petrol that every petrol pump has.
-2. Distance from that petrol pump to the next petrol pump.
+#### 6. Gas Station or Circular Tour (IMP)
+There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i]. You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations.
 
-Find a starting point where the truck can start to get through the complete circle without exhausting its petrol in between.
+Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.
+
+Input: gas = [1,2,3,4,5], cost = [3,4,5,1,2]
+
+Output: 3
 
 Hint: The gas stations we already visited will not be further checked for starting point.
 
 [Video Explaination](https://www.youtube.com/watch?v=zcnVaVJkLhY)
 
 ```cpp
-int tour(petrolPump p[],int n){
-   int front = 0, rear = 0;
-   int count=0, balance = 0;
-   while(count<2*n){
-       if(balance+p[rear].petrol<p[rear].distance){
-           rear++;
-           front = rear;
-           balance=0;
-       }
-       else{
-           balance = balance + p[rear].petrol - p[rear].distance;
-           rear = (rear+1)%n;
-           if(rear==front) 
-                return front;
-       }
-       count++;
-   }
-   return -1;
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    int n = gas.size();
+
+    /* 
+        We will use two variables i and j such that,
+        i will point to starting gas station and
+        j will act as iterator ahead it in circular manner 
+    */
+
+    int i=0, j=0;
+    int balance = 0;       
+
+    while(i<n){
+
+        /* add curr fuel to balance */
+
+        balance += gas[j];
+
+        /* If balance is greater then cost, we can travel to next station */
+
+        if(balance >= cost[j]){
+            balance -= cost[j];
+            j = (j+1) % n;   
+
+            if(j==i) return j;      // --> If next station is the starting station, we completed tour
+        }
+
+
+        /* Else we will start from the next gas station */
+
+        else{
+            j += 1;
+            balance = 0;
+
+            /* 
+                If next station is ahead of the prev starting station (i) then we can update i to next station 
+                Else simply return -1, because we get stuck in infinite loop, as next starting station should be
+                ahead of prev starting station
+            */
+
+            if(j>i) i = j;
+            else return -1;
+        }
+    }
+
+    return -1;
 }
 ```
 

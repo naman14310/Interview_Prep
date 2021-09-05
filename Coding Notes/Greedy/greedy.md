@@ -105,6 +105,36 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
 
 <br>
 
+### 3. Minimum Increment to Make Array Unique
+You are given an integer array nums. In one move, you can pick an index i where 0 <= i < nums.length and increment nums[i] by 1. Return the minimum number of moves to make every value in nums unique.
+
+Input: nums = [3,2,1,2,1,7]
+
+Output: 6
+
+Hint: Sort the input array. Compared with previous number, the current number need to be at least prev + 1.
+
+```cpp
+int minIncrementForUnique(vector<int>& nums) {
+
+    int moves = 0;
+    sort(nums.begin(), nums.end());
+
+    for(int i=1; i<nums.size(); i++){
+
+        if(nums[i]<=nums[i-1]){
+            moves += (nums[i-1]+1) - nums[i];
+            nums[i] = nums[i-1]+1;
+        }
+
+    }
+
+    return moves;
+}
+```
+
+<br>
+
 
 ## Problems on Intervals
 

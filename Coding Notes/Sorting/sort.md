@@ -1,8 +1,10 @@
 # Sorting
 
-## Sorting Algos
+<br>
 
-#### 1. Merge Sort 
+## @ Sorting Algos
+
+### 1. Merge Sort 
 
 **Time Complexity : O(nlogn) (for all cases)**
 
@@ -45,7 +47,9 @@ void sort(vector<int> & v){
 }
 ```
 
-#### 2. Quick Sort 
+<br>
+
+### 2. Quick Sort 
 
 **Time Complexity : O(n2) (worst case, Rare) | O(nlogn) (avg case)**
 
@@ -77,7 +81,9 @@ void quicksort(vector<int> & v, int start, int end){
 }
 ```
 
-#### 3. Quick Select (Variation of Quick sort for finding Kth smallest/largest element in array without sorting)
+<br>
+
+### 3. Quick Select (Variation of Quick sort for finding Kth smallest/largest element in array without sorting)
 
 **Time Complexity : O(n2) (worst case, Rare) | O(n) (avg case)**
 
@@ -119,7 +125,9 @@ int search(vector<int> & v, int k){
 }
 ```
 
-#### 4. CountSort ( gives O(n) Time complexity in some cases )
+<br>
+
+### 4. CountSort ( gives O(n) Time complexity in some cases )
 
 [Video](https://www.youtube.com/watch?v=pEJiGC-ObQE)
 
@@ -128,7 +136,9 @@ Tip:
 1. Use it while sorting string or stream of characters or symbols.
 2. Use it when numbers lies in given defined range (where maxLimit comes under linear function of total range).
 
-## Easy
+<br>
+
+## @ Easy
 
 #### 1. Count Inversions
 
@@ -171,6 +181,8 @@ long long int inversionCount(long long arr[], long long N){
 }
 ```
 
+<br>
+
 #### 2. Biggest Number String
 You're given a vector of numbers, Create a lexiographically largest no. by concatenating those numbers.
 
@@ -192,6 +204,8 @@ string concatenate(vector<int> numbers){
     return ans;
 }
 ```
+
+<br>
 
 #### 3. Custom Sort String
 order and str are strings composed of lowercase letters. In order, no letter occurs more than once. order was sorted in some custom order previously. We want to permute the characters of str so that they match the order that order was sorted. More specifically, if x occurs before y in order, then x should occur before y in the returned string. Return any permutation of str (as a string) that satisfies this property.
@@ -265,7 +279,9 @@ string customSortString(string order, string str) {
 }
 ```
 
-## Medium
+<br>
+
+## @ Medium
 
 #### 1. Minimum Swaps to Sort
 Given an array of n distinct elements. Find the minimum number of swaps required to sort the array in strictly increasing order.

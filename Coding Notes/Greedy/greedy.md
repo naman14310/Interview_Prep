@@ -425,7 +425,60 @@ int twoCitySchedCost(vector<vector<int>>& costs) {
 
 ## @ Jump Game Pattern (Flag-Race approach)
 
-### 1. Partition Labels
+### 1. Jump Game - O(n) | O(1)
+You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position. Return true if you can reach the last index, or false otherwise.
+
+Input: nums = [2,3,1,1,4]
+
+Output: true
+
+```cpp
+bool canJump(vector<int>& nums) {
+    int n = nums.size();
+    int reach = 0;
+
+    for(int i=0; i<=min(reach, n-1); i++)
+        reach = max(reach, nums[i]+i);
+
+    return reach>=n-1;
+}
+```
+
+<br>
+
+### 2. Jump Game II - O(n) | O(1)
+Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps.
+
+Input: nums = [2,3,0,1,4]
+
+Output: 2
+
+```cpp
+int jump(vector<int>& nums) {
+    int n = nums.size();
+
+    int steps = 0;
+    int begin = 0, end = 0, farthest = 0;
+
+    for(int i=0; i<n-1; i++){
+
+        farthest = max(farthest, i+nums[i]);
+
+        /* If we reached to the end of prev jump, then we need to increment jump steps and update end to farthest */
+
+        if(i==end){
+            end = farthest;
+            steps++;
+        }
+    }
+
+    return steps;
+}
+```
+
+<br
+
+### 3. Partition Labels
 You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part. Return a list of integers representing the size of these parts.
 
 Input: s = "ababcbacadefegdehijhklij"
@@ -462,7 +515,7 @@ vector<int> partitionLabels(string s) {
 
 <br>
 
-### 2. Max Chunks To Make Sorted
+### 4. Max Chunks To Make Sorted
 You are given an integer array arr of length n that represents a permutation of the integers in the range [0, n - 1]. We split arr into some number of chunks (i.e., partitions), and individually sort each chunk. After concatenating them in same order as they present, the result should equal the sorted array. Return the largest number of chunks we can make to sort the array.
 
 Input: arr = [2,0,1,4,3,5]
@@ -487,7 +540,7 @@ int maxChunksToSorted(vector<int>& arr) {
 
 <br>
 
-### 3. Video Stitching
+### 5. Video Stitching
 You are given a series of video clips. Each video clip is described by an array clips where clips[i] = [starti, endi]. We can cut these clips into segments freely. For example, a clip [0, 7] can be cut into segments [0, 1] + [1, 3] + [3, 7]. Return the minimum number of clips needed so that we can cut the clips into segments that cover the entire sporting event [0, time]. If the task is impossible, return -1.
 
 Input: clips = [[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], time = 10

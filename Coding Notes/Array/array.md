@@ -639,6 +639,47 @@ int maxScoreSightseeingPair(vector<int>& values) {
 
 <br>
 
+### 17. Maximum Swap
+You are given an integer num. You can swap two digits at most once to get the maximum valued number. Return the maximum valued number you can get.
+
+Input: num = 2736
+
+Output: 7236
+
+Hint: At each digit, if there is a larger digit that occurs later, we want the swap it with the largest such digit that occurs farthest.
+
+```cpp
+    int maximumSwap(int num) {
+        string nums = to_string(num);
+        int n = nums.size(); 
+        
+	/* It will store index of the greatest element on right */
+	
+        vector<int> mx (n, n-1);        
+        
+        for(int i=n-2; i>=0; i--){
+            
+            if(nums[i]>nums[mx[i+1]])
+                mx[i] = i;
+            else
+                mx[i] = mx[i+1];
+        }
+        
+        
+        for(int i=0; i<n; i++){
+            
+            if(nums[i]<nums[mx[i]]){
+                swap(nums[i], nums[mx[i]]);
+                return stoi(nums);
+            }
+        }
+        
+        return stoi(nums);
+    }
+```
+
+<br>
+
 ## Hard
 
 ### 1. Trapping Rain Water

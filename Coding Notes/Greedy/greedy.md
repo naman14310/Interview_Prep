@@ -4,6 +4,7 @@ Mostly Used Data Structures and Algos : Sorting & Heaps
 
 <br>
 
+
 ## @ Sorting based problems
 
 
@@ -99,6 +100,91 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
         }
     }
     return res;
+}
+```
+
+<br>
+
+
+## Problems on Intervals
+
+
+### 1. Maximum Length of Pair Chain
+You are given an array of n pairs pairs where pairs[i] = [lefti, righti] and lefti < righti. A pair p2 = [c, d] follows a pair p1 = [a, b] if b < c. A chain of pairs can be formed in this fashion. Return the length longest chain which can be formed.
+
+Input: pairs = [[1,2],[2,3],[3,4]]
+
+Output: 2
+
+Hint: Sort by pairs.second in ascending order
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+    return v1[1]<v2[1];
+}
+
+
+int findLongestChain(vector<vector<int>>& pairs) {
+    int n = pairs.size();
+    sort(pairs.begin(), pairs.end(), comp);     // --> Sort on the basis of pair[1] in ascending order
+
+    int prev = pairs[0][1];
+    int cnt = 1;
+
+    for(int i=1; i<n; i++){
+
+        if(pairs[i][0]>prev){
+            cnt++;
+            prev = pairs[i][1];
+        }
+
+    }
+
+    return cnt;
+}
+```
+
+<br>
+
+### 2. Minimum Number of Arrows to Burst Balloons
+There are some spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end coordinates of the horizontal diameter. 
+An arrow can be shot up from different points along the x-axis. A balloon with xstart and xend bursts by an arrow shot at x if xstart ≤ x ≤ xend. Given an array points where points[i] = [xstart, xend], return the minimum number of arrows that must be shot to burst all balloons.
+
+Input: points = [[10,16],[2,8],[1,6],[7,12]]
+
+Output: 2
+
+Hint: 
+1. Sort all points by end in ascending order. 
+2. Then start iterate from left and mark range as endPoint[i]
+3. Burst all balloons ahead it, which lies under this range and increment arrow by one.
+4. Repeat this process by increment i to first unbursted balloon.
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+    return v1[1]<v2[1];
+}
+
+int findMinArrowShots(vector<vector<int>>& points) {
+    int n = points.size();
+    sort(points.begin(), points.end(), comp);        // --> sort based on end in ascending order
+
+    int i=0;
+    int arrow = 0;
+
+    while(i<n){
+        int range = points[i][1];
+
+        int j=i+1;
+
+        while(j<n and points[j][0]<=range)
+            j++;
+
+        arrow++;
+        i = j;
+    }
+
+    return arrow;
 }
 ```
 
@@ -215,44 +301,6 @@ int twoCitySchedCost(vector<vector<int>>& costs) {
 
 <br>
 
-## Problems on Intervals
-
-### 1. Maximum Length of Pair Chain
-You are given an array of n pairs pairs where pairs[i] = [lefti, righti] and lefti < righti. A pair p2 = [c, d] follows a pair p1 = [a, b] if b < c. A chain of pairs can be formed in this fashion. Return the length longest chain which can be formed.
-
-Input: pairs = [[1,2],[2,3],[3,4]]
-
-Output: 2
-
-Hint: Sort by pairs.second in ascending order
-
-```cpp
-static bool comp (vector<int> & v1, vector<int> & v2){
-    return v1[1]<v2[1];
-}
-
-
-int findLongestChain(vector<vector<int>>& pairs) {
-    int n = pairs.size();
-    sort(pairs.begin(), pairs.end(), comp);     // --> Sort on the basis of pair[1] in ascending order
-
-    int prev = pairs[0][1];
-    int cnt = 1;
-
-    for(int i=1; i<n; i++){
-
-        if(pairs[i][0]>prev){
-            cnt++;
-            prev = pairs[i][1];
-        }
-
-    }
-
-    return cnt;
-}
-```
-
-<br>
 
 ## @ Jump Game Pattern (Flag-Race approach)
 

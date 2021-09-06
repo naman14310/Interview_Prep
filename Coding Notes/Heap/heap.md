@@ -483,121 +483,7 @@ int smallestChair(vector<vector<int>>& times, int targetFriend) {
 
 <br>
 
-### 3. Maximum Number of Events That Can Be Attended (Tricky)
-Given an array of events where events[i] = [startDayi, endDayi]. Every event i starts at startDayi and ends at endDayi. You can attend an event i at any day d where startTimei <= d <= endTimei. Notice that you can only attend one event at any time d. Return the maximum number of events you can attend.
-
-Input: events= [[1,2],[2,3],[3,4],[1,2]]
-
-Output: 4
-
-Hint: Sort events increased by start time. Minheap keeps the current open events. Iterate from the day 1 to day 100000, Each day, we add new events starting on day d to minheap. Also we remove the events that are already closed. Then we greedily attend the event that ends soonest.
-
-```cpp
-
-/* Time Complexity : O(d+nlogn) where d is range of days */
-
-static bool comp (vector<int> v1, vector<int> v2){
-    return v1[0]<v2[0];
-}
-
-
-int maxEvents(vector<vector<int>>& events) {
-    int n = events.size();
-    sort(events.begin(), events.end(), comp);                   // --> sort events by their startDay
-
-    priority_queue<int, vector<int>, greater<int>> minheap;     // --> minheap of (endDays)
-
-    int i=0;        // --> will iterate on events 
-    int cnt = 0;
-
-    /* Iterate for every day */
-
-    for(int day=1; day<=100000; day++){
-
-        /* push all events in minheap that will start on current day */
-
-        while(i<n and events[i][0]==day){
-            minheap.push(events[i][1]);
-            i++;
-        }
-
-        /* pop all events whose deadline gets over */
-
-        while(!minheap.empty() and minheap.top()<day)
-            minheap.pop();
-
-        /* pop one event with minimum deadline from minheap and increament cnt */
-
-        if(!minheap.empty()){
-            minheap.pop();
-            cnt++;
-        }
-
-        if(i==n and minheap.empty()) break;     
-    }
-
-    return cnt;
-}
-```
-
-<br>
-
-### 4. Course Schedule III
-You are given an array courses where courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi. You will start on the 1st day and you cannot take two or more courses simultaneously. Return the maximum number of courses that you can take.
-
-Input : [[7,17],[3,12],[10,20],[9,10],[5,20],[10,19],[4,18]]
-
-Output: 4
-
-```cpp
-static bool comp (pair<int,int> p1, pair<int,int> p2){
-    return p1.second < p2.second;
-}
-
-
-int scheduleCourse(vector<vector<int>>& courses) {
-
-    vector<pair<int,int>> v;
-    for(auto c : courses)
-        v.push_back({c[0], c[1]});
-
-    sort(v.begin(), v.end(), comp);         // --> sort all courses based on their lastDay
-
-    priority_queue<int> maxheap;            // --> will store duration of courses taken so far
-    int timeStamp = 0;
-
-    /* Iterate for all courses */
-
-    for(int i=0; i<v.size(); i++){
-        int duration = v[i].first, lastDay = v[i].second;
-
-        /* If we can take curr course without any clash then push it in maxheap and update timeStamp */
-
-        if(timeStamp + duration <= lastDay){
-            maxheap.push(duration);
-            timeStamp += duration;
-        }
-
-        /* 
-            Else if we've taken any course earlier whose duration is greater then curr_course
-            then replacing curr_course with that earlier course of higher duration (will be on the top of maxheap)
-            will be more beneficial for us.
-        */
-
-        else if (!maxheap.empty() and maxheap.top() > duration){
-            timeStamp = timeStamp - maxheap.top() + duration;
-            maxheap.pop();
-            maxheap.push(duration);
-        }
-    }
-
-    return maxheap.size();
-}
-```
-
-<br>
-
-### 5. Furthest Building You Can Reach (Tricky)
+### 3. Furthest Building You Can Reach (Tricky)
 You are given an integer array heights representing the heights of buildings, some bricks, and some ladders. You start your journey from building 0 and move to the next building by possibly using bricks or ladders.
 
 While moving from building i to building i+1 (0-indexed),
@@ -648,7 +534,7 @@ int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
 
 <br>
 
-### 6. Find K Pairs with Smallest Sums (Too Tricky)
+### 4. Find K Pairs with Smallest Sums (Too Tricky)
 You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u, v) which consists of one element from the first array and one element from the second array. Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
 
 Input: nums1 = [1,7,11], nums2 = [2,4,6], k = 3
@@ -772,7 +658,7 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 
 <br>
 
-### 7. Find Median from Data Stream (**IMP**)
+### 5. Find Median from Data Stream (**IMP**)
 
 [Explaination](https://www.youtube.com/watch?v=1LkOrc-Le-Y)
 
@@ -838,7 +724,7 @@ public:
 
 <br>
 
-### 8. Merge k Sorted Lists (**IMP**)
+### 6. Merge k Sorted Lists (**IMP**)
 You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it. 
 
 Input: lists = [[1,4,5],[1,3,4],[2,6]]
@@ -881,7 +767,7 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 
 <br>
 
-### 9. Minimum Number of Refueling Stops
+### 7. Minimum Number of Refueling Stops
 A car travels from a starting position to a destination which is target miles east of the starting position. The gas stations are represented as an array stations where stations[i] = [positioni, fueli] indicates that the ith gas station is positioni miles east of the starting position and has fueli liters of gas.
 
 The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car. Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.
@@ -928,7 +814,7 @@ int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
 
 <br>
 
-### 10. Construct Target Array With Multiple Sums
+### 8. Construct Target Array With Multiple Sums
 You are given an array target of n integers. From a starting array arr consisting of n 1's, you may perform the following procedure :
 1. let x be the sum of all elements currently in your array.
 2. choose index i, such that 0 <= i < n and set the value of arr at index i to x.
@@ -976,7 +862,7 @@ bool isPossible(vector<int>& target) {
 
 <br>
 
-### 11. Divide Array in Sets of K Consecutive Numbers
+### 9. Divide Array in Sets of K Consecutive Numbers
 Given an array of integers nums and a positive integer k, find whether it is possible to divide this array into sets of k consecutive numbers. Return true if it is possible. Otherwise, return false.
 
 Input: nums = [1,2,3,3,4,4,5,6], k = 4

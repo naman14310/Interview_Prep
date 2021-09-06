@@ -2,6 +2,42 @@
 
 <br>
 
+### 1. Merge Intervals
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+
+Output: [[1,6],[8,10],[15,18]]
+
+Hint: Sort all intervals by starttime.
+
+```cpp
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+    int n = intervals.size();
+    sort(intervals.begin(), intervals.end());       // --> sort by start
+
+    vector<vector<int>> res;
+    res.push_back(intervals[0]);
+
+    for(int i=1; i<n; i++){
+        
+        /* If intervals are overlapping, update prev_end to max(prev_end, curr_end) */
+        
+        if(intervals[i][0]<=res.back()[1])
+            res.back()[1] = max(res.back()[1], intervals[i][1]);
+        
+        /* Else pushback new interval to res vector */
+        
+        else
+            res.push_back(intervals[i]);
+    }
+
+    return res;
+}
+```
+
+<br>
+
 ### 1. Maximum Length of Pair Chain (IMP)
 You are given an array of n pairs pairs where pairs[i] = [lefti, righti] and lefti < righti. A pair p2 = [c, d] follows a pair p1 = [a, b] if b < c. A chain of pairs can be formed in this fashion. Return the length longest chain which can be formed.
 

@@ -174,7 +174,68 @@ int findMinArrowShots(vector<vector<int>>& points) {
 
 <br>
 
-### 5. Queue Reconstruction by Height (Tricky)
+### 5. Course Schedule III
+You are given an array courses where courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi. You will start on the 1st day and you cannot take two or more courses simultaneously. Return the maximum number of courses that you can take.
+
+Input: courses = [[100,200],[200,1300],[1000,1250],[2000,3200]]
+
+Output: 3
+
+Hint: 
+1. Sort all courses by their lastDay. Use one maxheap which will contain duration of all courses taken so far.
+2. Initiate timestamp to 0.
+3. Iterate for all courses, If curr_course will start after timestamp, push it in maxheap and update timestamp.
+4. Else If its duration is less then any course taken earlier (will be present on top of maxheap), then replace that with curr_course.
+
+```cpp
+static bool comp (pair<int,int> p1, pair<int,int> p2){
+    return p1.second < p2.second;
+}
+
+
+int scheduleCourse(vector<vector<int>>& courses) {
+
+    vector<pair<int,int>> v;
+    for(auto c : courses)
+        v.push_back({c[0], c[1]});
+
+    sort(v.begin(), v.end(), comp);         // --> sort all courses based on their lastDay
+
+    priority_queue<int> maxheap;            // --> will store duration of courses taken so far
+    int timeStamp = 0;
+
+    /* Iterate for all courses */
+
+    for(int i=0; i<v.size(); i++){
+        int duration = v[i].first, lastDay = v[i].second;
+
+        /* If we can take curr course without any clash then push it in maxheap and update timeStamp */
+
+        if(timeStamp + duration <= lastDay){
+            maxheap.push(duration);
+            timeStamp += duration;
+        }
+
+        /* 
+            Else if we've taken any course earlier whose duration is greater then curr_course
+            then replacing curr_course with that earlier course of higher duration (will be on the top of maxheap)
+            will be more beneficial for us.
+        */
+
+        else if (!maxheap.empty() and maxheap.top() > duration){
+            timeStamp = timeStamp - maxheap.top() + duration;
+            maxheap.pop();
+            maxheap.push(duration);
+        }
+    }
+
+    return maxheap.size();
+}
+```
+
+<br>
+
+### 6. Queue Reconstruction by Height (Tricky)
 You are given an array of people. Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi. Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue.
 
 Input: people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
@@ -239,7 +300,7 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
 
 <br>
 
-### 6. Two City Scheduling (Tricky)
+### 7. Two City Scheduling (Tricky)
 A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti. Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
 
 Input: costs = [[10,20],[30,200],[400,50],[30,20]]

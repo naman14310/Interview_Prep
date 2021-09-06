@@ -38,6 +38,86 @@ vector<vector<int>> merge(vector<vector<int>>& intervals) {
 
 <br>
 
+### 2. Insert Interval
+You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval.
+
+Insert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary). Return intervals after the insertion.
+
+Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+
+Output: [[1,2],[3,10],[12,16]]
+
+```cpp
+vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+    int n = intervals.size();
+
+    /* Boundary Case 1 : If n==0 */
+
+    if(n==0) return {{newInterval}};
+
+    /* Boundary Case 2 : If newInterval is greater then all intervals */
+
+    if(newInterval[0]>intervals.back()[1]){
+        intervals.push_back(newInterval);
+        return intervals;
+    }
+
+    vector<vector<int>> res;
+    int i=0;
+
+    while(i<n){
+
+        /* If new_start > curr_end, simply push curr_interval to res and increment i */  
+
+        if(newInterval[0]>intervals[i][1]){
+            res.push_back(intervals[i]);
+            i++;
+        }
+
+        /* 
+            Else If new_start <= curr_end and new_end < curr_start, No Overlapping Case
+            Hence push newInterval to res and will push others as well after it
+        */
+
+        else if (newInterval[1]<intervals[i][0]){
+            res.push_back(newInterval);
+            break;
+        }
+
+
+        /* 
+            Else newInterval is overlapping with currInterval, hence 
+            push min(new_start, curr_start) and max(new_end, curr_end) to res
+            and apply merge interval logic for others
+        */
+
+        else{
+            res.push_back({min(newInterval[0], intervals[i][0]), max(newInterval[1], intervals[i][1])});
+            i++;
+            break;
+        }
+    }
+
+
+    /* Simple merge interval logic for remaining intervals */
+
+    while(i<n){
+
+        if(intervals[i][0]<=res.back()[1])
+            res.back()[1] = max(res.back()[1], intervals[i][1]);
+
+        else
+            res.push_back(intervals[i]);
+
+        i++;
+    }
+
+    return res;
+}
+```
+
+<br>
+
 ### 1. Maximum Length of Pair Chain (IMP)
 You are given an array of n pairs pairs where pairs[i] = [lefti, righti] and lefti < righti. A pair p2 = [c, d] follows a pair p1 = [a, b] if b < c. A chain of pairs can be formed in this fashion. Return the length longest chain which can be formed.
 

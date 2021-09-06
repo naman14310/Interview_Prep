@@ -517,7 +517,7 @@ int minTaps(int n, vector<int>& ranges) {
 
 ## @ Other Tricky problems
 
-### 1. Get the Maximum Score
+### 1. Get the Maximum Score - O(n) | O(1)
 You are given two sorted arrays of distinct integers nums1 and nums2. A valid path is defined as follows:
 
 1. Choose array nums1 or nums2 to traverse (from index-0).

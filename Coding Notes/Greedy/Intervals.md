@@ -249,7 +249,51 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 
 <br>
 
-### 6. Maximum Number of Events That Can Be Attended
+### 6. Minimum Number of Arrows to Burst Balloons
+There are some spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end coordinates of the horizontal diameter. 
+An arrow can be shot up from different points along the x-axis. A balloon with xstart and xend bursts by an arrow shot at x if xstart ≤ x ≤ xend. Given an array points where points[i] = [xstart, xend], return the minimum number of arrows that must be shot to burst all balloons.
+
+Input: points = [[10,16],[2,8],[1,6],[7,12]]
+
+Output: 2
+
+Hint: 
+1. Sort all points by end in ascending order. 
+2. Then start iterate from left and mark range as endPoint[i]
+3. Burst all balloons ahead it, which lies under this range and increment arrow by one.
+4. Repeat this process by increment i to first unbursted balloon.
+
+```cpp
+static bool comp (vector<int> & v1, vector<int> & v2){
+    return v1[1]<v2[1];
+}
+
+int findMinArrowShots(vector<vector<int>>& points) {
+    int n = points.size();
+    sort(points.begin(), points.end(), comp);        // --> sort based on end in ascending order
+
+    int i=0;
+    int arrow = 0;
+
+    while(i<n){
+        int range = points[i][1];
+
+        int j=i+1;
+
+        while(j<n and points[j][0]<=range)
+            j++;
+
+        arrow++;
+        i = j;
+    }
+
+    return arrow;
+}
+```
+
+<br>
+
+### 7. Maximum Number of Events That Can Be Attended
 Given an array of events where events[i] = [startDayi, endDayi].  You can attend an event i at any day d where startTimei <= d <= endTimei. You can only attend one event at any time d. Return the maximum number of events you can attend.
 
 Input: events = [[1,4],[4,4],[2,2],[3,4],[1,1]]
@@ -298,50 +342,6 @@ int maxEvents(vector<vector<int>>& events) {
     }
 
     return attended;
-}
-```
-
-<br>
-
-### 7. Minimum Number of Arrows to Burst Balloons
-There are some spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end coordinates of the horizontal diameter. 
-An arrow can be shot up from different points along the x-axis. A balloon with xstart and xend bursts by an arrow shot at x if xstart ≤ x ≤ xend. Given an array points where points[i] = [xstart, xend], return the minimum number of arrows that must be shot to burst all balloons.
-
-Input: points = [[10,16],[2,8],[1,6],[7,12]]
-
-Output: 2
-
-Hint: 
-1. Sort all points by end in ascending order. 
-2. Then start iterate from left and mark range as endPoint[i]
-3. Burst all balloons ahead it, which lies under this range and increment arrow by one.
-4. Repeat this process by increment i to first unbursted balloon.
-
-```cpp
-static bool comp (vector<int> & v1, vector<int> & v2){
-    return v1[1]<v2[1];
-}
-
-int findMinArrowShots(vector<vector<int>>& points) {
-    int n = points.size();
-    sort(points.begin(), points.end(), comp);        // --> sort based on end in ascending order
-
-    int i=0;
-    int arrow = 0;
-
-    while(i<n){
-        int range = points[i][1];
-
-        int j=i+1;
-
-        while(j<n and points[j][0]<=range)
-            j++;
-
-        arrow++;
-        i = j;
-    }
-
-    return arrow;
 }
 ```
 

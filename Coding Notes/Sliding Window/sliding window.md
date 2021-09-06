@@ -1,6 +1,8 @@
 # Sliding Window
 
-## Type 1 : Fixed Window Size
+<br>
+
+## @ Type 1 : Fixed Window Size
 
 #### 1. Count Occurences of Anagrams
 Given a word pat and a text txt. Return the count of the occurences of anagrams of the word in the text.
@@ -33,6 +35,7 @@ int count_occurance(string pat, string txt) {
 }
 ```
 
+<br>
 
 #### 2. First negative integer in every window of size k
 
@@ -86,8 +89,10 @@ vector<long long> printFirstNegativeInteger(long long int A[], long long int N, 
  }
 ```
 
+<br>
+
 #### 3. Maximum Points You Can Obtain from Cards (Think in reverse)
-There are several cards arranged in a row, and each card has an associated number of points. The points are given in the integer array cardPoints. In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards. Your score is the sum of the points of the cards you have taken. Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+There are several cards arranged in a row, and each card has an associated number of points. In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards. Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
 
 Input: cardPoints = [1,2,3,4,5,6,1], k = 3
 
@@ -121,6 +126,8 @@ int maxScore(vector<int>& cardPoints, int k) {
     return totalSum - minSum;
 }
 ```
+
+<br>
 
 #### 4. Minimum Number of K Consecutive Bit Flips (Tricky)
 In an array nums containing only 0s and 1s, a k-bit flip consists of choosing a (contiguous) subarray of length k and simultaneously changing every 0 in the subarray to 1, and every 1 in the subarray to 0. Return the minimum number of k-bit flips required so that there is no 0 in the array.  If it is not possible, return -1.
@@ -159,8 +166,10 @@ int minKBitFlips(vector<int>& A, int K) {
 }
 ```
 
-## Type 2 : Variable Window Size
+<br>
 
+
+## @ Type 2 : Variable Window Size
 These type of problems can be solved with two poiters i and j. `i` points to the leftmost element of window (including i) and `j` points to rightmost element of window (including j)
 
 #### 1. Longest Substring Without Repeating Characters
@@ -188,6 +197,8 @@ int lengthOfLongestSubstring(string s) {
     return ans;
 }
 ```
+
+<br>
 
 #### 2. Longest Substring with atmost k distinct characters
 
@@ -220,6 +231,8 @@ int longest_substring(string s, int k){
 
 1. Fruit in a Basket (leetcode)
 2. Pick toys (aditya verma playlist)
+
+<br>
 
 #### 3. Longest Repeating Character Replacement (Tricky)
 You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
@@ -261,6 +274,8 @@ int characterReplacement(string s, int k) {
 }
 ```
 
+<br>
+
 #### 4. Smallest Distinct Window
 Given a string 's'. The task is to find the smallest window length that contains all the characters of the given string at least one time. For eg. A = “aabcbcdbca”, then the result would be 4 as of the smallest window will be “dbca”.
 
@@ -296,7 +311,9 @@ string smallestWindow(string s){
 }
 ```
 
-#### 5. Minimum Window Substring
+<br>
+    
+#### 5. Minimum Window Substring (IMP)
 Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
 
 Hint: Use two vectors for storing frequency of characters. Use one count variable. Increment count whenever `freq_t[ch]>0 and freq_s[ch]==freq_t[ch]` and decrement it whenever `freq_t[temp]>0 and freq_s[temp]<freq_t[temp]`
@@ -354,6 +371,8 @@ string minWindow(string s, string t) {
 }
 ```
 
+<br>
+
 #### 6. Minimum Operations to Reduce X to Zero (Think in Reverse)
 You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost element from the array nums and subtract its value from x. Note that this modifies the array for future operations. Return the minimum number of operations to reduce x to exactly 0 if it's possible, otherwise, return -1.
 
@@ -398,6 +417,8 @@ int minOperations(vector<int>& nums, int x) {
 }
 ```
 
+<br>
+
 #### 7. Max Consecutive Ones III
 Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
 
@@ -422,8 +443,10 @@ Given a binary array nums and an integer k, return the maximum number of consecu
     }
 ```
 
+<br>
+
 #### 8. Get Equal Substrings Within Budget
-You are given two strings s and t of the same length. You want to change s to t. Changing the i-th character of s to i-th character of t costs |s[i] - t[i]| that is, the absolute difference between the ASCII values of the characters. You are also given an integer maxCost. Return the maximum length of a substring of s that can be changed to be the same as the corresponding substring of twith a cost less than or equal to maxCost. If there is no substring from s that can be changed to its corresponding substring from t, return 0.
+You are given two strings s and t of the same length. You want to change s to t. Changing the i-th character of s to i-th character of t costs |s[i] - t[i]| that is, the absolute difference between the ASCII values of the characters. You are also given an integer maxCost. Return the maximum length of a substring of s that can be changed to be the same as the corresponding substring of t with a cost less than or equal to maxCost. If there is no substring from s that can be changed to its corresponding substring from t, return 0.
 
 Input: s = "abcd", t = "bcdf", maxCost = 3
 
@@ -450,6 +473,8 @@ int equalSubstring(string s, string t, int maxCost) {
 }
 ```
 
+<br>
+
 #### 9. Count Number of Nice Subarrays (Tricky)
 Given an array of integers nums and an integer k. A continuous subarray is called nice if there are k odd numbers on it. Return the number of nice sub-arrays.
 
@@ -475,7 +500,6 @@ int no_of_subarrays(vector<int> & v, int k){
 }
 
 
-
 int numberOfSubarrays(vector<int>& nums, int k) {
     for(int i=0; i<nums.size(); i++){
         if(nums[i]%2==0)
@@ -490,3 +514,73 @@ int numberOfSubarrays(vector<int>& nums, int k) {
 }
 ```
 
+<br>
+
+#### 10. Smallest Range Covering Elements from K Lists (Too Tricky)
+You have k lists of sorted integers in non-decreasing order. Find the smallest range that includes at least one number from each of the k lists.
+
+Input: nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]
+
+Output: [20,24]
+
+Approach: We can break this problem into two parts:
+1. Create a single sorted vector containing numbers from all list and respective listIDs
+2. Now this problem is reduced to -> find minimum window containing all listIDs (which is similar to minimum window substring)
+
+```cpp
+vector<int> smallestRange(vector<vector<int>>& nums) {
+
+    int k = nums.size();            // --> k is total number of lists
+
+    /* ---------------------------------- Part 1 ------------------------------------ */
+
+    // --> Create a single sorted vector containing numbers from all list  
+
+    vector<pair<int,int>> v;        // --> vector of pair {num, listID}
+
+    for(int i=0; i<nums.size(); i++){
+
+        for(int num : nums[i])
+            v.push_back({num, i});
+    }
+
+    sort(v.begin(), v.end());
+
+    /* ---------------------------------- Part 2 ------------------------------------- */
+
+    // --> find minimum window containing all listIDs 
+
+    int i=0, j=0;
+    vector<int> freq (k, 0);
+
+    int cnt = 0;
+    int minRange = INT_MAX;
+    vector<int> ans;
+
+    while(j<v.size()){
+        int id = v[j].second;
+
+        freq[id]++;
+        if(freq[id]==1) cnt++;
+
+        while(cnt==k){
+
+            if(v[j].first - v[i].first < minRange){
+                minRange = v[j].first - v[i].first;
+                ans = {v[i].first, v[j].first};
+            }
+
+            int idi = v[i].second;
+
+            freq[idi]--;
+            if(freq[idi]==0) cnt--;
+
+            i++;
+        }
+
+        j++;
+    }
+
+    return ans;
+}
+```

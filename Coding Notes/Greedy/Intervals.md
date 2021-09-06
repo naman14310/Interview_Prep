@@ -118,7 +118,64 @@ vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInter
 
 <br>
 
-### 1. Maximum Length of Pair Chain (IMP)
+### 3. Interval List Intersections
+You are given two lists of closed intervals, where firstList[i] = [starti, endi] and secondList[j] = [startj, endj]. Each list of intervals is pairwise disjoint and in sorted order. Return the intersection of these two interval lists.
+
+![img](https://assets.leetcode.com/uploads/2019/01/30/interval1.png)
+
+Input: firstList = [[0,2],[5,10],[13,23],[24,25]], secondList = [[1,5],[8,12],[15,24],[25,26]]
+
+Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+
+```cpp
+/* 
+    Following are two cases for overlapping:
+    1. If end1 lies between start2 -- end2
+    2. If end2 lies between start1 -- end1
+*/
+
+bool overlap(vector<int> & interval1, vector<int> & interval2){
+    int start1 = interval1[0], start2 = interval2[0];
+    int end1 = interval1[1], end2 = interval2[1];
+
+    if(end1>=start2 and end1<=end2) return true;
+    if(end2>=start1 and end2<=end1) return true;
+
+    return false;
+}
+
+
+vector<vector<int>> intervalIntersection(vector<vector<int>>& firstList, vector<vector<int>>& secondList) {
+    int i=0, j=0;
+    vector<vector<int>> res;
+
+    while(i<firstList.size() and j<secondList.size()){
+
+        /* If ith and jth intervals overlap then pushback their intersection in res */
+
+        if(overlap(firstList[i], secondList[j])){
+
+            int start_of_intersection = max(firstList[i][0], secondList[j][0]);
+            int end_of_intersection = min(firstList[i][1], secondList[j][1]);
+
+            res.push_back({start_of_intersection, end_of_intersection});
+        }
+
+        /* If end_i > end_j then increment j,  Else increment i */
+
+        if(firstList[i][1] > secondList[j][1])
+            j++;
+
+        else i++;
+    }
+
+    return res;
+}
+```
+
+<br>
+
+### 4. Maximum Length of Pair Chain (IMP)
 You are given an array of n pairs pairs where pairs[i] = [lefti, righti] and lefti < righti. A pair p2 = [c, d] follows a pair p1 = [a, b] if b < c. A chain of pairs can be formed in this fashion. Return the length longest chain which can be formed.
 
 Input: pairs = [[1,2],[2,3],[3,4]]
@@ -155,7 +212,7 @@ int findLongestChain(vector<vector<int>>& pairs) {
 
 <br>
 
-### 2. Non-overlapping Intervals
+### 5. Non-overlapping Intervals
 Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
 
 Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
@@ -192,7 +249,7 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 
 <br>
 
-### 3. Maximum Number of Events That Can Be Attended
+### 6. Maximum Number of Events That Can Be Attended
 Given an array of events where events[i] = [startDayi, endDayi].  You can attend an event i at any day d where startTimei <= d <= endTimei. You can only attend one event at any time d. Return the maximum number of events you can attend.
 
 Input: events = [[1,4],[4,4],[2,2],[3,4],[1,1]]
@@ -246,7 +303,7 @@ int maxEvents(vector<vector<int>>& events) {
 
 <br>
 
-### 4. Minimum Number of Arrows to Burst Balloons
+### 7. Minimum Number of Arrows to Burst Balloons
 There are some spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end coordinates of the horizontal diameter. 
 An arrow can be shot up from different points along the x-axis. A balloon with xstart and xend bursts by an arrow shot at x if xstart ≤ x ≤ xend. Given an array points where points[i] = [xstart, xend], return the minimum number of arrows that must be shot to burst all balloons.
 
@@ -290,7 +347,7 @@ int findMinArrowShots(vector<vector<int>>& points) {
 
 <br>
 
-### 5. Course Schedule III
+### 8. Course Schedule III
 You are given an array courses where courses[i] = [durationi, lastDayi] indicate that the ith course should be taken continuously for durationi days and must be finished before or on lastDayi. You will start on the 1st day and you cannot take two or more courses simultaneously. Return the maximum number of courses that you can take.
 
 Input: courses = [[100,200],[200,1300],[1000,1250],[2000,3200]]

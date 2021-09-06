@@ -512,3 +512,77 @@ int minTaps(int n, vector<int>& ranges) {
 }
 ```
 
+<br>
+
+
+## @ Other Tricky problems
+
+### 1. Get the Maximum Score
+You are given two sorted arrays of distinct integers nums1 and nums2. A valid path is defined as follows:
+
+1. Choose array nums1 or nums2 to traverse (from index-0).
+2. Traverse the current array from left to right.
+3. If you are reading any value that is present in nums1 and nums2 you are allowed to change your path to the other array. (Only one repeated value is considered in the valid path).
+4. Score is defined as the sum of uniques values in a valid path.
+
+Return the maximum score you can obtain of all possible valid paths. Since the answer may be too large, return it modulo 10^9 + 7.
+
+![img](https://assets.leetcode.com/uploads/2020/07/16/sample_1_1893.png)
+
+Input: nums1 = [2,4,5,8,10], nums2 = [4,6,8,9]
+
+Output: 30
+
+[Explaination](https://leetcode.com/problems/get-the-maximum-score/discuss/767987/JavaC%2B%2BPython-Two-Pointers-O(1)-Space)
+
+```cpp
+int maxSum(vector<int>& nums1, vector<int>& nums2) {
+    long long maxScore = 0;
+
+    int i=0, j=0;
+    long long hopsum1 = 0, hopsum2 = 0; 
+
+    while(i<nums1.size() and j<nums2.size()){
+
+        /* If val1 == val2 then add max_hopsum to score and increment both i and j, and also reset both hopsums to 0 */
+
+        if(nums1[i]==nums2[j]){
+            maxScore += max(hopsum1, hopsum2) + nums1[i];
+
+            i++; j++;
+            hopsum1 = 0; hopsum2 = 0;
+        }
+
+        /* If val1 < val2 then update hopsum1 and increment i */
+
+        else if(nums1[i]<nums2[j]){
+            hopsum1 += nums1[i];
+            i++;
+        }
+
+        /* Else update hopsum2 and increment j */
+
+        else{
+            hopsum2 += nums2[j];
+            j++;
+        }
+
+    }
+
+    /* Do same processing for last hop (i.e. last common val to list_end) */
+
+    while(i<nums1.size()){
+        hopsum1 += nums1[i];
+        i++;
+    }
+
+    while(j<nums2.size()){
+        hopsum2 += nums2[j];
+        j++;
+    }
+
+    maxScore += max(hopsum1, hopsum2);
+
+    return maxScore % 1000000007;
+}
+```

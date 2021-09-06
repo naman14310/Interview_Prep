@@ -517,7 +517,7 @@ int numberOfSubarrays(vector<int>& nums, int k) {
 <br>
 
 #### 10. Smallest Range Covering Elements from K Lists (Too Tricky)
-You have k lists of sorted integers in non-decreasing order. Find the smallest range that includes at least one number from each of the k lists.
+You have k lists of sorted integers. Find the smallest range that includes at least one number from each of the k lists.
 
 Input: nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]
 

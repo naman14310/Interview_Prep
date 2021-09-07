@@ -55,7 +55,7 @@ Input: n = 5
 
 Output: [0,1,1,2,1,2]
 
-**Approach 1 : Bit Counting **
+**Approach 1 : Bit Counting**
 
 ```cpp
 int countSetBits(int num){

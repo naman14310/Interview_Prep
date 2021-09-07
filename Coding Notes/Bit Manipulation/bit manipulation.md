@@ -174,6 +174,8 @@ int singleNumber(vector<int>& nums) {
 }
 ```
 
+<br>
+
 #### 2. Missing Number
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
@@ -196,3 +198,5 @@ int missingNumber(vector<int>& nums) {
     return ans;
 }
 ```
+
+Alternate approach : Math logic

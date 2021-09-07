@@ -2,7 +2,7 @@
 
 <br>
 
-## Easy
+## @ Basic Bits
 
 #### 1. Power of Two
 
@@ -106,5 +106,27 @@ vector<int> countBits(int n) {
     }
 
     return res;
+}
+```
+
+<br>
+
+## @ Problems on XOR
+
+#### 1. Single Number
+Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+```cpp
+
+Time: O(N)
+Space: O(1) 
+
+int singleNumber(vector<int>& nums) {
+    int ans = 0;
+
+    for(int num : nums)
+        ans = ans xor num;
+
+    return ans;
 }
 ```

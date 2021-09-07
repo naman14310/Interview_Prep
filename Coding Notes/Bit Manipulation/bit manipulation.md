@@ -25,7 +25,17 @@ bool isPowerOfTwo(int n) {
 
 <br>
 
-#### 2. Hamming Distance
+#### 2. Power of Four
+
+```cpp
+bool isPowerOfFour(int n) {
+    return n>0 and (n&(n-1))==0 and (n-1)%3==0;
+}
+```
+
+<br>
+
+#### 3. Hamming Distance
 The Hamming distance between two integers is the number of positions at which the corresponding bits are different. Given two integers x and y, return the Hamming distance between them.
 
 ```cpp
@@ -48,7 +58,7 @@ int hammingDistance(int x, int y) {
 
 <br>
 
-#### 3. Binary Number with Alternating Bits
+#### 4. Binary Number with Alternating Bits
 Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
 
 ```cpp
@@ -69,7 +79,7 @@ bool hasAlternatingBits(int n) {
 
 <br>
 
-#### 4. Counting Bits
+#### 5. Counting Bits
 Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
 Input: n = 5
@@ -132,7 +142,7 @@ vector<int> countBits(int n) {
 
 <br>
 
-#### 5. Number Complement
+#### 6. Number Complement
 The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation. Given an integer num, return its complement.
 
 ```cpp

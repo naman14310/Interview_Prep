@@ -48,7 +48,28 @@ int hammingDistance(int x, int y) {
 
 <br>
 
-#### 3. Counting Bits
+#### 3. Binary Number with Alternating Bits
+Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
+
+```cpp
+bool hasAlternatingBits(int n) {
+    int prev = -1;
+
+    while(n>0){
+        int bit = n&1;
+        if(bit==prev) return false;
+
+        prev = bit;
+        n>>=1;
+    }
+
+    return true;
+}
+```
+
+<br>
+
+#### 4. Counting Bits
 Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
 Input: n = 5
@@ -111,7 +132,7 @@ vector<int> countBits(int n) {
 
 <br>
 
-#### 4. Number Complement
+#### 5. Number Complement
 The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation. Given an integer num, return its complement.
 
 ```cpp

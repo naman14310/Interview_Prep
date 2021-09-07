@@ -173,3 +173,26 @@ int singleNumber(vector<int>& nums) {
     return ans;
 }
 ```
+
+#### 2. Missing Number
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+Input: nums = [9,6,4,2,3,5,7,0,1]
+
+Output: 8
+
+Hint: Apply XOR operation to both the index and value of the array. In a complete array with no missing numbers, the index and value should be perfectly corresponding (nums[index] = index), so in a missing array, what left finally is the missing number.
+
+```cpp
+int missingNumber(vector<int>& nums) {
+    int n = nums.size();
+    int ans = n;            // --> initialised with n so that it will act as an index for number n in [0,n]
+
+    for(int i=0; i<n; i++){
+        ans = ans xor i;
+        ans = ans xor nums[i];
+    }
+
+    return ans;
+}
+```

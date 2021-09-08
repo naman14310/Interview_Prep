@@ -76,19 +76,7 @@ string checkOddEven(int n){
 
 <br>
 
-### 2. Swap two numbers
-
-```cpp
-void swap(int & a, int & b){
-    a = a xor b;
-    b = a xor b;
-    a = a xor b;
-}
-```
-
-<br>
-
-### 3. Get/Set/Clear ith bits
+### 2. Get/Set/Clear ith bits
 
 ```cpp
 int get_ith_bit(int n, int i){
@@ -117,7 +105,7 @@ int clear_ith_bit(int n, int i){
 
 <br>
 
-### 4. Count Set Bits
+### 3. Count Set Bits
 
 **Log(n) approach**
 
@@ -151,7 +139,7 @@ int countSetBits(int num){
 
 <br>
 
-### 5. Hamming Distance
+### 4. Hamming Distance
 The Hamming distance between two integers is the number of positions at which the corresponding bits are different. Given two integers a and b, return the Hamming distance between them.
 
 Hint: Compute xor of both and cnt number of 1's.
@@ -165,7 +153,7 @@ int number_of_changed_bits(int a, int b){
 
 <br>
 
-### 6. Power of Two
+### 5. Power of Two
 
 Hint: If a number is power of 2 then it has only 1 set bit in its binary representation
 
@@ -195,7 +183,7 @@ bool isPowerOfTwo(int n) {
 
 <br>
 
-### 7. Power of Four
+### 6. Power of Four
 
 ```cpp
 bool isPowerOfFour(int n) {
@@ -205,7 +193,7 @@ bool isPowerOfFour(int n) {
 
 <br>
 
-### 8. Binary Number with Alternating Bits
+### 7. Binary Number with Alternating Bits
 Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
 
 ```cpp
@@ -226,7 +214,7 @@ bool hasAlternatingBits(int n) {
 
 <br>
 
-### 9. Counting Bits
+### 8. Counting Bits
 Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
 Input: n = 5
@@ -289,7 +277,7 @@ vector<int> countBits(int n) {
 
 <br>
 
-### 10. Number Complement
+### 9. Number Complement
 The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation. Given an integer num, return its complement.
 
 ```cpp
@@ -314,7 +302,37 @@ int findComplement(int num) {
 
 ## @ Problems on XOR
 
-### 1. Single Number
+Properties of xor:
+1. n xor 0 = n
+2. n xor n = 0
+
+<br>
+
+### 1. Swap two numbers
+
+```cpp
+void swap(int & a, int & b){
+    a = a xor b;
+    b = a xor b;
+    a = a xor b;
+}
+```
+
+<br>
+
+### 2. Toggle ith bit of Binary Number
+
+```cpp
+void toggle(int n, int i){
+     int mask = 1<<i;
+     n = n xor mask;
+     return n;
+}
+```
+
+<br>
+
+### 3. Single Number
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
 
 ```cpp
@@ -334,7 +352,7 @@ int singleNumber(vector<int>& nums) {
 
 <br>
 
-### 2. Missing Number
+### 4. Missing Number
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
 Input: nums = [9,6,4,2,3,5,7,0,1]
@@ -361,7 +379,7 @@ Alternate approach : Math logic
 
 <br>
 
-### 3. XOR Queries of a Subarray
+### 5. XOR Queries of a Subarray
 Given the array arr of positive integers and the array queries where queries[i] = [Li, Ri], for each query i compute the XOR of elements from Li to Ri (that is, arr[Li] xor arr[Li+1] xor ... xor arr[Ri] ). Return an array containing the result for the given queries.
 
 Input: arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]

@@ -14,7 +14,7 @@ Note: The left shift and right shift operators should not be used for negative n
 
 <br>
 
-**Significance of 2's complement**
+### Significance of 2's complement
 
 It is used to represent negative binary number. For eg: -5 is 2's complement of 5 in binary world.
 
@@ -32,7 +32,7 @@ Binary representation of 5  =   00000000000000000000000000000101
 
 <br>
 
-**Addition/Subtraction of Binary Numbers**
+### Addition/Subtraction of Binary Numbers
 
 ```
 Addition:
@@ -56,11 +56,120 @@ Hence, 00000000000000000000000000001100
 
 <br>
 
+### Some Tricks
+1. n & (n-1) will update least significant set bit (rightmost 1) to 0
+
+<br>
+
+
 ## @ Basic Bits
 
-#### 1. Power of Two
+
+### 1. Check Odd-Even
+
+```cpp
+string checkOddEven(int n){
+    if(n&1) return "odd";
+    else return "even";
+}
+```
+
+<br>
+
+### 2. Swap two numbers
+
+```cpp
+void swap(int & a, int & b){
+    a = a xor b;
+    b = a xor b;
+    a = a xor b;
+}
+```
+
+<br>
+
+### 3. Get/Set/Clear ith bits
+
+```cpp
+int get_ith_bit(int n, int i){
+    int mask = 1<<i;
+
+    if(n&mask)
+        return 1;
+    else
+        return 0; 
+}
+
+
+int set_ith_bit(int n, int i){
+    int mask = 1<<i;
+    n = n | mask;
+    return n;
+} 
+
+
+int clear_ith_bit(int n, int i){
+    int mask = ~(1<<i);
+    n = n & mask;
+    return n;
+} 
+```
+
+<br>
+
+### 4. Count Set Bits
+
+**Log(n) approach**
+
+```cpp
+int countSetBits(int num){
+    int cnt = 0;
+
+    while(num>0){ 
+        cnt += num&1;
+        num>>=1;
+    }
+
+    return cnt;
+}
+```
+
+**Optimized approach**
+
+```cpp
+int countSetBits(int num){
+   int cnt = 0;
+
+   while(num>0){ 
+       cnt ++;
+       num = num & (num-1);   // --> It will update righmost 1 to 0 in each iteration
+   }
+
+   return cnt;
+}
+```
+
+<br>
+
+### 5. Hamming Distance
+The Hamming distance between two integers is the number of positions at which the corresponding bits are different. Given two integers a and b, return the Hamming distance between them.
+
+Hint: Compute xor of both and cnt number of 1's.
+
+```cpp
+int number_of_changed_bits(int a, int b){
+    int n = a xor b;
+    return countSetBits(n);
+}
+```
+
+<br>
+
+### 6. Power of Two
 
 Hint: If a number is power of 2 then it has only 1 set bit in its binary representation
+
+**Log(n) approach**
 
 ```cpp
 bool isPowerOfTwo(int n) {
@@ -68,8 +177,7 @@ bool isPowerOfTwo(int n) {
 
     int cnt = 0;  
     while(n){
-        if(n&1)
-            cnt++;
+        if(n&1) cnt++;
         n>>=1;
     }
 
@@ -77,9 +185,17 @@ bool isPowerOfTwo(int n) {
 }
 ```
 
+**O(1) approach**
+
+```cpp
+bool isPowerOfTwo(int n) {
+   return n>0 and ((n & (n-1)) == 0);
+}
+```
+
 <br>
 
-#### 2. Power of Four
+### 7. Power of Four
 
 ```cpp
 bool isPowerOfFour(int n) {
@@ -89,30 +205,7 @@ bool isPowerOfFour(int n) {
 
 <br>
 
-#### 3. Hamming Distance
-The Hamming distance between two integers is the number of positions at which the corresponding bits are different. Given two integers x and y, return the Hamming distance between them.
-
-```cpp
-int hammingDistance(int x, int y) {
-    int cnt = 0;
-
-    while(x>0 or y>0){
-        int bit_x = x&1;
-        int bit_y = y&1;
-
-        cnt += bit_x xor bit_y;
-
-        x>>=1;
-        y>>=1;
-    }
-
-    return cnt;
-}
-```
-
-<br>
-
-#### 4. Binary Number with Alternating Bits
+### 8. Binary Number with Alternating Bits
 Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
 
 ```cpp
@@ -133,7 +226,7 @@ bool hasAlternatingBits(int n) {
 
 <br>
 
-#### 5. Counting Bits
+### 9. Counting Bits
 Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
 Input: n = 5
@@ -196,7 +289,7 @@ vector<int> countBits(int n) {
 
 <br>
 
-#### 6. Number Complement
+### 10. Number Complement
 The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation. Given an integer num, return its complement.
 
 ```cpp
@@ -218,9 +311,10 @@ int findComplement(int num) {
 
 <br>
 
+
 ## @ Problems on XOR
 
-#### 1. Single Number
+### 1. Single Number
 Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
 
 ```cpp
@@ -240,7 +334,7 @@ int singleNumber(vector<int>& nums) {
 
 <br>
 
-#### 2. Missing Number
+### 2. Missing Number
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
 Input: nums = [9,6,4,2,3,5,7,0,1]
@@ -267,7 +361,7 @@ Alternate approach : Math logic
 
 <br>
 
-#### 3. XOR Queries of a Subarray
+### 3. XOR Queries of a Subarray
 Given the array arr of positive integers and the array queries where queries[i] = [Li, Ri], for each query i compute the XOR of elements from Li to Ri (that is, arr[Li] xor arr[Li+1] xor ... xor arr[Ri] ). Return an array containing the result for the given queries.
 
 Input: arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]
@@ -302,45 +396,3 @@ vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
 }
 ```
 
-<br>
-
-
-## @ Problems on Bitmask
-
-#### 1. Maximum Product of Word Lengths
-Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. If no such two words exist, return 0.
-
-Input: words = ["abcw","baz","foo","bar","xtfn","abcdef"]
-
-Output: 16
-
-```cpp
-bool check(vector<bool> & v1, vector<bool> & v2){
-    for(int i=0; i<26; i++){
-        if(v1[i] && v2[i]) return false;
-    }
-    return true;
-}    
-
-int maxProduct(vector<string>& words) {
-    vector<vector<bool>> v;         // --> It contains bitmask for every word
-    unsigned long ans = 0;
-
-    for(auto w : words){
-        vector<bool> temp (26, false);
-        for(auto ch : w)
-            temp[ch-'a'] = true;
-        
-        v.push_back(temp);
-    }
-
-    for(int i=0; i<words.size(); i++){
-        for(int j=i+1; j<words.size(); j++){
-            if(check(v[i], v[j]))
-                ans = max(ans, words[i].size()*words[j].size());
-        }
-    }
-
-    return ans;
-}
-```

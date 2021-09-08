@@ -16,7 +16,43 @@ Note: The left shift and right shift operators should not be used for negative n
 
 **Significance of 2's complement**
 
-It is used to represent negative binary number.
+It is used to represent negative binary number. For eg: -5 is 2's complement of 5 in binary world.
+
+Steps to find 2's complement of a number:
+1. Invert all bits (by ~ operator)
+2. Add 1 to it
+
+Eg: 2's complement of 5 will be
+
+```
+Binary representation of 5  =   00000000000000000000000000000101
+1's complement of 5         =   11111111111111111111111111111010  (after inverting bits using ~)
+2's complement of 5 (or -5) =   11111111111111111111111111111011  (after adding 1 to 1's complement)
+```
+
+<br>
+
+**Addition/Subtraction of Binary Numbers**
+
+```
+Addition:
+
+1 + 0 = 1
+0 + 0 = 0
+1 + 1 = 10 (where 1 is carry)
+1 + 1 + 1 = 11 (where 1 is carry)
+
+Subtraction:
+
+We do not have any direct subtraction operation in binary system. We just add negative numbers.
+
+For eg: 12-5 = 12 + (-5) = 12 + 2's complement of (5)
+
+Hence, 00000000000000000000000000001100
+     + 11111111111111111111111111111011 
+      ----------------------------------
+       00000000000000000000000000000111  (it is equals to 12-5 = 7)       
+```
 
 <br>
 

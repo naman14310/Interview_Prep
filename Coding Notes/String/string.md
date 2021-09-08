@@ -457,6 +457,48 @@ int minDistance(string word1, string word2) {
 
 <br>
 
+#### 3. Maximum Product of Word Lengths
+Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. If no such two words exist, return 0.
+
+Input: words = ["abcw","baz","foo","bar","xtfn","abcdef"]
+
+Output: 16
+
+Hint: Use bitmasking for checking common letters in two words.
+
+```cpp
+bool check(vector<bool> & v1, vector<bool> & v2){
+    for(int i=0; i<26; i++){
+        if(v1[i] && v2[i]) return false;
+    }
+    return true;
+}    
+
+int maxProduct(vector<string>& words) {
+    vector<vector<bool>> v;         // --> It contains bitmask for every word
+    unsigned long ans = 0;
+
+    for(auto w : words){
+        vector<bool> temp (26, false);
+        for(auto ch : w)
+            temp[ch-'a'] = true;
+        
+        v.push_back(temp);
+    }
+
+    for(int i=0; i<words.size(); i++){
+        for(int j=i+1; j<words.size(); j++){
+            if(check(v[i], v[j]))
+                ans = max(ans, words[i].size()*words[j].size());
+        }
+    }
+
+    return ans;
+}
+```
+
+<br>
+
 ## Hard
 
 #### 1. Orderly Queue

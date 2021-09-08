@@ -303,8 +303,8 @@ int findComplement(int num) {
 ## @ Problems on XOR
 
 Properties of xor:
-1. n xor 0 = n
-2. n xor n = 0
+1. n ^ 0 = n
+2. n ^ n = 0
 
 <br>
 

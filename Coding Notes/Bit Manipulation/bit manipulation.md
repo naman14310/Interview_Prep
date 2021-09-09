@@ -18,7 +18,7 @@ Note: The left shift and right shift operators should not be used for negative n
 
 It is used to represent negative binary number. For eg: -5 is 2's complement of 5 in binary world.
 
-Steps to find 2's complement of a number:
+Steps:
 1. Invert all bits (by ~ operator)
 2. Add 1 to it
 

@@ -382,7 +382,49 @@ int singleNumber(vector<int>& nums){
 
 <br>
 
-### 5. Missing Number
+### 5. Single Number II (Tricky)
+Given an integer array nums where every element appears three times except for one, which appears exactly once. Find the single element and return it.
+
+Input: nums = [0,1,0,1,0,1,99]
+
+Output: 99
+
+Hint: Store freq of bits at every pos for all numbers. Then use % to find which positions have extra bits. 
+
+```cpp
+int singleNumber(vector<int>& nums) {
+   vector<int> bit_freq (32, 0);
+   int ans = 0;
+
+   /* Storing freq of bits at each positions for all numbers */
+
+   for(int n : nums){
+       int j=31;       // --> will iterate on bit_freq vector in reverse
+
+       for(int i=0; i<32; i++){
+           bit_freq[j] += n&1;
+
+           n>>=1;
+           j--;
+       }
+   }
+
+   /* If freq at any pos is not in multiple of 3, then that bit is set for a single occurring number */  
+
+   for(int i=0; i<32; i++){
+       int remaining_number_bit = bit_freq[i] % 3;
+
+       ans<<=1;
+       ans = ans | remaining_number_bit;
+   }
+
+   return ans;
+}
+```
+
+<br>
+
+### 6. Missing Number
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
 Input: nums = [9,6,4,2,3,5,7,0,1]
@@ -409,7 +451,7 @@ Alternate approach : Math logic
 
 <br>
 
-### 6. XOR Queries of a Subarray
+### 7. XOR Queries of a Subarray
 Given the array arr of positive integers and the array queries where queries[i] = [Li, Ri], for each query i compute the XOR of elements from Li to Ri (that is, arr[Li] xor arr[Li+1] xor ... xor arr[Ri] ). Return an array containing the result for the given queries.
 
 Input: arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]
@@ -446,7 +488,7 @@ vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries){
 
 <br>
 
-### 7. Equal Sum and XOR
+### 8. Equal Sum and XOR
 Given a positive integer n, find count of positive integers i such that 0 <= i <= n and n+i = n^i 
 
 Hint: Answer = pow(2, count of zero bits)

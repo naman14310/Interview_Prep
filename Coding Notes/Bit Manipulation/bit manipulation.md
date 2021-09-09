@@ -58,7 +58,7 @@ Hence, 00000000000000000000000000001100
 
 ### Some Tricks
 1. n & (n-1) will update least significant set bit (rightmost 1) to 0
-2. If n & (n+1) == 0 then are all bits of numbers are set
+2. If (n & (n+1) == 0) then all bits of numbers are set bits (i.e all 1's)
 
 <br>
 

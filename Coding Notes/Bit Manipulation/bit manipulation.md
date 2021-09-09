@@ -424,7 +424,64 @@ int singleNumber(vector<int>& nums) {
 
 <br>
 
-### 6. Missing Number
+### 6. Single Number III
+Given an integer array nums, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once. You can return the answer in any order.
+
+Input: nums = [1,2,1,3,2,5]
+
+Output: [3,5]
+
+```cpp
+int find_rightmost_set_bit (int num){
+   int pos = 0;
+
+   while(num!=0 and (num&1)==0){
+       num>>=1;
+       pos++;
+   }
+
+   return pos;
+}
+
+
+int get_bit (int num, int i){
+   int mask = 1<<i;
+   return (num & mask)!=0;
+}
+
+
+vector<int> singleNumber(vector<int>& nums) {
+   int res = 0;
+
+   /* compute xor of all numbers */
+
+   for(int num : nums)
+       res = res xor num; 
+
+   /* Find pos of rightmost set bit in xor res */
+
+   int pos = find_rightmost_set_bit(res);
+
+   /* Find xor of all numbers having set bit at position pos */
+
+   int res2 = 0;
+
+   for(int num : nums){
+       int bit = get_bit(num, pos);
+       if(bit==1) 
+           res2 = res2 xor num; 
+   }
+
+   int a = res xor res2;
+   int b = res xor a;
+
+   return {a,b};
+}
+```
+
+<br>
+
+### 7. Missing Number
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
 Input: nums = [9,6,4,2,3,5,7,0,1]
@@ -451,7 +508,7 @@ Alternate approach : Math logic
 
 <br>
 
-### 7. XOR Queries of a Subarray
+### 8. XOR Queries of a Subarray
 Given the array arr of positive integers and the array queries where queries[i] = [Li, Ri], for each query i compute the XOR of elements from Li to Ri (that is, arr[Li] xor arr[Li+1] xor ... xor arr[Ri] ). Return an array containing the result for the given queries.
 
 Input: arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]
@@ -488,7 +545,7 @@ vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries){
 
 <br>
 
-### 8. Equal Sum and XOR
+### 9. Equal Sum and XOR
 Given a positive integer n, find count of positive integers i such that 0 <= i <= n and n+i = n^i 
 
 Hint: Answer = pow(2, count of zero bits)

@@ -309,6 +309,39 @@ int findComplement(int num) {
 
 <br>
 
+### 10. Check If a String Contains All Binary Codes of Size K
+Given a binary string s and an integer k. Return true if every binary code of length k is a substring of s. Otherwise, return false.
+
+Input: s = "00110110", k = 2
+
+Output: true
+
+Hint: Insert all substrings of size k int unordered_set, and compare its size with pow(2, k)
+
+```cpp
+bool hasAllCodes(string s, int k) {
+   if(s.length()<k) return false;
+   
+   int i=0;
+   unordered_set<string> st;
+
+   while(i<s.length()-k+1){
+       string sb = s.substr(i, k);
+ 
+       if(st.find(sb)==st.end())
+           st.insert(sb);
+       i++;
+   }
+
+   if(st.size()==pow(2,k))
+       return true;
+
+   return false;
+}
+```
+
+<br>
+
 
 ## @ Problems on XOR
 

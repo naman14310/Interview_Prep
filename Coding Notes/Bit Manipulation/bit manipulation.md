@@ -342,6 +342,33 @@ bool hasAllCodes(string s, int k) {
 
 <br>
 
+### 11. Total Hamming Distance (Tricky)
+Given an integer array nums, return the sum of Hamming distances between all the pairs of the integers in nums.
+
+Hint: At every bit positions, find zero and one count. Then contribution of that position in hamming distance will be, zero_cnt * one_cnt.
+
+```cpp
+int totalHammingDistance(vector<int>& nums) {
+   int res = 0;
+
+   for(int i=0; i<32; i++){
+       int zero = 0, one = 0;
+       int mask = 1<<i;
+
+       for(int n : nums){
+           if(n&mask) one++;
+           else zero++;
+       }
+
+       res += one * zero;
+   }
+
+   return res;
+}
+```
+
+<br>
+
 
 ## @ Problems on XOR
 

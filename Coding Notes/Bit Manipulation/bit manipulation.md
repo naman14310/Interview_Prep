@@ -369,6 +369,23 @@ int totalHammingDistance(vector<int>& nums) {
 
 <br>
 
+### 12. Bitwise AND of Numbers Range
+Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.
+
+[Explaination](https://leetcode.com/problems/bitwise-and-of-numbers-range/discuss/56721/2-line-Solution(the-fastest)-with-detailed-explanation)
+
+```cpp
+int rangeBitwiseAnd(int left, int right) {
+
+   while(right>left and right!=0)
+       right = right & (right-1);
+
+   return right;
+}
+```
+
+<br>
+
 
 ## @ Problems on XOR
 

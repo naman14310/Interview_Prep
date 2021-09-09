@@ -1,6 +1,71 @@
 # Problems on Object Oriented Design (OOD)
 
-### 1. Design Twitter
+
+<br>
+
+### 1. Design HashMap
+
+Used Chaining for collision removal
+
+```cpp
+class MyHashMap {
+public:
+        
+    vector<list<pair<int,int>>> mp;         // --> vector of linked list of pair {key, values}
+    int size = 6151;                        // prime number for uniform distribution
+    
+    
+    MyHashMap() {    
+        mp.resize(size);
+    }
+    
+        
+    void put(int key, int value) {
+        int hash = key % size;
+        
+        for(auto &itr : mp[hash]){
+            if(itr.first==key){
+                itr.second = value;
+                return;
+            }
+        }
+        
+        mp[hash].push_back({key, value});
+    }
+    
+    
+    /* Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    
+    int get(int key) {
+        int hash = key % size;
+        
+        for(auto &itr : mp[hash]){
+            if(itr.first==key)
+                return itr.second;
+        }
+        
+        return -1;
+    }
+    
+    
+    /* Removes the mapping of the specified value key if this map contains a mapping for the key */
+    
+    void remove(int key) {
+        int hash = key % size;
+        
+        for(auto &itr : mp[hash]){
+            if(itr.first==key){
+                mp[hash].remove(itr);
+                return;   
+            }
+        }
+    }
+};
+```
+
+<br>
+
+### 2. Design Twitter
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed. Implement the Twitter class:
 

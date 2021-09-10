@@ -65,7 +65,52 @@ public:
 
 <br>
 
-### 2. Design Twitter
+### 2. Encode and Decode TinyURL
+
+```cpp
+class Solution {
+public:
+
+    unordered_map<string, string> long2short;
+    unordered_map<string, string> short2long;
+    
+    string pattern = "012345689abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    int counter = 0;
+    
+    
+    int getToken(){
+        return counter;
+    }
+    
+    
+    string encode(string long_url) {
+        int token = getToken();
+        string short_url = "http://tinyurl.com/";
+        
+        while(token>0){
+            short_url = to_string(pattern[token%62]) + short_url;
+            token = token/62;
+        }
+        
+        short_url = to_string(pattern[token%62]) + short_url;
+        
+        long2short[long_url] = short_url;
+        short2long[short_url] = long_url;
+        
+        counter++;
+        return short_url;
+    }
+
+ 
+    string decode(string short_url) {
+        return short2long[short_url];
+    }
+};
+```
+
+<br>
+
+### 3. Design Twitter
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed. Implement the Twitter class:
 

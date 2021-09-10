@@ -178,4 +178,9 @@ We can use cache for providing fast redirections to some frequently used URL's.
 2. We could simply increase the length of our range. That would mean that machines will approach the token service at a much lower frequency.
 
 
+<br>
 
+### References
+1. [Tushar Roy](https://www.youtube.com/watch?v=fMZMm_0ZhK4)
+2. [CodeKarle](https://www.codekarle.com/system-design/TinyUrl-system-design.html)
+3. [GFG](https://www.geeksforgeeks.org/system-design-url-shortening-service/)

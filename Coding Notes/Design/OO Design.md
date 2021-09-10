@@ -110,7 +110,60 @@ public:
 
 <br>
 
-### 3. Design Twitter
+### 3. Design Browser History
+You have a browser where you start on the homepage and you can visit another url, get back in the history number of steps or move forward in the history number of steps. Implement the BrowserHistory class:
+1. BrowserHistory(string homepage) Initializes the object with the homepage of the browser.
+2. void visit(string url) Visits url from the current page. It clears up all the forward history.
+3. string back(int steps) Move steps back in history. If you can only return x steps in the history and steps > x, you will return only x steps. Return the current url after moving back in history at most steps.
+4. string forward(int steps) Move steps forward in history. If you can only forward x steps in the history and steps > x, you will forward only x steps. Return the current url after forwarding in history at most steps.
+
+Hint: use two stacks
+
+![img](https://assets.leetcode.com/users/interviewrecipes/image_1591684752.png)
+
+```cpp
+class BrowserHistory {
+public:
+    
+    stack<string> bckstk;
+    stack<string> fwdstk;
+    
+    BrowserHistory(string homepage) {
+        bckstk.push(homepage);
+    }
+    
+    void visit(string url) {
+        bckstk.push(url);
+        fwdstk = stack<string>();
+    }
+    
+    string back(int steps) {
+        
+        while(bckstk.size()>1 and steps>0){
+            fwdstk.push(bckstk.top());
+            bckstk.pop();
+            steps--;
+        }
+        
+        return bckstk.top();
+    }
+    
+    string forward(int steps) {
+        
+        while(fwdstk.size()>0 and steps>0){
+            bckstk.push(fwdstk.top());
+            fwdstk.pop();
+            steps--;
+        }
+        
+        return bckstk.top();
+    }
+};
+```
+
+<br>
+
+### 4. Design Twitter
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed. Implement the Twitter class:
 

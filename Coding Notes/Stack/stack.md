@@ -157,7 +157,66 @@ int getMin() {
 
 <br>
 
-#### 3. Validate Stack Sequences
+#### 3. Design a Stack With Increment Operation (Tricky)
+Design a stack which supports the following operations. Implement the CustomStack class:
+
+1. CustomStack(int maxSize) Initializes the object with maxSize which is the maximum number of elements in the stack or do nothing if the stack reached the maxSize.
+2. void push(int x) Adds x to the top of the stack if the stack hasn't reached the maxSize.
+2. int pop() Pops and returns the top of stack or -1 if the stack is empty.
+3. void inc(int k, int val) Increments the bottom k elements of the stack by val. If there are less than k elements in the stack, just increment all the elements in the stack.
+
+[Explaination](https://leetcode.com/problems/design-a-stack-with-increment-operation/discuss/539716/JavaC%2B%2BPython-Lazy-increment-O(1))
+
+Hint: Lazy increment - Use an additional array to record the increment value. inc[i] means for all elements stack[0] ~ stack[i], we should plus inc[i] when popped from the stack. Then inc[i-1]+=inc[i], so that we can accumulate the increment inc[i] for the bottom elements and the following pops.
+
+```cpp
+class CustomStack {
+public:
+    
+    vector<int> inc;
+    stack<int> stk;
+    int MAXSIZE;
+    
+    CustomStack(int maxSize) {
+        inc = vector<int> (maxSize+1, 0);
+        MAXSIZE = maxSize;
+    }
+    
+    void push(int x) {
+        if(stk.size()==MAXSIZE) return;
+        stk.push(x);
+    }
+    
+    int pop() {
+        if(stk.empty()) return -1;
+        
+        int x = stk.top();
+        int idx = stk.size();
+        
+        stk.pop();
+        
+        if(inc[idx]>0){
+            x+=inc[idx];
+            inc[idx-1] += inc[idx];
+            inc[idx] = 0;
+        }
+        
+        return x;
+    }
+    
+    void increment(int k, int val) {
+
+        if(stk.size()>k)
+            inc[k] += val;
+        else
+            inc[stk.size()] += val;
+    }
+};
+```
+
+<br>
+
+#### 4. Validate Stack Sequences
 Given two sequences pushed and popped with distinct values, return true if and only if this could have been the result of a sequence of push and pop operations on an initially empty stack.
 
 ```cpp
@@ -188,7 +247,7 @@ bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
 
 <br>
 
-#### 4. Evaluate Reverse Polish Notation
+#### 5. Evaluate Reverse Polish Notation
 Input: tokens = ["4","13","5","/","+"]
 
 Output: 6
@@ -221,7 +280,7 @@ int evalRPN(vector<string>& tokens) {
 
 <br>
 
-#### 5. Insert at the end of Stack without using any Data structure
+#### 6. Insert at the end of Stack without using any Data structure
 
 Hint : Use recursion
 
@@ -241,7 +300,7 @@ void insert_at_end(stack<int> & stk, int val){
 
 <br>
 
-#### 6. Reverse a stack without using any Data structure
+#### 7. Reverse a stack without using any Data structure
 
 ```cpp
 void reverse_stack(stack<int> & stk){

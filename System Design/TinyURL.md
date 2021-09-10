@@ -29,7 +29,9 @@ It will provide short aliases redirecting to long URLs. A shortened version of u
 
 ### Capacity Estimation
 
-System will be read heavy. There will be more redirection requests (approx 10 times) then url-shortening requests. Assuming 200 QPS for shortning reqs and 1K QPS for redirection reqs, we need 15 TB of storage if we store each url for a span of 5 years with each object of size 500 bytes.
+System will be read heavy. There will be more redirection requests (approx 10 times) then url-shortening requests. 
+
+Assuming 200 QPS for shortning reqs and 1K QPS for redirection reqs, we need 15 TB of storage if we store each url for a span of 5 years with each object of size 500 bytes.
 
 <br>
 

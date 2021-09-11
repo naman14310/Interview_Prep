@@ -514,6 +514,43 @@ int minTaps(int n, vector<int>& ranges) {
 
 <br>
 
+### 7. Minimum Lights to Activate
+Given an array A of size N. The ith index of this array is 0 if the light at ith position is faulty otherwise it is 1. All the lights are of specific power B which if is placed at position X, it can light the corridor from [ X-B+1, X+B-1]. Return the minimum number of lights to be turned ON to light the whole corridor or -1 if the whole corridor cannot be lighted.
+
+Input: A = [ 0, 0, 1, 1, 1, 0, 0, 1], B = 3
+
+Output: 2
+
+```cpp
+int Solution::solve(vector<int> &A, int B) {
+    int n = A.size();
+    int reach = -1;
+    int bulb = 0;
+    int idx = 0;
+
+    while(reach<n-1){
+        int maxReach = reach;
+        
+        for(int i=idx; i<n; i++){
+            if(A[i]==1 and i-B+1 <= reach+1 and i+B-1 > maxReach){
+                maxReach = i+B-1;    
+                idx = i+1;    
+            }
+            else if (i-B+1 > reach) break;
+        }
+
+        if(maxReach==reach) return -1;
+
+        reach = maxReach;
+        bulb++;
+    }
+
+    return bulb;
+}
+```
+
+<br>
+
 
 ## @ Other Tricky problems
 

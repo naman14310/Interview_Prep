@@ -374,3 +374,48 @@ public:
 };
 ```
 
+<br>
+
+#### 9. Snapshot Array
+Implement a SnapshotArray that supports the following interface:
+1. SnapshotArray(int length) initializes an array-like data structure with the given length.  Initially, each element equals 0.
+2. void set(index, val) sets the element at the given index to be equal to val.
+3. int snap() takes a snapshot of the array and returns the snap_id: the total number of times we called snap() minus 1.
+4. int get(index, snap_id) returns the value at the given index, at the time we took the snapshot with the given snap_id
+
+```cpp
+class SnapshotArray {
+public:
+    
+    unordered_map<int, unordered_map<int, int>> mp;     // --> map of {index, map of {snap_id, val}}
+    int snap_id = 0;
+    
+    SnapshotArray(int length){
+    }
+    
+    /* Insert val with snap_id */
+    
+    void set(int index, int val) {
+        mp[index][snap_id] = val;
+    }
+    
+    /* Jst increment snap_id */
+    
+    int snap() {
+        snap_id++;
+        return snap_id-1;
+    }
+    
+    /* return val with asked snap_id or smaller snap_id (which is latest of all) */
+    
+    int get(int index, int snap_id) {
+        
+        for(int i=snap_id; i>=0; i--){
+            if(mp[index].find(i)!=mp[index].end())
+                return mp[index][i];
+        }
+        
+        return 0;
+    }
+};
+```

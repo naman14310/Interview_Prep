@@ -275,3 +275,35 @@ public:
     }
 };
 ```
+
+<br> #### 6. Time Based Key-Value Store
+Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
+
+```cpp
+class TimeMap {
+public:
+    
+    unordered_map<string, map<int,string> > mp;
+    
+    
+    TimeMap() {
+    }
+
+    
+    void set(string key, string value, int timestamp) {
+        mp[key].insert({timestamp, value});
+    }
+
+    
+    string get(string key, int timestamp) {
+        if(mp.find(key)==mp.end()) return "";
+
+        auto itr = mp[key].upper_bound(timestamp);
+        
+        if(itr==mp[key].begin())
+            return "";
+        else
+            return prev(itr)->second;           // --> prev will give the prev element of itr
+    }
+};
+```

@@ -65,7 +65,78 @@ public:
 
 <br>
 
-### 2. My Calendar I
+### 2. LRU Cache
+Design a data structure that follows the constraints of a Least Recently Used (LRU) cache. Implement the LRUCache class:
+1. LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+2. int get(int key) Return the value of the key if the key exists, otherwise return -1.
+3. void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+
+The functions get and put must each run in O(1) average time complexity.
+
+```cpp
+class LRUCache {
+public:
+    
+    unordered_map<int, list<pair<int,int>>::iterator> mp;
+    list<pair<int,int>> cache;
+    int freespace;
+    
+    
+    LRUCache(int capacity) {
+        freespace = capacity;
+    }
+    
+    
+    int get(int key) {
+        if(mp.find(key)==mp.end()) 
+            return -1;
+        
+        /* erase node from curr pos and append it to front */
+        
+        auto ptr = mp[key];
+        int val = (*ptr).second;
+        
+        cache.erase(ptr);
+        cache.push_front({key,val});
+        
+        mp[key] = cache.begin();
+        return val;
+    }
+    
+    
+    void put(int key, int value) {
+        
+        if(mp.find(key)!=mp.end()){
+            
+            /* erase node from curr pos */
+            
+            auto ptr = mp[key];
+            cache.erase(ptr);
+            freespace++;
+        }
+        else if(freespace==0){
+                
+            /* erase last node of linked_list */
+
+            int erased_key = cache.back().first;
+            mp.erase(erased_key);
+            cache.pop_back();
+            freespace++;
+        }
+        
+        /* insert node node at front of linked list */
+        
+        cache.push_front({key, value});
+        mp[key] = cache.begin();
+        freespace--;
+    }
+};
+```
+
+
+<br>
+
+### 3. My Calendar I
 You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a double booking. The event can be represented as a pair of integers start and end. Implement the MyCalendar class:
 
 1. MyCalendar() Initializes the calendar object.
@@ -118,7 +189,7 @@ public:
 
 <br>
 
-### 3. Encode and Decode TinyURL
+### 4. Encode and Decode TinyURL
 
 ```cpp
 class Solution {
@@ -163,7 +234,7 @@ public:
 
 <br>
 
-### 4. Design Browser History
+### 5. Design Browser History
 You have a browser where you start on the homepage and you can visit another url, get back in the history number of steps or move forward in the history number of steps. Implement the BrowserHistory class:
 1. BrowserHistory(string homepage) Initializes the object with the homepage of the browser.
 2. void visit(string url) Visits url from the current page. It clears up all the forward history.
@@ -216,7 +287,7 @@ public:
 
 <br>
 
-### 5. Design Twitter
+### 6. Design Twitter
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed. Implement the Twitter class:
 

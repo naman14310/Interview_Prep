@@ -276,7 +276,9 @@ public:
 };
 ```
 
-<br> #### 6. Time Based Key-Value Store
+<br> 
+
+#### 7. Time Based Key-Value Store
 Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
 
 ```cpp

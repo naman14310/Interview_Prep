@@ -230,3 +230,45 @@ int longestStrChain(vector<string>& words) {
     return longest_chain;
 }
 ```
+
+<br>
+
+#### 6. Implement Magic Dictionary
+Design a data structure that is initialized with a list of different words. Provided a string, you should determine if you can change exactly one character in this string to match any word in the data structure.
+
+```cpp
+class MagicDictionary {
+public:
+    /** Initialize your data structure here. */
+    
+    unordered_map<int, unordered_set<string>> mp;
+    
+    MagicDictionary() {
+    }
+    
+    void buildDict(vector<string> dictionary) {
+        for(auto s : dictionary)
+            mp[s.length()].insert(s);
+    }
+    
+    bool search(string word) {
+        int len = word.length();
+        if(mp.find(len)==mp.end()) return false;
+        
+        for(int i=0; i<len; i++){
+            string temp = word;
+            
+            for(int j=0; j<26; j++){
+                if(word[i]=='a'+j) continue; 
+
+                temp[i] = 'a' + j;
+                                
+                if(mp[len].find(temp)!=mp[len].end()) 
+                    return true;   
+            }
+        }
+        
+        return false;
+    }
+};
+```

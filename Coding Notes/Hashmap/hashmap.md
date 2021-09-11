@@ -185,7 +185,7 @@ vector<vector<string> > Anagrams(vector<string>& string_list) {
 <br>
 
 #### 5. Longest String Chain
-You are given an array of words. wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB.For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
+You are given an array of words. wordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB. For example, "abc" is a predecessor of "abac", while "cba" is not a predecessor of "bcad".
 
 A word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a predecessor of word3, and so on. A single word is trivially a word chain with k == 1. Return the length of the longest possible word chain with words chosen from the given list of words.
 
@@ -193,7 +193,10 @@ Input: words = ["a","b","ba","bca","bda","bdca"]
 
 Output: 4
 
-Hint: Sort the input vector by string length and Iterate for all words from left to right. For every word, from every possible word by erasing all char at each index one by one, and found these word in map. Calculate the len of longest chain for curr word so far and insert it in the map.
+Approach: 
+1. Sort the input vector by string length and iterate for all words from left to right. 
+2. For every word, from every possible word by erasing all char at each index one by one, and found these word in map. 
+3. Calculate the len of longest chain for curr word so far and insert it in the map.
 
 ```cpp
 static bool comp (string & s1, string & s2){

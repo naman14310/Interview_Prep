@@ -309,3 +309,68 @@ public:
     }
 };
 ```
+
+<br>
+
+#### 8. Insert Delete GetRandom O(1) (Tricky)
+
+Approach: Use two data structures, a Hashmap and a vector. The Hashmap maps the values to their respective indices in the array.
+
+1. Insert Operation
+
+Insert new value to the end of vector and updating its index in the Hash Table.
+
+2. Remove Operation
+
+We will swap the value we want to remove with the last element of the array and then remove the last element of the array and erase it from hashmap. Also update indexes in hashmap.
+
+3. getRandom Operation
+
+Use C++ inbuilt rand() on the array.
+
+```cpp
+class RandomizedSet {
+public:
+    
+    vector<int> v;
+    unordered_map<int,int> mp;          // --> map of {val, index in array}
+    
+    RandomizedSet(){
+    }
+    
+    /* Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    
+    bool insert(int val) {
+        if(mp.find(val)!=mp.end()) return false;
+        
+        v.push_back(val);
+        mp[val] = v.size()-1;
+        
+        return true;
+    }
+    
+    /* Removes a value from the set. Returns true if the set contained the specified element. */
+    
+    bool remove(int val) {
+        if(mp.find(val)==mp.end()) return false;
+        
+        int idx1 = mp[val];
+        int idx2 = mp[v.back()];
+        
+        mp[v.back()] = idx1;
+        swap(v[idx1], v[idx2]);
+        
+        v.pop_back();
+        mp.erase(val);
+        
+        return true;
+    }
+    
+    /* Get a random element from the set. */
+    
+    int getRandom() {
+        return v[rand()%v.size()];
+    }
+};
+```
+

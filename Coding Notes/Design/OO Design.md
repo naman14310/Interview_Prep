@@ -133,10 +133,62 @@ public:
 };
 ```
 
+<br>
+
+### 3. Maximum Frequency Stack
+Design a stack-like data structure to push elements to the stack and pop the most frequent element from the stack. Implement the FreqStack class:
+1. FreqStack() constructs an empty frequency stack.
+2. void push(int val) pushes an integer val onto the top of the stack.
+3. int pop() removes and returns the most frequent element in the stack.
+
+If there is a tie for the most frequent element, the element closest to the stack's top is removed and returned.
+
+[Explaination](https://www.youtube.com/watch?v=0fRmVjxopiE)
+
+Approach:
+1. Create an unordered map of integers (freq) to store the frequency of each element.
+2. Create an unordered map of the stack (stk) to store the elements of the same frequency in the same stack. This is for tackling the "frequency tie" condition.
+3. Create a variable to keep a note of the current maximum frequency (maxfreq).
+
+```cpp
+class FreqStack {
+public:
+    
+    unordered_map<int, stack<int>> stk;        // --> map of {freq, stack of vals}
+    unordered_map<int,int> freq;               // --> map of {vals, freq}
+    int maxfreq;
+    
+    FreqStack() {
+        maxfreq = 0;
+    }
+    
+    
+    void push(int val) {
+        freq[val]++;
+        
+        if(freq[val]>maxfreq) 
+            maxfreq = freq[val];
+        
+        stk[freq[val]].push(val);
+    }
+    
+    
+    int pop() {
+        int val = stk[maxfreq].top();
+        stk[maxfreq].pop();
+        
+        if(stk[maxfreq].empty())
+            maxfreq--;
+        
+        freq[val]--;
+        return val;
+    }
+};
+```
 
 <br>
 
-### 3. My Calendar I
+### 4. My Calendar I
 You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a double booking. The event can be represented as a pair of integers start and end. Implement the MyCalendar class:
 
 1. MyCalendar() Initializes the calendar object.
@@ -189,7 +241,7 @@ public:
 
 <br>
 
-### 4. Encode and Decode TinyURL
+### 5. Encode and Decode TinyURL
 
 ```cpp
 class Solution {
@@ -234,7 +286,7 @@ public:
 
 <br>
 
-### 5. Design Browser History
+### 6. Design Browser History
 You have a browser where you start on the homepage and you can visit another url, get back in the history number of steps or move forward in the history number of steps. Implement the BrowserHistory class:
 1. BrowserHistory(string homepage) Initializes the object with the homepage of the browser.
 2. void visit(string url) Visits url from the current page. It clears up all the forward history.
@@ -287,7 +339,7 @@ public:
 
 <br>
 
-### 6. Design Twitter
+### 7. Design Twitter
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed. Implement the Twitter class:
 

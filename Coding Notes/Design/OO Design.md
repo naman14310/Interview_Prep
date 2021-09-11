@@ -65,7 +65,60 @@ public:
 
 <br>
 
-### 2. Encode and Decode TinyURL
+### 2. My Calendar I
+You are implementing a program to use as your calendar. We can add a new event if adding the event will not cause a double booking. The event can be represented as a pair of integers start and end. Implement the MyCalendar class:
+
+1. MyCalendar() Initializes the calendar object.
+2. boolean book(int start, int end) Returns true if the event can be added to the calendar successfully without causing a double booking.
+
+Hint: Use set to store all bookings in sorted order and use binary search.
+
+```cpp
+class MyCalendar {
+public:
+    set<pair<int,int>> s;
+    
+    MyCalendar() {
+    }
+    
+    bool book(int start, int end) {
+        
+        if(s.empty()){
+            s.insert({start, end});
+            return true;
+        }
+        
+        auto next = s.lower_bound({start, end});
+        
+        if(next==s.end()){
+            if((--next)->second<=start){
+                s.insert({start, end});
+                return true;
+            }
+            else return false;
+        }
+        else if(next==s.begin()){
+            if(next->first>=end){
+                s.insert({start, end});
+                return true;
+            }
+            else return false;
+        }
+        
+        else if(end<=next->first and start>=(--next)->second){
+            s.insert({start,end});
+            return true;
+        }
+        
+        else return false;
+            
+    }
+};
+```
+
+<br>
+
+### 3. Encode and Decode TinyURL
 
 ```cpp
 class Solution {
@@ -110,7 +163,7 @@ public:
 
 <br>
 
-### 3. Design Browser History
+### 4. Design Browser History
 You have a browser where you start on the homepage and you can visit another url, get back in the history number of steps or move forward in the history number of steps. Implement the BrowserHistory class:
 1. BrowserHistory(string homepage) Initializes the object with the homepage of the browser.
 2. void visit(string url) Visits url from the current page. It clears up all the forward history.
@@ -163,7 +216,7 @@ public:
 
 <br>
 
-### 4. Design Twitter
+### 5. Design Twitter
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user, and is able to see the 10 most recent tweets in the user's news feed. Implement the Twitter class:
 

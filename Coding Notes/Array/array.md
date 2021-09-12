@@ -121,7 +121,55 @@ vector<int> leastGreaterElement(vector<int> &arr) {
 
 <br>
 
-### 5. Find Pivot Index (Left sum == Right sum)
+### 5. Maximum Sum Triplet
+Given an array A containing N integers. You need to find the maximum sum of triplet ( Ai + Aj + Ak ) such that 0 <= i < j < k < N and Ai < Aj < Ak. If no such triplet exist return 0.
+
+Input: A = [2, 5, 3, 1, 4, 9]
+
+Output: 16
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+int Solution::solve(vector<int> &A) {
+    int n = A.size();
+    int ans = 0;
+    
+    /* precomputing rightMax for every index */
+
+    vector<int> rmax (n, -1);
+    int mx = A[n-1];
+
+    for(int i=n-2; i>=0; i--){
+        mx = max(mx, A[i]);
+        if(mx>A[i]) rmax[i] = mx;
+    }
+
+    /* Set will be used to find greatest number smaller then A[i] in left side */
+    
+    set<int> s;
+    s.insert(A[0]);
+
+    for(int i=1; i<n-1; i++){
+        auto lb = s.lower_bound(A[i]);
+
+        if(lb!=s.begin() and rmax[i]!=-1){
+            int l = *prev(lb);
+            int temp = l+A[i]+rmax[i];
+            ans = max(ans, temp);
+        }
+
+        s.insert(A[i]);
+    }
+    
+    return ans;
+}
+```
+
+<br>
+
+### 6. Find Pivot Index (Left sum == Right sum)
 Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
 
 Input: nums = [2,1,-1]
@@ -152,8 +200,7 @@ int pivotIndex(vector<int>& nums) {
 
 <br>
 
-
-### 6. Global and Local Inversions
+### 7. Global and Local Inversions
 You are given an integer array nums of length n which represents a permutation of all the integers in the range [0, n - 1]. 
 1. The number of global inversions is the number of the different pairs (i, j) where: 0 <= i < j < n and nums[i] > nums[j]
 2. The number of local inversions is the number of indices i where: 0 <= i < n - 1 and nums[i] > nums[i + 1]

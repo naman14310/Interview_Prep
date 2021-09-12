@@ -363,9 +363,7 @@ int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
 ## @ Range Queries
 
 ### 1. Corporate Flight Bookings
-There are n flights that are labeled from 1 to n. You are given an array of flight bookings bookings, where bookings[i] = [firsti, lasti, seatsi] represents a booking for flights firsti through lasti (inclusive) with seatsi seats reserved for each flight in the range.
-
-Return an array answer of length n, where answer[i] is the total number of seats reserved for flight i.
+There are n flights that are labeled from 1 to n. You are given an array of flight bookings bookings, where bookings[i] = [firsti, lasti, seatsi] represents a booking for flights firsti through lasti (inclusive) with seatsi seats reserved for each flight in the range. Return an array answer of length n, where answer[i] is the total number of seats reserved for flight i.
 
 Input: bookings = [[1,2,10],[2,3,20],[2,5,25]], n = 5
 

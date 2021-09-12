@@ -1,4 +1,4 @@
-# Problems on MCM Pattern
+# Problems on Matrix Chain Multiplication (MCM) Pattern
 
 Identifying Pattern:
 When we need to break a problem at different pos like palindrome partitioning, then that question follows MCM pattern.

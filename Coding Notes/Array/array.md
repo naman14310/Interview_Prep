@@ -555,29 +555,41 @@ int smallestRangeII(vector<int>& nums, int k) {
 
 <br>
 
-### 12. Sum of Absolute Differences in a Sorted Array (Prefix Sum)
-You are given an integer array nums sorted in non-decreasing order. Build and return an integer array result with the same length as nums such that result[i] is equal to the summation of absolute differences between nums[i] and all the other elements in the array.
+### 12. Flip String to Monotone Increasing
+A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly none). You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0. Return the minimum number of flips to make s monotone increasing.
 
-Hint: Calculate prefix sum. Find left sum and right sum for every index i and calculate results.
+Input: s = "00011000"
+
+Output: 2
+
+**Approach 1 : O(n) | O(n)**
+
+Precompute one cnt on left side of every index and zero cnt on right side of every index (including curr idx). Then number of flips on each index = cnt of one on left side of idx + cnt of zero on right side of idx (including idx)
+
+
+**Approach 2 : O(n) | O(1)**
+
+Precompute zeroCount of hole array. Then iterate from left to right and increment/decrement zeroCount and oneCount in each iteration. Update flips in every iteration.
 
 ```cpp
-vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
-    int n = nums.size();
-    vector<int> res(n, 0);
+int minFlipsMonoIncr(string & s) {
+    int n = s.length();
+    int zero_cnt = count(s.begin(), s.end(), '0');
 
-    vector<int> csum(n, 0);
-    csum[0] = nums[0];
-
-    for(int i=1; i<n; i++)
-        csum[i] = csum[i-1] + nums[i];
+    int one_cnt = 0;
+    int flips = zero_cnt;
 
     for(int i=0; i<n; i++){
-        int left = 0, right = 0;
-        left = csum[i];
-        right = csum[n-1] - csum[i];
-        res[i] = ((i+1)*nums[i] - left) + (right - (n-i-1)*nums[i]);   
+
+        if(s[i]=='1')
+            one_cnt++;
+        else
+            zero_cnt--;
+
+        flips = min(flips, one_cnt+zero_cnt);
     }
-    return res;
+
+    return flips;
 }
 ```
 

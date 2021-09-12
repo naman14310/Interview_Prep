@@ -170,7 +170,41 @@ int longestWPI(vector<int>& hours) {
 
 <br>
 
-### 4. Ways to Split Array Into Three Subarrays
+### 4. Partition Array Into Three Parts With Equal Sum 
+Given an array of integers arr, return true if we can partition the array into three non-empty parts with equal sums.
+
+Hint: Compute Prefix sum, iterate it and find sum, (2 * sum) and (3 * sum)
+
+```cpp
+bool canThreePartsEqualSum(vector<int>& arr) {
+    int sum = 0;
+    for(int i : arr) sum+=i;
+
+    if(sum%3!=0) return false;
+
+    sum = sum/3;
+    for(int i=1; i<arr.size(); i++)
+        arr[i] += arr[i-1]; 
+
+    bool firstfound=false, secondfound=false;
+    for(int i=0; i<arr.size(); i++){
+        if(!firstfound){
+            if(arr[i]==sum) firstfound = true;
+        }
+        else if(!secondfound){
+            if(arr[i]==sum*2) secondfound = true;
+        }
+        else{
+            if(arr[i]==sum*3) return true;
+        }
+    }
+    return false;
+}
+```
+
+<br>
+
+### 5. Ways to Split Array Into Three Subarrays
 A split of an integer array is good if:
 1. The array is split into three non-empty contiguous subarrays - named left, mid, right.
 2. The sum of the elements in left is less than or equal to the sum of the elements in mid, and the sum of the elements in mid is less than or equal to the sum of the elements in right.
@@ -294,7 +328,7 @@ int waysToSplit(vector<int>& nums) {
 
 <br>
 
-### 5. Maximum Sum of Two Non-Overlapping Subarrays
+### 6. Maximum Sum of Two Non-Overlapping Subarrays
 Given an array nums of non-negative integers, return the maximum sum of elements in two non-overlapping (contiguous) subarrays, which have lengths firstLen and secondLen. The firstLen-length subarray could occur before or after the secondLen-length subarray.
 
 Input: nums = [0,6,5,2,2,5,1,9,4], firstLen = 1, secondLen = 2

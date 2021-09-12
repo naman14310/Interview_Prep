@@ -222,6 +222,38 @@ bool isIdealPermutation(vector<int>& A) {
 
 <br>
 
+### 8. Max Min (In Minimum Comparisions)
+Given an array A of size N. You need to find the sum of Maximum and Minimum element in the given array. You should make minimum number of comparisons.
+
+Hint: Use Divide and Conquer and recurse for left and right half of array.
+
+```cpp
+
+pair<int,int> findMinMax (vector<int> & A, int start, int end){
+    if(start==end)
+        return {A[start], A[start]}; 
+
+    int mid = start+(end-start)/2;
+
+    auto left = findMinMax(A, start, mid);
+    auto right = findMinMax(A, mid+1, end);
+
+    int mn = min(left.first, right.first);
+    int mx = max(left.second, right.second);
+
+    return {mn, mx};
+}
+
+
+int Solution::solve(vector<int> &A) {
+    int n = A.size();
+    auto res = findMinMax(A, 0, n-1);
+    return res.first + res.second;
+}
+```
+
+<br>
+
 ## Medium
 
 ### 1. Product of Array Except Self

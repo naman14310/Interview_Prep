@@ -2,9 +2,166 @@
 
 <br>
 
-## Easy
+## @ Easy
 
-### 1. Duplicate Zeros
+### 1. Minimum Moves to Equal Array Elements II
+Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
+
+Hint: Convert each no. to median
+
+```cpp
+int minMoves2(vector<int>& nums) {
+    int n = nums.size();
+    sort(nums.begin(), nums.end());
+
+    int median = nums[n/2];
+    int ans = 0;
+    for(int i : nums)
+        ans += abs(i-median);
+
+    return ans;
+}
+```
+
+<br>
+
+### 2. Find Pivot Index (Left sum == Right sum)
+Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
+
+Input: nums = [2,1,-1]
+
+Output: 0
+
+Hint: Find totalSum and then start iterating from left to right computing lsum on the go. For each lsum compute rsum using (sum-lsum-nums[i]). If both lsum and rsum are equal return i.
+
+```cpp
+int pivotIndex(vector<int>& nums) {
+	int sum = 0;
+	for(int i : nums)
+		sum += i;
+
+	int lsum = 0;
+
+	for(int i=0; i<nums.size(); i++){
+		int rsum = sum-lsum-nums[i];
+
+		if(lsum==rsum) return i;
+
+		lsum += nums[i];
+	}
+
+	return -1;
+}
+```
+
+<br>
+
+### 3. Global and Local Inversions
+You are given an integer array nums of length n which represents a permutation of all the integers in the range [0, n - 1]. 
+1. The number of global inversions is the number of the different pairs (i, j) where: 0 <= i < j < n and nums[i] > nums[j]
+2. The number of local inversions is the number of indices i where: 0 <= i < n - 1 and nums[i] > nums[i + 1]
+
+Return true if the number of global inversions is equal to the number of local inversions.
+
+```cpp
+bool isIdealPermutation(vector<int>& A) {
+    bool flag = false;
+	
+    for(int i=0; i<A.size(); i++){
+        if(abs(A[i]-i)>1) 
+			return false;
+    }
+  
+    return true;
+}
+```
+
+<br>
+
+### 4. Max Min (In Minimum Comparisions)
+Given an array A of size N. You need to find the sum of Maximum and Minimum element in the given array. You should make minimum number of comparisons.
+
+Hint: Use Divide and Conquer and recurse for left and right half of array.
+
+```cpp
+
+pair<int,int> findMinMax (vector<int> & A, int start, int end){
+    if(start==end)
+        return {A[start], A[start]}; 
+
+    int mid = start+(end-start)/2;
+
+    auto left = findMinMax(A, start, mid);
+    auto right = findMinMax(A, mid+1, end);
+
+    int mn = min(left.first, right.first);
+    int mx = max(left.second, right.second);
+
+    return {mn, mx};
+}
+
+
+int Solution::solve(vector<int> &A) {
+    int n = A.size();
+    auto res = findMinMax(A, 0, n-1);
+    return res.first + res.second;
+}
+```
+
+<br>
+
+### 5. Rotate Array (Awesome 3 line reverse logic)
+
+```cpp
+/* ROTATE RIGHT */
+
+void rotate_right(vector<int>& nums, int k) {
+    k = k%nums.size();
+    reverse(nums.begin(), nums.end());
+    reverse(nums.begin(), nums.begin()+k);
+    reverse(nums.begin()+k, nums.end());
+}
+
+/* ROTATE LEFT */
+
+void rotate_left(vector<int>& nums, int k) {
+    k = k%nums.size();
+    k = nums.size()-k;
+    reverse(nums.begin(), nums.end());
+    reverse(nums.begin(), nums.begin()+k);
+    reverse(nums.begin()+k, nums.end());
+}
+
+```
+
+<br>
+
+### 6. Increasing Triplet Subsequence
+Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+
+Hint: Maintain two variables for storing smallest and second smallest elements so far.
+
+```cpp
+bool increasingTriplet(vector<int>& nums) {
+    int len = nums.size();
+    if(len<3) return false;
+
+    int n1 = nums[0], n2 = INT_MAX;
+    for(int i=1; i<len; i++){
+        if(nums[i]<=n1) 
+            n1 = nums[i];
+        else if(nums[i]<=n2) 
+            n2 = nums[i];
+        else 
+            return true;
+    }
+    return false;
+}
+```
+
+<br>
+
+### 7. Duplicate Zeros
 Given a fixed length array arr of integers, duplicate each occurrence of zero, shifting the remaining elements to the right. Note that elements beyond the length of the original array are not written.
 
 Hint: Start shifting from back
@@ -36,62 +193,10 @@ void duplicateZeros(vector<int>& arr) {
 
 <br>
 
-### 2. Minimum Moves to Equal Array Elements II
-Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.
 
-Hint: Convert each no. to median
+## @ Medium
 
-```cpp
-int minMoves2(vector<int>& nums) {
-    int n = nums.size();
-    sort(nums.begin(), nums.end());
-
-    int median = nums[n/2];
-    int ans = 0;
-    for(int i : nums)
-        ans += abs(i-median);
-
-    return ans;
-}
-```
-
-<br>
-
-### 3. Partition Array Into Three Parts With Equal Sum (Prefix Sum)
-Given an array of integers arr, return true if we can partition the array into three non-empty parts with equal sums.
-
-Hint: Compute Prefix sum, iterate it and find sum, (2 * sum) and (3 * sum)
-
-```cpp
-bool canThreePartsEqualSum(vector<int>& arr) {
-    int sum = 0;
-    for(int i : arr) sum+=i;
-
-    if(sum%3!=0) return false;
-
-    sum = sum/3;
-    for(int i=1; i<arr.size(); i++)
-        arr[i] += arr[i-1]; 
-
-    bool firstfound=false, secondfound=false;
-    for(int i=0; i<arr.size(); i++){
-        if(!firstfound){
-            if(arr[i]==sum) firstfound = true;
-        }
-        else if(!secondfound){
-            if(arr[i]==sum*2) secondfound = true;
-        }
-        else{
-            if(arr[i]==sum*3) return true;
-        }
-    }
-    return false;
-}
-```
-
-<br>
-
-### 4. Least Greater Element
+### 1. Least Greater Element on Right
 Replace every element with the least greater element on its right
 
 Hint: Iterate from right to left and use Set data structure
@@ -121,12 +226,14 @@ vector<int> leastGreaterElement(vector<int> &arr) {
 
 <br>
 
-### 5. Maximum Sum Triplet
+### 2. Maximum Sum Triplet
 Given an array A containing N integers. You need to find the maximum sum of triplet ( Ai + Aj + Ak ) such that 0 <= i < j < k < N and Ai < Aj < Ak. If no such triplet exist return 0.
 
 Input: A = [2, 5, 3, 1, 4, 9]
 
 Output: 16
+
+Hint: Assume each element as middle element of triplet and try to maximize the sum using some pre-computation of max values on right side and binary search on left side.
 
 ```cpp
 #include<bits/stdc++.h>
@@ -169,94 +276,7 @@ int Solution::solve(vector<int> &A) {
 
 <br>
 
-### 6. Find Pivot Index (Left sum == Right sum)
-Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
-
-Input: nums = [2,1,-1]
-
-Output: 0
-
-Hint: Find totalSum and then start iterating from left to right computing lsum on the go. For each lsum compute rsum using (sum-lsum-nums[i]). If both lsum and rsum are equal return i.
-
-```cpp
-int pivotIndex(vector<int>& nums) {
-	int sum = 0;
-	for(int i : nums)
-		sum += i;
-
-	int lsum = 0;
-
-	for(int i=0; i<nums.size(); i++){
-		int rsum = sum-lsum-nums[i];
-
-		if(lsum==rsum) return i;
-
-		lsum += nums[i];
-	}
-
-	return -1;
-}
-```
-
-<br>
-
-### 7. Global and Local Inversions
-You are given an integer array nums of length n which represents a permutation of all the integers in the range [0, n - 1]. 
-1. The number of global inversions is the number of the different pairs (i, j) where: 0 <= i < j < n and nums[i] > nums[j]
-2. The number of local inversions is the number of indices i where: 0 <= i < n - 1 and nums[i] > nums[i + 1]
-
-Return true if the number of global inversions is equal to the number of local inversions.
-
-```cpp
-bool isIdealPermutation(vector<int>& A) {
-    bool flag = false;
-	
-    for(int i=0; i<A.size(); i++){
-        if(abs(A[i]-i)>1) 
-			return false;
-    }
-  
-    return true;
-}
-```
-
-<br>
-
-### 8. Max Min (In Minimum Comparisions)
-Given an array A of size N. You need to find the sum of Maximum and Minimum element in the given array. You should make minimum number of comparisons.
-
-Hint: Use Divide and Conquer and recurse for left and right half of array.
-
-```cpp
-
-pair<int,int> findMinMax (vector<int> & A, int start, int end){
-    if(start==end)
-        return {A[start], A[start]}; 
-
-    int mid = start+(end-start)/2;
-
-    auto left = findMinMax(A, start, mid);
-    auto right = findMinMax(A, mid+1, end);
-
-    int mn = min(left.first, right.first);
-    int mx = max(left.second, right.second);
-
-    return {mn, mx};
-}
-
-
-int Solution::solve(vector<int> &A) {
-    int n = A.size();
-    auto res = findMinMax(A, 0, n-1);
-    return res.first + res.second;
-}
-```
-
-<br>
-
-## Medium
-
-### 1. Product of Array Except Self
+### 3. Product of Array Except Self
 Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
 
 Hint: Create left and right array to store cummulative product of all left elements and right elements in array.
@@ -282,54 +302,7 @@ vector<int> productExceptSelf(vector<int>& nums) {
 
 <br>
 
-### 2. Beautiful Arrangement II
-Given two integers n and k, construct a list answer that contains n different positive integers ranging from 1 to n and obeys the following requirement: Suppose this list is answer = [a1, a2, a3, ... , an], then the list [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] has exactly k distinct integers.
-
-Hint: Fill in cyclic pattern
-
-```cpp
-vector<int> constructArray(int n, int k) {
-    vector<int> res;
-    int i=1, j=i+k;
-
-    while(i<=j){
-        res.push_back(i);
-        i++;
-        if(i>j) break;
-        res.push_back(j);
-        j--;
-    }
-
-    for(int itr=k+2; itr<=n; itr++)
-        res.push_back(itr);
-   
-    return res;
-}
-```
-
-<br>
-
-### 3. Pairs of Songs With Total Durations Divisible by 60
-You are given a list of songs where the ith song has a duration of time[i] seconds. Return the number of pairs of songs for which their total duration in seconds is divisible by 60. Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0.
-
-Hint: Play with remainders
-
-```cpp
-int numPairsDivisibleBy60(vector<int>& time) {
-    vector<int> rem(60, 0);
-    int ans = 0;
-    for(int i=0; i<time.size(); i++){
-        int tm = time[i];
-        ans+= rem[(60-tm%60)%60];
-        rem[tm%60]++;
-    }
-    return ans;
-}
-```
-
-<br>
-
-### 5. Sort Colors (Dutch National Flag algo - 3 pointer solution)
+### 4. Sort Colors (Dutch National Flag algo - 3 pointer solution)
 Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
 
 Hint: Settle 0 at the left end, 2 at the right end => 1 will automatically settle at middle.
@@ -356,71 +329,7 @@ void sortColors(vector<int>& nums) {
 
 <br>
 
-### 6. Array Nesting
-You are given an integer array nums of length n where nums is a permutation of the numbers in the range [0, n - 1]. You should build a set s[k] = {nums[k], nums[nums[k]], nums[nums[nums[k]]], ... } subjected to the following rule:
-1. The first element in s[k] starts with the selection of the element nums[k] of index = k.
-2. The next element in s[k] should be nums[nums[k]], and then nums[nums[nums[k]]], and so on.
-3. We stop adding right before a duplicate element occurs in s[k].
-
-Return the longest length of a set s[k].
-
-Input: nums = [5,4,0,3,1,6,2]
-
-Hint: Update vis index in nums to -1 and avoid using extra array for vis purpose.
-
-Output: 4
-
-```cpp
-int traverse (vector<int> & nums, int val){
-	if(nums[val]==-1) return 0;
-
-	int next = nums[val];
-	nums[val]=-1;
-
-	return 1 + traverse(nums, next);
-}
-
-int arrayNesting (vector<int>& nums){
-	int ans = 1;
-
-	for(int i=0; i<nums.size(); i++){
-		if(nums[i]!=-1)
-			ans = max(ans, traverse(nums, i));
-	}
-
-	return ans;
-}
-```
-
-<br>
-
-### 7. Rotate Array (Awesome 3 line reverse logic)
-
-```cpp
-/* ROTATE RIGHT */
-
-void rotate_right(vector<int>& nums, int k) {
-    k = k%nums.size();
-    reverse(nums.begin(), nums.end());
-    reverse(nums.begin(), nums.begin()+k);
-    reverse(nums.begin()+k, nums.end());
-}
-
-/* ROTATE LEFT */
-
-void rotate_left(vector<int>& nums, int k) {
-    k = k%nums.size();
-    k = nums.size()-k;
-    reverse(nums.begin(), nums.end());
-    reverse(nums.begin(), nums.begin()+k);
-    reverse(nums.begin()+k, nums.end());
-}
-
-```
-
-<br>
-
-### 8. Next Permutation
+### 5. Next Permutation
 
 Approach:
 1. Iterate from right to left and find rightmost flipped bit (i.e. nums[i]>nums[i-1]) and assign its index to pos
@@ -454,99 +363,58 @@ void nextPermutation(vector<int>& nums) {
 
 <br>
 
-### 9. 4Sum II
-Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that: 0 <= i, j, k, l < n and nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+### 6. Find Permutation
+Given a positive integer n and a string s consisting only of letters D or I, you have to find any permutation of first n positive integer that satisfy the given input string. D means the next number is smaller, while I means the next number is greater.
 
-Hint: Use two hashmaps for storing sum of A[i]+B[i] and C[i]+D[i]
+Input 1: n = 3, s = ID
+
+Return: [1, 3, 2]
+
+Hint: If next number in greater ('I') then full current smallest possible and if next number is smaller ('D') then fill current largest possible.
 
 ```cpp
-int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
-    int len = A.size();
-    int count = 0; 
-    unordered_map<int, int> mp1;
-    unordered_map<int, int> mp2;
-
-    for(int i=0; i<len; i++){
-        for(int j=0; j<len; j++){
-			mp1[A[i]+B[j]]++;
+vector<int> Solution::findPerm(const string A, int B) {
+    int curr_smallest = 1;
+    int curr_largest = B;
+    vector<int> ans;
+	
+    for(int i=0; i<A.size(); i++){
+        
+        if(A[i]=='I'){
+            ans.push_back(curr_smallest);
+            curr_smallest++;
+        }
+        else{
+            ans.push_back(curr_largest);
+            curr_largest--;
         }
     }
-    for(int i=0; i<len; i++){
-        for(int j=0; j<len; j++){
-			mp2[C[i]+D[j]]++;
-		}
-    }
-    for(auto p1 : mp1){
-        int nsum = -1*p1.first;
-        int freq = p1.second;
-        if(mp2.find(nsum)!=mp2.end())
-            count+= freq*mp2[nsum];       
-    }
-    return count;
+    
+    ans.push_back(curr_smallest); // here curr_smallest == curr_largest
+    return ans;
 }
 ```
 
 <br>
 
-### 10. Increasing Triplet Subsequence
-Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+### 7. Best Sightseeing Pair - O(n)|O(1)
+You are given an integer array values where values[i] represents the value of the ith sightseeing spot. The score of a pair (i < j) of sightseeing spots is values[i] + values[j] + i - j. Return the maximum score of a pair of sightseeing spots.
 
-Hint: Maintain two variables for storing smallest and second smallest elements so far.
+Input: values = [8,1,5,2,6]
 
-```cpp
-bool increasingTriplet(vector<int>& nums) {
-    int len = nums.size();
-    if(len<3) return false;
+Output: 11
 
-    int n1 = nums[0], n2 = INT_MAX;
-    for(int i=1; i<len; i++){
-        if(nums[i]<=n1) 
-            n1 = nums[i];
-        else if(nums[i]<=n2) 
-            n2 = nums[i];
-        else 
-            return true;
-    }
-    return false;
-}
-```
-
-<br>
-
-### 11. Smallest Range - O(nlogn)
-Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
-
-Input: nums = [1,3,6], k = 3
-
-Output: 3
-
-[Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173377/C%2B%2BJavaPython-Add-0-or-2-*-K)
+Hint: Use variable max_score_on_right for storing max value of value[j]-j on right side for every index. 
 
 ```cpp
-int smallestRangeII(vector<int>& nums, int k) {
-	int n = nums.size();
-	sort(nums.begin(), nums.end());
+int maxScoreSightseeingPair(vector<int>& values) {
+	int n = values.size();
+	int max_score_on_right = values.back()-(n-1);
+	int ans = 0;
 
-	/* Instead of adding +k and -k to elements, we will add 0 and 2*k to elements */
-
-	int ans = nums[n-1] - nums[0];      // --> This will be the max possible difference
-
-	/* 
-		Now we will iterate from left to right and start adding 2*k 
-		so as to minimize the differences between max and min 
-	*/
-
-	for(int i=0; i<n-1; i++){
-
-		/* Since we incremented curr_val so it can be the candidate to become max */
-
-		int mx = max(nums[n-1], nums[i]+(2*k));     
-
-		/* Since we incremented all prev elements before i, so nums[0]+(2*k) and nums[i+1] are the candidates for min */
-
-		int mn = min(nums[i+1], nums[0]+(2*k));
-
-		ans = min(ans, mx-mn);
+	for(int i=n-2; i>=0; i--){
+		ans = max(ans, values[i]+i+max_score_on_right);
+		max_score_on_right = max(max_score_on_right, values[i]-i);
 	}
 
 	return ans;
@@ -555,7 +423,43 @@ int smallestRangeII(vector<int>& nums, int k) {
 
 <br>
 
-### 12. Flip String to Monotone Increasing
+### 8. Max Distance
+Given an array A of integers, find the maximum of j - i subjected to the constraint of A[i] <= A[j].
+
+Input: A = [3, 5, 4, 2]
+
+Output: 2
+
+Hint: Create new vector of pair {value, index}. Sort this vector and iterate from right to left. Compute right max index in every iteration and update ans.
+
+```cpp
+int Solution::maximumGap(const vector<int> &A) {
+    int n = A.size();
+    vector<pair<int,int>> v;
+
+    for(int i=0; i<n; i++)
+        v.push_back({A[i], i});
+    
+    sort(v.begin(), v.end());
+
+    int maxRightIdx = v.back().second;
+    int ans = 0;
+
+    for(int i=n-2; i>=0; i--){
+
+        if(maxRightIdx>v[i].second)
+            ans = max(maxRightIdx - v[i].second, ans);
+        
+        maxRightIdx = max(maxRightIdx, v[i].second);
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+### 9. Flip String to Monotone Increasing
 A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly none). You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0. Return the minimum number of flips to make s monotone increasing.
 
 Input: s = "00011000"
@@ -595,81 +499,45 @@ int minFlipsMonoIncr(string & s) {
 
 <br>
 
-### 13. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
-Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
+### 10. Array Nesting
+You are given an integer array nums of length n where nums is a permutation of the numbers in the range [0, n - 1]. You should build a set s[k] = {nums[k], nums[nums[k]], nums[nums[nums[k]]], ... } subjected to the following rule:
+1. The first element in s[k] starts with the selection of the element nums[k] of index = k.
+2. The next element in s[k] should be nums[nums[k]], and then nums[nums[nums[k]]], and so on.
+3. We stop adding right before a duplicate element occurs in s[k].
 
-Hint: Run a while loop till we get all zeros. decrement all odd numbers by one, now all numbers becomes even, divide all by 2. Repeat these steps to get all zeros in min steps.
+Return the longest length of a set s[k].
+
+Input: nums = [5,4,0,3,1,6,2]
+
+Hint: Update vis index in nums to -1 and avoid using extra array for vis purpose.
+
+Output: 4
 
 ```cpp
-bool terminate(vector<int> v){
-    for(auto i : v)
-        if(i!=0)
-            return false;
+int traverse (vector<int> & nums, int val){
+	if(nums[val]==-1) return 0;
 
-    return true;
+	int next = nums[val];
+	nums[val]=-1;
+
+	return 1 + traverse(nums, next);
 }
 
-int minOperations(vector<int>& nums) {
-    int ans = 0;
-    int n = nums.size();
+int arrayNesting (vector<int>& nums){
+	int ans = 1;
 
-    while(!terminate(nums)){
-        for(int i=0; i<n; i++){
-            if(nums[i]%2==1){
-                nums[i]--;
-                ans++;
-            }
-        }
+	for(int i=0; i<nums.size(); i++){
+		if(nums[i]!=-1)
+			ans = max(ans, traverse(nums, i));
+	}
 
-        if(terminate(nums)) break;
-
-        for(int i=0; i<n; i++)
-            nums[i]/=2;
-
-        ans++;
-    }
-
-    return ans;
+	return ans;
 }
 ```
 
 <br>
 
-### 14. Find Permutation
-Given a positive integer n and a string s consisting only of letters D or I, you have to find any permutation of first n positive integer that satisfy the given input string. D means the next number is smaller, while I means the next number is greater.
-
-Input 1: n = 3, s = ID
-
-Return: [1, 3, 2]
-
-Hint: If next number in greater ('I') then full current smallest possible and if next number is smaller ('D') then fill current largest possible.
-
-```cpp
-vector<int> Solution::findPerm(const string A, int B) {
-    int curr_smallest = 1;
-    int curr_largest = B;
-    vector<int> ans;
-	
-    for(int i=0; i<A.size(); i++){
-        
-        if(A[i]=='I'){
-            ans.push_back(curr_smallest);
-            curr_smallest++;
-        }
-        else{
-            ans.push_back(curr_largest);
-            curr_largest--;
-        }
-    }
-    
-    ans.push_back(curr_smallest); // here curr_smallest == curr_largest
-    return ans;
-}
-```
-
-<br>
-
-### 15. Partition Array into Disjoint Intervals
+### 11. Partition Array into Disjoint Intervals
 Given an array nums, partition it into two (contiguous) subarrays left and right so that:
 
 1. Every element in left is less than or equal to every element in right.
@@ -704,69 +572,61 @@ int partitionDisjoint(vector<int>& nums) {
 
 <br>
 
-### 16. Best Sightseeing Pair - O(n)|O(1)
-You are given an integer array values where values[i] represents the value of the ith sightseeing spot. The score of a pair (i < j) of sightseeing spots is values[i] + values[j] + i - j. Return the maximum score of a pair of sightseeing spots.
+### 12. 4Sum II
+Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that: 0 <= i, j, k, l < n and nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
 
-Input: values = [8,1,5,2,6]
-
-Output: 11
-
-Hint: Use variable max_score_on_right for storing max value of value[j]-j on right side for every index. 
+Hint: Use two hashmaps for storing sum of A[i]+B[i] and C[i]+D[i]
 
 ```cpp
-int maxScoreSightseeingPair(vector<int>& values) {
-	int n = values.size();
-	int max_score_on_right = values.back()-(n-1);
-	int ans = 0;
+int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+    int len = A.size();
+    int count = 0; 
+    unordered_map<int, int> mp1;
+    unordered_map<int, int> mp2;
 
-	for(int i=n-2; i>=0; i--){
-		ans = max(ans, values[i]+i+max_score_on_right);
-		max_score_on_right = max(max_score_on_right, values[i]-i);
-	}
-
-	return ans;
+    for(int i=0; i<len; i++){
+        for(int j=0; j<len; j++){
+			mp1[A[i]+B[j]]++;
+        }
+    }
+    for(int i=0; i<len; i++){
+        for(int j=0; j<len; j++){
+			mp2[C[i]+D[j]]++;
+		}
+    }
+    for(auto p1 : mp1){
+        int nsum = -1*p1.first;
+        int freq = p1.second;
+        if(mp2.find(nsum)!=mp2.end())
+            count+= freq*mp2[nsum];       
+    }
+    return count;
 }
 ```
 
 <br>
 
-### 17. Max Distance
-Given an array A of integers, find the maximum of j - i subjected to the constraint of A[i] <= A[j].
+### 13. Pairs of Songs With Total Durations Divisible by 60
+You are given a list of songs where the ith song has a duration of time[i] seconds. Return the number of pairs of songs for which their total duration in seconds is divisible by 60. Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0.
 
-Input: A = [3, 5, 4, 2]
-
-Output: 2
-
-Hint: Create new vector of pair {value, index}. Sort this vector and iterate from right to left. Compute right max index in every iteration and update ans.
+Hint: Play with remainders
 
 ```cpp
-int Solution::maximumGap(const vector<int> &A) {
-    int n = A.size();
-    vector<pair<int,int>> v;
-
-    for(int i=0; i<n; i++)
-        v.push_back({A[i], i});
-    
-    sort(v.begin(), v.end());
-
-    int maxRightIdx = v.back().second;
+int numPairsDivisibleBy60(vector<int>& time) {
+    vector<int> rem(60, 0);
     int ans = 0;
-
-    for(int i=n-2; i>=0; i--){
-
-        if(maxRightIdx>v[i].second)
-            ans = max(maxRightIdx - v[i].second, ans);
-        
-        maxRightIdx = max(maxRightIdx, v[i].second);
+    for(int i=0; i<time.size(); i++){
+        int tm = time[i];
+        ans+= rem[(60-tm%60)%60];
+        rem[tm%60]++;
     }
-
     return ans;
 }
 ```
 
 <br>
 
-### 18. Maximum Swap
+### 14. Maximum Swap
 You are given an integer num. You can swap two digits at most once to get the maximum valued number. Return the maximum valued number you can get.
 
 Input: num = 2736
@@ -807,7 +667,114 @@ Hint: At each digit, if there is a larger digit that occurs later, we want the s
 
 <br>
 
-### 19. Maximum Length of Subarray With Positive Product
+### 15. Beautiful Arrangement II
+Given two integers n and k, construct a list answer that contains n different positive integers ranging from 1 to n and obeys the following requirement: Suppose this list is answer = [a1, a2, a3, ... , an], then the list [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] has exactly k distinct integers.
+
+Hint: Fill in cyclic pattern
+
+```cpp
+vector<int> constructArray(int n, int k) {
+    vector<int> res;
+    int i=1, j=i+k;
+
+    while(i<=j){
+        res.push_back(i);
+        i++;
+        if(i>j) break;
+        res.push_back(j);
+        j--;
+    }
+
+    for(int itr=k+2; itr<=n; itr++)
+        res.push_back(itr);
+   
+    return res;
+}
+```
+
+<br>
+
+### 16. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
+Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
+
+Hint: Run a while loop till we get all zeros. decrement all odd numbers by one, now all numbers becomes even, divide all by 2. Repeat these steps to get all zeros in min steps.
+
+```cpp
+bool terminate(vector<int> v){
+    for(auto i : v)
+        if(i!=0)
+            return false;
+
+    return true;
+}
+
+int minOperations(vector<int>& nums) {
+    int ans = 0;
+    int n = nums.size();
+
+    while(!terminate(nums)){
+        for(int i=0; i<n; i++){
+            if(nums[i]%2==1){
+                nums[i]--;
+                ans++;
+            }
+        }
+
+        if(terminate(nums)) break;
+
+        for(int i=0; i<n; i++)
+            nums[i]/=2;
+
+        ans++;
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+### 17. Maximum Absolute Difference
+You are given an array of N integers. Return maximum value of f(i, j) for all 1 ≤ i, j ≤ N. f(i, j) is defined as |A[i] - A[j]| + |i - j|, where |x| denotes absolute value of x.
+
+Input: A = [1, 3, -1]
+
+Output: 5
+
+```cpp
+int Solution::maxArr(vector<int> &A) {
+    int ans = 0;
+
+    int max1 = INT_MIN,  max2 = INT_MIN, max3 = INT_MIN, max4 = INT_MIN;
+    int min1 = INT_MAX, min2 = INT_MAX, min3 = INT_MAX, min4 = INT_MAX;
+    
+    for(int i=0; i<A.size(); i++){
+        
+        /* mod can be opened in 4 ways */
+
+        max1 = max(max1, A[i] + i);
+        max2 = max(max2, A[i] - i);
+        max3 = max(max3, -A[i] + i);
+        max4 = max(max4, -A[i] - i);
+        
+        min1 = min(min1, A[i] + i);
+        min2 = min(min2, A[i] - i);
+        min3 = min(min3, -A[i] + i);
+        min4 = min(min4, -A[i] - i);
+    }
+    
+    ans = max(ans, max1-min1);
+    ans = max(ans, max2-min2);
+    ans = max(ans, max3-min3);
+    ans = max(ans, max4-min4);
+    
+    return ans;
+}
+```
+
+<br>
+
+### 18. Maximum Length of Subarray With Positive Product
 Given an array of integers nums, find the maximum length of a subarray where the product of all its elements is positive. Return the maximum length of a subarray with positive product (Zero not considered).
 
 Input: nums = [-1,-2,-3,0,1]
@@ -880,7 +847,8 @@ Hint: If negative signs are even, then whole subarray will give positive product
 
 <br>
 
-## Hard
+
+## @ Hard
 
 ### 1. Trapping Rain Water
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
@@ -1038,7 +1006,49 @@ int longestMountain(vector<int>& arr) {
 
 <br>
 
-### 5.  Wiggle Subsequence (O(n) Approach) - Tricky
+### 5. Smallest Range - O(nlogn)
+Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
+
+Input: nums = [1,3,6], k = 3
+
+Output: 3
+
+[Explaination](https://leetcode.com/problems/smallest-range-ii/discuss/173377/C%2B%2BJavaPython-Add-0-or-2-*-K)
+
+```cpp
+int smallestRangeII(vector<int>& nums, int k) {
+	int n = nums.size();
+	sort(nums.begin(), nums.end());
+
+	/* Instead of adding +k and -k to elements, we will add 0 and 2*k to elements */
+
+	int ans = nums[n-1] - nums[0];      // --> This will be the max possible difference
+
+	/* 
+		Now we will iterate from left to right and start adding 2*k 
+		so as to minimize the differences between max and min 
+	*/
+
+	for(int i=0; i<n-1; i++){
+
+		/* Since we incremented curr_val so it can be the candidate to become max */
+
+		int mx = max(nums[n-1], nums[i]+(2*k));     
+
+		/* Since we incremented all prev elements before i, so nums[0]+(2*k) and nums[i+1] are the candidates for min */
+
+		int mn = min(nums[i+1], nums[0]+(2*k));
+
+		ans = min(ans, mx-mn);
+	}
+
+	return ans;
+}
+```
+
+<br>
+
+### 6.  Wiggle Subsequence (O(n) Approach) - Tricky
 A wiggle sequence is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. Given an integer array nums, return the length of the longest wiggle subsequence of nums.
 
 Input: nums = [1,17,5,10,13,15,10,5,16,8]
@@ -1083,42 +1093,3 @@ int wiggleMaxLength(vector<int>& nums) {
 }
 ```
 
-<br>
-
-### 6. Maximum Absolute Difference
-You are given an array of N integers. Return maximum value of f(i, j) for all 1 ≤ i, j ≤ N. f(i, j) is defined as |A[i] - A[j]| + |i - j|, where |x| denotes absolute value of x.
-
-Input: A = [1, 3, -1]
-
-Output: 5
-
-```cpp
-int Solution::maxArr(vector<int> &A) {
-    int ans = 0;
-
-    int max1 = INT_MIN,  max2 = INT_MIN, max3 = INT_MIN, max4 = INT_MIN;
-    int min1 = INT_MAX, min2 = INT_MAX, min3 = INT_MAX, min4 = INT_MAX;
-    
-    for(int i=0; i<A.size(); i++){
-        
-        /* mod can be opened in 4 ways */
-
-        max1 = max(max1, A[i] + i);
-        max2 = max(max2, A[i] - i);
-        max3 = max(max3, -A[i] + i);
-        max4 = max(max4, -A[i] - i);
-        
-        min1 = min(min1, A[i] + i);
-        min2 = min(min2, A[i] - i);
-        min3 = min(min3, -A[i] + i);
-        min4 = min(min4, -A[i] - i);
-    }
-    
-    ans = max(ans, max1-min1);
-    ans = max(ans, max2-min2);
-    ans = max(ans, max3-min3);
-    ans = max(ans, max4-min4);
-    
-    return ans;
-}
-```

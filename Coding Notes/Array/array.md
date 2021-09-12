@@ -718,7 +718,43 @@ int maxScoreSightseeingPair(vector<int>& values) {
 
 <br>
 
-### 17. Maximum Swap
+### 17. Max Distance
+Given an array A of integers, find the maximum of j - i subjected to the constraint of A[i] <= A[j].
+
+Input: A = [3, 5, 4, 2]
+
+Output: 2
+
+Hint: Create new vector of pair {value, index}. Sort this vector and iterate from right to left. Compute right max index in every iteration and update ans.
+
+```cpp
+int Solution::maximumGap(const vector<int> &A) {
+    int n = A.size();
+    vector<pair<int,int>> v;
+
+    for(int i=0; i<n; i++)
+        v.push_back({A[i], i});
+    
+    sort(v.begin(), v.end());
+
+    int maxRightIdx = v.back().second;
+    int ans = 0;
+
+    for(int i=n-2; i>=0; i--){
+
+        if(maxRightIdx>v[i].second)
+            ans = max(maxRightIdx - v[i].second, ans);
+        
+        maxRightIdx = max(maxRightIdx, v[i].second);
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+### 18. Maximum Swap
 You are given an integer num. You can swap two digits at most once to get the maximum valued number. Return the maximum valued number you can get.
 
 Input: num = 2736
@@ -759,7 +795,7 @@ Hint: At each digit, if there is a larger digit that occurs later, we want the s
 
 <br>
 
-### 18. Maximum Length of Subarray With Positive Product
+### 19. Maximum Length of Subarray With Positive Product
 Given an array of integers nums, find the maximum length of a subarray where the product of all its elements is positive. Return the maximum length of a subarray with positive product (Zero not considered).
 
 Input: nums = [-1,-2,-3,0,1]

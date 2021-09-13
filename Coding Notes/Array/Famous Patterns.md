@@ -190,59 +190,61 @@ int majorityElement(vector<int>& nums) {
 }
 ```
 
-#### 2. Majority Element II
+#### 2. Majority Element II (IMP)
 Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
 
-Hint: Use item1 and item2 to store largest and second largest element & count1 and count2 to store their respective counts.
+Hint: If at any instance, we have three distinct elements, if we remove them then, our answer does not change.
+
+Approach:
+1. Create mx1 and mx2 to store two max frequent items so far
+2. Create cnt1 and cnt2 for storing their freq
+3. Iterate over the array, If we get mx1 or mx2 then increment their cnt else decrement both cnts (we are removing 3 distinct elements)
+4. If cnt2 becomes larger then cnt1, swap both vars.
+5. After completing all iterations, mx1 and mx2 will only be our possible answers, so once again iterate the array to count their freqs.
+6. Return answer whose freq>n/3 else return -1 
 
 ```cpp
-bool checkValidity(vector<int> & nums, int item){
-    int c = 0;
-    for(int i : nums)
-        if(i==item) c++;
+int Solution::repeatedNumber(const vector<int> &A) {
+    int n = A.size();
 
-    if(c > nums.size()/3) return true;
-    return false;
-}
+    int mx1 = INT_MIN, mx2 = INT_MIN;
+    int cnt1 = 0, cnt2 = 0;
 
-vector<int> majorityElement(vector<int>& nums) {
-    int count1 = 0, count2 = 0;
-    int item1 = 0, item2 = 0;
-    int i=0;
+    for(int num : A){
 
-    while(i<nums.size()){
-        if(count1 == 0){
-            item1 = nums[i];
-            count1++;
+        if(num==mx1 or cnt1==0){
+            mx1 = num;
+            cnt1++;
         }
-        else if(item1==nums[i]) count1++;
-
-        else if(count2 == 0){
-            item2 = nums[i];
-            count2++;
+        else if(num==mx2 or cnt2==0){
+            mx2 = num;
+            cnt2++;
         }
-        else if(item2 == nums[i]) count2++;
-
         else{
-            count1--;
-            count2--;
+            cnt1--;
+            cnt2--;
         }
 
-        if(count2>count1){
-            swap(item1, item2);
-            swap(count1, count2);
+        if(cnt2>cnt1){
+            swap(mx1, mx2);
+            swap(cnt1, cnt2);
         }
-        i++;
     }
 
-    vector<int> res;
-    if(checkValidity(nums, item1))
-        res.push_back(item1);
-    if(item2!=item1)
-        if(checkValidity(nums, item2))
-            res.push_back(item2);
+    int freq1 = 0, freq2 = 0;
 
-    return res;
+    for(int num : A){
+        if(num==mx1 and cnt1>0) freq1++;
+        if(num==mx2 and cnt2>0) freq2++;    
+    }
+
+    if(freq1 > n/3) 
+        return mx1;
+
+    else if(freq2 > n/3)
+        return mx2;
+    
+    else return -1;
 }
 
 ```

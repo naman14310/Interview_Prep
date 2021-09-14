@@ -925,7 +925,79 @@ int longestConsecutive(vector<int>& nums) {
 
 <br>
 
-### 3. Candy
+### 3. Maximum Gap (Buckets and Pigeon Hole)
+Given an integer array nums, return the maximum difference between two successive elements in its sorted form. If the array contains less than two elements, return 0. You must write an algorithm that runs in linear time and uses linear extra space.
+
+Input: nums = [3,6,9,1]
+
+Output: 3
+
+Approach:
+```
+Eg:  3 .... 6 .... 9 .... 1
+
+Let n elements --> (n-1) gaps
+
+Step 1: Find avg_gap_size
+
+    avg_gap = range/total_gaps = ceil of [(max-min)/total_gaps]
+
+Step 2: Create (n-1) buckets and put all elements in buckets by using following formula
+
+    bucket = (num-min)/avg_gap
+
+Step 3: Iterate over all buckets and find diff between min-max of two consecutive buckets 
+```
+
+```cpp
+int maximumGap(vector<int>& nums) {
+	int n = nums.size();
+	if(n<2) return 0;
+	if(n==2) return abs(nums[0]-nums[1]);
+
+	int total_gaps = n-1;
+
+	int mn = *min_element(nums.begin(), nums.end());
+	int mx = *max_element(nums.begin(), nums.end());
+
+	if(mx==mn) return 0;
+
+	int avg_gap = ceil(((double)mx-(double)mn)/(double)total_gaps);
+
+
+	/* Create buckets for storing min and max number of that bucket */
+
+	vector<pair<int,int>> bucket (n-1, {INT_MAX, INT_MIN});
+
+	for(int num : nums){
+		int idx = (num-mn)/avg_gap;
+		if(idx==n-1) idx--;                     // --> Corner case (100, 3, 2, 1) 
+
+		bucket[idx].first = min(bucket[idx].first, num);
+		bucket[idx].second = max(bucket[idx].second, num);
+	}
+
+
+	/* Iterate over all buckets and find max gap between two consecutive buckets */ 
+
+	int prev_max = bucket[0].second;
+	int maxGap = 0;
+
+	for(int i=1; i<bucket.size(); i++){
+
+		if(bucket[i].first==INT_MAX) continue;
+
+		maxGap = max(maxGap, bucket[i].first - prev_max);
+		prev_max = bucket[i].second;            
+	}
+
+	return maxGap;
+}
+```
+
+<br>
+
+### 4. Candy
 There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings. You are giving candies to these children subjected to the following requirements:
 
 1. Each child must have at least one candy.
@@ -964,7 +1036,7 @@ int candy(vector<int>& ratings) {
 
 <br>
 
-### 4. Longest Mountain in Array
+### 5. Longest Mountain in Array
 An array arr is a mountain array if and only if arr.length >= 3 and, There exists some index i (0-indexed) with 0 < i < arr.length - 1 such that:
 1. arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
 2. arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
@@ -1006,7 +1078,7 @@ int longestMountain(vector<int>& arr) {
 
 <br>
 
-### 5. Smallest Range - O(nlogn)
+### 6. Smallest Range - O(nlogn)
 Given an array A of integers, for each integer A[i] we need to choose either x = -K or x = K, and add x to A[i] (only once). After this process, we have some array B. Return the smallest possible difference between the maximum value of B and the minimum value of B.
 
 Input: nums = [1,3,6], k = 3
@@ -1048,7 +1120,7 @@ int smallestRangeII(vector<int>& nums, int k) {
 
 <br>
 
-### 6.  Wiggle Subsequence (O(n) Approach) - Tricky
+### 7.  Wiggle Subsequence (O(n) Approach) - Tricky
 A wiggle sequence is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. Given an integer array nums, return the length of the longest wiggle subsequence of nums.
 
 Input: nums = [1,17,5,10,13,15,10,5,16,8]

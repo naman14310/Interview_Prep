@@ -26,6 +26,8 @@ string reverseOnlyLetters(string s) {
 }
 ```
 
+<br>
+
 #### 2. Move Zeroes
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 Hint: Use two pointers from left to right. Left pointer to keep track for rightmost non zero index. Right pointer to iterate array.

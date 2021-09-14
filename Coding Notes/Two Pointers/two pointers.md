@@ -2,7 +2,31 @@
 
 ## Easy
 
-#### 1. Move Zeroes
+#### 1. Reverse Only Letters
+Given a string s, reverse the string according to the following rules:
+1. All the characters that are not English letters remain in the same position.
+2. All the English letters (lowercase or uppercase) should be reversed.
+
+```cpp
+string reverseOnlyLetters(string s) {
+    int i=0, j=s.length();
+
+    while(i<j){
+
+        if(isalpha(s[i]) and isalpha(s[j])){
+            swap(s[i], s[j]);
+            i++; j--;
+        }
+
+        if(!isalpha(s[i])) i++;
+        if(!isalpha(s[j])) j--;
+    }
+
+    return s;
+}
+```
+
+#### 2. Move Zeroes
 Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 Hint: Use two pointers from left to right. Left pointer to keep track for rightmost non zero index. Right pointer to iterate array.
 
@@ -27,7 +51,7 @@ void moveZeroes(vector<int>& nums) {
 
 <br>
 
-#### 2. Remove Element
+#### 3. Remove Element
 Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 
 ```cpp
@@ -48,7 +72,7 @@ int removeElement(vector<int>& nums, int val) {
 
 <br>
 
-#### 3. Remove Duplicates from Sorted Array
+#### 4. Remove Duplicates from Sorted Array
 Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
 
 ```cpp
@@ -73,7 +97,7 @@ int removeDuplicates(vector<int>& nums) {
 
 <br>
 
-#### 4. Remove Duplicates from Sorted Array II
+#### 5. Remove Duplicates from Sorted Array II
 Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.
 
 ```cpp
@@ -105,7 +129,7 @@ int removeDuplicates(vector<int>& nums) {
 
 <br>
 
-#### 5. Merge Sorted Array
+#### 6. Merge Sorted Array
 Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
 
 ```cpp
@@ -134,7 +158,7 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 
 <br>
 
-#### 6. Intersection of Two Arrays II
+#### 7. Intersection of Two Arrays II
 Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
 
 ```cpp
@@ -162,7 +186,7 @@ vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
 
 <br>
 
-#### 7. Backspace String Compare
+#### 8. Backspace String Compare
 Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
 ```cpp
@@ -208,7 +232,7 @@ bool backspaceCompare(string s, string t) {
 
 <br>
 
-#### 8. Squares of a Sorted Array 
+#### 9. Squares of a Sorted Array 
 Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
 
 ```cpp
@@ -235,7 +259,7 @@ vector<int> sortedSquares(vector<int>& nums) {
 
 <br>
 
-#### 9. Is Subsequence
+#### 10. Is Subsequence
 Given two strings s and t, check if s is a subsequence of t.
 
 ```cpp
@@ -281,7 +305,7 @@ bool isSubsequence(string s, string t) {
 
 <br>
 
-#### 10. Valid Palindrome II
+#### 11. Valid Palindrome II
 Given a string s, return true if the s can be palindrome after deleting at most one character from it.
 
 ```cpp
@@ -326,7 +350,7 @@ bool validPalindrome(string s) {
 
 <br>
 
-#### 11. Container With Most Water
+#### 12. Container With Most Water
 
 ```cpp
 int maxArea(vector<int>& height) {

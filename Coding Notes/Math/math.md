@@ -4,8 +4,10 @@
 
 ## @ Easy
 
-#### 1. Missing Number 
+### 1. Missing Number 
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+PS: In come cases, It might give overflow (Use Swap sort)
 
 ```cpp
 int missingNumber(vector<int>& nums) {
@@ -19,7 +21,7 @@ int missingNumber(vector<int>& nums) {
 
 <br>
 
-#### 2. Count Primes (Sieve of Eratosthenes)
+### 2. Count Primes (Sieve of Eratosthenes)
 Count the number of prime numbers less than a non-negative number, n.
 
 ```cpp
@@ -45,7 +47,44 @@ int countPrimes(int n) {
 
 <br>
 
-#### 3. Happy Number (Floyds Cycle Algo)
+### 3. Prime Sum
+Given an even number (greater than 2), return two prime numbers whose sum will be equal to given number.
+
+**Theorem: Goldbach's conjecture**
+
+It states that every even whole number greater than 2 is the sum of two prime numbers. The conjecture has been shown to hold for all integers less than 4 × 10^18.
+
+```cpp
+vector<bool> primeSieve (int A){
+    vector<bool> prime (A+1, true);
+    prime[0] = false; prime[1] = false;
+    int root = sqrt(A);
+
+    for(int i=2; i<=root; i++){
+        if(!prime[i]) continue;
+
+        for(int j=i+i; j<prime.size(); j+=i)
+            prime[j] = false;
+    }
+
+    return prime;
+}
+
+vector<int> Solution::primesum(int A) {
+    vector<bool> prime  = primeSieve(A);
+
+    for(int i=2; i<prime.size(); i++){
+        if(prime[i] and prime[A-i])
+            return {i, A-i};
+    }
+
+    return {-1, -1};
+}
+```
+
+<br>
+
+### 4. Happy Number (Floyds Cycle Algo)
 Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process:
 1. Starting with any positive integer, replace the number by the sum of the squares of its digits.
 2. Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
@@ -79,7 +118,7 @@ bool isHappy(int n) {
 
 <br>
 
-#### 4. Power of Three 
+### 5. Power of Three 
 Given an integer n, return true if it is a power of three. Otherwise, return false.
 
 ```cpp
@@ -102,7 +141,7 @@ bool isPowerOfThree(int n) {
 
 <br>
 
-#### 5. Factorial Trailing Zeroes
+### 6. Factorial Trailing Zeroes
 Given an integer n, return the number of trailing zeroes in n!.
 
 ```cpp
@@ -118,7 +157,7 @@ int trailingZeroes(int n) {
 
 <br>
 
-#### 6. Bulb Switcher (Puzzle)
+### 7. Bulb Switcher (Puzzle)
 There are n bulbs that are initially off. You first turn on all the bulbs, then you turn off every second bulb. On the third round, you toggle every third bulb (turning on if it's off or turning off if it's on). For the ith round, you toggle every i bulb. For the nth round, you only toggle the last bulb. Return the number of bulbs that are on after n rounds.
 
 ![bulb](https://assets.leetcode.com/uploads/2020/11/05/bulb.jpg)
@@ -131,7 +170,7 @@ int bulbSwitch(int n) {
 
 <br>
 
-#### 7. Partitioning Into Minimum Number Of Deci-Binary Numbers
+### 8. Partitioning Into Minimum Number Of Deci-Binary Numbers
 A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100 are deci-binary, while 112 and 3001 are not. Given a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that they sum up to n.
 
 Input: n = "32"
@@ -156,7 +195,7 @@ int minPartitions(string n) {
 
 ## @ Medium
 
-#### 1. Repeat and Missing Number Array
+### 1. Repeat and Missing Number Array
 You are given a read only (we can't swap of modify it) array of n integers from 1 to n. Each integer appears exactly once except D which appears twice and M which is missing. Return D and M.
 
 Input:[3 1 2 5 3] 
@@ -213,7 +252,7 @@ vector<int> Solution::repeatedNumber(const vector<int> &A) {
 
 <br>
 
-#### 2. Reordered Power of 2
+### 2. Reordered Power of 2
 
 You are given an integer n. We reorder the digits in any order (including the original order) such that the leading digit is not zero. Return true if and only if we can do this so that the resulting number is a power of two.
 
@@ -253,7 +292,7 @@ bool reorderedPowerOf2(int N) {
 
 <br>
 
-#### 3. Broken Calculator (Think in Reverse)
+### 3. Broken Calculator (Think in Reverse)
 On a broken calculator that has a number showing on its display, we can perform two operations:
 
 1. Double: Multiply the number on the display by 2, or,
@@ -281,12 +320,12 @@ int brokenCalc(int X, int Y) {
 
 <br>
 
-#### 4. Perfect Squares (Lagrange's Four Square theorem)
+### 4. Perfect Squares 
 Given an integer n, return the least number of perfect square numbers that sum to n.
 
-Theorem: Every number can be represented using the sum of maximum for perfect squares.
-
-If a number can be represent in the form of 4^r(8k + 7) => It can only be represented using sum of 4 squares
+**Theorem: Lagrange's Four Square theorem**
+1. Every number can be represented using the sum of maximum for perfect squares. 
+2. If a number can be represent in the form of 4^r(8k + 7) => It can only be represented using sum of 4 squares.
 
 ```cpp
 int is_square(int n){  
@@ -315,7 +354,3 @@ int numSquares(int n) {
     return 3;  
 } 
 ```
-
-<br>
-
-

@@ -192,6 +192,36 @@ int minPartitions(string n) {
 
 <br>
 
+### 9. Step by Step
+Given a target A on an infinite number line, i.e. -infinity to +infinity. You are currently at position 0 and you need to reach the target by moving according to the below rule:
+1. In ith move you can take i steps forward or backward.
+
+Find the minimum number of moves required to reach the target.
+
+Approach:
+1. First of all, make target = abs(target) because if magnitude is equal then steps to reach target will also be equal. 
+2. Then, if curr_pos < target, then increment the curr_pos and steps
+3. Else if curr_pos >= target, and difference of pos and target is odd, then also increment the pos and steps.
+4. Else return steps taken so far.
+
+```cpp
+int Solution::solve(int target) {
+    target = abs(target);
+    
+    int i=1;
+    int sum = 0, steps = 0;
+    
+    while(sum<target or (sum-target)%2==1){
+        sum+=i;
+        i++; steps++;
+    }
+    
+    return steps;
+}
+```
+
+<br>
+
 
 ## @ Medium
 

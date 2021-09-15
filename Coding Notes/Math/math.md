@@ -4,7 +4,19 @@
 
 ## @ Easy
 
-### 1. Missing Number 
+### 1. Greatest Common Divisor (Euclidean Algo)
+
+```cpp
+int gcd(int a, int b){
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+```
+
+<br>
+
+### 2. Missing Number 
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
 PS: In come cases, It might give overflow (Use Swap sort)
@@ -21,7 +33,7 @@ int missingNumber(vector<int>& nums) {
 
 <br>
 
-### 2. Count Primes (Sieve of Eratosthenes)
+### 3. Count Primes (Sieve of Eratosthenes)
 Count the number of prime numbers less than a non-negative number, n.
 
 ```cpp
@@ -47,7 +59,7 @@ int countPrimes(int n) {
 
 <br>
 
-### 3. Prime Sum
+### 4. Prime Sum
 Given an even number (greater than 2), return two prime numbers whose sum will be equal to given number.
 
 **Theorem: Goldbach's conjecture**
@@ -84,7 +96,7 @@ vector<int> Solution::primesum(int A) {
 
 <br>
 
-### 4. Happy Number (Floyds Cycle Algo)
+### 5. Happy Number (Floyds Cycle Algo)
 Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process:
 1. Starting with any positive integer, replace the number by the sum of the squares of its digits.
 2. Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
@@ -118,7 +130,7 @@ bool isHappy(int n) {
 
 <br>
 
-### 5. Power of Three 
+### 6. Power of Three 
 Given an integer n, return true if it is a power of three. Otherwise, return false.
 
 ```cpp
@@ -141,7 +153,32 @@ bool isPowerOfThree(int n) {
 
 <br>
 
-### 6. Factorial Trailing Zeroes
+### 7. Power Of Two Integers
+Given a positive integer which fits in a 32 bit signed integer, find if it can be expressed as A^P where P > 1 and A > 0. A and P both should be integers.
+
+```cpp
+int Solution::isPower(int A) {
+    if(A==1) return true;
+    int root = sqrt(A);
+    
+    /* check for all numbers smaller then root(A) whether they can be x which satisfies x^y */  
+
+    for(int i=2; i<=root; i++){
+        int temp=A;
+
+        while(temp%i==0)
+            temp /= i;
+        
+        if(temp==1) return true;
+    }
+
+    return false;
+}
+```
+
+<br>
+
+### 8. Factorial Trailing Zeroes
 Given an integer n, return the number of trailing zeroes in n!.
 
 ```cpp
@@ -157,7 +194,7 @@ int trailingZeroes(int n) {
 
 <br>
 
-### 7. Bulb Switcher (Puzzle)
+### 9. Bulb Switcher (Puzzle)
 There are n bulbs that are initially off. You first turn on all the bulbs, then you turn off every second bulb. On the third round, you toggle every third bulb (turning on if it's off or turning off if it's on). For the ith round, you toggle every i bulb. For the nth round, you only toggle the last bulb. Return the number of bulbs that are on after n rounds.
 
 ![bulb](https://assets.leetcode.com/uploads/2020/11/05/bulb.jpg)
@@ -170,7 +207,7 @@ int bulbSwitch(int n) {
 
 <br>
 
-### 8. Partitioning Into Minimum Number Of Deci-Binary Numbers
+### 10. Partitioning Into Minimum Number Of Deci-Binary Numbers
 A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100 are deci-binary, while 112 and 3001 are not. Given a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that they sum up to n.
 
 Input: n = "32"
@@ -192,7 +229,7 @@ int minPartitions(string n) {
 
 <br>
 
-### 9. Step by Step
+### 11. Step by Step
 Given a target A on an infinite number line, i.e. -infinity to +infinity. You are currently at position 0 and you need to reach the target by moving according to the below rule:
 1. In ith move you can take i steps forward or backward.
 

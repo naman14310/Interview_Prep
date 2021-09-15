@@ -500,6 +500,3 @@ int brokenCalc(int X, int Y) {
     return steps;
 }
 ```
-
-
-```

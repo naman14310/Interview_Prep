@@ -499,3 +499,56 @@ int brokenCalc(int X, int Y) {
     return steps;
 }
 ```
+
+<br>
+
+### 5. Sorted Permutation Rank
+Given a string, find the rank of the string amongst its permutations sorted lexicographically.  Assume that no characters are repeated.
+
+Input: 'acb'
+
+Output: 2
+
+The sorted order of permutations with letters 'a', 'c', and 'b' are: abc, acb, bac, bca, cab, cba
+
+```cpp
+long long factorial (int num){
+    long long mod = 1000003;
+    long long fact = num;
+
+    for(int i=num-1; i>1; i--)
+        fact = (fact * i) % mod;
+
+    return fact;
+}
+
+
+/* It will return the number of chars smaller then curr char on right side */
+
+long long find_rank (string &s, int &idx){
+    char ch = s[idx];
+    long long rank = 0;
+
+    for(int i=idx+1; i<s.length(); i++)
+        if(s[i]<ch) rank++;
+    
+    return rank;
+}
+
+
+/* At every index, char ch will be responsible to skip rank(ch)*fact(remaining_length) pos */
+
+int Solution::findRank(string A) {
+    long long n = A.length();
+    long long mod = 1000003;
+    long long ans = 0;
+
+    for(int i=0; i<n; i++){
+        char ch = A[i];
+        auto rank = find_rank(A, i);
+        ans = (ans + (rank * factorial(n-i-1)) % mod ) % mod;
+    }
+
+    return (ans+1) % mod;
+}
+```

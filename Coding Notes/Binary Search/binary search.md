@@ -66,6 +66,67 @@ int mySqrt(int x) {
 
 <br>
 
+#### 4. Search in Bitonic Array
+A Bitonic Sequence is a sequence of numbers which is first strictly increasing then after a point strictly decreasing. Return Index of element.
+
+Hint: First find peak using Binary Search. Then search in left part and right part.
+
+```cpp
+
+int findPeak(vector<int> &A, int B){
+    int start = 0, end = A.size()-1;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        
+        if(A[mid]>max(A[mid-1], A[mid+1])) 
+            return mid;
+
+        else if(A[mid]<A[mid+1]) 
+            start++;
+
+        else end--;
+    }
+
+    return -1;
+}
+
+
+int binarySearch(vector<int> &A, int B, int start, int end, bool inc){
+    while(start<=end){
+        int mid = start + (end-start)/2;
+        if(A[mid]==B) return mid;
+
+        else if(A[mid]<B){
+            if(inc) start++;
+            else end--;
+        } 
+        else{
+            if(inc) end--;
+            else start++;
+        }
+    }
+    return -1;
+}
+
+
+int Solution::solve(vector<int> &A, int B) {
+    int peak = findPeak(A, B);
+    if(A[peak]==B) 
+        return peak;
+
+    int left = binarySearch(A, B, 0, peak-1, true);
+    if(left!=-1) return left;
+
+    int right = binarySearch(A, B, peak+1, A.size()-1, false);
+    return right;
+}
+
+```
+
+<br>
+
+
 ## Medium
 
 #### 1. Find Minimum in Rotated Sorted Array (Same as No. of times a sorted array is rotated)

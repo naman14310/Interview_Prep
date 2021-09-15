@@ -764,3 +764,86 @@ int trap(vector<int>& height) {
     return water;
 }
 ```
+
+<br>
+
+#### 2. Next Smallest Palindrome
+Given a numeric string A representing a large number you need to find the next smallest palindrome greater than this number.
+
+Input: A = "23545"
+
+Output: "23632"
+
+Hint: There can be three different types of inputs that need to be handled separately.
+1. The input number is palindrome and has all 9s. For example “9 9 9”. Output should be “1 0 0 1”
+2. The input number is not palindrome. For example “1 2 3 4”. Output should be “1 3 3 1”
+3. The input number is palindrome and doesn’t have all 9s. For example “1 2 2 1”. Output should be “1 3 3 1”.
+
+```cpp
+string Solution::solve(string A) {
+
+    /* ------------------ Case1 : If all digits are 9 ------------------- */
+
+    bool all9 = true;
+
+    for(char ch: A){
+        if(ch!='9'){
+            all9 = false;
+            break;
+        }
+    }
+
+    if(all9){
+        A[0] = '1';
+        for(int i=1; i<A.length(); i++) A[i] = '0';
+        A.push_back('1');
+        return A;
+    }
+
+
+    /* --------------------- Case2 : If not all 9 ----------------------- */
+
+
+    int i=0, j=A.size()-1;
+    bool smaller = true;
+    
+    /* Iterate i from left to right and j from right to left. And if A[i]!=A[j], update A[j] = A[i] */
+
+    while(i<j){
+        if(A[i]==A[j]){
+            i++; j--;
+            continue;
+        } 
+
+        if(A[j]>=A[i]) smaller = true;
+        else smaller = false;
+
+        A[j] = A[i];
+    }
+    
+    /* If the new formed number is smaller then prev */
+
+    if(smaller){
+    
+        /* 
+            Continue iteration, if A[i] == 9 then make it 0 and continue
+            Else Update both A[i] and A[j] to A[i]+1 and break the loop
+        */
+    
+        while(i>=0 and j<A.size()){
+            if(A[i]=='9'){
+                A[i]='0'; A[j]='0'; 
+                i++; j--;
+                continue;
+            }
+
+            int num = (A[i]-'0') + 1;
+            A[i] = num + '0';
+            A[j] = num + '0'; 
+            break;
+        }
+    }
+
+    return A;
+}
+```

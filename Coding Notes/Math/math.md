@@ -191,7 +191,7 @@ vector<vector<long long>> matrix_exponentiation (vector<vector<long long>> &m, i
 ### 2. Find Nth Fibonacci
 F1 = 1, F2 = 1, Find the nth fibonacci number Fn = Fn-1 + Fn-2 (n > 2)
 
-![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/fibonaccimatrix.png)
+![img](https://pbs.twimg.com/media/EXlf0njXsAAXGvp.png)
 
 Note: Use above function for matrix exponentiation
 

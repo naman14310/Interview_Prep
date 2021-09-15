@@ -407,6 +407,8 @@ vector<int> Solution::repeatedNumber(const vector<int> &A) {
 }
 ```
 
+<br>
+
 
 ## @ Some Tricky Problems
 

@@ -865,6 +865,50 @@ int splitArray(vector<int>& nums, int m) {
 
 <br>
 
+#### 8. WoodCutting Made Easy (IB)
+
+[Question](https://www.interviewbit.com/problems/woodcutting-made-easy/)
+
+```cpp
+bool isValid(vector<int> &A, long long B, long long bladeHeight){
+    long long sum=0;
+
+    for(auto h : A)
+        if(h>bladeHeight) sum += h-bladeHeight;
+    
+    return sum>=B;
+}
+
+
+int binarySearch (vector<int> &A, long long B, long long low, long long high){
+    long long ans = -1;
+    
+    while(low<=high){
+        long long mid = low + (high-low)/2;
+
+        if(isValid(A, B, mid)){
+            ans = mid;
+            low = mid+1;
+        }
+
+        else high = mid-1;
+    }
+
+    return ans;
+}
+
+
+int Solution::solve(vector<int> &A, int B) {
+    long long low = 0;
+    long long high = *max_element(A.begin(), A.end());
+
+    return binarySearch(A, B, low, high);
+}
+```
+
+<br>
+
+
 ## @ Binary Search on Matrix
 
 #### 1. Search a 2D Matrix II

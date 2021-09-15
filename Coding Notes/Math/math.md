@@ -446,10 +446,7 @@ int minPartitions(string n) {
 <br>
 
 ### 3. Step by Step
-Given a target A on an infinite number line, i.e. -infinity to +infinity. You are currently at position 0 and you need to reach the target by moving according to the below rule:
-1. In ith move you can take i steps forward or backward.
-
-Find the minimum number of moves required to reach the target.
+Given a target A on an infinite number line, i.e. -infinity to +infinity. You are currently at position 0 and you need to reach the target by moving according to the rule: In ith move you can take i steps forward or backward. Find the minimum number of moves required to reach the target.
 
 Approach:
 1. First of all, make target = abs(target) because if magnitude is equal then steps to reach target will also be equal. 

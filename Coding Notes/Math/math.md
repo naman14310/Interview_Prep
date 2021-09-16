@@ -137,7 +137,37 @@ vector<int> Solution::primesum(int A) {
 
 ## @ Playing With Powers
 
-### 1. Matrix Exponentiation
+### 1. Fast Exponentiation
+Implement pow(x, n), which calculates x raised to the power n.
+
+Hint: Use Binary Search
+
+```cpp
+double exp(double x, int n){
+    if(n==0) return 1;
+
+    double p = exp(x, n/2);
+
+    if(n&1)
+        return  p*p*x;
+    else
+        return p*p;
+}
+
+
+double myPow(double x, int n) {
+    if(x==0) return 0;
+
+    if(n>=0) 
+        return exp(x, n);
+    else
+        return exp(1/x, n);
+}
+```
+
+<br>
+
+### 2. Matrix Exponentiation
 Given a matrix M and an integer n, compute pow(M,n).
 
 Prerequisite: Fast Exponentiation using Binary Search
@@ -188,7 +218,7 @@ vector<vector<long long>> matrix_exponentiation (vector<vector<long long>> &m, i
 
 <br>
 
-### 2. Find Nth Fibonacci
+### 3. Find Nth Fibonacci
 F1 = 1, F2 = 1, Find the nth fibonacci number Fn = Fn-1 + Fn-2 (n > 2)
 
 ![img](https://pbs.twimg.com/media/EXlf0njXsAAXGvp.png)
@@ -206,7 +236,7 @@ int fib (int n) {
 
 <br>
 
-### 3. Power of Three 
+### 4. Power of Three 
 Given an integer n, return true if it is a power of three. Otherwise, return false.
 
 ```cpp
@@ -229,7 +259,7 @@ bool isPowerOfThree(int n) {
 
 <br>
 
-### 4. Power Of Two Integers
+### 5. Power Of Two Integers
 Given a positive integer which fits in a 32 bit signed integer, find if it can be expressed as A^P where P > 1 and A > 0. A and P both should be integers.
 
 ```cpp
@@ -254,7 +284,7 @@ int Solution::isPower(int A) {
 
 <br>
 
-### 5. Perfect Squares 
+### 6. Perfect Squares 
 Given an integer n, return the least number of perfect square numbers that sum to n.
 
 **Theorem: Lagrange's Four Square theorem**
@@ -291,7 +321,7 @@ int numSquares(int n) {
 
 <br>
 
-### 6. Reordered Power of 2
+### 7. Reordered Power of 2
 
 You are given an integer n. We reorder the digits in any order (including the original order) such that the leading digit is not zero. Return true if and only if we can do this so that the resulting number is a power of two.
 

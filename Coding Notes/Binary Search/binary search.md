@@ -1039,39 +1039,104 @@ int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
 
 Approach:
 1. Let smaller array be nums1 and other one be nums2.
-2. Run binary search over nums1 to calculate mid1. Let start = 0 and end = n. => then mid = start + (end-start)/2
-3. Now calculate mid2 using this formula => mid2 = (n+m+1)/2 - mid1
-4. Create four variable maxLeft1, maxLeft2, minRight1, minRight2 for endpoints. (Basically we are dividing elements into two logical sets)
-5. Now if maxLeft1<=minRight2 && maxLeft2<=minRight1 => then return median.
-6. Else if maxLeft1>minRight2 => shift to left => end = mid-1
+2. Run binary search over nums1 to calculate cut1. Let start = 0 and end = m. => then cut1 = start + (end-start)/2
+3. Now calculate cut using this formula => cut2 = (m+n+1)/2 - cut1
+4. Create four variable l1, l2, r1, r2 for endpoints. (Basically we are dividing elements into two logical sets)
+5. Now if l1<=r2 && l2<=r1 => then return median.
+6. Else if l1>r2 => shift to left => end = mid-1
 7. Else shift to right => start = mid+1
 
 ```cpp
-double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {    
-    int n = nums1.size();
-    int m = nums2.size();
-    if(n>m) return findMedianSortedArrays(nums2, nums1);
+class Solution {
+public:
+    
+    /*
+    
+                                                Approach
+                                                --------
+                                
+                                           
+    step1:  Initialise start=0 and end=m and find cut1 = start+(end-start)/2 
+    
+    step2:  Find cut2 for respective cut1 using, cut2 = (m+n+1)/2 - cut1
+                                 
+    step3:  Compute 4 coordinates i.e. l1, l2 (left nbr of cut1 and cut2) and r1, r2 (right nbr of cut1 and cut2)
+    
+    step4:  (a) If max(l1, l2) <= min(r1, r2) ==> we found the correct partitions, hence return median
+    
+            (b) Else if l1>r2 move end to cut1-1
+            
+            (c) Else move start to cut1+1
+            
+    
+    --------------------------------------------------------------------------------------------------------------
+             
+                Iteration 1:
+    
+                                    arr1 (length m) :           1 4 | 5        
+                                    arr2 (length n) :           2 | 3
+                                    
+                                    (1,4,2 belongs to left part and 5,3 belongs to right part)
+                
+                Iteration 2:
+            
+                                    arr1            :           1 | 4 5
+                                    arr2            :           2 3 | INT_MAX
+                                    
+                                    (1,2,3 belongs to left part and 4,5 belongs to right part)
 
-    int start = 0, end = n;
-    while(start<=end){
-        int mid1 =  start + (end-start)/2;
-        int mid2 = (n+m+1)/2 - mid1;
+                                    Median = max(1,3) = 3
+                                   
+                                   
+                PS: We need to perform iteration till all elements of left part becomes smaller then right part
+    */
+    
+    
+    
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size(), n = nums2.size();
+        
+        /* Our code will work fine if size of first array is smaller */
+        
+        if(m>n) return findMedianSortedArrays(nums2, nums1);
 
-        int maxLeft1 = mid1==0 ? INT_MIN : nums1[mid1-1];
-        int maxLeft2 = mid2==0 ? INT_MIN : nums2[mid2-1];
-        int minRight1 = mid1==n ? INT_MAX : nums1[mid1];
-        int minRight2 = mid2==m ? INT_MAX : nums2[mid2];
-
-        if(maxLeft1<=minRight2 && maxLeft2<=minRight1){
-            if((m+n)%2==0)
-                return (double) (max(maxLeft1, maxLeft2) + min(minRight1, minRight2))/2.0;
-            else
-                return (double) max(maxLeft1, maxLeft2);
+        /* Apply binary search only on first array */
+        
+        int start = 0, end = m;        
+        
+        while(start<=end){
+            
+            int cut1 = start + (end-start)/2;
+            int cut2 = (m+n+1)/2 - cut1;
+                                    
+            double l1 = cut1==0 ? INT_MIN : nums1[cut1-1];
+            double l2 = cut2==0 ? INT_MIN : nums2[cut2-1];
+            
+            double r1 = cut1==m ? INT_MAX : nums1[cut1];
+            double r2 = cut2==n ? INT_MAX : nums2[cut2];
+            
+            
+            /* If left part is smaller then right part simply return median based on odd-even criteria */
+                        
+            if(l1<=r2 and l2<=r1){
+                
+                if((m+n)%2==0) 
+                    return (max(l1,l2) + min(r1,r2))/2;
+                else
+                    return max(l1, l2);
+            }
+            
+            /* Else if leftMax of nums1 > rightMin of nums2 --> shift cut1 to left side */
+                
+            else if(l1>r2)
+                end = cut1-1;
+            
+            /* Else shift cut1 to right side */
+            
+            else start = cut1+1;
         }
-
-        else if(maxLeft1>minRight2) end = mid1-1;
-        else start = mid1+1;
+        
+        return -1;
     }
-   return -1;
-}
+};
 ```

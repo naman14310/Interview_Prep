@@ -1,19 +1,28 @@
 # Binary Search
 
-## Easy
+## @ Easy
 
-#### 1. Peak Index in a Mountain Array
+### 1. Peak Index in a Mountain Array
 
 ```cpp
 int peakIndexInMountainArray(vector<int>& arr) {
-    int n = arr.size();
-    int start = 0, end = n-1;
+    int start = 0, end = arr.size()-1;
+    
     while(start<=end){
         int mid = start + (end - start)/2;
-        if(mid==0) start = mid + 1;
-        else if(mid==n-1) end = mid-1;
-        else if(arr[mid]>arr[mid+1] && arr[mid]>arr[mid-1]) return mid;
-        else if(arr[mid]<arr[mid-1]) end = mid-1;
+        
+        if(mid==0) 
+            start = mid + 1;
+            
+        else if(mid==n-1) 
+            end = mid-1;
+            
+        else if(arr[mid]>arr[mid+1] && arr[mid]>arr[mid-1]) 
+            return mid;
+            
+        else if(arr[mid]<arr[mid-1]) 
+            end = mid-1;
+            
         else start = mid+1;
     }
     return -1;
@@ -22,7 +31,7 @@ int peakIndexInMountainArray(vector<int>& arr) {
 
 <br>
   
-#### 2. Find Smallest Letter Greater Than Target
+### 2. Find Smallest Letter Greater Than Target
   
 ```cpp
 char nextGreatestLetter(vector<char>& letters, char target) {
@@ -43,36 +52,41 @@ char nextGreatestLetter(vector<char>& letters, char target) {
 
 <br>
 
-#### 3. Sqrt(x) using Binary Search
+### 3. Sqrt(x) using Binary Search
   
 ```cpp
 int mySqrt(int x) {
-    int start = 1;
-    int end = x;
+    int start = 1, end = x;
     int ans = 0;
+    
     while(start<=end){
         long int mid = start + (end-start)/2;
         long long unsigned int sqr = mid*mid;
-        if(sqr==x) return mid;
-        else if(sqr>x) end = mid-1;
+        
+        if(sqr==x) 
+            return mid;
+            
+        else if(sqr>x) 
+            end = mid-1;
+            
         else{
             ans = mid; 
             start = mid+1;
         } 
     }
+    
     return ans;
 }
 ```
 
 <br>
 
-#### 4. Search in Bitonic Array
+### 4. Search in Bitonic Array
 A Bitonic Sequence is a sequence of numbers which is first strictly increasing then after a point strictly decreasing. Return Index of element.
 
 Hint: First find peak using Binary Search. Then search in left part and right part.
 
 ```cpp
-
 int findPeak(vector<int> &A, int B){
     int start = 0, end = A.size()-1;
 
@@ -121,15 +135,16 @@ int Solution::solve(vector<int> &A, int B) {
     int right = binarySearch(A, B, peak+1, A.size()-1, false);
     return right;
 }
-
 ```
 
 <br>
 
 
-## Medium
+## @ Medium
 
-#### 1. Find Minimum in Rotated Sorted Array (Same as No. of times a sorted array is rotated)
+### 1. Find Minimum in Rotated Sorted Array 
+
+Note: Similar to Number of times a sorted array is rotated
 
 ```cpp
 int findMin(vector<int>& nums) {
@@ -148,7 +163,7 @@ int findMin(vector<int>& nums) {
 
 <br>
 
-#### 2. Find Minimum in Rotated Sorted Array II (Repeating values)
+### 2. Find Minimum in Rotated Sorted Array II (Repeating values)
 
 ```cpp
 int findMin(vector<int>& nums) {
@@ -167,7 +182,7 @@ int findMin(vector<int>& nums) {
 
 <br>
 
-#### 3. Search in Rotated Sorted Array (Values are distinct)
+### 3. Search in Rotated Sorted Array (Values are distinct)
 
 ```cpp
 int findMinPos(vector<int> & nums){
@@ -203,7 +218,7 @@ int search(vector<int>& nums, int target) {
 
 <br>
 
-#### 4. Search in Rotated Sorted Array II (Values can be repeating)
+### 4. Search in Rotated Sorted Array II (Values can be repeating)
 
 ```cpp
 bool search(vector<int>& nums, int target) {
@@ -248,7 +263,7 @@ bool search(vector<int>& nums, int target) {
 
 <br>
 
-#### 5. Longest Increasing Subsequence (NlogN approach using Binary Search)
+### 5. Longest Increasing Subsequence (NlogN approach)
 
 PS: It will only give correct Length but not correct sequence.
 
@@ -275,7 +290,7 @@ int lengthOfLIS(vector<int>& nums) {
 
 <br>
 
-#### 6. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
+### 6. Find First and Last Position of Element in Sorted Array (Lower Bound and Upper Bound)
 
 ```cpp
 int lowerBound(vector<int> & nums, int target, int n){
@@ -324,36 +339,7 @@ vector<int> searchRange(vector<int>& nums, int target) {
 
 <br>
 
-#### 7. Pow(x, n) (Fast exponentiation using Binary Search)
-
-```cpp
-double myPow(double x, int n) {
-    if(n==0) return 1;
-    if(n>0){
-        double res = 1;
-        while(n>0){
-            if(n&1) res*=x;
-            x*=x;
-            n>>=1;
-        }
-        return res;
-    }
-    else{
-        n = abs(n);
-        double res = 1;
-        while(n>0){
-            if(n&1) res*=1/x;
-            x*=x;
-            n>>=1;
-        }
-        return res;
-    }
-}
-```
-
-<br>
-
-#### 8. Find the missing number in Arithmetic Progression
+### 7. Find the missing number in Arithmetic Progression
 Given an array that represents elements of arithmetic progression in order. One element is missing in the progression, find the missing number.
 
 Input: arr[]  = {2, 4, 8, 10, 12, 14}
@@ -367,11 +353,13 @@ int findMissingUtil(int arr[], int low, int high, int diff){
   
     int mid = low + (high - low) / 2;
   
-    // The element just after the middle element is missing.
+    /* The element just after the middle element is missing*/
+    
     if (arr[mid + 1] - arr[mid] != diff)
         return (arr[mid] + diff);
   
-    // The element just before mid is missing
+    /* The element just before mid is missing */
+    
     if (mid > 0 && arr[mid] - arr[mid - 1] != diff)
         return (arr[mid - 1] + diff);
 
@@ -389,14 +377,14 @@ int findMissing(int arr[], int n) {
 
 <br>
 
-#### 9. Search in a Infinite Sorted Array (IMP for interview)
+### 8. Search in a Infinite Sorted Array (IMP for interview)
 
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int INFINITE = 100000;
 
-// return index
+
 int binarySearch(vector<int> & v, int start, int end, int val){
     while(start<=end){
         int mid = start + (end-start)/2;
@@ -407,6 +395,7 @@ int binarySearch(vector<int> & v, int start, int end, int val){
     return -1;
 }
 
+
 pair<int,int> find_start_end(vector<int> & v, int val){
     int start=0, end=1;
     while(val>end){
@@ -415,6 +404,7 @@ pair<int,int> find_start_end(vector<int> & v, int val){
     }
     return {start,end};
 }
+
 
 int main(){
     int val = 15;                    // ----> TO BE SEARCHED
@@ -430,7 +420,7 @@ int main(){
 
 <br>
 
-#### 10.  Minimum Difference element in sorted array
+### 9.  Minimum Difference element in sorted array
 
 ```cpp
 int binarySearch(vector<int> & v, int val){
@@ -450,7 +440,7 @@ int binarySearch(vector<int> & v, int val){
 
 <br>
 
-#### 11. Find K Closest Elements
+### 10. Find K Closest Elements
 Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order. An integer a is closer to x than an integer b if:
 1. |a - x| < |b - x|, or
 2. |a - x| == |b - x| and a < b
@@ -505,7 +495,7 @@ vector<int> findClosestElements(vector<int>& arr, int k, int x) {
 
 ## @ Binary Search on Answer (Tricky Questions)
 
-#### 1. Capacity To Ship Packages Within D Days 
+### 1. Capacity To Ship Packages Within D Days 
 A conveyor belt has packages that must be shipped from one port to another within D days. The ith package on the conveyor belt has a weight of weights[i]. Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship. Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within D days.
 
 ```cpp
@@ -552,8 +542,8 @@ int shipWithinDays(vector<int>& weights, int D) {
 
 <br>
 
-#### 2. Koko Eating Bananas 
-Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
+### 2. Koko Eating Bananas 
+There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
 
 **Example**
 Input: piles = [30,11,23,4,20], h = 5
@@ -592,9 +582,8 @@ int minEatingSpeed(vector<int>& piles, int h) {
 
 <br>
 
-#### 3. Minimum Number of Days to Make m Bouquets 
-Given an integer array bloomDay, an integer m and an integer k. We need to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden.
-The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet. Return the minimum number of days you need to wait to be able to make m bouquets from the garden. If it is impossible to make m bouquets return -1.
+### 3. Minimum Number of Days to Make m Bouquets 
+Given an integer array bloomDay, an integer m and an integer k. We need to make m bouquets. To make a bouquet, you need to use k adjacent flowers from the garden. The garden consists of n flowers, the ith flower will bloom in the bloomDay[i] and then can be used in exactly one bouquet. Return the minimum number of days you need to wait to be able to make m bouquets from the garden. If it is impossible to make m bouquets return -1.
 
 Input: bloomDay = [7,7,7,7,12,7,7], m = 2, k = 3
 
@@ -658,7 +647,7 @@ int minDays(vector<int>& bloomDay, int m, int k) {
 
 <br>
 
-#### 4. Find the Smallest Divisor Given a Threshold
+### 4. Find the Smallest Divisor Given a Threshold
 Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, divide all the array by it, and sum the division's result. Find the smallest divisor such that the result mentioned above is less than or equal to threshold. Each result of the division is rounded to the nearest integer greater than or equal to that element. (For example: 7/3 = 3 and 10/2 = 5).
 
 ```cpp
@@ -698,7 +687,7 @@ int smallestDivisor(vector<int>& nums, int threshold) {
 
 <br>
 
-#### 5. Sum of Mutated Array Closest to Target
+### 5. Sum of Mutated Array Closest to Target
 Given an integer array arr and a target value target, return the integer value such that when we change all the integers larger than value in the given array to be equal to value, the sum of the array gets as close as possible (in absolute difference) to target. In case of a tie, return the minimum such integer.
 
 ```cpp
@@ -749,7 +738,7 @@ int findBestValue(vector<int>& arr, int target) {
 
 <br>
 
-#### 6. Allocate minimum number of pages
+### 6. Allocate minimum number of pages
 You are given N number of books. Every ith book has Ai number of pages.You have to allocate books to M number of students. The task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value. Each book will be allocated to exactly one student. Each student has to be allocated at least one book.
 
 Note: Return -1 if a valid assignment is not possible, and allotment should be in contiguous order
@@ -810,7 +799,7 @@ int findPages(int arr[], int n, int m)
 
 <br>
 
-#### 7. Split Array Largest Sum
+### 7. Split Array Largest Sum
 Given an array nums which consists of non-negative integers and an integer m, you can split the array into m non-empty continuous subarrays. Write an algorithm to minimize the largest sum among these m subarrays.
 
 Input: nums = [7,2,5,10,8], m = 2
@@ -865,7 +854,7 @@ int splitArray(vector<int>& nums, int m) {
 
 <br>
 
-#### 8. WoodCutting Made Easy (IB)
+### 8. WoodCutting Made Easy (IB)
 
 [Question](https://www.interviewbit.com/problems/woodcutting-made-easy/)
 
@@ -911,7 +900,7 @@ int Solution::solve(vector<int> &A, int B) {
 
 ## @ Binary Search on Matrix
 
-#### 1. Search a 2D Matrix II
+### 1. Search a 2D Matrix II
 
 ![matrix](https://assets.leetcode.com/uploads/2020/11/24/searchgrid2.jpg)
 
@@ -930,7 +919,7 @@ bool searchMatrix(vector<vector<int>>& matrix, int target) {
 
 <br>
 
-#### 2. Kth Smallest Element in a Sorted Matrix (Binary Search on Answer)
+### 2. Kth Smallest Element in a Sorted Matrix (Binary Search on Answer)
 Given an n x n matrix where each of the rows and columns are sorted in ascending order, return the kth smallest element in the matrix.
 
 Approach: 
@@ -976,7 +965,7 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
 
 <br>
 
-#### 3. Median in a row-wise sorted Matrix
+### 3. Median in a row-wise sorted Matrix
 
 [Video Solution](https://www.youtube.com/watch?v=_4rxBuhyLXw)
 
@@ -992,7 +981,6 @@ pair<int,int> count(vector<vector<int>> & matrix, int val, int row, int col){
 }
 
 int median(vector<vector<int>> &matrix, int r, int c){
-
     int row = matrix.size(), col = matrix[0].size();
     int low = INT_MAX, high = INT_MIN;
 
@@ -1017,7 +1005,7 @@ int median(vector<vector<int>> &matrix, int r, int c){
 
 <br>
 
-#### 4. Row with max 1s (Best approach - O(m+n))
+### 4. Row with max 1s (Best approach - O(m+n))
 Given a boolean 2D array of n x m dimensions where each row is sorted. Find the 0-based index of the first row that has the maximum number of 1's.
 
 Approach: Instead of doing binary search in every row, we first check whether the row has more 1s than max so far. If the row has more 1s, then only count 1s in the row. Also, to count 1s in a row, we don't do binary search in complete row, we do search in before the index of last max.
@@ -1045,7 +1033,7 @@ int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
 
 ## Hard
 
-#### 1. Median of Two Sorted Arrays (Log(m+n) approach)
+### 1. Median of Two Sorted Arrays (Log(m+n) approach)
 
 [Video Solution](https://www.youtube.com/watch?v=ws98ud9uxl4)
 

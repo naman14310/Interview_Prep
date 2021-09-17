@@ -499,7 +499,79 @@ int maxProduct(vector<string>& words) {
 
 <br>
 
-#### 4. Compare Version Numbers
+#### 4. String to Integer (atoi)
+Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
+
+[Algorithm](https://leetcode.com/problems/string-to-integer-atoi/)
+
+```cpp
+class Solution {
+public:
+    int myAtoi(string s) {
+        int n = s.length();
+        long long num = 0;
+        
+        bool neg = false;
+        bool start = true;
+        bool boundary = false;
+        
+        int i=0;
+        
+        
+        /* Skipping leading white spaces if present */
+        
+        while(i<n and s[i]==' ')
+            i++;
+        
+        
+        /* Checking for negative sign if present */
+        
+        if(i<n and s[i]=='-'){
+            neg = true;
+            i++;
+        }
+        
+        
+        /* Skipping positive sign if present */
+        
+        else if(i<n and s[i]=='+') i++;
+        
+        
+        /* processing digits one by one */
+        
+        while(i<n and isdigit(s[i])){
+            
+            if(start and s[i]=='0'){
+                i++;
+                continue;
+            }
+            
+            start = false;
+            num = num*10 + s[i]-'0'; 
+            
+            if(num>INT_MAX){
+                boundary = true;
+                break;
+            }
+            i++;
+        }
+        
+        if(boundary){
+            if(neg) return INT_MIN;
+            else return INT_MAX;
+        }
+        else{
+            if(neg) return num*-1;
+            else return num;
+        }
+        
+    }
+};
+```
+
+<br>
+
+#### 5. Compare Version Numbers
 Compare two version numbers version1 and version2.
 1. If version1 > version2 return 1,
 2. If version1 < version2 return -1,

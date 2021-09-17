@@ -854,7 +854,92 @@ int splitArray(vector<int>& nums, int m) {
 
 <br>
 
-### 8. WoodCutting Made Easy (IB)
+### 8. Painter's Partition Problem (IB)
+Given 2 integers A and B and an array of integars C of size N. Element C[i] represents length of ith board. There are A painters available and each of them takes B units of time to paint 1 unit of board. Calculate and return minimum time required to paint all boards under the constraints that any painter will only paint contiguous sections of board. Return the ans % 10000003
+
+Input: A = 10, B = 1, C = [1, 8, 11, 3]
+Output: 11
+
+PS: Use unsigned long long datatype for variables created by us.
+
+```cpp
+bool isValid (int A, int B, vector<int>& C, unsigned long long mid){
+    int i=0, cnt=0;
+    unsigned long long time = 0;
+
+    while(i<C.size()){
+        
+        if(time+B*C[i]<=mid){
+            time += B*C[i];
+            i++;
+        }
+        else{
+            time=0;
+            cnt++;
+        }
+    }
+    cnt++;
+
+    return cnt<=A;
+}
+
+
+unsigned long long binarySearch (int A, int B, vector<int> &C, unsigned long long low, unsigned long long high){
+    unsigned long long ans = high;
+
+    while(low<=high){
+        unsigned long long mid = low + (high-low)/2;
+
+        if(isValid(A, B, C, mid)){
+            ans = mid;
+            high = mid-1;
+        }
+
+        else low = mid+1;
+    }
+
+    return ans;
+}
+
+
+int Solution::paint(int A, int B, vector<int> &C) {
+    int mod = 10000003;
+    B = B%mod;
+
+    unsigned long long mx = *max_element(C.begin(), C.end());
+    unsigned long long sum = accumulate(C.begin(), C.end(), 0);
+
+    unsigned long long low = (B*mx);
+    unsigned long long high = (B*sum);
+
+    if(A==1) 
+        return high%mod;
+
+    unsigned long long maxLimit =  binarySearch(A, B, C, low, high);
+
+    int i=0;
+    unsigned long long time=0, maxTime=0;
+
+    while(i<C.size()){
+        
+        if(time+B*C[i]<=maxLimit){
+            time += B*C[i];
+            i++;
+        }
+        else{
+            maxTime = max(time, maxTime);
+            time=0;
+        }
+    }
+    maxTime = max(time, maxTime);
+    
+    return maxTime%mod;
+}
+```
+
+<br>
+
+### 9. WoodCutting Made Easy (IB)
 
 [Question](https://www.interviewbit.com/problems/woodcutting-made-easy/)
 

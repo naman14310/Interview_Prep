@@ -969,6 +969,8 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
 
 [Video Solution](https://www.youtube.com/watch?v=_4rxBuhyLXw)
 
+Hint: Find minimum mid such that Left part (smaller then or equal to mid) must be greater then total/2
+
 ```cpp
 
 /* It will return count of elements smaller then or equal to mid */

@@ -499,6 +499,78 @@ int maxProduct(vector<string>& words) {
 
 <br>
 
+#### 4. Compare Version Numbers
+Compare two version numbers version1 and version2.
+1. If version1 > version2 return 1,
+2. If version1 < version2 return -1,
+3. otherwise return 0.
+
+Here is an example of version numbers ordering:
+
+0.1 < 1.1 < 1.2 < 1.13 < 1.13.4
+
+```cpp
+int isGreater (string & s1, string & s2){
+    if(s1.length()>s2.length()) return 1;
+    if(s1.length()<s2.length()) return -1;
+ 
+    for(int i=0; i<s1.length(); i++){
+        if(s1[i]>s2[i]) return 1;
+        if(s1[i]<s2[i]) return -1;
+    }
+ 
+    return 0;
+}
+ 
+int Solution::compareVersion(string A, string B) {
+    int i=0 , j=0;
+ 
+    while(i<A.length() and j<B.length()){
+ 
+        string s1 = "", s2 = "";
+        bool start = false;
+ 
+        while(A[i]!='.' and i<A.length()){
+            if (!start and A[i]=='0'){i++; continue;}         // --> remove leading zeros
+            s1.push_back(A[i]);
+            i++;
+            start = true;
+        }
+ 
+        i++;
+        start = false;
+ 
+        while(B[j]!='.' and j<B.length()){
+            if (!start and B[j]=='0'){j++; continue;}          // --> remove leading zeros
+            s2.push_back(B[j]);
+            j++;
+            start = true;
+        }
+ 
+        j++;
+        
+        int comp = isGreater(s1, s2);
+        if(comp==1) return 1;
+        if(comp==-1) return -1;
+    }
+ 
+    while(i<A.length()){
+        if(A[i]!='0' and A[i]!='.') return 1;
+        i++;
+    }
+ 
+    while(j<B.length()){
+        if(B[j]!='0' and B[j]!='.') return -1;
+        j++;
+    }
+ 
+    return 0;
+}
+```
+
+<br>
+
+
 ## Hard
 
 #### 1. Orderly Queue

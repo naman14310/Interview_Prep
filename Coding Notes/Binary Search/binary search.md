@@ -858,6 +858,7 @@ int splitArray(vector<int>& nums, int m) {
 Given 2 integers A and B and an array of integars C of size N. Element C[i] represents length of ith board. There are A painters available and each of them takes B units of time to paint 1 unit of board. Calculate and return minimum time required to paint all boards under the constraints that any painter will only paint contiguous sections of board. Return the ans % 10000003
 
 Input: A = 10, B = 1, C = [1, 8, 11, 3]
+
 Output: 11
 
 PS: Use unsigned long long datatype for variables created by us.

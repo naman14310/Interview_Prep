@@ -970,36 +970,67 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
 [Video Solution](https://www.youtube.com/watch?v=_4rxBuhyLXw)
 
 ```cpp
-pair<int,int> count(vector<vector<int>> & matrix, int val, int row, int col){
-    int leftCount = 0, rightCount = 0;
+
+/* It will return count of elements smaller then or equal to mid */
+
+int small_count (vector<vector<int>> &A, int mid){
+    int row = A.size(), col = A[0].size();  
+    int cnt = 0;
+
     for(int i=0; i<row; i++){
-        int pos = upper_bound(matrix[i].begin(), matrix[i].end(), val) - matrix[i].begin();
-        leftCount += pos;
-        rightCount += col-pos;
+        int idx = upper_bound(A[i].begin(), A[i].end(), mid) - A[i].begin();
+        cnt += idx; 
     }
-    return {leftCount, rightCount};
+
+    return cnt;
 }
 
-int median(vector<vector<int>> &matrix, int r, int c){
-    int row = matrix.size(), col = matrix[0].size();
-    int low = INT_MAX, high = INT_MIN;
 
-    for(int i=0; i<row; i++){
-        low = min(low, matrix[i][0]);
-        high = max(high, matrix[i][col-1]);
-    }
+int binarySearch (vector<vector<int>> &A, int low, int high, int total){
+    int ans = high;
+
+    /* 
+        Divide all elements into left and right part.
+        Left part will contain element smaller then or equal to mid.
+        Right part will contain elemets greater then mid.
+
+        Logic: Find minimum mid such that Left part must be greater then total/2
+    */
+
 
     while(low<=high){
         int mid = low + (high-low)/2;
-        auto p = count(matrix, mid, row, col);
+        int leftcnt = small_count(A, mid);
 
-        int lc = p.first;
-        int rc = p.second;
+        /* 
+            If cnt > total/2 : Then mid might be the ans, 
+            so update ans and reduce our search space to left side. 
+        */
 
-        if(lc-1<rc) low = mid+1;
-        else high = mid-1;
+        if(leftcnt>total/2){
+            ans = mid;
+            high = mid-1;
+        }
+
+        /* Else reduce search space to right side */ 
+
+        else low = mid+1;
     }
-    return low;
+
+    return ans;
+}
+
+
+int Solution::findMedian(vector<vector<int>> &A) {
+    int row = A.size(), col = A[0].size();
+    int low = INT_MAX, high = INT_MIN;
+
+    for(int i=0; i<row; i++){
+        low = min(low, A[i][0]);
+        high = max(high, A[i][col-1]);
+    }
+
+    return binarySearch (A, low, high, row*col);
 }
 ```
 

@@ -255,7 +255,7 @@ Hint: We are only interested in the last value of this lps array because it show
 Approach:
 1. Append rev of same string with one seperator i.e.  s = s + "#" + rev(s)
 2. Find lps array of the newly formed string.
-3. Our answer will be n-lcs.back(), where n is the length of original string.
+3. Our answer will be n-lps.back(), where n is the length of original string.
 
 ```cpp
 vector<int> compute_lps(string s){

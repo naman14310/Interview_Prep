@@ -305,6 +305,46 @@ bool canConstruct(string s, int k) {
 
 <br>
 
+### 10. Reverse Words in a String
+Return the string A after reversing the string word by word.
+
+Input: s = "the sky is blue"
+
+Output: "blue is sky the"
+
+```cpp
+string reverseWords(string s) {
+    string res = "";
+    string word = "";
+
+    int i=s.length()-1;
+
+    while(i>=0){
+        if(s[i]!=' ') word.push_back(s[i]);
+
+        else if(word!=""){
+            reverse(word.begin(), word.end());
+            res += word + " ";
+            word = "";
+        }
+
+        i--;
+    }
+
+    if(word!=""){
+        reverse(word.begin(), word.end());
+        res+=word;
+    } 
+
+    while(res.length()>0 and res.back()==' ')       // --> Removing extra spaces from back
+        res.pop_back();
+
+    return res;
+}
+```
+
+<br>
+
 
 ## @ Medium
 

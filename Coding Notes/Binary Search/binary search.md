@@ -1150,7 +1150,7 @@ int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
 
 <br>
 
-## Hard
+## @ Hard
 
 ### 1. Median of Two Sorted Arrays (Log(m+n) approach)
 

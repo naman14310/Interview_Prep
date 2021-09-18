@@ -207,6 +207,8 @@ Input: A = "AACECAAAA"
 
 Output: 2
 
+<br>
+
 **Approach 1: Naive Algo - O(n2)**
 
 *Min insertion at front == Min deletion from back*

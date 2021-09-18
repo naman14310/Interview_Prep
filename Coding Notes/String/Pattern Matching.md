@@ -203,7 +203,7 @@ int strStr(string s, string p) {
 ### 3. Minimum Characters required to make a String Palindromic (Tricky)
 Given an string A. The only operation allowed is to insert  characters in the beginning of the string. Find how many minimum characters are needed to be inserted to make the string a palindrome string.
 
-[LeetCode Link](https://leetcode.com/problems/shortest-palindrome/)
+[LeetCode Link](https://leetcode.com/problems/shortest-palindrome/) - return new string instead of Min char count
 
 Input: A = "AACECAAAA"
 

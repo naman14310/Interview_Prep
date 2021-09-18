@@ -10,30 +10,9 @@ Some important string functions:
 
 <br>
 
-## Easy
+## @ Easy
 
-#### 1. Search All (Find method)
-Implement a function that return all occurances of subtring in a given string
-
-```cpp
-vector<int> stringSearch(string big,string small){
-    vector<int> result;
-    int index = 0;
-    
-    while(true){
-        index = big.find(small, index);
-        if(index==-1) break;
-        
-        result.push_back(index);
-        index++;
-    }
-    return result;
-}
-```
-
-<br>
-
-#### 2. Tokenize string (stringstream)
+### 1. Tokenize string (stringstream)
 
 ```cpp
 int main(){
@@ -56,7 +35,7 @@ int main(){
 
 <br>
 
-#### 3. Run Length Encoding
+### 2. Run Length Encoding
 
 ```cpp
 string compressString(const string &str){   
@@ -85,7 +64,7 @@ string compressString(const string &str){
 
 <br>
 
-#### 4. String Normalization
+### 3. String Normalization
 Convert given string to Camelcase
 
 ```cpp
@@ -115,7 +94,7 @@ string normalize(const string &sentence) {
 
 <br>
 
-#### 5. Palindrome break
+### 4. Palindrome break
 Convert a given palindromic string containing characters a and b to non palindrome (which is lexicographically smallest) by replacing only one character.
 
 ```cpp
@@ -137,7 +116,7 @@ string breakPalindrome(string s) {
 
 <br>
 
-#### 6. Remove Palindromic Subsequences (Tricky)
+### 5. Remove Palindromic Subsequences (Tricky)
 You are given a string s consisting only of letters 'a' and 'b'. In a single step you can remove one palindromic subsequence from s. Return the minimum number of steps to make the given string empty.
 
 ```cpp
@@ -163,7 +142,7 @@ int removePalindromeSub(string s) {
 
 <br>
 
-#### 7. Count Binary Substrings
+### 6. Count Binary Substrings
 Give a binary string s, return the number of non-empty substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively. Substrings that occur multiple times are counted the number of times they occur.
 
 ```cpp
@@ -203,7 +182,7 @@ int countBinarySubstrings(string s) {
 
 <br>
 
-#### 8. Roman to Integer
+### 7. Roman to Integer
 
 ```cpp
 int romanToInt(string s) {
@@ -269,42 +248,7 @@ int romanToInt(string s) {
 
 <br>
 
-#### 9. Rotate String (Smart Solution)
-We are given two strings, s and goal. A shift on s consists of taking string s and moving the leftmost character to the rightmost position. For example, if s = 'abcde', then it will be 'bcdea' after one shift on s. Return true if and only if s can become goal after some number of shifts on s.
-
-```cpp
-bool rotateString(string s, string goal) {
-    if (s.length()!=goal.length()) return false; 
-    s += s;
-    return s.find(goal)!=-1;
-}
-```
-
-<br>
-
-#### 10. Repeated Substring Pattern (Tricky)
-Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.
-
-Input: s = "abab"
-
-Output: true
-
-Approach:  If we can find a rotation m which is larger than 0 and less than n then the input string consists of repeated substrings.
-
-```cpp
-bool repeatedSubstringPattern(string s) {
-    if(s.length()<=1) return false;
-
-    string s2 = s+s;
-    int idx = s2.find(s, 1);
-
-    return idx<s.length(); 
-}
-```
-
-<br>
-
-#### 11. Longest Palindrome
+### 8. Longest Palindrome
 Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
 
 Input: s = "abccccdd"
@@ -335,7 +279,7 @@ int longestPalindrome(string s) {
 
 <br>
 
-#### 12. Construct K Palindrome Strings
+### 9. Construct K Palindrome Strings
 Given a string s and an integer k. You should construct k non-empty palindrome strings using all the characters in s. Return True if you can use all the characters in s to construct k palindrome strings or False otherwise.
 
 Input: s = "aabababccdsb", k = 3
@@ -361,9 +305,10 @@ bool canConstruct(string s, int k) {
 
 <br>
 
-## Medium
 
-#### 1. Minimum Add to Make Parentheses Valid
+## @ Medium
+
+### 1. Minimum Add to Make Parentheses Valid
 You are given a parentheses string s. In one move, you can insert a parenthesis at any position of the string. Return the minimum number of moves required to make s valid.
 
 Input: s = "()))(("
@@ -431,7 +376,7 @@ int minAddToMakeValid(string s) {
 
 <br>
 
-#### 2. Delete Operation for Two Strings (LCS Variation)
+### 2. Delete Operation for Two Strings (LCS Variation)
 Given two strings word1 and word2, return the minimum number of steps required to make word1 and word2 the same.
 
 ```cpp
@@ -457,7 +402,7 @@ int minDistance(string word1, string word2) {
 
 <br>
 
-#### 3. Maximum Product of Word Lengths
+### 3. Maximum Product of Word Lengths
 Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. If no such two words exist, return 0.
 
 Input: words = ["abcw","baz","foo","bar","xtfn","abcdef"]
@@ -499,7 +444,7 @@ int maxProduct(vector<string>& words) {
 
 <br>
 
-#### 4. String to Integer (atoi)
+### 4. String to Integer (atoi)
 Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
 
 [Algorithm](https://leetcode.com/problems/string-to-integer-atoi/)
@@ -571,7 +516,7 @@ public:
 
 <br>
 
-#### 5. Compare Version Numbers
+### 5. Compare Version Numbers
 Compare two version numbers version1 and version2.
 1. If version1 > version2 return 1,
 2. If version1 < version2 return -1,
@@ -643,9 +588,9 @@ int Solution::compareVersion(string A, string B) {
 <br>
 
 
-## Hard
+## @ Hard
 
-#### 1. Orderly Queue
+### 1. Orderly Queue
 You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string. Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
 
 Input: s = "cba", k = 1

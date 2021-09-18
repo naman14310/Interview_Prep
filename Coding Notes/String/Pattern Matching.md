@@ -196,3 +196,92 @@ int strStr(string s, string p) {
 }
 ```
 
+<br>
+
+### 3. Minimum Characters required to make a String Palindromic (Tricky)
+Given an string A. The only operation allowed is to insert  characters in the beginning of the string. Find how many minimum characters are needed to be inserted to make the string a palindrome string.
+
+Input: A = "AACECAAAA"
+
+Output: 2
+
+**Approach 1: Naive Algo - O(n2)**
+
+*Min insertion at front == Min deletion from back*
+
+Hence, one by one pop chars from back at chk if string is palindrome or not.
+
+```cpp
+bool isPalindrome (string &s){
+    int i=0, j=s.length()-1;
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
+    return true;
+}
+ 
+ 
+int Solution::solve(string A) {
+    int n = A.length();
+    if(isPalindrome(A)) return 0;
+    
+    int cnt=0;
+
+    while(A.length()>0){
+        A.pop_back();
+        cnt++;
+
+        if(isPalindrome(A))
+            return cnt;
+    }
+ 
+    return n-1;
+}
+```
+
+**Approach 2: Using LPS array - O(n)**
+
+[Explaination](https://www.geeksforgeeks.org/minimum-characters-added-front-make-string-palindrome/)
+
+Hint: We are only interested in the last value of this lps array because it shows us the largest suffix of the reversed string that matches the prefix of the original string.
+
+Approach:
+1. Append rev of same string with one seperator i.e.  s = s + "#" + rev(s)
+2. Find lps array of the newly formed string.
+3. Our answer will be n-lcs.back(), where n is the length of original string.
+
+```cpp
+vector<int> compute_lps(string s){
+    int n = s.length();
+    vector<int> lps (n, 0);
+    int i=0, j=1;
+
+    while(j<n){
+
+        if(s[i]==s[j]){
+            lps[j] = i+1;
+            i++; j++;
+        }
+        else{
+            if(i>0) i = lps[i-1];
+            else j++;
+        }
+    }
+
+    return lps;
+}
+
+
+int Solution::solve(string A) {
+    int n = A.length();
+    
+    string rev = A;
+    reverse(rev.begin(), rev.end());
+
+    A += "#" + rev;   // --> append rev of same string with one seprator
+
+    vector<int> lps = compute_lps(A);
+    return n-lps.back();
+}
+```

@@ -66,6 +66,8 @@ bool repeatedSubstringPattern(string s) {
 
 ## @ KMP Algo
 
+[KMP Explaination](https://www.youtube.com/watch?v=4jY57Ehc14Y)
+
 ### 1. Longest Prefix Suffix
 Given a string of characters, find the length of the longest proper prefix which is also a proper suffix.
 
@@ -120,3 +122,77 @@ int lps(string s) {
     return lps.back();
 }
 ```
+
+<br>
+
+### 2. Substring Match (kmp)
+Return the index of the first occurrence of pattern p in a given string s.
+
+```cpp
+/* Return: Longest Prefix Suffix vector */
+
+vector<int> compute_LPS (string &p){
+    vector<int> lps (p.size(), 0);
+    int i=0, j=1;
+
+    while(j<p.size()){
+
+        if(p[i]==p[j]){
+            lps[j] = i+1;
+            i++; j++;    
+        }
+        else{
+
+            if(i>0) 
+                i = lps[i-1];
+            else 
+                j++;
+        }
+    }
+
+    return lps;
+}
+
+
+int KMP (string s, string p, vector<int> & lps){
+
+    /* i will iterate over s and j will iterate over p */
+
+    int i=0, j=0;
+
+    while(i<s.length() and j<p.length()){
+
+        /* If both cur_i and cur_j matches, increment i and j */
+
+        if(s[i]==p[j]){
+            i++; j++;
+        }
+
+        /* Else shift j to lps[j-1] if j>0 or simply increment i if j==0 */
+
+        else{
+
+            if(j==0)
+                i++;
+            else
+                j = lps[j-1];
+        }
+    }
+
+
+    /* If whole pattern get matched return i-len(p) for getting start index of pattern */
+
+    if (j==p.length())
+        return i-p.length();
+    else 
+        return -1;
+}
+
+
+
+int strStr(string s, string p) {
+    vector<int> lps = compute_LPS (p);
+    return KMP (s, p, lps);
+}
+```
+

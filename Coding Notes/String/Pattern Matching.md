@@ -68,6 +68,8 @@ bool repeatedSubstringPattern(string s) {
 
 [KMP Explaination](https://www.youtube.com/watch?v=4jY57Ehc14Y)
 
+<br>
+
 ### 1. Longest Prefix Suffix
 Given a string of characters, find the length of the longest proper prefix which is also a proper suffix.
 

@@ -293,3 +293,24 @@ int Solution::solve(string A) {
     return n-lps.back();
 }
 ```
+
+<br>
+
+### 4. Minimum Appends for Palindrome (At end)
+Given a string A consisting of lowercase characters. Return minimum characters to be appended (insertion at end) to make the string A a palindrome.
+
+Hint: Same as above if we reverse the string.
+
+```cpp
+int Solution::solve(string A) {
+    int n = A.length();
+    
+    string rev = A;
+    reverse(rev.begin(), rev.end());
+
+    rev += "#" + A;   // --> append rev of same string with one seprator
+
+    vector<int> lps = compute_lps(rev);
+    return n-lps.back();
+}
+```

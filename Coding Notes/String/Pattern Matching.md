@@ -244,6 +244,8 @@ int Solution::solve(string A) {
 }
 ```
 
+<br>
+
 **Approach 2: Using LPS array - O(n)**
 
 [Explaination](https://www.geeksforgeeks.org/minimum-characters-added-front-make-string-palindrome/)

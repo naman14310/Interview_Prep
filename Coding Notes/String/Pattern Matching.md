@@ -75,8 +75,10 @@ Output: 2
 
 **Approach for Filling LPS array**
 1. Initialise two pointers i=0 and j=1. j will points to the character we are currently processing and i will points to prev matched prefix.
-2. If s[i]==s[j]: lps[i] = lps[i]+1 and increment both i and j
-3. Else: decrement i till i>0 and s[i]!=s[j]
+2. If s[i]==s[j]: 
+        lps[j] = i+1 and increment both i and j
+3. Else: 
+        decrement i till i>0 and s[i]!=s[j]
 
 ```cpp
 int lps(string s) {

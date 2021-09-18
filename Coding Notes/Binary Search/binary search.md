@@ -1259,3 +1259,62 @@ public:
     }
 };
 ```
+
+<br>
+
+### 2. Minimum Number of Operations to Make Array Continuous 
+You are given an integer array nums. In one operation, you can replace any element in nums with any integer. nums is considered continuous if both of the following conditions are fulfilled:
+1. All elements in nums are unique.
+2. The difference between the maximum element and the minimum element in nums equals nums.length - 1.
+
+Return the minimum number of operations to make nums continuous.
+
+Input: nums = [1,2,3,5,6]
+
+Output: 1
+
+[Explaination with pictures](https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/discuss/1470900/Python-Binary-Search-explanation-with-pictures.)
+
+Hint: Traverse the list A, for the current number a, we need to find out how many unique numbers in the range [a, a + n - 1] (inclusively), present in A.
+
+```cpp
+int minOperations(vector<int>& nums) {
+    int n = nums.size();
+    int ans = n;
+
+    sort(nums.begin(), nums.end());
+
+    vector<int> unique (n+1, 0);          // --> It'll give us cnt of unique numbers in a given range in O(1)
+    unique[0] = 1;
+
+    for(int i=1; i<n; i++){
+
+        unique[i] = unique[i-1];
+
+        if(nums[i]!=nums[i-1])
+            unique[i]++;
+    }
+
+    unique[n] = unique[n-1];
+
+    /* 
+        Iterating over sorted nums, and cnt unqiue elements present in array of range [start, end] 
+        by making every element start in each iteration.
+    */
+
+    for(int i=0; i<n; i++){
+
+        int start = nums[i];
+        int end = start + n-1;
+
+        int ub = upper_bound(nums.begin(), nums.end(), end) - nums.begin();
+        int end_idx = ub-1;
+
+        int unq_cnt = unique[end_idx]-unique[i]+1;
+        ans = min(ans, n-unq_cnt);
+    }
+
+    return ans;
+
+}
+```

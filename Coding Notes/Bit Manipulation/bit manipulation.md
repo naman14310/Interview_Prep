@@ -386,6 +386,32 @@ int rangeBitwiseAnd(int left, int right) {
 
 <br>
 
+### 13. Count Total Set Bits
+Given a positive integer A, the task is to count the total number of set bits in the binary representation of all the numbers from 1 to A. Return the count modulo 109 + 7.
+
+```cpp
+int Solution::solve(int A) {
+    long long setBits = 0;
+    long long mod = 1000000007;
+
+    for(int i=0; i<31; i++){
+        long long jump = pow(2, i);
+
+        long long complete_cycle = (A+1)/(jump*2);
+        long long partial_cycle = (A+1)%(jump*2);
+
+        long long b1 = complete_cycle*pow(2,i);
+        long long b2 = partial_cycle>jump ? partial_cycle-jump : 0;
+
+        setBits = (setBits + (b1%mod + b2%mod)%mod)%mod;
+    }
+    
+    return setBits;
+}
+```
+
+<br>
+
 
 ## @ Problems on XOR
 

@@ -154,7 +154,34 @@ int number_of_changed_bits(int a, int b){
 
 <br>
 
-### 5. Power of Two
+### 5. Total Hamming Distance (Tricky)
+Given an integer array nums, return the sum of Hamming distances between all the pairs of the integers in nums.
+
+Hint: At every bit positions, find zero and one count. Then contribution of that position in hamming distance will be, zero_cnt * one_cnt.
+
+```cpp
+int totalHammingDistance(vector<int>& nums) {
+   int res = 0;
+
+   for(int i=0; i<32; i++){
+       int zero = 0, one = 0;
+       int mask = 1<<i;
+
+       for(int n : nums){
+           if(n&mask) one++;
+           else zero++;
+       }
+
+       res += one * zero;
+   }
+
+   return res;
+}
+```
+
+<br>
+
+### 6. Power of Two
 
 Hint: If a number is power of 2 then it has only 1 set bit in its binary representation
 
@@ -184,7 +211,7 @@ bool isPowerOfTwo(int n) {
 
 <br>
 
-### 6. Power of Four
+### 7. Power of Four
 
 ```cpp
 bool isPowerOfFour(int n) {
@@ -194,7 +221,7 @@ bool isPowerOfFour(int n) {
 
 <br>
 
-### 7. Binary Number with Alternating Bits
+### 8. Binary Number with Alternating Bits
 Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
 
 ```cpp
@@ -224,7 +251,7 @@ bool hasAlternatingBits(int n) {
 
 <br>
 
-### 8. Counting Bits
+### 9. Counting Bits
 Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
 
 Input: n = 5
@@ -287,7 +314,56 @@ vector<int> countBits(int n) {
 
 <br>
 
-### 9. Number Complement
+### 10. Count Total Set Bits
+Given a positive integer A, the task is to count the total number of set bits in the binary representation of all the numbers from 1 to A. Return the count modulo 10^9 + 7.
+
+```cpp
+int Solution::solve(int A) {
+    long long setBits = 0;
+    long long mod = 1000000007;
+
+    for(int i=0; i<31; i++){
+        long long jump = pow(2, i);
+
+        long long complete_cycle = (A+1)/(jump*2);
+        long long partial_cycle = (A+1)%(jump*2);
+
+        long long b1 = complete_cycle*pow(2,i);
+        long long b2 = partial_cycle>jump ? partial_cycle-jump : 0;
+
+        setBits = (setBits + (b1%mod + b2%mod)%mod)%mod;
+    }
+    
+    return setBits;
+}
+```
+
+<br>
+
+### 11. Reverse Bits
+Reverse bits of a given 32 bits unsigned integer.
+
+```cpp
+uint32_t reverseBits(uint32_t n) {
+   uint32_t rev = 0;
+
+   for(int i=0; i<32; i++){
+       int bit = n&1;
+       rev = rev|bit;
+
+       n>>=1;
+
+       if(i==31) break;
+       rev<<=1;
+   }
+
+   return rev;
+}
+```
+
+<br>
+
+### 12. Number Complement
 The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation. Given an integer num, return its complement.
 
 ```cpp
@@ -309,7 +385,7 @@ int findComplement(int num) {
 
 <br>
 
-### 10. Check If a String Contains All Binary Codes of Size K
+### 13. Check If a String Contains All Binary Codes of Size K
 Given a binary string s and an integer k. Return true if every binary code of length k is a substring of s. Otherwise, return false.
 
 Input: s = "00110110", k = 2
@@ -342,34 +418,7 @@ bool hasAllCodes(string s, int k) {
 
 <br>
 
-### 11. Total Hamming Distance (Tricky)
-Given an integer array nums, return the sum of Hamming distances between all the pairs of the integers in nums.
-
-Hint: At every bit positions, find zero and one count. Then contribution of that position in hamming distance will be, zero_cnt * one_cnt.
-
-```cpp
-int totalHammingDistance(vector<int>& nums) {
-   int res = 0;
-
-   for(int i=0; i<32; i++){
-       int zero = 0, one = 0;
-       int mask = 1<<i;
-
-       for(int n : nums){
-           if(n&mask) one++;
-           else zero++;
-       }
-
-       res += one * zero;
-   }
-
-   return res;
-}
-```
-
-<br>
-
-### 12. Bitwise AND of Numbers Range
+### 14. Bitwise AND of Numbers Range (Tricky)
 Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.
 
 [Explaination](https://leetcode.com/problems/bitwise-and-of-numbers-range/discuss/56721/2-line-Solution(the-fastest)-with-detailed-explanation)
@@ -386,27 +435,70 @@ int rangeBitwiseAnd(int left, int right) {
 
 <br>
 
-### 13. Count Total Set Bits
-Given a positive integer A, the task is to count the total number of set bits in the binary representation of all the numbers from 1 to A. Return the count modulo 109 + 7.
+### 15. Palindromic Binary Representation (BFS approach)
+Given an integer A find the Ath number whose binary representation is a palindrome.
+
+[Explaination-GFG](https://www.geeksforgeeks.org/find-n-th-number-whose-binary-representation-palindrome/)
+
+Hint: Initially push "11" to the queue. Then for every popped string, we have following choices:
+1. If curr string is of even length then add “0” and “1” at the mid of curr string and add it into the queue.
+2. if curr string is of odd length then add mid char of the curr string into the resultant string and then add it into the queue.
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/20200810214232/newOne-200x193.PNG)
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/20200810214239/newtwo-300x277.PNG)
 
 ```cpp
 int Solution::solve(int A) {
-    long long setBits = 0;
-    long long mod = 1000000007;
+    if(A==1) return 1;
 
-    for(int i=0; i<31; i++){
-        long long jump = pow(2, i);
+    queue<string> q;
+    q.push("11");
 
-        long long complete_cycle = (A+1)/(jump*2);
-        long long partial_cycle = (A+1)%(jump*2);
+    int cnt = 1;
+    string res = "";
 
-        long long b1 = complete_cycle*pow(2,i);
-        long long b2 = partial_cycle>jump ? partial_cycle-jump : 0;
+    while(!q.empty()){
+        res = q.front(); q.pop();
+        cnt++;
 
-        setBits = (setBits + (b1%mod + b2%mod)%mod)%mod;
+        if(cnt==A) break;
+
+        int len = res.length();
+        int mid = len/2;
+        
+        /* If len is odd, then push middle element in middle */
+        
+        if(len&1){
+            string ch = "";
+            ch.push_back(res[mid]);
+            res.insert(mid, ch);
+            q.push(res);
+        }
+        
+        /* Else if len is even, push "0" and "1" in middle */
+        
+        else{
+            string res1 = res, res2 = res;
+            res1.insert(mid, "0");
+            res2.insert(mid, "1");
+            q.push(res1);
+            q.push(res2);
+        }
     }
-    
-    return setBits;
+
+    int ans = 0;
+
+    for(int i=res.length()-1; i>=0; i--){
+
+        int bit = res[i]-'0';
+        ans = ans|bit;
+
+        if(i==0) break;
+        ans<<=1;
+    }
+
+    return ans;
 }
 ```
 
@@ -446,7 +538,7 @@ void toggle(int n, int i){
 
 <br>
 
-### 3. Compute XOR from 1 to n
+### 3. Compute XOR from 1 to n (Direct)
 
 ```cpp
 /* Direct XOR of all numbers from 1 to n */

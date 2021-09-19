@@ -717,6 +717,40 @@ vector<int> sortArrayByParityII(vector<int>& nums) {
 
 <br>
 
+#### 11. Array 3 Pointers
+You are given 3 sorted arrays A, B and C. Find i, j, k such that : max(abs(A[i] - B[j]), abs(B[j] - C[k]), abs(C[k] - A[i])) is minimized.
+
+Input: A = [1, 4, 10], B = [2, 15, 20], C = [10, 12]
+
+Output: 5
+
+Hint: Find 3 closest numbers such tha mx-mn should be minimum
+
+```cpp
+int Solution::minimize(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
+    int ans = INT_MAX;
+    int i=0, j=0, k=0;
+
+    while(i<A.size() and j<B.size() and k<C.size()){
+
+        int mx = max({A[i], B[j], C[k]});
+        int mn = min({A[i], B[j], C[k]});
+
+        ans = min(ans, abs(mx-mn));
+
+        if(A[i]==mn) i++;
+        else if(B[j]==mn) j++;
+        else k++;
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+
+
 ## Hard
 
 #### 1. Trapping Rain Water (Best approach using two pointers) - O(n) | O(1)

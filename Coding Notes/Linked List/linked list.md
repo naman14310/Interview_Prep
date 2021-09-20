@@ -1053,7 +1053,7 @@ Node* segregate(Node *head) {
 
 
 
-## @ Problems on Conversion of Linked List to Trees and vice versa
+## @ Linked List & Trees
 
 ### 1. Convert Sorted List to Binary Search Tree
 

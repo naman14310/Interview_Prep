@@ -110,7 +110,7 @@ int evalRPN(vector<string>& tokens) {
 
 
 
-### @ Parenthesis Based Questions
+## @ Parenthesis Based Questions
 
 ### 1. Valid Parentheses
 
@@ -291,7 +291,7 @@ int scoreOfParentheses(string s) {
 <br>
 
 
-### @ Hard to guess as Stack
+## @ Hard to guess as Stack
 
 ### 1. Remove All Adjacent Duplicates in String II
 You are given a string s and an integer k, a k duplicate removal consists of choosing k adjacent and equal letters from s and removing them, causing the left and the right side of the deleted substring to concatenate together. Return the final string after all such duplicate removals have been made. 

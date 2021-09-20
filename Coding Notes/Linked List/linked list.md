@@ -195,7 +195,41 @@ ListNode *partition(ListNode *head, int x) {
 
 <br>
 
-### 7. Add Two Numbers
+### 7. Rotate List
+Given the head of a linked list, rotate the list to the right by k places.
+
+```cpp
+ListNode* rotateRight(ListNode* head, int k) {        
+    if(!head or !head->next) return head;
+
+    ListNode* temp = head;
+    int n = 1;
+    while(temp->next){
+        n++;
+        temp = temp->next;
+    }
+
+    k = n - (k % n);
+
+    if(k==0) return head;
+
+    temp->next = head;      /* Joining tail to head */
+
+    ListNode* head2 = head, *prev = NULL;
+    for(int i=1; i<=k ; i++){
+        prev = head2;
+        head2 = head2->next;
+    }
+
+    prev->next =  NULL;
+    return head2;
+}
+```
+
+<br>
+
+
+### 8. Add Two Numbers
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 
 ```cpp
@@ -266,7 +300,7 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 
 <br>
 
-### 8. Merge k Sorted Lists
+### 9. Merge k Sorted Lists
 
 Approach: 
 
@@ -499,6 +533,9 @@ ListNode* reverseKGroup(ListNode* head, int k) {
     return recurse(head, k);
 }
 ```
+
+<br>
+
 
 
 ## @ Node Removal or Deletion
@@ -907,41 +944,7 @@ void reorderList(ListNode* head) {
 
 <br>
 
-### 4. Rotate List
-Given the head of a linked list, rotate the list to the right by k places.
-
-```cpp
-ListNode* rotateRight(ListNode* head, int k) {        
-    if(!head or !head->next) return head;
-
-    ListNode* temp = head;
-    int n = 1;
-    while(temp->next){
-        n++;
-        temp = temp->next;
-    }
-
-    k = n - (k % n);
-
-    if(k==0) return head;
-
-    temp->next = head;      /* Joining tail to head */
-
-    ListNode* head2 = head, *prev = NULL;
-    for(int i=1; i<=k ; i++){
-        prev = head2;
-        head2 = head2->next;
-    }
-
-    prev->next =  NULL;
-    return head2;
-}
-```
-
-<br>
-
-
-### 5. Flattening a Linked List 
+### 4. Flattening a Linked List 
 Given a Linked List of size N, where every node represents a sub-linked-list and contains two pointers:
 1. a next pointer to the next node,
 2. a bottom pointer to a linked list where this node is head.
@@ -1006,7 +1009,7 @@ Node *flatten(Node *root){
 
 <br>
 
-### 6. Sort a linked list of 0s, 1s and 2s by changing links
+### 5. Sort a linked list of 0s, 1s and 2s by changing links
 
 Hint: To avoid many null checks, we use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
 
@@ -1045,6 +1048,9 @@ Node* segregate(Node *head) {
     return dummy0->next;
 }
 ```
+
+<br>
+
 
 
 ## @ Problems on Conversion of Linked List to Trees and vice versa

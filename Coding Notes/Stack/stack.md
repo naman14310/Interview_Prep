@@ -109,7 +109,7 @@ int evalRPN(vector<string>& tokens) {
 <br>
 
 ### 5. Simplify Path
-(Question)[https://leetcode.com/problems/simplify-path/]
+[Question](https://leetcode.com/problems/simplify-path/)
 
 Input: "/a//b////c/d//././/.."
 

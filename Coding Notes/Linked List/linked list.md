@@ -165,37 +165,7 @@ bool isPalindrome(ListNode* head) {
 }
 ```
 
-<br>
-
-### 6. Partition list
-Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.
-
-![img](https://assets.leetcode.com/uploads/2021/01/04/partition.jpg)
-
-**Solution by creating two seperate lists**
-
-Approach: Use to new linked list, one for storing nodes lesser then x and other for storing nodes greater then or equals to x. 
-
-```cpp
-ListNode *partition(ListNode *head, int x) {
-    ListNode node1(0), node2(0);
-    ListNode *p1 = &node1, *p2 = &node2;
-    while (head) {
-        if (head->val < x)
-            p1 = p1->next = head;
-        else
-            p2 = p2->next = head;
-        head = head->next;
-    }
-    p2->next = NULL;
-    p1->next = node2.next;
-    return node1.next;
-}
-```
-
-<br>
-
-### 7. Rotate List
+### 6. Rotate List
 Given the head of a linked list, rotate the list to the right by k places.
 
 ```cpp
@@ -229,7 +199,7 @@ ListNode* rotateRight(ListNode* head, int k) {
 <br>
 
 
-### 8. Add Two Numbers
+### 7. Add Two Numbers
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 
 ```cpp
@@ -300,7 +270,7 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 
 <br>
 
-### 9. Merge k Sorted Lists
+### 8. Merge k Sorted Lists
 
 Approach: 
 
@@ -531,6 +501,201 @@ ListNode* recurse(ListNode* head, int k){
 
 ListNode* reverseKGroup(ListNode* head, int k) {
     return recurse(head, k);
+}
+```
+
+<br>
+
+
+
+## @ Partition Linked Lists
+
+### 1. Partition list
+Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.
+
+![img](https://assets.leetcode.com/uploads/2021/01/04/partition.jpg)
+
+**Solution by creating two seperate lists**
+
+Approach: Use to new linked list, one for storing nodes lesser then x and other for storing nodes greater then or equals to x. 
+
+```cpp
+ListNode *partition(ListNode *head, int x) {
+    ListNode node1(0), node2(0);
+    ListNode *p1 = &node1, *p2 = &node2;
+    while (head) {
+        if (head->val < x)
+            p1 = p1->next = head;
+        else
+            p2 = p2->next = head;
+        head = head->next;
+    }
+    p2->next = NULL;
+    p1->next = node2.next;
+    return node1.next;
+}
+```
+
+<br>
+
+### 2. Odd Even Linked List
+Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
+
+![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)
+
+```cpp
+ListNode* oddEvenList(ListNode* head) {
+    if (!head or !head->next) return head;
+
+    ListNode* head2 = head->next;
+    ListNode *temp1 = head, *temp2 = head2, *prev=NULL;
+
+    while(temp1 and temp2){
+        temp1->next = temp2->next;
+        prev = temp1;
+        temp1 = temp1->next;
+
+        if(temp1){
+            temp2->next = temp1->next;
+            temp2 = temp2->next;
+        }
+    }
+
+    if(!temp2)
+        temp1->next = head2;
+    else
+        prev->next = head2;
+
+    return head;
+}
+```
+
+<br>
+
+### 3. Even Reverse
+Given a linked list A , reverse the order of all nodes at even positions.
+
+Input: A = 1 -> 2 -> 3 -> 4
+
+Output: 1 -> 4 -> 3 -> 2
+
+```cpp
+ListNode* reverse (ListNode* curr){
+    ListNode* prev = NULL, *nxt = NULL;
+
+    while(curr){
+        nxt = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nxt;
+    }
+
+    return prev;
+}
+
+
+ListNode* Solution::solve(ListNode* A) {
+    if(!A or !A->next) return A;
+
+    /* Step 1: Break whole linked list into even and odd indexed nodes */
+
+    ListNode* odd = A;
+    ListNode* even = A->next;
+
+    ListNode* t1 = odd, *t2 = even;
+    ListNode* temp = A->next->next;
+
+    while(temp){
+        t1->next = temp;
+        t1 = t1->next;
+        temp = temp->next;
+
+        if(!temp) break;
+
+        t2->next = temp;
+        t2 = t2->next;
+        temp = temp->next;
+    }
+
+    t1->next = NULL; t2->next = NULL;
+
+    /* Step 2: Reverse even linked list */
+
+    ListNode* revhead = reverse(even);
+
+    /* Step 3: Merge both odd and reversed even linked list into single list */ 
+
+    ListNode* newHead = odd; 
+    ListNode* itr = newHead;
+    t1=odd->next; t2=revhead;
+
+    while(t2 and t1){
+
+        itr->next = t2;
+        t2 = t2->next;
+        itr = itr->next;
+
+        itr->next = t1;
+        t1 = t1->next;
+        itr = itr->next;
+    }
+
+    if(t1){
+        itr->next = t1;
+        t1 = t1->next;
+        itr = itr->next;
+    }
+
+    if(t2){
+        itr->next = t2;
+        t2 = t2->next;
+        itr = itr->next;
+    }
+
+    return newHead;
+}
+
+```
+
+<br>
+
+### 4. Sort a linked list of 0s, 1s and 2s by changing links
+
+Hint: To avoid many null checks, we use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
+
+```cpp
+Node* segregate(Node *head) {
+    Node* dummy0 = new Node(0);
+    Node* dummy1 = new Node(1);
+    Node* dummy2 = new Node(2);
+
+    Node *temp0 = dummy0, *temp1 = dummy1, *temp2 = dummy2;
+
+    while(head){
+        if(head->data == 0){
+            temp0->next = new Node(0);
+            temp0 = temp0->next;
+        }
+        else if(head->data == 1){
+            temp1->next = new Node(1);
+            temp1 = temp1->next;
+        }
+        else{
+            temp2->next = new Node(2);
+            temp2 = temp2->next;
+        }
+        head = head->next;
+    }
+
+    if(dummy1->next){
+        temp0->next = dummy1->next;
+        temp1->next = dummy2->next;
+    }
+    else{
+        temp0->next = dummy2->next;
+    }
+
+    return dummy0->next;
 }
 ```
 
@@ -855,41 +1020,8 @@ Node* copyRandomList(Node* head) {
 
 <br>
 
-### 2. Odd Even Linked List
-Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
 
-![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)
-
-```cpp
-ListNode* oddEvenList(ListNode* head) {
-    if (!head or !head->next) return head;
-
-    ListNode* head2 = head->next;
-    ListNode *temp1 = head, *temp2 = head2, *prev=NULL;
-
-    while(temp1 and temp2){
-        temp1->next = temp2->next;
-        prev = temp1;
-        temp1 = temp1->next;
-
-        if(temp1){
-            temp2->next = temp1->next;
-            temp2 = temp2->next;
-        }
-    }
-
-    if(!temp2)
-        temp1->next = head2;
-    else
-        prev->next = head2;
-
-    return head;
-}
-```
-
-<br>
-
-### 3. Reorder List (Cyclic)
+### 2. Reorder List (Cyclic)
 
 ![img](https://assets.leetcode.com/uploads/2021/03/09/reorder2-linked-list.jpg)
 
@@ -944,7 +1076,7 @@ void reorderList(ListNode* head) {
 
 <br>
 
-### 4. Flattening a Linked List 
+### 3. Flattening a Linked List 
 Given a Linked List of size N, where every node represents a sub-linked-list and contains two pointers:
 1. a next pointer to the next node,
 2. a bottom pointer to a linked list where this node is head.
@@ -1008,49 +1140,6 @@ Node *flatten(Node *root){
 ```
 
 <br>
-
-### 5. Sort a linked list of 0s, 1s and 2s by changing links
-
-Hint: To avoid many null checks, we use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
-
-```cpp
-Node* segregate(Node *head) {
-    Node* dummy0 = new Node(0);
-    Node* dummy1 = new Node(1);
-    Node* dummy2 = new Node(2);
-
-    Node *temp0 = dummy0, *temp1 = dummy1, *temp2 = dummy2;
-
-    while(head){
-        if(head->data == 0){
-            temp0->next = new Node(0);
-            temp0 = temp0->next;
-        }
-        else if(head->data == 1){
-            temp1->next = new Node(1);
-            temp1 = temp1->next;
-        }
-        else{
-            temp2->next = new Node(2);
-            temp2 = temp2->next;
-        }
-        head = head->next;
-    }
-
-    if(dummy1->next){
-        temp0->next = dummy1->next;
-        temp1->next = dummy2->next;
-    }
-    else{
-        temp0->next = dummy2->next;
-    }
-
-    return dummy0->next;
-}
-```
-
-<br>
-
 
 
 ## @ Linked List & Trees

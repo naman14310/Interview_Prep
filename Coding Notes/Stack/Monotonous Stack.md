@@ -2,6 +2,8 @@
 
 **Patterns: NGL | NGR | NSL | NSR**
 
+<br>
+
 ### 1. Daily Temperatures
 Given a list of daily temperatures temperatures, return a list such that, for each day, how many days you would have to wait until a warmer temperature. If there is no future day for which this is possible, put 0 instead. 
 

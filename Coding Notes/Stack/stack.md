@@ -108,6 +108,75 @@ int evalRPN(vector<string>& tokens) {
 
 <br>
 
+### 5. Simplify Path
+(Question)[https://leetcode.com/problems/simplify-path/]
+
+Input: "/a//b////c/d//././/.."
+
+Output: "/a/b/c"
+
+```cpp
+string simplifyPath(string path) {
+    string res = "", word = "";
+    stack<string> stk;
+
+
+    for(char ch : path){
+
+        if(ch=='/'){
+
+            if(word!=""){
+                if(word==".") word = "";
+
+                else if(word==".."){
+                    if(!stk.empty()) stk.pop();
+                    if(!stk.empty()) stk.pop();
+                    word = "";
+                }
+
+                else{
+                    reverse(word.begin(), word.end());
+                    stk.push(word);
+                    word = "";
+                }
+            }
+
+            if(stk.empty() or stk.top()!="/")
+                stk.push("/");
+        }
+
+        else word.push_back(ch);
+    }
+
+
+    if(word!="" and word!="."){
+        if(word==".."){
+            if(!stk.empty()) stk.pop();
+            if(!stk.empty()) stk.pop();
+        }
+        else{
+            reverse(word.begin(), word.end());
+            stk.push(word);
+        }
+    }
+
+
+    while(!stk.empty()){
+        res += stk.top();
+        stk.pop();
+    }
+
+    reverse(res.begin(), res.end());
+
+    if(res.size()==0) res.push_back('/');
+
+    if(res.size()>1 and res.back()=='/') res.pop_back();
+    return res;
+
+}
+```
+
+<br>
 
 
 ## @ Parenthesis Based Questions

@@ -2,221 +2,48 @@
 
 <br>
 
-## Easy
+## @ Stack Simulation
 
-#### 1. Implement Stack using queues
+### 1. Insert at the end of Stack without using any Data structure
+
+Hint : Use recursion
 
 ```cpp
-queue<int> q1, q2;
-
-MyStack() {
-}
-
-/* Push element x onto stack. */
-
-void push(int x) {
-    if(!q2.empty()) q2.push(x);
-    else q1.push(x);
-}
-
-/* Removes the element on top of the stack and returns that element. */
-
-int pop() {
-    if(!q1.empty()){
-        while(q1.size()>1){
-            cout<<q1.front()<<endl;
-            q2.push(q1.front());
-            q1.pop();
-        }
-        int x = q1.front();
-        q1.pop();
-        return x;
+void insert_at_end(stack<int> & stk, int val){
+    if(stk.empty()){
+        stk.push(val);
+        return;
     }
-    else{
-        while(q2.size()>1){
-            q1.push(q2.front());
-            q2.pop();
-        }
-        int x = q2.front();
-        q2.pop();
-        return x;
-    }
-}
 
-/* Get the top element. */
-
-int top() {
-    if(!q1.empty()){
-        while(q1.size()>1){
-            cout<<q1.front()<<endl;
-            q2.push(q1.front());
-            q1.pop();
-        }
-        int x = q1.front();
-        q2.push(x);
-        q1.pop();
-        return x;
-    }
-    else{
-        while(q2.size()>1){
-            q1.push(q2.front());
-            q2.pop();
-        }
-        int x = q2.front();
-        q1.push(x);
-        q2.pop();
-        return x;
-    }
-}
-
-/* Returns whether the stack is empty. */
-
-bool empty() {
-    if(q1.empty() && q2.empty()) return true;
-    else return false;
+    int item = stk.top();
+    stk.pop(); 
+    insert_at_end(stk, val);
+    stk.push(item);
 }
 ```
 
 <br>
 
-#### 2. Min Stack (Tricky)
-Hint: Use two stacks. One for storing elements in order. Second for storing min element so far.
+
+### 2. Reverse a stack without using any Data structure
 
 ```cpp
-/* Time Complexity: O(1) | Space Complexity: O(n) */
+void reverse_stack(stack<int> & stk){
+    if(stk.empty()) 
+        return;
 
-stack<int> s1;
-stack<int> s2;
+    int item = stk.top();
+    stk.pop();
 
-MinStack() {
-}
-
-void push(int val) {
-    s1.push(val);
-    if(s2.empty()){
-        s2.push(val);
-    }
-    else{
-        if(val<s2.top()) s2.push(val);
-        else s2.push(s2.top());
-    }
-}
-
-void pop() {
-    s1.pop(); s2.pop();
-}
-
-int top() {
-    return s1.top();
-}
-
-int getMin() {
-    return s2.top();
-}
-```
-
-More optimized solution with O(1) Space Complexity
-
-[Video Solution](https://www.youtube.com/watch?v=ZvaRHYYI0-4)
-
-```cpp
-stack<long long int> s;
-long long int minItem = INT_MAX;
-
-MinStack() {
-}
-
-void push(int val) {
-    if(s.empty()){
-        s.push(val);
-        minItem = val;
-    }
-    else{
-        if(val<minItem){
-            s.push(2*val - minItem);
-            minItem = val;
-        }
-        else s.push(val);
-    }
-}
-
-void pop() {
-    if(s.top()<minItem)
-        minItem = 2*minItem - s.top();
-    s.pop();
-}
-
-int top() {
-    return s.top();
-}
-
-int getMin() {
-    return minItem;
+    reverse_stack(stk);
+    insert_at_end(stk, item);   // Use above function for insert_at_end()
 }
 ```
 
 <br>
 
-#### 3. Design a Stack With Increment Operation (Tricky)
-Design a stack which supports the following operations. Implement the CustomStack class:
 
-1. CustomStack(int maxSize) Initializes the object with maxSize which is the maximum number of elements in the stack or do nothing if the stack reached the maxSize.
-2. void push(int x) Adds x to the top of the stack if the stack hasn't reached the maxSize.
-2. int pop() Pops and returns the top of stack or -1 if the stack is empty.
-3. void inc(int k, int val) Increments the bottom k elements of the stack by val. If there are less than k elements in the stack, just increment all the elements in the stack.
-
-[Explaination](https://leetcode.com/problems/design-a-stack-with-increment-operation/discuss/539716/JavaC%2B%2BPython-Lazy-increment-O(1))
-
-Hint: Lazy increment - Use an additional array to record the increment value. inc[i] means for all elements stack[0] ~ stack[i], we should plus inc[i] when popped from the stack. Then inc[i-1]+=inc[i], so that we can accumulate the increment inc[i] for the bottom elements and the following pops.
-
-```cpp
-class CustomStack {
-public:
-    
-    vector<int> inc;
-    stack<int> stk;
-    int MAXSIZE;
-    
-    CustomStack(int maxSize) {
-        inc = vector<int> (maxSize+1, 0);
-        MAXSIZE = maxSize;
-    }
-    
-    void push(int x) {
-        if(stk.size()==MAXSIZE) return;
-        stk.push(x);
-    }
-    
-    int pop() {
-        if(stk.empty()) return -1;
-        
-        int x = stk.top();
-        int idx = stk.size();
-        
-        stk.pop();
-        
-        if(inc[idx]>0){
-            x+=inc[idx];
-            inc[idx-1] += inc[idx];
-            inc[idx] = 0;
-        }
-        
-        return x;
-    }
-    
-    void increment(int k, int val) {
-
-        if(stk.size()>k)
-            inc[k] += val;
-        else
-            inc[stk.size()] += val;
-    }
-};
-```
-
-<br>
-
-#### 4. Validate Stack Sequences
+### 3. Validate Stack Sequences
 Given two sequences pushed and popped with distinct values, return true if and only if this could have been the result of a sequence of push and pop operations on an initially empty stack.
 
 ```cpp
@@ -247,7 +74,8 @@ bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
 
 <br>
 
-#### 5. Evaluate Reverse Polish Notation
+
+### 4. Evaluate Reverse Polish Notation
 Input: tokens = ["4","13","5","/","+"]
 
 Output: 6
@@ -280,362 +108,11 @@ int evalRPN(vector<string>& tokens) {
 
 <br>
 
-#### 6. Insert at the end of Stack without using any Data structure
 
-Hint : Use recursion
-
-```cpp
-void insert_at_end(stack<int> & stk, int val){
-    if(stk.empty()){
-        stk.push(val);
-        return;
-    }
-
-    int item = stk.top();
-    stk.pop(); 
-    insert_at_end(stk, val);
-    stk.push(item);
-}
-```
-
-<br>
-
-#### 7. Reverse a stack without using any Data structure
-
-```cpp
-void reverse_stack(stack<int> & stk){
-    if(stk.empty()) 
-        return;
-
-    int item = stk.top();
-    stk.pop();
-
-    reverse_stack(stk);
-    insert_at_end(stk, item);   // Use above function for insert_at_end()
-}
-```
-
-<br>
-
-
-## Medium
-
-### @ Problems on Monotonous Increasing/Decreasing Stack (NGL|NGR|NSL|NSR)
-
-#### 1. Daily Temperatures
-Given a list of daily temperatures temperatures, return a list such that, for each day in the input, tells you how many days you would have to wait until a warmer temperature. If there is no future day for which this is possible, put 0 instead. For example, given the list of temperatures temperatures = [73, 74, 75, 71, 69, 72, 76, 73], your output should be [1, 1, 4, 2, 1, 1, 0, 0].
-
-```cpp
-vector<int> dailyTemperatures(vector<int>& T) {
-    stack<pair<int,int>> s;
-    int n = T.size();
-    vector<int> res (n, 0);
-    s.push({T[n-1], n-1});
-
-    for(int i=n-2; i>=0; i--){            
-        while(!s.empty() && s.top().first<=T[i]) s.pop();
-
-        if(s.empty()) res[i] = 0;
-        else res[i] = s.top().second - i;
-
-        s.push({T[i], i});
-    }
-    return res;
-}
-```
-
-<br>
-
-#### 2. Find the Most Competitive Subsequence (Very Tricky)
-Given an integer array nums and a positive integer k, return the most competitive subsequence of nums of size k. An array's subsequence is a resulting sequence obtained by erasing some (possibly zero) elements from the array. We define that a subsequence a is more competitive than a subsequence b (of the same length) if in the first position where a and b differ, subsequence a has a number less than the corresponding number in b. For example, [1,3,4] is more competitive than [1,3,5] because the first position they differ is at the final number, and 4 is less than 5.
-
-Hint: Create a monotonic increasing stack. Pop out elements from the stack till stack.top() is less then arr[i] and  we have enough elements left in array to maintain size k. Else push if k>0.
-
-```cpp
-vector<int> mostCompetitive(vector<int>& nums, int k) {
-    stack<int> stk;
-    int n = nums.size();
-
-    for(int i=0; i<n; i++){
-
-        while(!stk.empty() && stk.top()>nums[i] && n-i>k){
-            stk.pop();
-            k++;
-        }
-
-        if(k>0){
-            stk.push(nums[i]);
-            k--;
-        }
-    }
-
-    vector<int> res;
-    while(!stk.empty()){
-        res.push_back(stk.top());
-        stk.pop();
-    }
-
-    reverse(res.begin(), res.end());
-    return res;  
-}
-```
-
-<br>
-
-#### 3. Remove K Digits (Very Tricky)
-Given string num representing a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
-
-[Video Solution](https://www.youtube.com/watch?v=r_OyrbYWP1M)
-
-Hint: Maintain a monotonic increasing stack. Find running peaks from left to right and delete k peaks. (Running peaks means also check for new peak that is created after deletion of some element). Remove few elements from back if still k>0. ** check for boundary cases **
-
-```cpp
-string removeKdigits(string num, int k) {
-    int n = num.size();
-    stack<char> stk;
-    stk.push(num[0]);
-
-    int i=1;
-    while(i<n){
-
-        while(!stk.empty() && num[i]<stk.top() && k>0){
-            stk.pop();
-            k--;
-        }
-
-        if(num[i]=='0' && stk.empty()){
-            i++; 
-            continue;
-        } 
-
-        stk.push(num[i]);        
-        i++;
-    }
-
-    while(!stk.empty() && k>0){
-        stk.pop();
-        k--;
-    }
-
-    if(stk.empty()) return "0";
-
-    string res = "";
-    while(!stk.empty()){
-        res.push_back(stk.top());
-        stk.pop();
-    }
-
-    reverse(res.begin(), res.end());
-    return res;
-}
-```
-
-<br>
-
-#### 4. Stock span problem 
-
-Hint : Push indexes instead of actual elements
-
-```cpp
-vector <int> calculateSpan(int price[], int n){
-    vector<int> res (n, 1);
-    stack<int> stk;
-    stk.push(0);
-
-    for(int i=1; i<n; i++){
-        while(!stk.empty() && price[stk.top()]<=price[i])
-            stk.pop();
-
-        if(!stk.empty())
-            res[i] = i-stk.top();
-        else
-            res[i] = i+1;
-
-        stk.push(i);
-    }
-    return res;
-}
-```
-
-<br>
-
-#### 5. Largest Rectangle in Histogram 
-Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
-
-![hist](https://assets.leetcode.com/uploads/2021/01/04/histogram.jpg)
-
-Hint: Find NSL and NSR for calculating width for each index. Then area for each index will be width * heights[i].
-
-```cpp
-vector<int> nsl, nsr;
-
-void NSL(vector<int> & heights, int n){
-    stack<int> stk;
-
-    for(int i=0; i<n; i++){
-        while(!stk.empty() && heights[stk.top()]>=heights[i]) stk.pop();
-
-        if(stk.empty()) nsl.push_back(0);
-        else nsl.push_back(stk.top()+1);
-
-        stk.push(i);
-    }
-}
-
-void NSR(vector<int> & heights, int n){
-    stack<int> stk;
-    vector<int> temp (n, 0);
-    nsr = temp;
-
-    for(int i=n-1; i>=0; i--){
-        while(!stk.empty() && heights[stk.top()]>=heights[i]) stk.pop();
-
-        if(stk.empty()) nsr[i] = n-1;
-        else nsr[i] = stk.top()-1;
-
-        stk.push(i);
-    }
-}
-
-int largestRectangleArea(vector<int>& heights) {
-    int n = heights.size();
-    int maxArea = 0;
-    NSL(heights, n); 
-    NSR(heights, n);
-
-    for(int i=0; i<n; i++){
-        int width = (i - nsl[i]) + (nsr[i] - i) + 1;
-        int area = heights[i] * width;
-        maxArea = max(area, maxArea);
-    }
-    return maxArea;
-}
-```
-
-<br>
-
-#### 6. Largest Rectangle in Binary Matrix
-
-Hint : Use concept of Largest area in Histogram
-
-```cpp
-void NSL(vector<int> & heights, vector<int> & nsl, int n){
-    stack<int> stk;
-
-    for(int i=0; i<n; i++){
-        while(!stk.empty() && heights[stk.top()]>=heights[i]) 
-            stk.pop();
-
-        if(stk.empty()) nsl.push_back(0);
-        else nsl.push_back(stk.top()+1);
-
-        stk.push(i);
-    }
-}
-
-void NSR(vector<int> & heights, vector<int> & nsr, int n){
-    stack<int> stk;
-    nsr = vector<int> (n, 0);
-
-    for(int i=n-1; i>=0; i--){
-        while(!stk.empty() && heights[stk.top()]>=heights[i]) 
-            stk.pop();
-
-        if(stk.empty()) nsr[i] = n-1;
-        else nsr[i] = stk.top()-1;
-
-        stk.push(i);
-    }
-}
-
-int largestRectangleArea(vector<int> & heights) {
-    vector<int> nsl, nsr;
-    int n = heights.size();
-
-    NSL(heights, nsl, n); 
-    NSR(heights, nsr, n);
-
-    int maxArea = 0;
-
-    for(int i=0; i<n; i++){
-        int width = (i - nsl[i]) + (nsr[i] - i) + 1;
-        int area = heights[i] * width;
-        maxArea = max(area, maxArea);
-    }
-
-    return maxArea;
-}
-
-int maximalRectangle(vector<vector<char>>& matrix) {
-    int row = matrix.size();
-    if(row==0) return 0;
-
-    int col = matrix[0].size();
-    vector<int> arr(col, 0);
-
-    for(int j=0; j<col; j++)
-        arr[j] = matrix[0][j]-'0';
-
-    int ans = largestRectangleArea(arr);
-
-    for(int i=1; i<row; i++){
-
-        for(int j=0; j<col; j++)
-            arr[j] = matrix[i][j] == '0' ? 0 : arr[j] + (matrix[i][j]-'0');
-
-        int area = largestRectangleArea(arr);
-        ans = max(ans, area);
-    }
-
-    return ans;
-}
-```
-
-<br>
-
-#### 7. Number of Visible People in a Queue
-There are n people standing in a queue, and they numbered from 0 to n - 1 in left to right order. You are given an array heights of distinct integers where heights[i] represents the height of the ith person. A person can see another person to their right in the queue if everybody in between is shorter than both of them. More formally, the ith person can see the jth person if i < j and min(heights[i], heights[j]) > max(heights[i+1], heights[i+2], ..., heights[j-1]).
-
-Return an array answer of length n where answer[i] is the number of people the ith person can see to their right in the queue.
-
-![img](https://assets.leetcode.com/uploads/2021/05/29/queue-plane.jpg)
-
-Input: heights = [10,6,8,5,11,9]
-
-Output: [3,1,2,1,1,0]
-
-```cpp
-vector<int> canSeePersonsCount(vector<int>& heights) {
-    int n = heights.size();
-    vector<int> res (n, 0);
-
-    stack<int> stk;
-    stk.push(heights.back());
-
-    for(int i=n-2; i>=0; i--){
-
-        int cnt = 0;
-
-        while(!stk.empty() and stk.top()<heights[i]){
-            stk.pop();
-            cnt++;
-        }
-
-        if(!stk.empty()) cnt++; 
-
-        res[i] = cnt;
-        stk.push(heights[i]);
-    }
-
-    return res;
-}
-```
-
-<br>
 
 ### @ Parenthesis Based Questions
 
-#### 1. Valid Parentheses
+### 1. Valid Parentheses
 
 ```cpp
 bool isValid(string s) {
@@ -668,7 +145,7 @@ bool isValid(string s) {
 
 <br>
 
-#### 2. Minimum Remove to Make Valid Parentheses
+### 2. Minimum Remove to Make Valid Parentheses
 
 Approach: First iterate from left to right and remove extra ')'  brackets using bracketCount. Similaily, then move from right to left and remove extra '(' brackets using bracketCount.
 
@@ -715,7 +192,7 @@ string minRemoveToMakeValid(string s) {
 
 <br>
 
-#### 3. Longest Valid Parenthesis (Very Tricky)
+### 3. Longest Valid Parenthesis (Very Tricky)
 Given a string consisting of opening and closing parenthesis, find the length of the longest valid parenthesis substring.
 
 [Explaination](https://www.geeksforgeeks.org/length-of-the-longest-valid-substring/)
@@ -723,11 +200,8 @@ Given a string consisting of opening and closing parenthesis, find the length of
 Algo:
 
 1. Create an empty stack and push -1 to it. The first element of the stack is used to provide a base for the next valid string. 
-
 2. Initialize result as 0.
-
 3. If the character is '(' i.e. str[i] == '('), push index'i' to the stack. 
-
 4. Else (if the character is ')')
 
    a) Pop an item from the stack (Most of the time an opening bracket)
@@ -754,7 +228,9 @@ int longestValidParentheses(string s) {
             
         else{
             stk.pop();
-
+            
+            /* If stack becomes empty then this ')' was not valid and hence now this index will become base for next valid string */
+            
             if(stk.empty()) 
                 stk.push(i);
             else
@@ -767,7 +243,8 @@ int longestValidParentheses(string s) {
 
 <br>
 
-#### 4. Score of Parentheses (Tricky)
+
+### 4. Score of Parentheses (Tricky)
 Given a balanced parentheses string s, compute the score of the string based on the following rule:
 1. () has score 1
 2. AB has score A + B, where A and B are balanced parentheses strings.
@@ -813,10 +290,11 @@ int scoreOfParentheses(string s) {
 
 <br>
 
+
 ### @ Hard to guess as Stack
 
-#### 1. Remove All Adjacent Duplicates in String II
-You are given a string s and an integer k, a k duplicate removal consists of choosing k adjacent and equal letters from s and removing them, causing the left and the right side of the deleted substring to concatenate together. We repeatedly make k duplicate removals on s until we no longer can. Return the final string after all such duplicate removals have been made. It is guaranteed that the answer is unique.
+### 1. Remove All Adjacent Duplicates in String II
+You are given a string s and an integer k, a k duplicate removal consists of choosing k adjacent and equal letters from s and removing them, causing the left and the right side of the deleted substring to concatenate together. Return the final string after all such duplicate removals have been made. 
 
 Hint: Use stack to store freq of char while iterating over string. Pop out that character that exceeds freq k.
 
@@ -853,7 +331,7 @@ string removeDuplicates(string s, int k) {
 
 <br>
 
-#### 2. Remove Duplicate Letters (Smallest Subsequence of Distinct Characters)
+### 2. Remove Duplicate Letters (Smallest Subsequence of Distinct Characters)
 Given a string s, remove duplicate letters so that every letter appears once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
 
 Input: s = "bcabc"
@@ -883,7 +361,7 @@ string removeDuplicateLetters(string s) {
             continue;
         } 
 
-        /* pop till stk.top() is lexically greater then curr char and its freq >=1 and also mark it unvisited */
+        /* pop till stk.top() is lexically greater then curr_char and its freq >=1 and also mark it unvisited */
 
         while(!stk.empty() and stk.top()>ch and mp[stk.top()]>=1){
             vis[stk.top()-'a'] = false;
@@ -909,14 +387,12 @@ string removeDuplicateLetters(string s) {
 
 <br>
 
-#### 3. The Celebrity Problem
+### 3. The Celebrity Problem
 A celebrity is a person who is known to all but does not know anyone at a party. If you go to a party of N people, find if there is a celebrity in the party or not.
 
-Approach: 
-
-If A knows B, then A can't be a celebrity. Discard A, and B may be celebrity.
-
-If A doesn't know B, then B can't be a celebrity. Discard B, and A may be celebrity.
+Hint: Everytime pop two items from stack untill only one left. Then,
+1. If A knows B, then A can't be a celebrity. Discard A, and B may be celebrity.
+2. If A doesn't know B, then B can't be a celebrity. Discard B, and A may be celebrity.
 
 ```cpp
 int celebrity(vector<vector<int> >& matrix, int n) {
@@ -948,7 +424,7 @@ int celebrity(vector<vector<int> >& matrix, int n) {
 
 <br>
 
-#### 4. Sum of Subarray Minimums (Too Tricky)
+### 4. Sum of Subarray Minimums (Too Tricky)
 Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 10^9 + 7.
 
 Input: arr = [3,1,2,4]
@@ -1050,9 +526,222 @@ int sumSubarrayMins(vector<int>& arr) {
 
 <br>
 
-## Hard
 
-#### 1. Implement k stacks in a single array
+## @ Stack Design 
+
+### 1. Implement Stack using queues
+
+```cpp
+queue<int> q1, q2;
+
+MyStack() {
+}
+
+/* Push element x onto stack. */
+
+void push(int x) {
+    if(!q2.empty()) q2.push(x);
+    else q1.push(x);
+}
+
+/* Removes the element on top of the stack and returns that element. */
+
+int pop() {
+    if(!q1.empty()){
+        while(q1.size()>1){
+            cout<<q1.front()<<endl;
+            q2.push(q1.front());
+            q1.pop();
+        }
+        int x = q1.front();
+        q1.pop();
+        return x;
+    }
+    else{
+        while(q2.size()>1){
+            q1.push(q2.front());
+            q2.pop();
+        }
+        int x = q2.front();
+        q2.pop();
+        return x;
+    }
+}
+
+/* Get the top element. */
+
+int top() {
+    if(!q1.empty()){
+        while(q1.size()>1){
+            cout<<q1.front()<<endl;
+            q2.push(q1.front());
+            q1.pop();
+        }
+        int x = q1.front();
+        q2.push(x);
+        q1.pop();
+        return x;
+    }
+    else{
+        while(q2.size()>1){
+            q1.push(q2.front());
+            q2.pop();
+        }
+        int x = q2.front();
+        q1.push(x);
+        q2.pop();
+        return x;
+    }
+}
+
+/* Returns whether the stack is empty. */
+
+bool empty() {
+    if(q1.empty() && q2.empty()) return true;
+    else return false;
+}
+```
+
+<br>
+
+### 2. Min Stack (Tricky)
+Hint: Use two stacks. One for storing elements in order. Second for storing min element so far.
+
+```cpp
+/* Time Complexity: O(1) | Space Complexity: O(n) */
+
+stack<int> s1;
+stack<int> s2;
+
+MinStack() {
+}
+
+void push(int val) {
+    s1.push(val);
+    if(s2.empty()){
+        s2.push(val);
+    }
+    else{
+        if(val<s2.top()) s2.push(val);
+        else s2.push(s2.top());
+    }
+}
+
+void pop() {
+    s1.pop(); s2.pop();
+}
+
+int top() {
+    return s1.top();
+}
+
+int getMin() {
+    return s2.top();
+}
+```
+
+More optimized solution with O(1) Space Complexity
+
+[Video Solution](https://www.youtube.com/watch?v=ZvaRHYYI0-4)
+
+```cpp
+stack<long long int> s;
+long long int minItem = INT_MAX;
+
+MinStack() {
+}
+
+void push(int val) {
+    if(s.empty()){
+        s.push(val);
+        minItem = val;
+    }
+    else{
+        if(val<minItem){
+            s.push(2*val - minItem);
+            minItem = val;
+        }
+        else s.push(val);
+    }
+}
+
+void pop() {
+    if(s.top()<minItem)
+        minItem = 2*minItem - s.top();
+    s.pop();
+}
+
+int top() {
+    return s.top();
+}
+
+int getMin() {
+    return minItem;
+}
+```
+
+<br>
+
+### 3. Design a Stack With Increment Operation (Tricky)
+Design a stack which supports the following operations. Implement the CustomStack class:
+
+1. CustomStack(int maxSize) Initializes the object with maxSize which is the maximum number of elements in the stack or do nothing if the stack reached the maxSize.
+2. void push(int x) Adds x to the top of the stack if the stack hasn't reached the maxSize.
+2. int pop() Pops and returns the top of stack or -1 if the stack is empty.
+3. void inc(int k, int val) Increments the bottom k elements of the stack by val. If there are less than k elements in the stack, just increment all the elements in the stack.
+
+[Explaination](https://leetcode.com/problems/design-a-stack-with-increment-operation/discuss/539716/JavaC%2B%2BPython-Lazy-increment-O(1))
+
+**Lazy Increment:** Use an additional array to record the increment value. inc[i] means for all elements stack[0] ~ stack[i], we should plus inc[i] when popped from the stack. Then inc[i-1]+=inc[i], so that we can accumulate the increment inc[i] for the bottom elements and the following pops.
+
+```cpp
+class CustomStack {
+public:
+    
+    vector<int> inc;
+    stack<int> stk;
+    int MAXSIZE;
+    
+    CustomStack(int maxSize) {
+        inc = vector<int> (maxSize+1, 0);
+        MAXSIZE = maxSize;
+    }
+    
+    void push(int x) {
+        if(stk.size()==MAXSIZE) return;
+        stk.push(x);
+    }
+    
+    int pop() {
+        if(stk.empty()) return -1;
+        
+        int x = stk.top();
+        int idx = stk.size();
+        
+        stk.pop();
+        
+        if(inc[idx]>0){
+            x+=inc[idx];
+            inc[idx-1] += inc[idx];
+            inc[idx] = 0;
+        }
+        
+        return x;
+    }
+    
+    void increment(int k, int val) {
+
+        if(stk.size()>k)
+            inc[k] += val;
+        else
+            inc[stk.size()] += val;
+    }
+};
+```
+
+<br>
+
+### 4. Implement k stacks in a single array
 The idea is to use two extra arrays for efficient implementation of k stacks in an array. Following are the two extra arrays are used:
 
 1) top[]: This is of size k and stores indexes of top elements in all stacks.

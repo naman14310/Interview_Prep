@@ -146,7 +146,7 @@ int numberOfSubarrays(vector<int>& nums, int k) {
 ### 5. Subarray Sums Divisible by K
 Given an array nums of integers, return the number of contiguous, non-empty subarrays that have a sum divisible by k.
 
-Hint: Insert remainder instead of csum into hashmap. Also handle negative numbers.
+Hint: Insert remainder instead of csum into hashmap. Also handle negative remainders.
 
 ```cpp
 int subarraysDivByK(vector<int>& nums, int k) {
@@ -157,22 +157,15 @@ int subarraysDivByK(vector<int>& nums, int k) {
     mp[0] = 1;
 
     for(int num : nums){
-
-        /* 
-            If numbers are negative then convert them to lowest positive num 
-            which will also generate same remainder 
-        */
-
-        if(num<0)
-            num = (num%k)+k;
-
         csum += num;
-        int rem = csum % k;         // --> here we compute rem instead of gain
+
+        int rem = csum%k;
+        if(rem<0) rem = rem+k;      // --> If remainder becomes negative, convert it into +ve by adding k
 
         if(mp.find(rem)!=mp.end())
             ans += mp[rem];
 
-        mp[rem]+=1;                 // --> and we will insert rem instead of csum
+        mp[rem]+=1;
     }
 
     return ans;

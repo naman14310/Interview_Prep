@@ -71,7 +71,6 @@ ListNode* swapPairs(ListNode* head) {
 <br>
 
 ### 4. Sort List
-
 Hint: Use divide and conquer approach
 
 ```cpp
@@ -116,7 +115,56 @@ ListNode* sortList(ListNode* head) {
 
 <br>
 
-### 5. Palindrome Linked List
+### 5. Insertion Sort List
+
+```cpp
+ListNode* Solution::insertionSortList(ListNode* A) {
+    if(!A or !A->next) return A;
+
+    /* 
+        A points at the starting of sorted list while,
+        unsorted points at the starting of unsorted list
+    */
+
+    ListNode *unsorted = A->next;
+    A->next = NULL;
+
+    /* Iterate till whole list gets sorted (unsorted!=NULL) */
+
+    while(unsorted){
+        ListNode* tempS = A;            // --> tempS will iterate over sorted list to find crrct posn
+        ListNode* tempU = unsorted;     // --> tempU will points to curr node that we are processing     
+        unsorted = unsorted->next;
+
+        /* 
+            If tempU is smaller then first node of sorted list 
+            Append it at front, and update the head (i.e A)
+        */
+
+        if(tempU->val<=A->val){
+            tempU->next = A;
+            A = tempU;
+        }
+
+        /* Else iterate tempS till we get tempS->next==NULL or tempS->next > tempU */ 
+
+        else{
+
+            while(tempS->next and tempU->val > tempS->next->val)
+                tempS = tempS->next;
+
+            tempU->next = tempS->next;
+            tempS->next = tempU;
+        }
+    }
+
+    return A;
+}
+```
+
+<br>
+
+### 6. Palindrome Linked List
 
 ```cpp
 ListNode* reverseSecondHalf(ListNode* mid){
@@ -167,7 +215,7 @@ bool isPalindrome(ListNode* head) {
 
 <br>
 
-### 6. Rotate List
+### 7. Rotate List
 Given the head of a linked list, rotate the list to the right by k places.
 
 ```cpp
@@ -201,7 +249,7 @@ ListNode* rotateRight(ListNode* head, int k) {
 <br>
 
 
-### 7. Add Two Numbers
+### 8. Add Two Numbers
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 
 ```cpp
@@ -272,10 +320,8 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 
 <br>
 
-### 8. Merge k Sorted Lists
-
+### 9. Merge k Sorted Lists
 Approach: 
-
 1. Create a minheap using priority queue of type pair<int,int> for {val, list_id}
 2. Create a vector of type ListNode* for storing pointers to nodes of every list
 3. Push first value of every list to minHeap
@@ -393,7 +439,7 @@ ListNode* reverseBetween(ListNode* head, int left, int right) {
     temp1->next = curr;
 
     if(prev_temp) prev_temp->next = prev;
-    else head = prev;                              // Head will change if reversing starts from head
+    else head = prev;                              // --> Head will change if reversing starts from head
 
     return head;
 }
@@ -459,7 +505,6 @@ ListNode* Solution::solve(ListNode* A, int B) {
 <br>
 
 ### 4. Reverse Nodes in k-Group
-
 Hint : Use recursion
 
 ```cpp
@@ -541,7 +586,7 @@ ListNode *partition(ListNode *head, int x) {
 <br>
 
 ### 2. Odd Even Linked List
-Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list. The first node is considered odd, and the second node is even, and so on. Note that the relative order inside both the even and odd groups should remain as it was in the input.
+Group all the nodes with odd indices together followed by the nodes with even indices. The first node is considered odd, and the second node is even, and so on. Relative order inside both the even and odd groups should remain as it was in the input.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/oddeven2-linked-list.jpg)
 
@@ -580,6 +625,11 @@ Given a linked list A , reverse the order of all nodes at even positions.
 Input: A = 1 -> 2 -> 3 -> 4
 
 Output: 1 -> 4 -> 3 -> 2
+
+Approach: 
+1. Break whole linked list in two lists (even and odd). 
+2. Reverse even linked list
+3. Merge both odd and reversed even linked list into single list
 
 ```cpp
 ListNode* reverse (ListNode* curr){
@@ -662,8 +712,7 @@ ListNode* Solution::solve(ListNode* A) {
 <br>
 
 ### 4. Sort a linked list of 0s, 1s and 2s by changing links
-
-Hint: To avoid many null checks, we use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
+Hint: Use three dummy pointers dummy0, dummy1 and dummy2 that work as dummy headers of three lists.
 
 ```cpp
 Node* segregate(Node *head) {
@@ -925,7 +974,6 @@ Node* compute(Node *head){
 **Method 2 : Iterative approach (By reversing linked list)**
 
 Approach:
-
 1. Reverse the list. 
 2. Traverse the reversed list. Keep max till now. If the next node is less than max, then delete the next node, otherwise max = next node. 
 3. Reverse the list again to retain the original order. 

@@ -101,7 +101,43 @@ int findMaxLength(vector<int>& nums) {
 
 <br>
 
-### 4. Count Number of Nice Subarrays (Tricky)
+### 4. Longest Subarray Length Having more OneCount
+Given an integer array A of size N containing 0's and 1's only.  You need to find the length of the longest subarray having count of 1’s one more than count of 0’s.
+
+Input: A = [0, 1, 1, 0, 0, 1]
+ 
+Output: 5
+
+Hint: Compute csum by incrementing it for 1 and decrementing it for 0. Now, to find longest subarray with more OneCount, find the longest subarray whose sum is 1. Hence problem reduced to subarray sum equals 1.
+
+```cpp
+int Solution::solve(vector<int> &A) {
+    int ans = 0;
+    int csum = 0;
+
+    unordered_map<int, int> mp;
+    mp[0] = -1;
+
+    for(int i=0; i<A.size(); i++){
+        if(A[i]==0) csum--;
+        else csum++;
+
+        int diff = csum-1;              
+
+        if(mp.find(diff)!=mp.end())
+            ans = max(ans, i-mp[diff]);
+        
+        if(mp.find(csum)==mp.end())
+            mp[csum] = i;
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+### 5. Count Number of Nice Subarrays (Tricky)
 A continuous subarray is called nice if there are k odd numbers on it. Return the number of nice sub-arrays.
 
 Hint: Convert all odd numbers to 1 and all even numbers to 0. Now problem is reduced to number of subarrays having sum equals k.
@@ -143,7 +179,7 @@ int numberOfSubarrays(vector<int>& nums, int k) {
 
 <br>
 
-### 5. Subarray Sums Divisible by K
+### 6. Subarray Sums Divisible by K
 Given an array nums of integers, return the number of contiguous, non-empty subarrays that have a sum divisible by k.
 
 Hint: Insert remainder instead of csum into hashmap. Also handle negative remainders.
@@ -174,7 +210,7 @@ int subarraysDivByK(vector<int>& nums, int k) {
 
 <br>
 
-### 6. Subarray Sum Divisibility by K (Return true/false)
+### 7. Subarray Sum Divisibility by K (Return true/false)
 Return true if nums has a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
 
 Input: nums = [23,2,6,4,7], k = 6
@@ -209,7 +245,7 @@ bool checkSubarraySum(vector<int>& nums, int k) {
 
 <br>
 
-### 7. Make Sum Divisible by P (Tricky)
+### 8. Make Sum Divisible by P (Tricky)
 Given an array of positive integers nums, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by p. It is not allowed to remove the whole array. Return the length of the smallest subarray that you need to remove, or -1 if it's impossible.
 
 Input: nums = [6,3,5,2], p = 9
@@ -271,6 +307,7 @@ int minSubarray(vector<int>& nums, int p) {
 ```
 
 <br>
+
 
 
 ## @ Tricky Subarrays

@@ -1,9 +1,10 @@
 # Famous Patterns in Array problems
 
+<br>
 
 ## @ Swap Sort
 
-#### 1. Find All Numbers Disappeared in an Array (Swap sort variation)
+### 1. Find All Numbers Disappeared in an Array (Swap sort variation)
 
 Hint: Swap sort (Use swap sort whenever they asked for duplicacy or missingness of no. ranges from [1,n] )
 
@@ -34,7 +35,9 @@ vector<int> findDisappearedNumbers(vector<int>& nums) {
 
 ```
 
-#### 2. First Missing Positive (Swap Sort)
+<br>
+
+### 2. First Missing Positive (Swap Sort)
 Given an unsorted integer array nums, find the smallest missing positive integer.
 
 ```cpp
@@ -58,11 +61,13 @@ int firstMissingPositive(vector<int>& nums) {
 }
 ```
 
+<br>
+
+
 
 ## @ Buy and Sell Stocks 
 
-#### 1. Best Time to Buy and Sell Stock (Only one transaction allowed)
-
+### 1. Best Time to Buy and Sell Stock (Only one transaction allowed)
 Approach : Find max difference between any two elements of array
 
 ```cpp
@@ -82,8 +87,9 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
-#### 2. Best Time to Buy and Sell Stock II (As many transactions as you want)
+<br>
 
+### 2. Best Time to Buy and Sell Stock II (As many transactions as you want)
 Hint: Always buy when price[i]<price[i+1] and buy == 0. Always sell when price[i]>price[i+1] and buy == 1.
 
 ```cpp
@@ -109,7 +115,9 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
-#### 3. Best Time to Buy and Sell Stock III (Atmost two transactions allowed)
+<br>
+
+### 3. Best Time to Buy and Sell Stock III (Atmost two transactions allowed)
 
 [Video Solution](https://www.youtube.com/watch?v=37s1_xBiqH0)
 
@@ -161,10 +169,13 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
+<br>
+
+
 
 ## @ Majority elements (Moore's voting)
 
-#### 1. Majority Element I
+### 1. Majority Element I
 The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
 
 HINT : Moore's Voting algo (cancel out majority item so far with other item).
@@ -190,7 +201,9 @@ int majorityElement(vector<int>& nums) {
 }
 ```
 
-#### 2. Majority Element II (IMP)
+<br>
+
+### 2. Majority Element II (IMP)
 Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
 
 Hint: If at any instance, we have three distinct elements, if we remove them then, our answer does not change.
@@ -249,10 +262,13 @@ int Solution::repeatedNumber(const vector<int> &A) {
 
 ```
 
+<br>
+
+
 
 ## @ Kadane's Algo
 
-#### 1. Maximum Subarray (Kadane algo)
+### 1. Maximum Subarray (Kadane algo)
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 
 ```cpp
@@ -266,7 +282,9 @@ int maxSubArray(vector<int>& nums) {
 }
 ```
 
-#### 2. Maximum Product Subarray (Kadane with multiplication)
+<br>
+
+### 2. Maximum Product Subarray (Kadane with multiplication)
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
 
 Hint: Maintain positive and negative products and swap(ptemp, ntemp) whenever negative element appears. ps, zeros are break points (reinitialize ptemp, ntemp to 1)
@@ -303,7 +321,9 @@ int maxProduct(vector<int>& nums) {
 }
 ```
 
-#### 3. Maximum Sum Circular Subarray
+<br>
+
+### 3. Maximum Sum Circular Subarray
 
 Hint: Find maxSum subarray and minSum subarray using Kadane's algo. If maxSum<0 return maxSum, else return max(maxSum, totalSum-minSum)
 
@@ -360,7 +380,9 @@ int maxSubarraySumCircular(vector<int>& nums) {
 }
 ```
 
-#### 4. K-Concatenation Maximum Sum (Tricky)
+<br>
+
+### 4. K-Concatenation Maximum Sum (Tricky)
 Given an integer array arr and an integer k, modify the array by repeating it k times. For example, if arr = [1, 2] and k = 3 then the modified array will be [1, 2, 1, 2, 1, 2]. Return the maximum sub-array sum in the modified array. Note that the length of the sub-array can be 0 and its sum in that case is 0. As the answer can be very large, return the answer modulo 1e9 + 7.
 
 Input: arr = [1,-2,1], k = 5
@@ -426,272 +448,13 @@ int kConcatenationMaxSum(vector<int>& arr, int k) {
 }
 ```
 
-## @ Problems with Subarrays
+<br>
 
-
-
-
-
-#### 3. Continuous Subarray Sum
-Given an integer array nums and an integer k, return true if nums has a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
-
-Input: nums = [23,2,6,4,7], k = 6
-
-Output: true
-
-```cpp
-bool checkSubarraySum(vector<int>& nums, int k) {
-    int n = nums.size();
-    if(n<2) return false;
-
-    unordered_map<int, int> mp;
-    mp[0] = -1;
-
-    int csum = 0;
-    for(int i=0; i<n; i++){
-        csum += nums[i];
-        int rem = csum % k;
-
-        if(mp.find(rem)!=mp.end()){
-            if(i-mp[rem]>=2)
-                return true;
-        }
-        else mp[rem] = i;
-    }
-
-    return false;
-}
-```
-
-
-
-#### 5. Make Sum Divisible by P
-Given an array of positive integers nums, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by p. It is not allowed to remove the whole array. Return the length of the smallest subarray that you need to remove, or -1 if it's impossible.
-
-Input: nums = [6,3,5,2], p = 9
-
-Output: 2
-
-```cpp
-int minSubarray(vector<int>& nums, int p) {
-    long long n = nums.size();
-
-    /* Find total sum of all numbers */
-
-    long long sum = 0;
-    for(int num : nums)
-        sum += num;
-
-    /* If sum < p we need to remove whole array which is not permissible hence return -1 */
-
-    if(sum<p) return -1;
-
-    /* If rem==0 that means on removing 0 elements we get the desired res so return 0 */
-
-    long long rem = sum%p;
-    if(rem==0) return 0;
-
-    /* Else We need to find a subarray whose remainder equals to sum % p */
-
-    unordered_map<long long,long long> mp;
-    mp[0] = -1;
-
-    long long csum = 0;
-    long long ans = n;
-
-    for(int i=0; i<n; i++){
-        csum += nums[i];
-        long long r = csum % p;
-
-        int target = (r-rem+p) % p;         // --> This line is additional to subarray sum divisible by k
-
-        if(mp.find(target)!=mp.end())
-            ans = min(ans, i-mp[target]);
-
-        mp[r] = i;
-    }
-
-    return ans==n ? -1 : ans;
-}
-```
-
-#### 6. Subarray Product Less Than K (Tricky)
-Count and print the number of (contiguous) subarrays where the product of all the elements in the subarray is less than k.
-
-Hint: Everytime when we add new no. to existing subarray, and if product of new subarray is less then k => then it will add R-L+1 subarray to our answer.
-
-[Video Solution](https://www.youtube.com/watch?v=4775IgUKfww)
-
-```cpp
-int numSubarrayProductLessThanK(vector<int>& nums, int k) {
-    int product = nums[0];
-    int ans = 0;
-    int l=0, r=0;
-    while(r<nums.size()){
-        if(product>=k){
-            product /= nums[l];
-            if(l==r){
-                r++;
-                if(r>=nums.size()) break;
-                product*=nums[r];
-            }
-            l++;
-        }
-        else{
-            ans += r-l+1;
-            r++;
-            if(r>=nums.size()) break;
-            product*=nums[r];
-        }   
-    }
-    return ans;
-}
-```
-
-#### 7. Number of Subarrays with Bounded Maximum
-Return the number of (contiguous, non-empty) subarrays such that the value of the maximum array element in that subarray is at least left and at most right.
-
-Approach: Count all valid subarrays ending at an index i, where 0 <= i < n. For a  particular element we can have 3 cases:
-1. ele > R --> We will mark this as the most recent invalid index.
-2. ele < L --> It's answer will be equal to it's previous element's answer
-3. L <= ele <= R --> subarrays ending at ele can be computed as i-last_invalid_index
-
-```cpp
-int numSubarrayBoundedMax(vector<int>& nums, int left, int right) {
-    int last_invalid_index = -1;
-    int ans = 0, prev = 0;
-
-    for(int i=0; i<nums.size(); i++){
-        if(nums[i]<left)
-            ans += prev;
-
-        else if(nums[i]>right){
-            last_invalid_index = i;
-            prev = 0;
-        }
-
-        else{
-            prev = i-last_invalid_index;
-            ans += prev;
-        }
-    }
-    return ans;
-}
-```
-
-#### 8. Arithmetic Slices
-An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. Given an integer array nums, return the number of arithmetic subarrays of nums.
-
-Hint: Find count of equal common differences. If count is n then it gives n*(n-1)/2 subarrays.
-
-```cpp
-int numberOfArithmeticSlices(vector<int>& A) {
-    int len = A.size();
-    int ans = 0;
-    int i=1;
-    while(i<len){
-        int item = A[i]-A[i-1];
-        int count = 0;
-
-        while(i<len && A[i]-A[i-1]==item){
-            count++;
-            i++;
-        }
-        if(count>=2) ans += (count*(count-1))/2;
-    }
-    return ans;
-}
-```
-
-#### 9. Shortest Unsorted Continuous Subarray
-Given an integer array nums, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order.Return the shortest such subarray and output its length.
-
-Approach:
-1. Find leftmost flipped item and assign its index to left. If left = -1 => return 0
-2. Find rightmost flipped item and assign its index to right
-3. Find max and min inside the range left to right
-4. Iterate from 0 to left => if any item is greater then min then reassign its index to left
-5. Iterate from nums.size() to right => if any item is smaller then max then reassign its index to right
-6. Return right-left+1
-
-```cpp
-int findUnsortedSubarray(vector<int>& nums) {
-    int left=-1, right=-1;
-    for(int i=0; i<nums.size()-1; i++){
-        if(nums[i]>nums[i+1]){
-            left = i;
-            break;
-        }
-    }
-    if(left==-1) return 0;
-
-    for(int i=nums.size()-1; i>=1; i--){
-        if(nums[i]<nums[i-1]){
-            right = i;
-            break;
-        }
-    }
-
-    int mn = INT_MAX, mx = INT_MIN;
-    for(int i=left; i<=right; i++){
-        mn = min(mn, nums[i]);
-        mx = max(mx, nums[i]);
-    }
-
-    for(int i=0; i<left; i++){
-        if(nums[i]>mn) {
-            left = i;
-            break;
-        }
-    }
-    
-    for(int i=nums.size()-1; i>right; i--){
-        if(nums[i]<mx){
-            right = i;
-            break;
-        }
-    }
-    return right-left+1;
-}
-```
-
-
-
-#### 11. Shortest Subarray with Sum at Least K
-Given an integer array nums and an integer k, return the length of the shortest non-empty subarray of nums with a sum of at least k. If there is no such subarray, return -1.
-
-**Approach 1: Brute Force - O(n2)**
-
-```cpp
-/* Brute Force Solution - O(n2) */
-
-int shortestSubarray(vector<int>& nums, int k) {
-
-    /* Calculating prefixSum */
-
-    for(int i=1; i<nums.size(); i++)
-        nums[i]+=nums[i-1];
-
-    int ans = INT_MAX;
-
-    for(int j=0; j<nums.size(); j++){
-        for(int i=0; i<=j; i++){
-
-            int sum = i==0 ? nums[j] : nums[j] - nums[i-1];
-
-            if(sum>=k and j-i+1 < ans)
-                ans = j-i+1;
-        }
-    }
-
-    return ans==INT_MAX ? -1 : ans;
-}
-```
 
 
 ## @ Wave Sort
 
-#### 1. Wiggle Sort 1
+### 1. Wiggle Sort 1
 Given an unsorted array arr. Reorder it in-place such that :  arr[0] <= arr[1] >= arr[2] <= arr[3] . . . .
 
 Hint: Jump over odd posn and compare left and right elements. 
@@ -713,7 +476,9 @@ void wiggleSort(vector<int> & v){
 }
 ```
 
-#### 2. Wiggle Sort II
+<br>
+
+### 2. Wiggle Sort II
 Given an integer array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
 
 ```cpp

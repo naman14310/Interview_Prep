@@ -428,66 +428,9 @@ int kConcatenationMaxSum(vector<int>& arr, int k) {
 
 ## @ Problems with Subarrays
 
-#### 1. Subarray Sum Equals K (Tricky)
-Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
 
-Approach: Create hashmap and initialize with mp[0] = 1. Compute prefix sum. Iterate over the prefix sum and calculate gain (gain = cs[i]-k) for every iteration. If gain exist in hashmap, add mp[gain] to answer. Add prefix sum of each iteration to hashmap.
 
-[Video Solution](https://www.youtube.com/watch?v=MHocw0bP1rA)
 
-```cpp
-int subarraySum(vector<int>& nums, int k) {
-    int ans = 0;
-    unordered_map<int, int> mp;
-    mp[0] = 1;
-    int cs = 0;
-    for(int num : nums){
-        cs += num;
-        int gain = cs - k;
-        
-        if(mp.find(gain)!=mp.end()) 
-            ans+=mp[gain];
-            
-        mp[cs] += 1;
-    }
-    return ans;
-}
-```
-
-#### 2. Subarray Sums Divisible by K
-Given an array nums of integers, return the number of (contiguous, non-empty) subarrays that have a sum divisible by k.
-
-Hint: Same as above approach (Insert remainder instead of csum into hashmap). Also handle negative numbers.
-
-```cpp
-int subarraysDivByK(vector<int>& nums, int k) {
-    unordered_map<int,int> mp;
-    mp[0] = 1;
-    int csum = 0;
-    int ans = 0;
-
-    for(int num : nums){
-
-        /* 
-            If numbers are negative then convert them to lowest positive num 
-            which will also generate same remainder 
-        */
-
-        if(num<0)
-            num = (num%k)+k;
-
-        csum += num;
-        int rem = csum%k;       // --> here we compute rem instead of gain
-
-        if(mp.find(rem)!=mp.end())
-            ans += mp[rem];
-
-        mp[rem]+=1;             // --> and we will insert rem instead of csum
-    }
-
-    return ans;
-}
-```
 
 #### 3. Continuous Subarray Sum
 Given an integer array nums and an integer k, return true if nums has a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
@@ -520,37 +463,7 @@ bool checkSubarraySum(vector<int>& nums, int k) {
 }
 ```
 
-#### 4. Largest subarray with 0 sum
-Given an array having both positive and negative integers. Compute the length of the largest subarray with sum 0.
 
-Input: N = 8, A[] = {15,-2,2,-8,1,7,10,23}
-
-Output: 5
-
-Hint: Cummulative sum repeates if sum of subarray becomes 0.
-
-```cpp
-int maxLen(int A[], int n){
-    int csum=0;
-    unordered_map<int,int> mp;          // --> {csum, first occuring index}
-    mp[0] = -1;                         // --> Boundary case
-    
-    int ans = 0;
-    
-    for(int i=0; i<n; i++){
-        csum += A[i];
-        
-        /* Whenever we find csum in map, it means we found subarray of sum 0 */
-        
-        if(mp.find(csum)!=mp.end())
-            ans = max(ans, i-mp[csum]);
-        else
-            mp[csum] = i;
-    }
-    
-    return ans;
-}
-```
 
 #### 5. Make Sum Divisible by P
 Given an array of positive integers nums, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by p. It is not allowed to remove the whole array. Return the length of the smallest subarray that you need to remove, or -1 if it's impossible.
@@ -742,35 +655,7 @@ int findUnsortedSubarray(vector<int>& nums) {
 }
 ```
 
-#### 10. Contiguous Array (Tricky)
-Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
 
-Input: nums = [0,1,1,0,1,1,1]
-
-Output: 4
-
-Hint: Variation of largest subarray with sum 0.
-
-```cpp
-int findMaxLength(vector<int>& nums) {
-    int ans = 0, csum = 0;
-    unordered_map<int,int> mp;
-    mp[0] = -1;
-
-    for(int i=0; i<nums.size(); i++){
-
-        if(nums[i]==0) csum += -1;
-        else csum += 1;
-
-        if(mp.find(csum)!=mp.end())
-            ans = max(ans, i-mp[csum]);
-        else
-            mp[csum] = i;
-    }
-
-    return ans;
-}
-```
 
 #### 11. Shortest Subarray with Sum at Least K
 Given an integer array nums and an integer k, return the length of the shortest non-empty subarray of nums with a sum of at least k. If there is no such subarray, return -1.

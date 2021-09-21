@@ -174,10 +174,224 @@ int subarraysDivByK(vector<int>& nums, int k) {
 
 <br>
 
+### 6. Subarray Sum Divisibility by K (Return true/false)
+Return true if nums has a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
+
+Input: nums = [23,2,6,4,7], k = 6
+
+Output: true
+
+```cpp
+bool checkSubarraySum(vector<int>& nums, int k) {
+    int n = nums.size();
+    if(n<2) return false;
+
+    unordered_map<int, int> mp;
+    mp[0] = -1;
+
+    int csum = 0;
+    
+    for(int i=0; i<n; i++){
+        csum += nums[i];
+        int rem = csum % k;
+
+        if(mp.find(rem)!=mp.end()){
+            if(i-mp[rem]>=2)
+                return true;
+        }
+        
+        else mp[rem] = i;
+    }
+
+    return false;
+}
+```
+
+<br>
+
+### 7. Make Sum Divisible by P (Tricky)
+Given an array of positive integers nums, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by p. It is not allowed to remove the whole array. Return the length of the smallest subarray that you need to remove, or -1 if it's impossible.
+
+Input: nums = [6,3,5,2], p = 9
+
+Output: 2
+
+Hint: Find a subarray whose remainder equals to sum % p
+
+```cpp
+int minSubarray(vector<int>& nums, int p) {
+    long long n = nums.size();
+
+    /* Find total sum of all numbers */
+
+    long long sum = 0;
+    for(int num : nums)
+        sum += num;
+
+    /* 
+        Case 1: If sum < p we need to remove whole array 
+        which is not permissible, hence return -1 
+    */
+
+    if(sum<p) return -1;
 
 
-### 1. Flip (IB)
+    /* 
+        Case 2: If required_rem==0 that means on removing 0 elements 
+        we get the desired res, hence so return 0 
+    */
 
+    long long required_rem = sum % p;
+    if(required_rem==0) return 0;
+
+
+    /* Else We need to find a subarray whose remainder equals to required_rem (sum % p)  */
+
+    unordered_map<long long,long long> mp;
+    mp[0] = -1;
+
+    long long csum = 0;
+    long long ans = n;
+
+    for(int i=0; i<n; i++){
+        csum += nums[i];
+        long long rem = csum % p;
+
+        int target = rem - required_rem;
+        if(target<0) target += p;               // --> converting -ve rem to +ve
+
+        if(mp.find(target)!=mp.end())
+            ans = min(ans, i-mp[target]);
+
+        mp[rem] = i;
+    }
+
+    return ans==n ? -1 : ans;
+}
+```
+
+<br>
+
+
+## @ Tricky Subarrays
+
+### 1. Number of Subarrays with Bounded Maximum
+Return the number of (contiguous, non-empty) subarrays such that the value of the maximum array element in that subarray is at least left and at most right.
+
+Approach: Count all valid subarrays ending at an index i, where 0 <= i < n. For a  particular element we can have 3 cases:
+1. ele > R --> We will mark this as the most recent invalid index.
+2. ele < L --> It's answer will be equal to it's previous element's answer
+3. L <= ele <= R --> subarrays ending at ele can be computed as i-last_invalid_index
+
+```cpp
+int numSubarrayBoundedMax(vector<int>& nums, int left, int right) {
+    int last_invalid_index = -1;
+    int ans = 0, prev = 0;
+
+    for(int i=0; i<nums.size(); i++){
+        if(nums[i]<left)
+            ans += prev;
+
+        else if(nums[i]>right){
+            last_invalid_index = i;
+            prev = 0;
+        }
+
+        else{
+            prev = i-last_invalid_index;
+            ans += prev;
+        }
+    }
+    return ans;
+}
+```
+
+<br>
+
+### 2. Arithmetic Slices
+An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. Given an integer array nums, return the number of arithmetic subarrays of nums.
+
+Hint: Find count of equal common differences. If count is n then it gives n*(n-1)/2 subarrays.
+
+```cpp
+int numberOfArithmeticSlices(vector<int>& A) {
+    int ans = 0;
+    int i=1;
+    
+    while(i<A.size()){
+        int item = A[i]-A[i-1];
+        int count = 0;
+
+        while(i<A.size() && A[i]-A[i-1]==item){
+            count++;
+            i++;
+        }
+        
+        if(count>=2) 
+            ans += (count*(count-1))/2;
+    }
+    
+    return ans;
+}
+```
+
+<br>
+
+### 3. Shortest Unsorted Continuous Subarray
+Given an integer array nums, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order.Return the shortest such subarray and output its length.
+
+Approach:
+1. Find leftmost flipped item and assign its index to left. If left = -1 => return 0
+2. Find rightmost flipped item and assign its index to right
+3. Find max and min inside the range left to right
+4. Iterate from 0 to left => if any item is greater then min then reassign its index to left
+5. Iterate from nums.size() to right => if any item is smaller then max then reassign its index to right
+6. Return right-left+1
+
+```cpp
+int findUnsortedSubarray(vector<int>& nums) {
+    int left=-1, right=-1;
+    for(int i=0; i<nums.size()-1; i++){
+        if(nums[i]>nums[i+1]){
+            left = i;
+            break;
+        }
+    }
+    if(left==-1) return 0;
+
+    for(int i=nums.size()-1; i>=1; i--){
+        if(nums[i]<nums[i-1]){
+            right = i;
+            break;
+        }
+    }
+
+    int mn = INT_MAX, mx = INT_MIN;
+    for(int i=left; i<=right; i++){
+        mn = min(mn, nums[i]);
+        mx = max(mx, nums[i]);
+    }
+
+    for(int i=0; i<left; i++){
+        if(nums[i]>mn) {
+            left = i;
+            break;
+        }
+    }
+    
+    for(int i=nums.size()-1; i>right; i--){
+        if(nums[i]<mx){
+            right = i;
+            break;
+        }
+    }
+    return right-left+1;
+}
+```
+
+<br>
+
+### 4. Flip (IB)
 You are given a binary string A. In a single operation, you can choose two indices L and R and flip the characters between them. Perform ATMOST one operation such that in final string number of 1s is maximised. Return the lexicographically smallest such pair of L and R.
 
 NOTE: Pair (a, b) is lexicographically smaller than pair (c, d) if a < c or, if a == c and b < d.
@@ -228,5 +442,38 @@ vector<int> Solution::flip(string A) {
     }
 
     return ans;
+}
+```
+
+<br>
+
+### 5. Shortest Subarray with Sum at Least K
+Given an integer array nums and an integer k, return the length of the shortest non-empty subarray of nums with a sum of at least k. If there is no such subarray, return -1.
+
+**Approach 1: Brute Force - O(n2)**
+
+```cpp
+/* Brute Force Solution - O(n2) */
+
+int shortestSubarray(vector<int>& nums, int k) {
+
+    /* Calculating prefixSum */
+
+    for(int i=1; i<nums.size(); i++)
+        nums[i]+=nums[i-1];
+
+    int ans = INT_MAX;
+
+    for(int j=0; j<nums.size(); j++){
+        for(int i=0; i<=j; i++){
+
+            int sum = i==0 ? nums[j] : nums[j] - nums[i-1];
+
+            if(sum>=k and j-i+1 < ans)
+                ans = j-i+1;
+        }
+    }
+
+    return ans==INT_MAX ? -1 : ans;
 }
 ```

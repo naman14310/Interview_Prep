@@ -272,7 +272,48 @@ int longestKSubstr(string s, int k) {
 
 <br>
 
-### 4. Count Subarrays with exactly K Different Integers
+### 4. Count Subarrays with sum lies within a Range
+Given an array of non negative integers A, and a range (B, C). Find the number of continuous subsequences in the array which have sum S in the range [B, C] or B <= S <= C.
+
+Input: A = [10, 5, 1, 0, 2], B = 6, C = 8
+
+Output: 3
+
+Hint: Count_between(B,C) = Count_atmost(C) - Count_atmost(B-1)
+
+```cpp
+
+int cntSubarray (vector<int> &A, int K){
+    int i=0, j=0;
+    int sum=0, cnt=0;
+
+    while(j<A.size()){
+        sum+=A[j];
+
+        while(sum>K){
+            sum -= A[i];
+            i++;
+        }
+
+        if(i<=j) cnt += j-i+1;
+
+        j++;
+    }
+
+    return cnt;
+}
+
+
+int Solution::numRange(vector<int> &A, int B, int C) {
+    int cnt1 = cntSubarray(A, C);
+    int cnt2 = cntSubarray(A, B-1);
+    return cnt1-cnt2;
+}
+```
+
+<br>
+
+### 5. Count Subarrays with exactly K Different Integers
 
 Input: nums = [1,2,1,3,4], k = 3
 
@@ -320,7 +361,7 @@ int subarraysWithKDistinct(vector<int>& nums, int k) {
 
 <br>
 
-### 5. Longest Repeating Character Replacement (Tricky)
+### 6. Longest Repeating Character Replacement (Tricky)
 You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
 
 Input: s = "ABAB", k = 2
@@ -362,7 +403,7 @@ int characterReplacement(string s, int k) {
 
 <br>
 
-### 6. Smallest Distinct Window
+### 7. Smallest Distinct Window
 Given a string 's'. The task is to find the smallest window length that contains all the characters of the given string at least one time. For eg. A = “aabcbcdbca”, then the result would be 4 as of the smallest window will be “dbca”.
 
 ```cpp
@@ -399,7 +440,7 @@ string smallestWindow(string s){
 
 <br>
     
-### 7. Minimum Window Substring (IMP)
+### 8. Minimum Window Substring (IMP)
 Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
 
 Hint: Use two vectors for storing frequency of characters. Use one count variable. Increment count whenever `freq_t[ch]>0 and freq_s[ch]==freq_t[ch]` and decrement it whenever `freq_t[temp]>0 and freq_s[temp]<freq_t[temp]`
@@ -459,7 +500,7 @@ string minWindow(string s, string t) {
 
 <br>
 
-### 8. Minimum Operations to Reduce X to Zero (Think in Reverse)
+### 9. Minimum Operations to Reduce X to Zero (Think in Reverse)
 You are given an integer array nums and an integer x. In one operation, you can either remove the leftmost or the rightmost element from the array nums and subtract its value from x. Note that this modifies the array for future operations. Return the minimum number of operations to reduce x to exactly 0 if it's possible, otherwise, return -1.
 
 Input: nums = [1,1,4,2,3], x = 5
@@ -505,7 +546,7 @@ int minOperations(vector<int>& nums, int x) {
 
 <br>
 
-### 9. Max Consecutive Ones III
+### 10. Max Consecutive Ones III
 Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
 
 ```cpp
@@ -531,7 +572,7 @@ Given a binary array nums and an integer k, return the maximum number of consecu
 
 <br>
 
-### 10. Get Equal Substrings Within Budget
+### 11. Get Equal Substrings Within Budget
 You are given two strings s and t of the same length. You want to change s to t. Changing the i-th character of s to i-th character of t costs |s[i] - t[i]| that is, the absolute difference between the ASCII values of the characters. You are also given an integer maxCost. Return the maximum length of a substring of s that can be changed to be the same as the corresponding substring of t with a cost less than or equal to maxCost. If there is no substring from s that can be changed to its corresponding substring from t, return 0.
 
 Input: s = "abcd", t = "bcdf", maxCost = 3
@@ -561,7 +602,7 @@ int equalSubstring(string s, string t, int maxCost) {
 
 <br>
 
-### 11. Count Number of Nice Subarrays (Tricky)
+### 12. Count Number of Nice Subarrays (Tricky)
 Given an array of integers nums and an integer k. A continuous subarray is called nice if there are k odd numbers on it. Return the number of nice sub-arrays.
 
 Hint: Convert all odd numbers to 1 and all even numbers to 0. Now problem is reduced to number of subarrays having sum equals k.
@@ -602,7 +643,7 @@ int numberOfSubarrays(vector<int>& nums, int k) {
 
 <br>
 
-### 12. Smallest Range Covering Elements from K Lists (Too Tricky)
+### 13. Smallest Range Covering Elements from K Lists (Too Tricky)
 You have k lists of sorted integers. Find the smallest range that includes at least one number from each of the k lists.
 
 Input: nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]

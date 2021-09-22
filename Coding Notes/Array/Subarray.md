@@ -308,6 +308,43 @@ int minSubarray(vector<int>& nums, int p) {
 
 <br>
 
+### 9. Subarray with given XOR
+Find the total number of subarrays having bitwise XOR of all elements equals to B.
+
+```cpp
+
+/*
+            cxor
+|<-----------><------------->|
+       x              B
+
+    hence, x ^ B = cxor 
+        => x = cxor ^ B
+*/
+
+int Solution::solve(vector<int> &A, int B) {
+    int ans = 0;
+    int cxor = 0;
+
+    unordered_map<int, int> mp;
+    mp[0] = 1;
+
+    for(int num : A){
+        cxor = cxor ^ num;
+        int target = cxor ^ B;
+
+        if(mp.find(target)!=mp.end())
+            ans += mp[target];
+
+        mp[cxor]++;
+    }
+
+    return ans;
+}
+```
+
+<br>
+
 
 
 ## @ Tricky Subarrays

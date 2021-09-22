@@ -740,7 +740,34 @@ vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries){
 
 <br>
 
-### 9. Equal Sum and XOR
+### 9. Pairs With Given Xor
+Given an 1D integer array A containing N distinct integers. Find the number of unique pairs of integers in the array whose XOR is equal to B.
+
+Hint: x xor y = B --> x xor x xor y = x xor B --> y = x xor B. Hence search y for every x in left side.
+
+```cpp
+int Solution::solve(vector<int> &A, int B) {
+    int cnt=0;
+    
+    unordered_set<int> s;
+    s.insert(A[0]);
+
+    for(int i=1; i<A.size(); i++){
+        int xr = A[i] xor B;
+
+        if(s.find(xr)!=s.end())
+            cnt++;
+
+        s.insert(A[i]);
+    }
+
+    return cnt;
+}
+```
+
+<br>
+
+### 10. Equal Sum and XOR
 Given a positive integer n, find count of positive integers i such that 0 <= i <= n and n+i = n^i 
 
 Hint: Answer = pow(2, count of zero bits)

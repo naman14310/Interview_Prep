@@ -364,7 +364,42 @@ string reorganizeString(string s) {
 
 <br>
 
-## Hard and Tricky Problems
+### 10. An Increment Problem
+Given a stream of numbers A. On arrival of each number, you need to increase its first occurence by 1 and include this in the stream. Return the final stream of numbers.
+
+Note: You have to update first occurance in new pattern itself not of the given.
+
+Input: 1 2 3 2 3 1 4 2 1 3 
+
+Output: 4 5 3 2 3 2 4 2 1 3 
+
+Hint: create an unordered_map of {num, minheap of indexes}. Whenever we get repeated element, pop its first occurance index from minheap, increment it ans push it again in minheap of new value.
+
+```cpp
+vector<int> Solution::solve(vector<int> &A) {
+    unordered_map<int, priority_queue<int, vector<int>, greater<int>> > mp;       
+
+    for(int i=0; i<A.size(); i++){
+        int num = A[i];
+        
+        if(mp.find(num)!=mp.end() and !mp[num].empty()){
+            int first_idx = mp[num].top();
+            mp[num].pop();
+
+            A[first_idx]++;
+            mp[A[first_idx]].push(first_idx);
+        }
+
+        mp[num].push(i);
+    }
+
+    return A;
+}
+```
+
+<br>
+
+## @ Hard and Tricky Problems
 
 ### 1. Task Scheduler (Tricky)
 Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.

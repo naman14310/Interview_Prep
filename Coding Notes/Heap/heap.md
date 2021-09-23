@@ -693,7 +693,46 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 
 <br>
 
-### 5. Find Median from Data Stream (**IMP**)
+### 5. Maximum Sum Combinations
+Given two equally sized 1-D arrays. A sum combination is made by adding one element from array A and another element of array B. Return the maximum C valid sum combinations from all the possible sum combinations.
+
+Input: A = [1, 4, 2, 3], B = [2, 5, 1, 6], C = 4
+ 
+Output: [10, 9, 9, 8]
+
+Hint: Logic similar to previous problem
+
+```cpp
+vector<int> Solution::solve(vector<int> &A, vector<int> &B, int C) {
+    vector<int> res;
+
+    sort(A.begin(), A.end(), greater<int>());
+    priority_queue<pair<int,pair<int,int>>> maxheap;
+
+    for(int i=0; i<B.size(); i++){
+        int sum = A[0] + B[i];
+        maxheap.push({sum, {0, i}});
+    }
+
+    while(C--){
+        auto p = maxheap.top(); maxheap.pop();
+        res.push_back(p.first);
+
+        int i=p.second.first+1, j=p.second.second;
+
+        if(i<A.size()){
+            int sum = A[i] + B[j];
+            maxheap.push({sum, {i, j}});
+        } 
+    }
+
+    return res;
+}
+```
+
+<br>
+
+### 6. Find Median from Data Stream (**IMP**)
 
 [Explaination](https://www.youtube.com/watch?v=1LkOrc-Le-Y)
 
@@ -759,7 +798,7 @@ public:
 
 <br>
 
-### 6. Merge k Sorted Lists (**IMP**)
+### 7. Merge k Sorted Lists (**IMP**)
 You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it. 
 
 Input: lists = [[1,4,5],[1,3,4],[2,6]]
@@ -802,7 +841,7 @@ ListNode* mergeKLists(vector<ListNode*>& lists) {
 
 <br>
 
-### 7. Minimum Number of Refueling Stops
+### 8. Minimum Number of Refueling Stops
 A car travels from a starting position to a destination which is target miles east of the starting position. The gas stations are represented as an array stations where stations[i] = [positioni, fueli] indicates that the ith gas station is positioni miles east of the starting position and has fueli liters of gas.
 
 The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car. Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.
@@ -849,7 +888,7 @@ int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
 
 <br>
 
-### 8. Construct Target Array With Multiple Sums
+### 9. Construct Target Array With Multiple Sums
 You are given an array target of n integers. From a starting array arr consisting of n 1's, you may perform the following procedure :
 1. let x be the sum of all elements currently in your array.
 2. choose index i, such that 0 <= i < n and set the value of arr at index i to x.
@@ -897,7 +936,7 @@ bool isPossible(vector<int>& target) {
 
 <br>
 
-### 9. Divide Array in Sets of K Consecutive Numbers
+### 10. Divide Array in Sets of K Consecutive Numbers
 Given an array of integers nums and a positive integer k, find whether it is possible to divide this array into sets of k consecutive numbers. Return true if it is possible. Otherwise, return false.
 
 Input: nums = [1,2,3,3,4,4,5,6], k = 4

@@ -134,9 +134,51 @@ void findPreSuc(Node* root, Node*& pre, Node*& suc, int key){
 }
 ```
 
+<br> 
+
+#### 5. Binary Search Tree Iterator
+
+Hint: Use Iterative Inorder Traversal. Everytime we call nxt function or (during initialization), hold root var to left most null after pushing all nodes in stack. On calling next(), pop node from stack, move root to stk.top()->right and then again to leftmost Null.
+
+```cpp
+class BSTIterator {
+public:
+    
+    stack<TreeNode*> stk;
+    TreeNode* root;             // --> curr node var for iterative inorder traversal
+     
+    
+    BSTIterator(TreeNode* rt) {
+        root = rt;
+        while(root){
+            stk.push(root);
+            root = root->left;
+        }
+    }
+    
+    
+    int next() {
+        TreeNode* nxt = stk.top(); stk.pop();
+        root = nxt->right;
+        
+        while(root){
+            stk.push(root);
+            root = root->left;
+        }
+        
+        return nxt->val;
+    }
+    
+    
+    bool hasNext() {
+        return root or !stk.empty();
+    }
+};
+```
+
 <br>
 
-#### 5. Serialize and Deserialize BST
+#### 6. Serialize and Deserialize BST
 
 Hint: Convert to preorder
 

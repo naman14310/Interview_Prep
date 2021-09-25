@@ -270,6 +270,8 @@ Inter-process communication (IPC) is a mechanism that allows processes to commun
 
 Processes can use shared memory for extracting information as a record from another process as well as for delivering any specific information to other processes. Eg: Producer-Consumer problem 
 
+<br>
+
 **Message Passing Method**
 
 If two processes p1 and p2 want to communicate with each other, they proceed as follows:
@@ -284,5 +286,53 @@ We need at least two primitives:
 
 [Detailed Explaination](https://www.geeksforgeeks.org/inter-process-communication-ipc/)
 
- 
+<br>
+
+#### 8. Producer Consumer Problem (Bounded Buffer)
+We have a buffer of fixed size. A producer can produce an item and can place in the buffer. A consumer can pick items and can consume them. We need to ensure that when a producer is placing an item in the buffer, then at the same time consumer should not consume any item. In this problem, buffer is the critical section. 
+
+To solve this problem, we need two counting semaphores – Full and Empty. “Full” keeps track of number of items in the buffer at any given time and “Empty” keeps track of number of unoccupied slots. 
+
+```cpp
+Initialization of semaphores:
+
+mutex = 1; 
+Full = 0;               // --> Initially, all slots are empty. Thus full slots are 0 
+Empty = n;              // --> All slots are empty initially 
+
+/* --------------------------------------------------------------------------------------------------*/
+
+Solution for Producer:
+
+do {
+    produce_item();
+
+    wait(empty);
+    wait(mutex);
+
+    place_in_buffer();
+
+    signal(mutex);
+    signal(full);
+
+} while(true)
+
+/* --------------------------------------------------------------------------------------------------*/
+
+Solution for Consumer:
+
+do {
+
+    wait(full);
+    wait(mutex);
+
+    remove_item_from_buffer();
+
+    signal(mutex);
+    signal(empty);
+
+    consume_item();
+
+} while(true)
+```
 

@@ -351,9 +351,11 @@ Here priority means, no reader should wait if the share is currently opened for 
 
 
 ```cpp
-mutex   : used to ensure mutual exclusion when readcnt is updated i.e. when any reader enters or exit from the critical section.
-wrt     : used to restrict access of writers if atleast 1 reader is present.
-readcnt : tells the number of processes performing read in the critical section, initially 0.
+/*
+    mutex   : used to ensure mutual exclusion when readcnt is updated i.e. when any reader enters or exit from the critical section.
+    wrt     : used to restrict access of writers if atleast 1 reader is present.
+    readcnt : tells the number of processes performing read in the critical section, initially 0.
+*/
 
 semaphore mutex, wrt;           
 int readcnt;  

@@ -336,3 +336,75 @@ do {
 } while(true)
 ```
 
+<br>
+
+#### 9. Reader Writer Problem
+Consider a situation where we have a file shared between many people. Then,
+1. If one of the people tries editing the file, no other person should be reading or writing at the same time.
+2. However if some person is reading the file, then others may read it at the same time.
+
+
+**Solution when Reader has the Priority over Writer**
+
+Here priority means, no reader should wait if the share is currently opened for reading. Three variables are used: mutex, wrt, readcnt to implement solution.
+
+semaphore mutex is used to ensure mutual exclusion when readcnt is updated i.e. when any reader enters or exit from the critical section and semaphore wrt is used by both readers and writers. While, readcnt tells the number of processes performing read in the critical section, initially 0.
+
+
+```cpp
+semaphore mutex, wrt;           
+int readcnt;  
+
+/* ---------------------------------------------------------------------------------------*/
+
+Writer process:
+
+do {
+    wait(wrt);                      // --> writer requests for critical section
+    write();
+    signal(wrt);                    // --> leaves the critical section
+
+} while(true);
+
+/* ---------------------------------------------------------------------------------------*/
+
+Reader process:
+
+do {
+   wait(mutex);         // --> Reader wants to enter the critical section (mutex is used to ensure mutual exclusion on readcnt)
+   
+   readcnt++;           // --> The number of readers has now increased by 1                   
+
+   /*   
+        If there is atleast one reader in the critical section
+        we will ensure that no writer can enter..
+        thus we give preference to readers here
+   */
+   
+   if (readcnt==1)     
+      wait(wrt);                    
+
+   signal(mutex);       // --> other readers can enter while this current reader is inside the critical section (hence release mutex) 
+
+
+   reading();
+   
+   
+   wait(mutex);         // --> a reader wants to leave, again we will apply acquire lock on mutex before changing readcnt value
+
+   readcnt--;
+
+   /* 
+        If no reader is left in the critical section,
+        release wrt lock so that writer can perform their actions
+   */
+    
+   if (readcnt == 0) 
+       signal(wrt);         
+
+   signal(mutex);       // --> reader leaves and releasing mutex lock
+
+} while(true);
+
+```
+

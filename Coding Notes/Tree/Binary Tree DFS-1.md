@@ -1,10 +1,11 @@
 # Binary Tree (DFS or Recursive based Questions)
-# Part 1
+## Part 1
+
+<br>
 
 ## @ Standard BT Questions
 
-
-#### 1. Invert a Binary Tree
+### 1. Invert a Binary Tree
 
 ![img](https://assets.leetcode.com/uploads/2021/03/14/invert1-tree.jpg)
 
@@ -22,7 +23,9 @@ TreeNode* invertTree(TreeNode* root) {
 }
 ```
 
-#### 2. Is Siblings
+<br>
+
+### 2. Is Siblings
 Siblings are those nodes which have same parent. Return true if and only if the nodes corresponding to the values x and y are siblings.
 
 ```cpp
@@ -38,7 +41,9 @@ bool isSiblings(TreeNode* root, int x, int y){
 }
 ```
 
-#### 3. Cousins in Binary Tree
+<br>
+
+### 3. Cousins in Binary Tree
 Two nodes of a binary tree are cousins if they have the same depth, but have different parents (i.e they are not siblings). Return true if and only if the nodes corresponding to the values x and y are cousins.
 
 ```cpp
@@ -71,7 +76,9 @@ bool isCousins(TreeNode* root, int x, int y) {
 }
 ```
 
-#### 4. Minimum Depth of Binary Tree
+<br>
+
+### 4. Minimum Depth of Binary Tree
 Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
 
 ```cpp
@@ -90,7 +97,9 @@ int minDepth(TreeNode* root) {
 }
 ```
 
-#### 5. Balanced Binary Tree
+<br>
+
+### 5. Balanced Binary Tree
 Given a binary tree, determine if it is height-balanced.
 
 ```cpp
@@ -117,7 +126,9 @@ bool isBalanced(TreeNode* root) {
 }
 ```
 
-#### 6. Check Completeness of a Binary Tree (Tricky)
+<br>
+
+### 6. Check Completeness of a Binary Tree (Tricky)
 
 Method 1: DFS (Recursive approach) O(n) | O(h)
 
@@ -197,7 +208,9 @@ bool isCompleteTree(TreeNode* root) {
 }
 ```
 
-#### 7. Lowest Common Ancestor of a Binary Tree
+<br>
+
+### 7. Lowest Common Ancestor of a Binary Tree
 
 ```cpp
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
@@ -216,7 +229,9 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 8. Min distance between two given nodes of a Binary Tree
+<br>
+
+### 8. Min distance between two given nodes of a Binary Tree
 
 Hint: First find their lca. Then min distance between nodes n1, n2 will be : dist(n1, n2) = dist(lca, n1) + dist(lca, n2)
 
@@ -249,14 +264,15 @@ int findDist(Node* root, int a, int b) {
 }
 ```
 
-#### 9. Lowest Common Ancestor of Deepest Leaves (Tricky)
+<br>
+
+### 9. Lowest Common Ancestor of Deepest Leaves (Tricky)
 
 Similar Question : Smallest Subtree with all the Deepest Nodes
 
 ![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/01/sketch1.png)
 
-Approach (for one pass solution) :
-
+Approach (for one pass solution):
 1. Create a function which return maxdepth of tree
 2. Recurse for left and right subtree
 3. Maintain a referenced variable deepest which store the deepest node so far
@@ -286,7 +302,9 @@ TreeNode* lcaDeepestLeaves(TreeNode* root) {
 }
 ```
 
-#### 10. Check if a Binary Tree contains duplicate subtrees of size 2 or more 
+<br>
+
+### 10. Check if a Binary Tree contains duplicate subtrees of size 2 or more 
 Given a binary tree, find out whether it contains a duplicate sub-tree of size two or more, or not.
 
 Hint: Return inorder traversal and store it everytime in a set to check whether it occurs again or not.
@@ -318,7 +336,9 @@ bool dupSub(Node *root){
 }
 ```
 
-#### 11. Find all Duplicate subtrees in a Binary tree
+<br>
+
+### 11. Find all Duplicate subtrees in a Binary tree
 
 ![img](https://contribute.geeksforgeeks.org/wp-content/uploads/tree1-1.png)
 
@@ -349,14 +369,18 @@ vector<Node*> printAllDups(Node* root){
 }
 ```
 
-#### 12. Serialize and Deserialize Binary Tree
+<br>
+
+### 12. Serialize and Deserialize Binary Tree
 
 ```cpp
 // Encodes a tree to a single string.
+
 string serialize(TreeNode* root) {
     if(!root) return "X";
     return to_string(root->val) + "," + serialize(root->left) + "," + serialize(root->right);  
 }
+
 
 TreeNode* buildTree(vector<string> v, int & i){
     if(v[i]=="X"){
@@ -373,7 +397,9 @@ TreeNode* buildTree(vector<string> v, int & i){
     return root;
 }
 
+
 // Decodes your encoded data to tree.
+
 TreeNode* deserialize(string data) {
     stringstream ss(data);
     vector<string> v;
@@ -387,10 +413,13 @@ TreeNode* deserialize(string data) {
 }
 ```
 
+<br>
+
+
 
 ## @ Comparision between two trees
 
-#### 1. Merge Two Binary Trees
+### 1. Merge Two Binary Trees
 
 ![img](https://assets.leetcode.com/uploads/2021/02/05/merge.jpg)
 
@@ -408,7 +437,9 @@ TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
 }
 ```
 
-#### 2. Same Tree
+<br>
+
+### 2. Same Tree
 Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
 ```cpp
@@ -420,7 +451,9 @@ bool isSameTree(TreeNode* p, TreeNode* q) {
 }
 ```
 
-#### 3. Symmetric Tree
+<br>
+
+### 3. Symmetric Tree
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 
 ![img](https://assets.leetcode.com/uploads/2021/02/19/symtree1.jpg)
@@ -439,7 +472,9 @@ bool isSymmetric(TreeNode* root) {
 }
 ```
 
-#### 4. Isomorphic Tree
+<br>
+
+### 4. Isomorphic Tree
 Two trees are called isomorphic if one can be obtained from another by a series of flips, i.e. by swapping left and right children of several nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
 
 ![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/ISomorphicTrees-e1368593305854.png)
@@ -469,7 +504,9 @@ bool isIsomorphic(Node *root1, Node *root2){
 }
 ```
 
-#### 5. Subtree of Another Tree
+<br>
+
+### 5. Subtree of Another Tree
 Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/28/subtree1-tree.jpg)
@@ -491,11 +528,13 @@ bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 ```
 Optimization: To optimize the time complexity of our code, instead of checking subtree at every node, we will only check when both roots are at same level.
 
+<br>
+
 
 
 ## @ Questions based on unique Tree Traversals
 
-#### 1. Diagonal Traversal of Binary Tree 
+### 1. Diagonal Traversal of Binary Tree 
 
 ![img](https://www.geeksforgeeks.org/wp-content/uploads/unnamed1.png)
 
@@ -524,7 +563,9 @@ vector<int> diagonal(Node *root){
 }
 ```
 
-#### 2. Boundary Traversal of Binary Tree
+<br>
+
+### 2. Boundary Traversal of Binary Tree
 
 ![img](https://contribute.geeksforgeeks.org/wp-content/uploads/boundary.png)
 
@@ -582,10 +623,13 @@ vector<int> printBoundary(Node *root){
 }
 ```
 
+<br>
+
+
 
 ## @ Few IMP Interview Questions
 
-#### 1. Transform to Sum Tree
+### 1. Transform to Sum Tree
 Given a Binary Tree of size N. Convert this to a tree where each node contains the sum of the left and right sub trees of the original tree. The values of leaf nodes are changed to 0.
 
 ```cpp
@@ -605,7 +649,9 @@ void toSumTree(Node *root){
 }
 ```
 
-#### 2. Check if Binary tree is Sum tree or not
+<br>
+
+### 2. Check if Binary tree is Sum tree or not
 Given a Binary Tree. Return 1 if, for every node X in the tree other than the leaves, its value is equal to the sum of its left subtree's value and its right subtree's value. Else return 0. An empty tree is also a Sum Tree. A leaf node is also considered a Sum Tree.
 
 ```cpp
@@ -627,7 +673,9 @@ bool isSumTree(Node* root){
 }
 ```
 
-#### 3. Sum of Left Leaves
+<br>
+
+### 3. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -648,7 +696,10 @@ int sumOfLeftLeaves(TreeNode* root) {
 }
 ```
 
-#### 4. Check if all leaves are at same level
+<br>
+
+
+### 4. Check if all leaves are at same level
 
 ```cpp
 bool traverse(Node* root, int level, int & leaf_level){
@@ -678,7 +729,9 @@ bool check(Node *root){
 }
 ```
 
-#### 5. Count Complete Tree Nodes
+<br>
+
+### 5. Count Complete Tree Nodes (Tricky)
 Given the root of a complete binary tree, return the number of the nodes in the tree. Design an algorithm that runs in less than O(n) time complexity.
 
 ```cpp
@@ -723,7 +776,9 @@ int countNodes(TreeNode* root) {
 }
 ```
 
-#### 6. Most Frequent Subtree Sum
+<br>
+
+### 6. Most Frequent Subtree Sum
 Given the root of a binary tree, return the most frequent subtree sum. If there is a tie, return all the values with the highest frequency in any order.
 
 ```cpp
@@ -761,7 +816,9 @@ vector<int> findFrequentTreeSum(TreeNode* root) {
 }
 ```
 
-#### 7. Maximum Product of Splitted Binary Tree
+<br>
+
+### 7. Maximum Product of Splitted Binary Tree
 Given a binary tree root. Split the binary tree into two subtrees by removing 1 edge such that the product of the sums of the subtrees are maximized. Since the answer may be too large, return it modulo 10^9 + 7.
 
 ![img](https://assets.leetcode.com/uploads/2020/01/21/sample_1_1699.png)
@@ -802,9 +859,13 @@ int maxProduct(TreeNode* root) {
 }
 ```
 
+<br>
+
+
+
 ## @ Questions based on Deletion of Nodes
 
-#### 1. Delete Leaves With a Given Value
+### 1. Delete Leaves With a Given Value
 
 Hint: Traverse in postorder manner
 
@@ -822,7 +883,9 @@ TreeNode* removeLeafNodes(TreeNode* root, int target) {
 }
 ```
 
-#### 2. Binary Tree Pruning
+<br>
+
+### 2. Binary Tree Pruning
 Given the root of a binary tree, return the same tree where every subtree (of the given tree) not containing a target_val has been removed.
 
 Hint: Return type is boolean which tells whether that subtree contains that value or not
@@ -848,7 +911,9 @@ TreeNode* pruneTree(TreeNode* root) {
 }
 ```
 
-#### 3. Delete Nodes And Return Forest
+<br>
+
+### 3. Delete Nodes And Return Forest
 Given the root of a binary tree, each node in the tree has a distinct value. After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees). Return the roots of the trees in the remaining forest. You may return the result in any order.
 
 Input: root = [1,2,3,4,5,6,7], to_delete = [3,5]

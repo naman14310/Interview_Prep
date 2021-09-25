@@ -1,10 +1,11 @@
 # Binary Tree (DFS or Recursive based Questions)
-# PART 2
+## PART 2
 
+<br>
 
 ## @ Iterative Tree Traversals
 
-#### 1. Preorder using stack
+### 1. Preorder using stack
 
 Hint : Use single stack of type TreeNode*
 
@@ -34,7 +35,9 @@ vector<int> preorderTraversal(TreeNode* root) {
 }
 ```
 
-#### 2. Inorder using stack and variable
+<br>
+
+### 2. Inorder using stack and variable
 
 Hint: Use one stack of type TreeNode* + one variable of type TreeNode*
 
@@ -71,7 +74,9 @@ vector<int> inorderTraversal(TreeNode* root) {
 }
 ```
 
-#### 3. Postorder using two stacks
+<br>
+
+### 3. Postorder using two stacks
 
 Hint: Use two stacks of type TreeNode*
 
@@ -108,7 +113,9 @@ vector<int> postorderTraversal(TreeNode* root) {
 }
 ```
 
-#### 4. Morris Inorder Traversal (Time complexity : O(n) | Space complexity : O(1))
+<br>
+
+### 4. Morris Inorder Traversal - O(n) | O(1)
 
 ![img](https://2.bp.blogspot.com/-Oi7ZBzR9Wzs/V5YWWkB1FII/AAAAAAAAY8k/hVhzEWlwigM5HpHHN1VIZITzw9By4zAOACLcB/s1600/threadedBT.png)
 
@@ -163,9 +170,13 @@ vector<int> inorderTraversal(TreeNode* root) {
 }
 ```
 
+<br>
+
+
+
 ## @ Questions based on Path Traversals
 
-#### 1. N-ary Tree Preorder Traversal
+### 1. N-ary Tree Preorder Traversal
 
 ```cpp
 void traverse(Node* root, vector<int> & ans){
@@ -184,7 +195,9 @@ vector<int> preorder(Node* root) {
 }
 ```
 
-#### 2. Binary Tree Paths
+<br>
+
+### 2. Binary Tree Paths
 Given the root of a binary tree, return all root-to-leaf paths in any order.
 
 ```cpp
@@ -209,7 +222,9 @@ vector<string> binaryTreePaths(TreeNode* root) {
 }
 ```
 
-#### 3. Sum Root to Leaf Numbers
+<br>
+
+### 3. Sum Root to Leaf Numbers
 You are given the root of a binary tree containing digits from 0 to 9 only. Return the total sum of all root-to-leaf numbers.
 
 ```cpp
@@ -234,7 +249,9 @@ int sumNumbers(TreeNode* root) {
 }
 ```
 
-#### 4. Sum of Root To Leaf Binary Numbers (Tricky)
+<br>
+
+### 4. Sum of Root To Leaf Binary Numbers (Tricky)
 You are given the root of a binary tree where each node has a value 0 or 1.  Each root-to-leaf path represents a binary number starting with the most significant bit.  For example, if the path is 0 -> 1 -> 1 -> 0 -> 1, then this could represent 01101 in binary, which is 13.
 
 Hint : Use Bitwise logic to form integer on the go.
@@ -259,7 +276,9 @@ int sumRootToLeaf(TreeNode* root) {
 }
 ```
 
-#### 5. Path Sum
+<br>
+
+### 5. Path Sum
 Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
 
 ```cpp
@@ -277,7 +296,9 @@ bool hasPathSum(TreeNode* root, int targetSum) {
 }
 ```
 
-#### 6. Path Sum II
+<br>
+
+### 6. Path Sum II
 Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where each path's sum equals targetSum.
 
 ```cpp
@@ -306,7 +327,9 @@ vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
 }
 ```
 
-#### 7. Path Sum III (Tricky)
+<br>
+
+### 7. Path Sum III (Tricky)
 Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum. The path does not need to start or end at the root or a leaf, but it must go downwards.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/09/pathsum3-1-tree.jpg)
@@ -345,7 +368,9 @@ int pathSum(TreeNode* root, int targetSum) {
 }
 ```
 
-#### 8. Sum of Nodes on the Longest path from root to leaf node 
+<br>
+
+### 8. Sum of Nodes on the Longest path from root to leaf node 
 Find the sum of all nodes on the longest path from root to leaf node. If two or more paths compete for the longest path, then the path having maximum sum of nodes is being considered.
 
 ```cpp
@@ -376,7 +401,9 @@ int sumOfLongRootToLeafPath(Node *root){
 }
 ```
 
-#### 9. Count Good Nodes in Binary Tree
+<br>
+
+### 9. Count Good Nodes in Binary Tree
 Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
 
 ![img](https://assets.leetcode.com/uploads/2020/04/02/test_sample_1.png)
@@ -401,7 +428,9 @@ int goodNodes(TreeNode* root) {
 }
 ```
 
-#### 10. Longest ZigZag Path in a Binary Tree
+<br>
+
+### 10. Longest ZigZag Path in a Binary Tree
 
 ![img](https://assets.leetcode.com/uploads/2020/01/22/sample_1_1702.png)
 
@@ -441,10 +470,13 @@ int longestZigZag(TreeNode* root) {
 }
 ```
 
+<br>
+
+
 
 ## @ BT to Linked List Conversion
 
-#### 1. Flatten Binary Tree to Linked List
+### 1. Flatten Binary Tree to Linked List
 The "linked list" should be in the same order as a pre-order traversal of the binary tree.
 
 ![img](https://assets.leetcode.com/uploads/2021/01/14/flaten.jpg)
@@ -495,7 +527,9 @@ void flatten(TreeNode* root) {
 }
 ```
 
-#### 2. Binary Tree to Doubly Linked List
+<br>
+
+### 2. Binary Tree to Doubly Linked List
 Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL) In-Place. The left and right pointers in nodes are to be used as previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder of the given Binary Tree. The first node of Inorder traversal (leftmost node in BT) must be the head node of the DLL.
 
 ![img](https://www.geeksforgeeks.org/wp-content/uploads/TreeToList.png)
@@ -541,11 +575,14 @@ Node * bToDLL(Node *root){
 }
 ```
 
-## @ Questions based on Tree Construction (Tricky)
+<br>
 
-#### 1. Maximum Binary Tree
+
+
+## @ Questions based on Tree Construction 
+
+### 1. Maximum Binary Tree (Tricky - O(n))
 You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
-
 1. Create a root node whose value is the maximum value in nums.
 2. Recursively build the left subtree on the subarray prefix to the left of the maximum value.
 3. Recursively build the right subtree on the subarray suffix to the right of the maximum value.
@@ -562,7 +599,6 @@ Approach:
 
 ```cpp
 TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-
     stack<TreeNode*> stk;
 
     for(int i=0; i<nums.size(); i++){
@@ -586,7 +622,9 @@ TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
 }
 ```
 
-#### 2. Construct Binary Tree from Preorder and Inorder Traversal
+<br>
+
+### 2. Construct Binary Tree from Preorder and Inorder Traversal
 
 ```cpp
 int find_root_index(vector<int> & v, int start, int end, int root_value){
@@ -618,7 +656,9 @@ TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
 }
 ```
 
-#### 3. Construct Binary Tree from Inorder and Postorder Traversal
+<br>
+
+### 3. Construct Binary Tree from Inorder and Postorder Traversal
 
 ```cpp
 int find_root_index(vector<int> & v, int start, int end, int val){
@@ -649,9 +689,13 @@ TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
 }
 ```
 
+<br>
+
+
+
 ## @ Playing with Tree pointers
 
-#### 1. Populating Next Right Pointers in Each Node (Tricky)
+### 1. Populating Next Right Pointers in Each Node (Perfect Binary Tree)
 
 ![img](https://assets.leetcode.com/uploads/2019/02/14/116_sample.png)
 
@@ -674,7 +718,51 @@ Node* connect(Node* root) {
 }
 ```
 
-#### 2. Add One Row to Tree
+<br>
+
+### 2. Populating Next Right Pointers in Each Node II (Binary Tree)
+
+![img](https://assets.leetcode.com/uploads/2019/02/15/117_sample.png1)
+
+```cpp
+/* Move temp to temp->next till we get first Not NULL child or temp==NULL */
+
+Node* getnext (Node* node){
+    Node* temp = node;
+
+    while(temp){
+        if(temp->left) return temp->left;
+        if(temp->right) return temp->right;
+        temp = temp->next;
+    }
+
+    return NULL;
+}
+
+
+Node* connect(Node* root) {
+    if(!root) return root;
+
+    if(root->left){
+        if(root->right)
+            root->left->next = root->right;
+        else
+            root->left->next = getnext (root->next);
+    }
+
+    if(root->right)
+        root->right->next = getnext (root->next);
+
+    connect(root->right);
+    connect(root->left);
+
+    return root;
+}
+```
+
+<br>
+
+### 3. Add One Row to Tree
 Given the root of a binary tree and two integers val and depth, add a row of nodes with value val at the given depth depth. Note that the root node is at depth 1.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/11/add2-tree.jpg)
@@ -710,10 +798,13 @@ TreeNode* addOneRow(TreeNode* root, int v, int d) {
 }
 ```
 
+<br>
+
+
 
 ## @ DP on Trees
 
-#### 1. Diameter of Binary Tree (Longest path from leaf to leaf)
+### 1. Diameter of Binary Tree (Longest path from leaf to leaf)
 
 Hint: Use DP on tree concept
 
@@ -736,7 +827,9 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 2. Distribute Coins in Binary Tree
+<br>
+
+### 2. Distribute Coins in Binary Tree
 You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree. In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent. Return the minimum number of moves required to make every node have exactly one coin.
 
 ![img](https://assets.leetcode.com/uploads/2019/01/18/tree4.png)
@@ -763,7 +856,9 @@ int distributeCoins(TreeNode* root) {
 }
 ```
 
-#### 3. House Robber III (Similar as Max Subset Sum in Binary tree)
+<br>
+
+### 3. House Robber III (Similar as Max Subset Sum in Binary tree)
 All houses in this place form a binary tree. It will automatically contact the police if two directly-linked houses were broken into on the same night. Given the root of the binary tree, return the maximum amount of money the thief can rob without alerting the police.
 
 ![img](https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg)
@@ -799,7 +894,9 @@ int rob(TreeNode* root) {
 }
 ```
 
-#### 4. Binary Tree Cameras
+<br>
+
+### 4. Binary Tree Cameras
 You are given the root of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, itself, and its immediate children. Return the minimum number of cameras needed to monitor all nodes of the tree.
 
 ![img](https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_01.png)
@@ -838,7 +935,9 @@ int minCameraCover(TreeNode* root) {
 }
 ```
 
-#### 5. Binary Tree Maximum Path Sum (from any node to any node)
+<br>
+
+### 5. Binary Tree Maximum Path Sum (from any node to any node)
 Refer DP on trees playlist of Aditya verma
 
 Hint: At every node, check whether it can become the best solution and return max off all to its parent. 
@@ -866,7 +965,9 @@ int maxPathSum(TreeNode* root) {
 }
 ```
 
-#### 6. Longest Univalue Path (Tricky)
+<br>
+
+### 6. Longest Univalue Path (Tricky)
 Given the root of a binary tree, return the length of the longest path, where each node in the path has the same value. This path may or may not pass through the root. The length of the path between two nodes is represented by the number of edges between them.
 
 ![img](https://assets.leetcode.com/uploads/2020/10/13/ex2.jpg)
@@ -911,10 +1012,3 @@ int longestUnivaluePath(TreeNode* root) {
     return max_path_len-1;
 }
 ```
-
-
-
-
-
-
-

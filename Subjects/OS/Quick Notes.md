@@ -348,10 +348,12 @@ Consider a situation where we have a file shared between many people. Then,
 
 Here priority means, no reader should wait if the share is currently opened for reading. Three variables are used: mutex, wrt, readcnt to implement solution.
 
-semaphore mutex is used to ensure mutual exclusion when readcnt is updated i.e. when any reader enters or exit from the critical section and semaphore wrt is used by both readers and writers. While, readcnt tells the number of processes performing read in the critical section, initially 0.
-
 
 ```cpp
+mutex   : used to ensure mutual exclusion when readcnt is updated i.e. when any reader enters or exit from the critical section.
+wrt     : used to restrict access of writers if atleast 1 reader is present.
+readcnt : tells the number of processes performing read in the critical section, initially 0.
+
 semaphore mutex, wrt;           
 int readcnt;  
 

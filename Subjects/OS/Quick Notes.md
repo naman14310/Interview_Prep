@@ -120,6 +120,12 @@ A low-priority process gets the priority of a high-priority process waiting for 
 
 <br>
 
+#### 6. Independent vs Co-operative process
+An independent process is not affected by the execution of other processes while a co-operating process can be affected by other executing processes.
+
+<br>
+
+
 
 ## @ Process Synchronisation
 
@@ -147,7 +153,7 @@ A solution to the critical section problem must satisfy the following properties
 #### 3. Semaphores
 A semaphore is an integer variable that, apart from initialization, is accessed only through two atomic operations called wait() and signal().
 
-```
+```cpp
 wait() is used for acquiring lock
 
 wait(S){
@@ -162,3 +168,121 @@ signal(S){
     S++;
 }
 ```
+
+<br>
+
+#### 4. Binary Semaphores (Mutexes)
+It is used to implement solution of critical section problem with multiple processes. Initialized to 1.
+
+```cpp
+struct semaphore {
+    enum value(0, 1);                 // --> Since it is Binary Semaphore, it'll only contains 0 or 1
+  
+    /* q contains all Process Control Blocks (PCBs) corresponding to processes got blocked while performing wait() operation */
+    
+    queue<process> q;
+}; 
+
+
+wait(semaphore s){
+    if (s.value == 1) {
+        s.value = 0;
+    }
+    else {
+        q.push(P);                  // --> add the process to the waiting queue
+        sleep();
+    }
+}
+
+
+signal(Semaphore s){
+    if (s.q is empty()) {
+        s.value = 1;
+    }
+    else {  
+        Process p=q.pop();         // --> select a process from waiting queue and give entry to critical section
+        wakeup(p);
+    }
+}
+```
+
+<br>
+
+#### 5. Counting semaphore
+It is used to control access to a resource that has multiple instances. Initialized to n, where n is the number of resources.
+
+```cpp
+struct Semaphore {
+    int value;                    // --> Since it is counting semaphore, It will contain any integer val depends on number of resources 
+    Queue<process> q;
+};
+
+
+wait(Semaphore s){
+    s.value = s.value - 1;
+    if (s.value < 0) {
+        q.push(p);               // --> add process to queue here p is a process which is currently executing
+        block();
+    }
+    else
+        return;
+}
+  
+  
+signal(Semaphore s){
+    s.value = s.value + 1;
+    if (s.value <= 0) {
+        Process p=q.pop();      // --> remove process p from queue
+        wakeup(p);
+    }
+    else
+        return;
+}
+```
+
+<br>
+
+#### 6. Do Semaphore suffers from deadlock
+Semaphores may lead to indefinite wait (starvation) and deadlocks.
+
+```cpp
+Example of two prcoess, where use of semaphores leads to deadlock
+
+   P0                            P1
+   
+ wait (S);                    wait (Q);
+ wait (Q);                    wait (S);
+  ...                           ...
+signal (S);                  signal (Q);
+signal (Q);                  signal (S);
+```
+
+<br>
+
+#### 7. Inter Process Communication (IPC)
+Inter-process communication (IPC) is a mechanism that allows processes to communicate with each other and synchronize their actions. rocesses can communicate with each other through:
+1. Shared Memory
+2. Message passing
+
+![img](https://forns.lmu.build/assets/images/spring-2018/cmsi-387/week-8/ipc-1.png)
+
+**Shared Memory Method**
+
+Processes can use shared memory for extracting information as a record from another process as well as for delivering any specific information to other processes. Eg: Producer-Consumer problem 
+
+**Message Passing Method**
+
+If two processes p1 and p2 want to communicate with each other, they proceed as follows:
+1. Establish a communication link (if a link already exists, no need to establish it again.)
+2. Start exchanging messages using basic primitives.
+
+We need at least two primitives: 
+
+– send(message, destination) or send(message) 
+
+– receive(message, host) or receive(message)
+
+[Detailed Explaination](https://www.geeksforgeeks.org/inter-process-communication-ipc/)
+
+ 
+

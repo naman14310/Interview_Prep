@@ -722,7 +722,7 @@ Node* connect(Node* root) {
 
 ### 2. Populating Next Right Pointers in Each Node II (Binary Tree)
 
-![img](https://assets.leetcode.com/uploads/2019/02/15/117_sample.png1)
+![img](https://assets.leetcode.com/uploads/2019/02/15/117_sample.png)
 
 ```cpp
 /* Move temp to temp->next till we get first Not NULL child or temp==NULL */

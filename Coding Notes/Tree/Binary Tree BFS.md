@@ -1,8 +1,10 @@
 # Binary Tree (BFS or Queue based Question)
 
-## @ Questions based on Level Order Traversal
+<br>
 
-#### 1. Average of Levels in Binary Tree
+## @ Problems on Level Order Traversal
+
+### 1. Average of Levels in Binary Tree
 
 ```cpp
 vector<double> averageOfLevels(TreeNode* root) {
@@ -44,7 +46,9 @@ vector<double> averageOfLevels(TreeNode* root) {
 }
 ```
 
-#### 2. Binary Tree Zigzag Level Order Traversal
+<br>
+
+### 2. Binary Tree Zigzag Level Order Traversal
 
 ```cpp
 vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
@@ -89,7 +93,9 @@ vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
 }
 ```
 
-#### 3. Deepest Leaves Sum
+<br>
+
+### 3. Deepest Leaves Sum
 Given the root of a binary tree, return the sum of values of its deepest leaves.
 
 ```cpp
@@ -128,10 +134,13 @@ int deepestLeavesSum(TreeNode* root) {
 }
 ```
 
+<br>
+
+
 
 ## @ Few IMP Interview Questions
 
-#### 1. All Nodes Distance K in Binary Tree
+### 1. All Nodes Distance K in Binary Tree (VIMP)
 We are given a binary tree (with root node root), a target node, and an integer value k. Return a list of the values of all nodes that have a distance k from the target node. 
 
 Hint : Convert tree into graph by creating parent child mappings. Then use bfs to get all nodes at distance k.
@@ -199,7 +208,9 @@ vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
 }
 ```
 
-#### 2. Maximum Width of Binary Tree
+<br>
+
+### 2. Maximum Width of Binary Tree
 The maximum width of a tree is the maximum width among all levels. The width of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes are also counted into the length calculation.
 
 ```cpp
@@ -243,7 +254,9 @@ int widthOfBinaryTree(TreeNode* root) {
 }
 ```
 
-#### 3. Vertical Order Traversal of a Binary Tree
+<br>
+
+### 3. Vertical Order Traversal of a Binary Tree
 The vertical order traversal of a binary tree is a list of top-to-bottom orderings for each column index starting from the leftmost column and ending on the rightmost column. There may be multiple nodes in the same row and same column. In such a case, sort these nodes by their values.
 
 ```cpp
@@ -257,7 +270,6 @@ vector<vector<int>> verticalTraversal(TreeNode* root) {
     q.push({root,0});
 
     int currentCount = 1, childCount = 0;
-
     vector<pair<int, int>> v;          // ---- > used for removing conflict between two nodes at same level and at same pos
 
     while(!q.empty()){
@@ -306,10 +318,13 @@ vector<vector<int>> verticalTraversal(TreeNode* root) {
 }
 ```
 
+<br>
+
+
 
 ## @ Questions based on Different views of Binary Tree
 
-#### 1. Right Side View
+### 1. Right Side View
 
 Hint: Print last node of each level (when currentCount = 0)
 
@@ -348,8 +363,9 @@ vector<int> rightSideView(TreeNode* root) {
 
 Note: For left view, just print first node of every level (when childCount = 0)
 
+<br>
 
-#### 2. Top View 
+### 2. Top View 
 
 Hint: Insert only when the pos does not occur before (i.e. not present in the map)
 

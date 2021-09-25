@@ -111,3 +111,54 @@ A dispatcher is the module of the operating system that gives control of the CPU
 
 #### 4. Priority inversion
 A low-priority process gets the priority of a high-priority process waiting for it.
+
+<br>
+
+#### 5. Scheduling Chart
+
+![img](https://github.com/naman14310/Interview_Prep/blob/main/Subjects/OS/scheduling%20chart%20os.png)
+
+<br>
+
+
+## @ Process Synchronisation
+
+**Race condition** is a situation where several processes access and manipulate the same data concurrently and the outcome of the execution depends on the particular order in which the accesses take place. To avoid such situations, it must be ensured that only one process can manipulate the data at a
+given time. This can be done by process synchronization.
+
+<br>
+
+#### 1. Critical Section
+1. Each process has a section of code, called the critical section, in which the process access shared resources, changes common variables and files.
+2. The problem is to ensure that when one process is executing in its critical section then no other process can execute its own critical section
+3. The critical section is preceded by an *entry section* in which a process seeks permission from other processes. The critical section is followed by an *exit section.*
+
+<br>
+
+#### 2. Condition for Synchronisation mechanisms
+A solution to the critical section problem must satisfy the following properties:
+1. Mutual exclusion
+2. Progress 
+3. Bounded waiting
+4. Architectural Neutrality
+
+<br>
+
+#### 3. Semaphores
+A semaphore is an integer variable that, apart from initialization, is accessed only through two atomic operations called wait() and signal().
+
+```
+wait() is used for acquiring lock
+
+wait(S){
+    while(S<=0);    // --> Busy Waiting
+    S--;
+}
+
+
+signal() is used for releasing lock
+
+signal(S){
+    S++;
+}
+```

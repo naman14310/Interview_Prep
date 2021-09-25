@@ -343,6 +343,7 @@ Consider a situation where we have a file shared between many people. Then,
 1. If one of the people tries editing the file, no other person should be reading or writing at the same time.
 2. However if some person is reading the file, then others may read it at the same time.
 
+<br>
 
 **Solution when Reader has the Priority over Writer**
 

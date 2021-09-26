@@ -202,7 +202,9 @@ Separate address spaces would mean context switching to call basic OS services. 
 <br>
 
 ### 13. What happens when we turn on computer?
-When the computer is turned on or restarted, it first performs the power-on-self-test, also known as POST. It ensures whether your hardware configuration is valid and working properly. If the POST is successful and no issues are found, BIOS looks for a Master Boot Record (MBR), to launch the bootloader. The bootloader will load the operating system for the computer into memory. The computer will then be able to quickly access, load, and run the operating system. 
+1. When the computer is turned on or restarted, it first performs the power-on-self-test, also known as POST. It ensures whether your hardware configuration is valid and working properly. 
+2. If the POST is successful and no issues are found, BIOS looks for a Master Boot Record (MBR), to launch the bootloader. 
+3. The bootloader will load the operating system for the computer into memory. The computer will then be able to quickly access, load, and run the operating system. 
 
 Modern system use two stage boot loading. In the first step a tiny program is loaded from a sector of Hard disk. This tiny program in turn load a program from some where in the disk, which is called bootloader. And finally bootloader loads the OS.
 

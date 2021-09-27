@@ -399,6 +399,50 @@ vector<int> Solution::solve(vector<int> &A) {
 
 <br>
 
+### 11. Meeting Rooms (IMP)
+Given an 2D integer array A of size N x 2 denoting time intervals of different meetings. Where:
+1. A[i][0] = start time of the ith meeting.
+2. A[i][1] = end time of the ith meeting.
+
+Find the minimum number of conference rooms required so that all meetings can be done.
+
+Input: A =  [[1, 18], [18, 23], [15, 29], [4, 15], [2, 11]. [5, 13]]
+
+```cpp
+
+
+int Solution::solve(vector<vector<int> > &A) {
+    int room = 0;
+    sort(A.begin(), A.end());           // --> sort meetings by startTime
+
+    priority_queue<int, vector<int>, greater<int>> minheap;
+
+    /* Iterate over meetings one by one */
+
+    for(int i=0; i<A.size(); i++){
+        int start = A[i][0], end = A[i][1];
+
+        /* Pop all meetings which ended before curr meet */
+
+        while(!minheap.empty() and minheap.top()<=start)
+            minheap.pop();
+
+        minheap.push(end);              // --> push endTime of currm meet in minheap
+
+        /* Now minheap contains all of meetings running simultaneously at curr instant of time */ 
+
+        int curr_room_required = minheap.size();
+        room = max(room, curr_room_required);
+    }
+
+    return room;
+}
+```
+
+<br>
+
+
+
 ## @ Hard and Tricky Problems
 
 ### 1. Task Scheduler (Tricky)

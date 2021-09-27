@@ -488,3 +488,58 @@ int Solution::solve(vector<int> &A, int B) {
 }
 ```
 
+<br>
+
+### 10. Minimum Speed to Arrive on Time
+
+[Question](https://leetcode.com/problems/minimum-speed-to-arrive-on-time/)
+
+Input: dist = [1,3,2], hour = 2.7
+
+Output: 3
+
+```cpp
+bool reachOnTime (vector<int> &dist, double hour, double speed){
+    double time = 0;
+    int n = dist.size();
+
+    for(int i=0; i<n; i++){
+        double d = dist[i];
+
+        if(i<n-1)
+            time += ceil(d/speed);
+        else
+            time += d/speed;
+    }
+
+    return time<=hour;
+}
+
+
+int binarySearch (vector<int> &dist, double hour, int start, int end){
+    int ans = end;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(reachOnTime(dist, hour, mid)){
+            ans = mid;
+            end = mid-1;
+        }
+
+        else start = mid+1;
+    }
+
+    return ans;
+}
+
+
+int minSpeedOnTime(vector<int>& dist, double hour) {
+    int n = dist.size();
+    if(n-1 >= hour) return -1;
+
+    int start = 1, end = INT_MAX;
+    return binarySearch (dist, hour, start, end);
+}
+```
+

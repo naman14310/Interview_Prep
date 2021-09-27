@@ -493,7 +493,53 @@ int celebrity(vector<vector<int> >& matrix, int n) {
 
 <br>
 
-### 4. Sum of Subarray Minimums (Too Tricky)
+### 4. Asteroid Collision
+We are given an array representing size of asteroids in a row and the sign represents its direction (positive meaning right, negative meaning left). Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
+
+Input: asteroids = [10,2,-5]
+
+Output: [10]
+
+```cpp
+class Solution {
+public:
+    
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> res;
+        
+        /* Collision will occur only if res.back() is moving on right and a is moving to left */
+        
+        for(int a : asteroids){
+            
+            /* pop res.back() till collision occurs and left moving asteroid is heavy */
+            
+            while(!res.empty() and res.back()>0 and a<0 and abs(a)>abs(res.back()))
+                res.pop_back();
+            
+            /* Else if collision occurs and left moving asteroid is light, then simply ignore it */
+            
+            if(!res.empty() and res.back()>0 and a<0 and abs(a)<abs(res.back()))
+                continue;
+            
+            /* Else if collision occurs and both asteroids are of same size, pop_back() and continue */
+            
+            else if(!res.empty() and res.back()>0 and a<0 and abs(a)==abs(res.back())){
+                res.pop_back();
+                continue;
+            }
+            
+            else
+                res.push_back(a);
+        }
+        
+        return res;
+    }
+};
+```
+
+<br>
+
+### 5. Sum of Subarray Minimums (Too Tricky)
 Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 10^9 + 7.
 
 Input: arr = [3,1,2,4]

@@ -1,3 +1,7 @@
+# Some Common DP Patterns 
+
+<br>
+
 ## @ House Robber Pattern
 
 ### 1. House Robber
@@ -25,6 +29,8 @@ int rob(vector<int>& nums) {
     return dp[n-1];
 }
 ```
+
+<br>
 
 ### 2. House Robber II (arranged in a circle)
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
@@ -66,6 +72,8 @@ int rob(vector<int>& nums) {
 }
 ```
 
+<br>
+
 ### 3. Delete and Earn
 You are given an integer array nums. You want to maximize the number of points you get by performing the following operation any number of times: Pick any nums[i] and delete it to earn nums[i] points. Afterwards, you must delete every element equal to nums[i] - 1 and every element equal to nums[i] + 1. Return the maximum number of points you can earn by applying the above operation some number of times.
 
@@ -83,7 +91,7 @@ int deleteAndEarn(vector<int>& nums) {
     for(int n : nums)
         res[n]++;
 
-    /* After that, implement house robber logic */
+    /* After that, implement house robber logic on frequency array*/
 
     for(int i=2; i<res.size(); i++)
         res[i] = max(res[i-2]+res[i]*i, res[i-1]);
@@ -91,6 +99,10 @@ int deleteAndEarn(vector<int>& nums) {
     return res.back();
 }
 ```
+
+<br>
+
+
 
 ## @ Problems on Ugly Numbers
 An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
@@ -113,10 +125,14 @@ bool isUgly(int n) {
 }
 ```
 
+<br>
+
 ### 2. Ugly Number II
 Given an integer n, return the nth ugly number.
 
-[Video Explaination](https://www.youtube.com/watch?v=78Yx7oLA43s)
+Hint: Initially point three pointer i2, i3 and i5 to dp[0], Now to fill dp[i], we need to find next multiple of 2, 3 and 5 which is only divisible by (2,3 or 5). And then increment the pointer, which is minimum.
+
+[Video Explaination](https://www.youtube.com/watch?v=Lj68VJ1wu84)
 
 ```cpp
 int nthUglyNumber(int n) {
@@ -160,6 +176,8 @@ int nthUglyNumber(int n) {
 }
 ```
 
+<br>
+
 ### 3. Super Ugly Number
 A super ugly number is a positive integer whose prime factors are in the array primes. Given an integer n and an array of integers primes, return the nth super ugly number.
 
@@ -167,7 +185,7 @@ Input: n = 12, primes = [2,7,13,19]
 
 Output: 32
 
-Hint: Genralize above approach using vectors instead of variables
+Hint: Genralize above approach using vectors instead of variables.
 
 ```cpp
 int nthSuperUglyNumber(int n, vector<int>& primes) {
@@ -192,6 +210,10 @@ int nthSuperUglyNumber(int n, vector<int>& primes) {
     return dp[n-1];
 }
 ```
+
+<br>
+
+
 
 ## @ Problems on Word Break
 
@@ -236,6 +258,8 @@ bool wordBreak(string s, vector<string>& wordDict) {
     return solve (s, n, 0, dict, dp);
 }
 ```
+
+<br>
 
 ### 2. Word Break II
 Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in any order. Same word in the dictionary may be reused multiple times in the segmentation.
@@ -284,6 +308,65 @@ vector<string> wordBreak(string s, vector<string>& wordDict) {
 }
 ```
 
+<br>
+
+### 3. Arrange II (IB)
+You are given a sequence of black and white horses, and a set of K stables. You have to accommodate the horses into the stables such that:
+1. You fill the horses into the stables preserving the relative order of horses. 
+2. No stable should be empty and no horse should be left unaccommodated.
+3. Take the product (number of white horses * number of black horses) for each stable and take the sum of all these products. This value should be the minimum among all possible accommodation arrangements.
+
+Input: "WWWB" , K = 2
+
+Output: 0
+
+```cpp
+
+int solve (string &A, int idx, int n, vector<vector<int>> &dp, int k, vector<int> &whiteCnt, vector<int> &blackCnt){
+    if(idx==A.size()) return 0;
+    if(k==1) return whiteCnt[idx] * blackCnt[idx];
+
+    if(dp[idx][k]!=-1) return dp[idx][k];
+
+    int res = INT_MAX;
+    int wc = 0, bc = 0;
+
+    for(int i=idx; i<n; i++){
+        if(A[i]=='W') wc++;
+        else bc++;
+
+        res = min(wc*bc + solve(A, i+1, n, dp, k-1, whiteCnt, blackCnt), res);
+    } 
+
+    return dp[idx][k] = res;
+}
+
+int Solution::arrange(string A, int k) {
+    int n = A.size();
+    if(n<k) return -1;
+
+    vector<int> whiteCnt (n, 0);
+    vector<int> blackCnt (n, 0);
+
+    for(int i=n-1; i>=0; i--){
+        if(i<n-1){
+            whiteCnt[i] = whiteCnt[i+1];
+            blackCnt[i] = blackCnt[i+1];
+        }
+
+        if(A[i]=='W') whiteCnt[i]++;
+        else blackCnt[i]++;
+    }
+
+    vector<vector<int>> dp (n, vector<int> (k+1, -1));
+    return solve (A, 0, n, dp, k, whiteCnt, blackCnt);
+}
+```
+
+<br>
+
+
+
 ## @ Jump Game Pattern
 
 ### 1. Jump Game
@@ -306,6 +389,8 @@ bool canJump(vector<int>& nums) {
     return false;
 }
 ```
+
+<br>
 
 ### 2. Jump Game II
 Given an array of non-negative integers nums, you are initially positioned at the first index of the array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the last index in the minimum number of jumps.
@@ -360,6 +445,8 @@ int jump(vector<int>& nums) {
     return steps;
 }
 ```
+
+<br>
 
 ### 3. Jump Game VII
 You are given a 0-indexed binary string s and two integers minJump and maxJump. In the beginning, you are standing at index 0, which is equal to '0'. You can move from index i to index j if the following conditions are fulfilled:
@@ -427,6 +514,10 @@ bool canReach(string s, int minJump, int maxJump) {
 }
 ```
 
+<br>
+
+
+
 ## @ Stock Buy-Sell
 
 ### 1. Best Time to Buy and Sell Stock IV
@@ -469,3 +560,5 @@ int maxProfit(int k, vector<int>& prices) {
     return solve (prices, n, 0, k, false, dp);
 }
 ```
+
+<br>

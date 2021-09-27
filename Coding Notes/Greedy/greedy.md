@@ -7,8 +7,31 @@ Mostly Used Data Structures and Algos : Sorting & Heaps
 
 ## @ Sorting based problems
 
+### 1. Assign Mice to Holes
+There are N Mice and N holes that are placed in a straight line. Each hole can accomodate only 1 mouse. The positions of Mice are denoted by array A and the position of holes are denoted by array B. A mouse can stay at his position, move one step right from x to x + 1, or move one step left from x to x − 1. Any of these moves consumes 1 minute. Assign mice to holes so that the time when the last mouse gets inside a hole is minimized.
 
-### 1. Maximize Sum Of Array After K Negations
+Input: A = [-4, 2, 3], B = [0, -2, 4]
+
+Output: 2
+
+```cpp
+int Solution::mice(vector<int> &A, vector<int> &B) {
+
+    sort(A.begin(), A.end());
+    sort(B.begin(), B.end());
+
+    int ans = INT_MIN;
+
+    for(int i=0; i<A.size(); i++)
+        ans = max(ans, abs(A[i]-B[i]));
+    
+    return ans;
+}
+```
+
+<br>
+
+### 2. Maximize Sum Of Array After K Negations
 Given an integer array nums and an integer k, modify the array by choosing an index i and replace nums[i] with -nums[i]. You should apply this process exactly k times. You may choose the same index i multiple times. Return the largest possible sum of the array after modifying it in this way.
 
 Input: nums = [3,-1,0,2], k = 3
@@ -58,7 +81,7 @@ int largestSumAfterKNegations(vector<int>& nums, int k) {
 
 <br>
 
-### 2. Advantage Shuffle
+### 3. Advantage Shuffle
 Given two arrays A and B of equal size, the advantage of A with respect to B is the number of indices i for which A[i] > B[i]. Return any permutation of A that maximizes its advantage with respect to B.
 
 Input: A = [2,7,11,15], B = [1,10,4,11]
@@ -105,7 +128,7 @@ vector<int> advantageCount(vector<int>& A, vector<int>& B) {
 
 <br>
 
-### 3. Minimum Increment to Make Array Unique
+### 4. Minimum Increment to Make Array Unique
 You are given an integer array nums. In one move, you can pick an index i where 0 <= i < nums.length and increment nums[i] by 1. Return the minimum number of moves to make every value in nums unique.
 
 Input: nums = [3,2,1,2,1,7]
@@ -135,7 +158,7 @@ int minIncrementForUnique(vector<int>& nums) {
 
 <br>
 
-### 4. Most Profit Assigning Work
+### 5. Most Profit Assigning Work
 You have n jobs and m workers. You are given three arrays: difficulty, profit, and worker where:
 1. difficulty[i] and profit[i] are the difficulty and the profit of the ith job, and
 2. worker[j] is the ability of jth worker (i.e., the jth worker can only complete a job with difficulty at most worker[j]).
@@ -189,7 +212,7 @@ int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int
 
 <br>
 
-### 5. Queue Reconstruction by Height (Tricky)
+### 6. Queue Reconstruction by Height (Tricky)
 You are given an array of people. Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi. Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue.
 
 Input: people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
@@ -254,7 +277,7 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
 
 <br>
 
-### 6. Two City Scheduling (Tricky)
+### 7. Two City Scheduling (Tricky)
 A company is planning to interview 2n people. Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti. Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
 
 Input: costs = [[10,20],[30,200],[400,50],[30,20]]
@@ -299,6 +322,7 @@ int twoCitySchedCost(vector<vector<int>>& costs) {
 ```
 
 <br>
+
 
 
 ## @ Jump Game Pattern (Flag-Race approach)

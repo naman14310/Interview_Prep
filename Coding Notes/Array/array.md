@@ -193,6 +193,24 @@ void duplicateZeros(vector<int>& arr) {
 
 <br>
 
+### 8. Highest Product (IB)
+Given an array A, of N integers. Return the highest product possible by multiplying 3 numbers from the array.
+
+```cpp
+int Solution::maxp3(vector<int> &A) {
+    int n = A.size();
+    sort(A.begin(), A.end());
+
+    if(A[n-1]<=0) 
+        return A[n-1]*A[n-2]*A[n-3];
+    else
+        return A[n-1] * max(A[0]*A[1], A[n-2]*A[n-3]);
+}
+```
+
+<br>
+
+
 
 ## @ Medium
 

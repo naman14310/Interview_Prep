@@ -218,7 +218,7 @@ A Thread shares same address space, code section, data section and same global v
 
 <br>
 
-### 3. Can Multiple threads can run simultaneously ?
+### 3. Can Multiple threads run simultaneously ?
 No, The CPU switches rapidly back and forth among the threads giving the illusion that the threads are running in parallel.
 
 <br>

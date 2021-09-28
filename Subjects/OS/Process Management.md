@@ -113,12 +113,44 @@ Context switches are computationally intensive since register and memory state m
 
 <br>
 
-### 11. Independent vs Co-operative process
+### 11. Which is the Best Scheduling Algorithm ?
+Every scheduling algorithm has a type of a situation where it is the best choice. Let's look at different such situations:
+
+**Situation 1: incoming processes are short with no specific priority**
+
+In this case, **FCFS** works best when compared to SJF and RR because the processes are short which means that no process will wait for a longer time. When each process is executed one by one, every process will be executed eventually.
+
+**Situation 2: If processes are a mix of long and short processes and the task will only be completed if all the processes are executed successfully in a given time.**
+
+**Round Robin scheduling** works efficiently here because it does not cause starvation and also gives equal time quantum for each process.
+
+**Situation 3: The processes are a mix of user based and kernel based processes.**
+
+**Priority based scheduling** works efficiently in this case because generally kernel based processes have higher priority when compared to user based processes.
+
+<br>
+
+### 12. Which scheduling algorithm is used in Linux ?
+Linux uses a **Completely Fair Scheduling (CFS) algorithm**, which is an implementation of weighted fair queueing (WFQ). There is a fixed time interval during which each thread in the system must run at least once.
+
+<br>
+
+### 13. Which scheduling algorithm is used in Windows?
+Windows NT/XP/Vista uses a **multilevel feedback queue**, a combination of fixed-priority preemptive scheduling, round-robin, and first in, first out algorithms.
+
+<br>
+
+### 14. Which scheduling algorithm is used in Android?
+Android operating system uses O(1) scheduling algorithm as it is based on Linux Kernel 2.6.
+
+<br>
+
+### 15. Independent vs Co-operative process
 An independent process is not affected by the execution of other processes while a co-operating process can be affected by other executing processes.
 
 <br>
 
-### 12. Inter Process Communication (IPC)
+### 16. Inter Process Communication (IPC)
 Inter-process communication (IPC) is a mechanism that allows processes to communicate with each other and synchronize their actions. Processes can communicate with each other through:
 1. Shared Memory
 2. Message passing

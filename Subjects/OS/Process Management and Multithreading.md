@@ -481,6 +481,8 @@ signal(S){
 ### 8. Binary Semaphores (Mutexes)
 It is used to implement solution of critical section problem with multiple processes. Initialized to 1.
 
+Note: The use of a mutex decreases parallelism.
+
 ```cpp
 struct semaphore {
     enum value(0, 1);                 // --> Since it is Binary Semaphore, it'll only contains 0 or 1
@@ -722,3 +724,75 @@ do {
 Above system may suffer from deadlock if all philosopher pick there left chopstick at same instant. 
 
 **Solution for Deadlock:** We make (n-1) philospher to pick left chopstick first and we will reverse the order for 1 philosopher so he will pick his right chopstick first.
+
+<br>
+
+
+## @ Synchronisation Mechanisms in C++
+
+[Best Article](https://medium.com/swlh/c-mutex-write-your-first-concurrent-code-69ac8b332288)
+
+### 1. Mutex Implementation 
+Hold a lock only for the operations that actually require it.
+
+```cpp
+#include<iostream>
+#include <mutex>
+#include <vector>
+using namespace std;
+
+mutex door;                      // --> mutex declaration
+vector<int> v;                   // --> shared data
+
+door.lock();                     // --> acquiring lock i.e. wait()
+
+/*-----------------------*/
+
+This is a thread-safe zone: just one thread at the time allowed
+  
+Unique ownership of vector v guaranteed 
+
+/*-----------------------*/
+
+door.unlock();                   // --> releasing lock i.e. signal()
+```
+
+<br>
+
+### 2. Non blocking mutex
+1. `try_lock()` is a non-blocking method offered by `std::mutex`. It returns immediately, even if the acquisition failed, with a value of true if the mutex is acquired, false if not.
+2. `std::timed_mutex` offers two non-blocking methods for locking the mutex: `try_lock_for()` and `try_lock_until()`, both returning when the time elapsed with a true or false value based on the acquisition success.
+
+<br>
+
+### 3. What happens if we forget to unlock() or any exception is thrown before it ?
+The unlock() will never be executed. The resource will be unavailable during all the mutex lifetime, and if destroyed, the behavior is undefined.
+
+<br>
+
+### 4. Lock Gaurd
+It always guarantees to unlock the mutex using RAII (Resource Acquisition Is Initialization) paradigm: the raw mutex is encapsulated inside a lock_guard that invokes lock() at its construction and unlock() at its destruction, when it exits its scope. This is safe even in case of exceptions.
+
+```cpp
+#include<iostream>
+#include <mutex>
+#include <vector>
+using namespace std;
+
+mutex door;                         // --> mutex declaration
+vector<int> v;                      // --> shared data
+
+{     
+     lock_guard<mutex> lg(door);    // --> lg Constructor called. Equivalent to door.lock();
+      
+     /*-----------------------*/
+       
+     Unique ownership of vector guaranteed..
+    
+     /*-----------------------*/
+     
+}                                   // --> lg exits its scope. Destructor called. Equivalent to door.unlock();
+```
+
+<br>
+

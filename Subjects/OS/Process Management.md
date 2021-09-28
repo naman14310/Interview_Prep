@@ -262,6 +262,29 @@ fork() is a system call executed in the kernel through which a process creates a
 
 Yes, there can be security issues because of the extensive sharing of resources between multiple threads.
 
+<br>
+
+### 12. Multithreading on Multiple Cores
+Multicore refers to a computer or processor that has more than one logical CPU core, that can physically execute multiple instructions at the same time. Programs that support multithreading can use more than one core if more than one is available.
+
+**Only one thread can run on a core at once. Different threads running is actually just threads jumping onto the CPU and running for short periods of time, then being switched out with other threads which also need to run.**
+
+<br>
+
+### 13. Can we do multithreading on Single Core Processor ?
+Even if we have only one core, we can still run multiple threads, and our OS will do its best to make sure that all running threads get their fair share of CPU time.
+
+<br>
+
+### 14. Hyperthreading
+Hyper-threading was Intel’s first effort to bring parallel computation to end user’s PCs. A single CPU with hyper-threading appears as two logical CPUs for an operating system. When a "core" has two "threads" (like in many new Intel chips), it means that the core can run two parallel threads, as if there were two cores.
+
+<br>
+
+### 15. Core Vs Threads
+The CPU cores mean the actual hardware component whereas threads refer to the virtual component which manages the tasks.
+
+
 
 
 <br>

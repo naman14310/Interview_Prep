@@ -120,9 +120,13 @@ Every scheduling algorithm has a type of a situation where it is the best choice
 
 In this case, **FCFS** works best when compared to SJF and RR because the processes are short which means that no process will wait for a longer time. When each process is executed one by one, every process will be executed eventually.
 
+<br>
+
 **Situation 2: If processes are a mix of long and short processes and the task will only be completed if all the processes are executed successfully in a given time.**
 
 **Round Robin scheduling** works efficiently here because it does not cause starvation and also gives equal time quantum for each process.
+
+<br>
 
 **Situation 3: The processes are a mix of user based and kernel based processes.**
 

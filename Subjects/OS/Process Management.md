@@ -1,45 +1,270 @@
-# @ Process Management
+# Process Management
 
 Note: Kernel is the first process to be created, is the ancestor of all other processes and is at the root of the process tree.
 
 <br>
 
-### 1. Zombie process
-A zombie process is a process that has terminated but its PCB still exists because its parent has not yet accepted its return value.
+## @ Process Basics & Scheduling 
+
+### 1. How does a process look like in memory ?
+When a program is created then it is just some pieces of Bytes which is stored in Hard Disk as a passive entity. When a program is loaded in memory it becomes an active entity known as **Process**.
+
+![img](https://www.tutorialspoint.com/assets/questions/media/29467/1.jpg)
+
+**Code (or Text)**
+
+This section of memory contains the executable instructions of a program. It is read-only segment.
+
+**Data**
+
+It contains the global and static variables that are initialized by the programmer prior to the execution of a program. This segment is not read-only, as the value of the variables can be changed at the runtime.
+
+**Stack**
+
+It contains temporary data i.e. function parameters, return addresses, and local variables. Stack grows in opposite direction of heap for avoiding overlapping problem. This section is committed to store all the data needed by a function call in a program. A stack pointer register keeps the tracks of the top of the stack i.e., how much of the stack area using by the current process.
+
+**Heap**
+
+To allocate memory for variables whose size cannot be statically determined by the compiler before program execution, requested by the programmer, there is a requirement of dynamic allocation of memory which is done in heap segment. It can be only determined at run-time. It is managed via system calls to malloc, calloc, free, delete etc.
 
 <br>
 
-### 2. Difference between process and thread
-1. processes are typically independent while threads exist as parts of a process
-2. processes carry considerably more state information than threads, whereas multiple threads within a process share process state as well as memory and other resources
-3. processes have separate address spaces, whereas threads share their address space
-4. processes interact only through system-provided inter-process communication mechanisms
-5. context switching between threads in the same process is typically faster than context switching between processes
+[Working Of Stack Vs Heap Memory](https://www.youtube.com/watch?v=PdvGEI-P3-M)
 
 <br>
 
-### 3. Dispatcher
-A dispatcher is the module of the operating system that gives control of the CPU to the process selected by the CPU scheduler. Dispatch latency is the time taken to stop a process and start another. Dispatch latency is a pure overhead.
+
+### 2. Process States
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/20190604122001/states_modified.png)
 
 <br>
 
-### 4. Priority inversion
-A low-priority process gets the priority of a high-priority process waiting for it.
+### 3. CPU and IO Bound Processes
+If the process is intensive in terms of CPU operations then it is called CPU bound process. Similarly, If the process is intensive in terms of I/O operations then it is called IO bound process. For better performance, we should choose proper mix of CPU bound and I/O bound processes.
 
 <br>
 
-### 5. Scheduling Chart
+### 4. Zombie process (or Defunct process)
+A zombie process is a process that has terminated but its PCB still exists because its parent has not yet accepted its return value. Those Processes has completed their execution by exit() system call but still has an entry in Process Table. It is a process in terminated state.
+
+**Maximum number of Zombie process a system can handle?**
+
+It will depend upon system configuration and strength.
+
+<br>
+
+### 5. PCB (Process Control Block)
+PCB is used to track the process’s execution status. When process makes a transition from one state to another, OS must update information in the process’s PCB. It contains following info:
+1. Process Number
+2. Process State
+3. Program Counter (stores address of next instruction)
+4. Register
+5. Memory info
+6. Open file lists
+
+<br>
+
+### 6. Process Scheduling Queues
+OS maintains all PCBs in Process Scheduling Queues. 
+1. Job Queue: keeps track of all newly created process.
+2. Ready Queue: Keeps track of all process residing in main memory and are ready and waiting to execute.
+3. Device Queue: Every device has its own device queue.
+
+<br>
+
+### 7. Types of schedulers
+
+**Long term** – performance 
+
+Makes a decision about how many processes while reside in the ready state, this **decides the degree of multiprogramming**.
+
+<br>
+
+**Short term** – Context switching time 
+
+Short term scheduler will **decide which process to be executed** next and then it will call dispatcher. A dispatcher is a software that moves process from ready to run and vice versa. In other words, it is context switching.
+
+<br>
+
+**Medium term** – Swapping time 
+
+Medium term scheduler is **used for swapping** i.e. moving the process from main memory to secondary and vice versa.
+
+<br>
+
+### 8. Dispatcher
+A dispatcher is the module of the operating system that gives control of the CPU to the process selected by the CPU scheduler. **Dispatch latency** is the time taken to stop a process and start another. Dispatch latency is a pure overhead.
+
+<br>
+
+### 9. What happens during Context Switch ?
+During Context Switch, the state of current running process is stored in its PCB. After this, the state of the process to run next is loaded from its own PCB and used to set the PC, registers, etc. 
+
+![img](https://www.tutorialspoint.com/operating_system/images/context_switch.jpg)
+
+Context switches are computationally intensive since register and memory state must be saved and restored. To avoid the amount of context switching time, some hardware systems employ two or more sets of processor registers.
+
+<br>
+
+### 10. Scheduling Chart
 
 ![img](https://github.com/naman14310/Interview_Prep/blob/main/Subjects/OS/scheduling%20chart%20os.png)
 
 <br>
 
-### 6. Independent vs Co-operative process
+### 11. Independent vs Co-operative process
 An independent process is not affected by the execution of other processes while a co-operating process can be affected by other executing processes.
 
 <br>
 
+### 12. Inter Process Communication (IPC)
+Inter-process communication (IPC) is a mechanism that allows processes to communicate with each other and synchronize their actions. Processes can communicate with each other through:
+1. Shared Memory
+2. Message passing
 
+![img](https://forns.lmu.build/assets/images/spring-2018/cmsi-387/week-8/ipc-1.png)
+
+**Shared Memory Method**
+
+Processes can use shared memory for extracting information as a record from another process as well as for delivering any specific information to other processes. Eg: Producer-Consumer problem 
+
+<br>
+
+**Message Passing Method**
+
+If two processes p1 and p2 want to communicate with each other, they proceed as follows:
+1. Establish a communication link (if a link already exists, no need to establish it again.)
+2. Start exchanging messages using basic primitives.
+
+We need at least two primitives: 
+
+– send(message, destination) or send(message) 
+
+– receive(message, host) or receive(message)
+
+[Detailed Explaination](https://www.geeksforgeeks.org/inter-process-communication-ipc/)
+
+<br>
+
+
+
+## @ Multhreading Concepts
+
+[Resource](https://www.studytonight.com/operating-system/multithreading)
+
+<br>
+
+### 1. What are Threads?
+A thread is a path of execution within a process. A process can contain multiple threads. A thread consists of its own program counter (keeps track of which instruction to execute next), a stack (contains the history of execution) , and a set of registers (hold its current working variables). 
+
+**Why Threads ?**
+
+Threads are a popular way to improve the performance of an application through parallelism. In the implementation of network servers and web servers threads have been successfully used. In a browser, multiple tabs can be different threads.
+
+<br>
+
+### 2. Which segments do Threads share?
+**Everything except stack and registers**
+
+A Thread shares same address space, code section, data section and same global variables (heap memory), same files (file discriptors)
+
+```
+           Process   Thread
+
+   Stack   private   private
+   Heap    private   shared
+   Data    private   shared
+   Code    private   shared
+```
+
+<br>
+
+### 3. Can Multiple threads can run simultaneously ?
+No, The CPU switches rapidly back and forth among the threads giving the illusion that the threads are running in parallel.
+
+<br>
+
+### 4. What are advantages of using threads ?
+1. Better utilization of resources.
+2. Creating and managing threads becomes easier.
+3. Context Switching is smooth.
+4. Responsiveness
+5. Communication between multiple threads is easier.
+
+<br>
+
+### 5. Difference between Process and Thread
+1. Processes are typically independent while threads exist as parts of a process.
+2. Processes have separate address spaces, whereas threads share their address space
+3. Context switching between threads in the same process is typically faster than context switching between processes
+4. If a process gets blocked then the remaining processes can continue their execution, while if a user-level thread gets blocked, all of its peer threads also get blocked.
+
+<br>
+
+### 6. User Threads Vs Kernel Threads
+
+**User Threads**
+1. These are the threads that application programmers use in their programs.
+2. If one user-level thread performs a blocking operation then the entire process will be blocked.
+3. Context switch requires no hardware support.
+
+
+**Kernel Threads**
+1. These threads are implemented within OS Kernels.
+2. If one kernel thread performs a blocking operation then another thread can continue the execution.
+3. Context switch requires hardware support.
+
+<br>
+
+### 7. Concurrency vs Parallelism
+In Parallelism we execute different processes exactly at the same time on multiple processors, while Concurrency means we are executing multiple programs on single processors by switching rapidly among them giving an illusion of parallel execution.
+
+![img](https://www.educative.io/cdn-cgi/image/f=auto,fit=contain,w=1800/api/page/6705609052258304/image/download/5161243770880000)
+
+<br>
+
+### 8. Thread Libraries
+Thread libraries provide APIs for the creation and management of threads. Thread libraries may be implemented either in user space or in kernel space. Some common libs are:
+1. **POSIX or Ptheads** may be provided as either a user or kernel library, as an extension to the POSIX standard.
+2. **Win32 threads** are provided as a kernel-level library on Windows systems.
+
+<br>
+
+### 9. Pthreads Vs Threads
+If you want to run code on many platforms, go for Posix Threads. They are available almost everywhere and are quite mature. On the other hand if you only use Linux/gcc, thread is perfectly fine, it has a higher abstraction level, a really good interface and plays nicely with other C++11 classes.
+
+<br>
+
+### 10. What are some best examples of multithreaded applications? 
+1. **Web Browsers** - A web browser can download any number of files and web pages (multiple tabs) at the same time and still lets you continue browsing.
+2. **Web Servers** - A threaded web server handles each request with a new thread. There is a thread pool and every time a new request comes in, it is assigned to a thread from the thread pool.
+3. **Text Editors & IDEs** - When you are typing in an editor, spell-checking, formatting of text and saving the text are done concurrently by multiple threads.
+4. **VLC Media Player** - When you open the media player, you play a song and at the same time you kept on adding new songs to the list, displaying ads, searching for a new song.
+
+<br>
+
+### 11. Issues with Multithreading
+
+**Thread Cancellation**
+
+Thread cancellation means terminating a thread before it has finished working. There can be two approaches for this, one is **Asynchronous cancellation**, which terminates the target thread immediately. The other is **Deferred cancellation** allows the target thread to periodically check if it should be canceled.
+
+**Signal Handling**
+
+Signals are used in UNIX systems to notify a process that a particular event has occurred. Now in when a Multithreaded process receives a signal, to which thread it must be delivered? 
+
+**fork() System Call**
+
+fork() is a system call executed in the kernel through which a process creates a copy of itself. Now the problem in the Multithreaded process is, if one thread forks, will the entire process be copied or not?
+
+**Security Issues**
+
+Yes, there can be security issues because of the extensive sharing of resources between multiple threads.
+
+
+
+<br>
 
 ## @ Process Synchronisation
 
@@ -52,6 +277,11 @@ given time. This can be done by process synchronization.
 1. Each process has a section of code, called the critical section, in which the process access shared resources, changes common variables and files.
 2. The problem is to ensure that when one process is executing in its critical section then no other process can execute its own critical section
 3. The critical section is preceded by an *entry section* in which a process seeks permission from other processes. The critical section is followed by an *exit section.*
+
+<br>
+
+### 4. Priority inversion
+A low-priority process gets the priority of a high-priority process waiting for it.
 
 <br>
 
@@ -173,34 +403,7 @@ signal (Q);                  signal (S);
 
 <br>
 
-### 7. Inter Process Communication (IPC)
-Inter-process communication (IPC) is a mechanism that allows processes to communicate with each other and synchronize their actions. rocesses can communicate with each other through:
-1. Shared Memory
-2. Message passing
 
-![img](https://forns.lmu.build/assets/images/spring-2018/cmsi-387/week-8/ipc-1.png)
-
-**Shared Memory Method**
-
-Processes can use shared memory for extracting information as a record from another process as well as for delivering any specific information to other processes. Eg: Producer-Consumer problem 
-
-<br>
-
-**Message Passing Method**
-
-If two processes p1 and p2 want to communicate with each other, they proceed as follows:
-1. Establish a communication link (if a link already exists, no need to establish it again.)
-2. Start exchanging messages using basic primitives.
-
-We need at least two primitives: 
-
-– send(message, destination) or send(message) 
-
-– receive(message, host) or receive(message)
-
-[Detailed Explaination](https://www.geeksforgeeks.org/inter-process-communication-ipc/)
-
-<br>
 
 ### 8. Producer Consumer Problem (Bounded Buffer)
 We have a buffer of fixed size. A producer can produce an item and can place in the buffer. A consumer can pick items and can consume them. We need to ensure that when a producer is placing an item in the buffer, then at the same time consumer should not consume any item. In this problem, buffer is the critical section. 

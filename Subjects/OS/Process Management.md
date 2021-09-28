@@ -151,7 +151,11 @@ We need at least two primitives:
 
 ## @ Multhreading Concepts
 
-[Resource](https://www.studytonight.com/operating-system/multithreading)
+[Theory](https://www.studytonight.com/operating-system/multithreading)
+
+[Multithreading in C++ : Blog1](https://www.educative.io/blog/modern-multithreading-and-concurrency-in-cpp)
+
+[Multithreading in C++ : Blog2](https://medium.com/swlh/c-multithreading-and-concurrency-introduction-f640ce986fa7)
 
 <br>
 

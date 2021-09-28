@@ -116,45 +116,41 @@ Context switches are computationally intensive since register and memory state m
 ### 11. Which is the Best Scheduling Algorithm ?
 Every scheduling algorithm has a type of a situation where it is the best choice. Let's look at different such situations:
 
-**Situation 1: incoming processes are short with no specific priority**
+Case 1: If Incoming processes are short with no specific priority
 
-In this case, **FCFS** works best when compared to SJF and RR because the processes are short which means that no process will wait for a longer time. When each process is executed one by one, every process will be executed eventually.
-
-<br>
-
-**Situation 2: If processes are a mix of long and short processes and the task will only be completed if all the processes are executed successfully in a given time.**
-
-**Round Robin scheduling** works efficiently here because it does not cause starvation and also gives equal time quantum for each process.
+**FCFS** works best when compared to SJF and RR because the processes are short which means that no process will wait for a longer time. When each process is executed one by one, every process will be executed eventually.
 
 <br>
 
-**Situation 3: The processes are a mix of user based and kernel based processes.**
+Case2: If processes are a mix of long and short processes and the task will only be completed if all the processes are executed successfully in a given time.
+
+**Round Robin scheduling** works efficiently here because it does not cause starvation and also gives equal time quantum for each process. Round-robin will adjust the average waiting time for all process.
+
+<br>
+
+Case 3: The processes are a mix of user based and kernel based processes.
 
 **Priority based scheduling** works efficiently in this case because generally kernel based processes have higher priority when compared to user based processes.
 
 <br>
 
-### 12. Which scheduling algorithm is used in Linux ?
-Linux uses a **Completely Fair Scheduling (CFS) algorithm**, which is an implementation of weighted fair queueing (WFQ). There is a fixed time interval during which each thread in the system must run at least once.
+### 12. Which scheduling algorithm is used in Linux, Windows and Android ?
+```
+Linux      :          Completely Fair Scheduling (CFS) algorithm
+Windows    :          Multilevel feedback queue (combination of fixed-priority preemptive scheduling, round-robin, and FCFS)
+Android    :          O(1) scheduling algorithm (based on Linux Kernel 2.6)
+```
 
 <br>
 
-### 13. Which scheduling algorithm is used in Windows?
-Windows NT/XP/Vista uses a **multilevel feedback queue**, a combination of fixed-priority preemptive scheduling, round-robin, and first in, first out algorithms.
+### 13. What is Starvation and Aging ?
+Starvation or indefinite blocking is phenomenon, in which a process ready to run for CPU can wait indefinitely because of low priority. **Aging** is a technique of gradually increasing the priority of processes that wait in the system for a long time.
+
+Note: Starvation is different from deadlock as it occurs due to not getting access to CPU becoz of low priority, while deadlock occurs due to circular waiting of resources.
 
 <br>
 
-### 14. Which scheduling algorithm is used in Android?
-Android operating system uses O(1) scheduling algorithm as it is based on Linux Kernel 2.6.
-
-<br>
-
-### 15. Independent vs Co-operative process
-An independent process is not affected by the execution of other processes while a co-operating process can be affected by other executing processes.
-
-<br>
-
-### 16. Inter Process Communication (IPC)
+### 14. Inter Process Communication (IPC)
 Inter-process communication (IPC) is a mechanism that allows processes to communicate with each other and synchronize their actions. Processes can communicate with each other through:
 1. Shared Memory
 2. Message passing

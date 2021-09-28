@@ -3,6 +3,8 @@
 **Identification:** 
 Whenever there is a need to use prev variable in recursive code so that next element should be either greater or smaller then that prev variable then that question can be solved by using LIS approach.
 
+<br>
+
 ### 1. Longest Increasing Subsequence
 Given an integer array nums, return the length of the longest strictly increasing subsequence.
 
@@ -52,6 +54,8 @@ int lengthOfLIS(vector<int>& nums) {
 }
 ```
 
+<br>
+
 ### 2. Number of Longest Increasing Subsequence
 Given an integer array nums, return the number of longest increasing subsequences.
 
@@ -98,7 +102,53 @@ int findNumberOfLIS(vector<int>& nums) {
 }
 ```
 
-### 3. Longest Arithmetic Subsequence
+<br>
+
+### 3. Longest Bitonic Subsequence
+Given an 1D integer array A of length N, find the length of longest subsequence which is first increasing then decreasing.
+
+Input: A = [1, 11, 2, 10, 4, 5, 2, 1]
+ 
+Output: 6
+
+```cpp
+int Solution::longestSubsequenceLength(const vector<int> &A) {
+    int n = A.size();
+    if(n==0) return 0;
+
+    vector<int> dp1 (n, 1);      
+    vector<int> dp2 (n, 1);
+    int ans = 1;
+
+    /* computing lis in forward direction */
+
+    for(int j=1; j<n; j++){
+        for(int i=0; i<j; i++){
+            if(A[i]<A[j]) dp1[j] = max(dp1[j], dp1[i]+1);
+        }
+    }
+
+    /* computing lis in backward direction */
+
+    for(int i=n-2; i>=0; i--){
+        for(int j=i+1; j<n; j++){
+            if(A[j]<A[i]) dp2[i] = max(dp2[i], dp2[j]+1);
+        }
+    }    
+
+    /* ans will be max of dp1[i] + dp2[i] - 1 for every index i*/
+
+    for(int i=0; i<n; i++)
+        ans = max(ans, dp1[i]+dp2[i]-1);
+    
+    return ans;
+}
+
+```
+
+<br>
+
+### 4. Longest Arithmetic Subsequence
 Given an array nums of integers, return the length of the longest arithmetic subsequence in nums. Recall that a sequence seq is arithmetic if seq[i+1] - seq[i] are all the same value (for 0 <= i < seq.length - 1).
 
 Input: nums = [9,4,7,2,10]
@@ -131,7 +181,9 @@ int longestArithSeqLength(vector<int>& nums) {
 }
 ```
 
-### 4. Length of Longest Fibonacci Subsequence
+<br>
+
+### 5. Length of Longest Fibonacci Subsequence
 A sequence x1, x2, ..., xn is Fibonacci-like if:
 1. n >= 3
 2. xi + xi+1 == xi+2 for all i + 2 <= n
@@ -166,7 +218,9 @@ int lenLongestFibSubseq(vector<int>& arr) {
 }
 ```
 
-### 5. Best Team With No Conflicts
+<br>
+
+### 6. Best Team With No Conflicts
 A conflict exists if a younger player has a strictly higher score than an older player. A conflict does not occur between players of the same age. Given two lists, scores and ages, where each scores[i] and ages[i] represents the score and age of the ith player, respectively, return the highest overall score of all possible basketball teams.
 
 Input: scores = [4,5,6,5], ages = [2,1,2,1]
@@ -263,7 +317,9 @@ int bestTeamScore(vector<int>& scores, vector<int>& ages) {
 }
 ```
 
-### 6. Russian Doll Envelopes
+<br>
+
+### 7. Russian Doll Envelopes
 You are given a 2D array of integers envelopes where envelopes[i] = [wi, hi] represents the width and the height of an envelope. One envelope can fit into another if and only if both the width and height of one envelope are greater than the other envelope's width and height. Return the maximum number of envelopes you can Russian doll (i.e., put one inside the other). You cannot rotate an envelope.
 
 Input: envelopes = [[5,4],[6,4],[6,7],[2,3]]
@@ -299,7 +355,9 @@ int maxEnvelopes(vector<vector<int>>& envelopes) {
 }
 ```
 
-### 7. Largest Divisible Subset (Tricky)
+<br>
+
+### 8. Largest Divisible Subset (Tricky)
 Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
 1. answer[i] % answer[j] == 0, or
 2. answer[j] % answer[i] == 0
@@ -392,7 +450,9 @@ vector<int> largestDivisibleSubset(vector<int>& nums) {
 }
 ```
 
-### 8. Maximum Profit in Job Scheduling (Tricky)
+<br>
+
+### 9. Maximum Profit in Job Scheduling (Tricky)
 We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i]. You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range. If you choose a job that ends at time X you will be able to start another job that starts at time X.
 
 ![img](https://assets.leetcode.com/uploads/2019/10/10/sample22_1584.png)

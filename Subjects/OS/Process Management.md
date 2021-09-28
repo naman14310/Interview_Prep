@@ -291,6 +291,74 @@ If your threads don't do I/O, synchronization etc, 1 thread per core will get yo
 
 <br>
 
+### 13. Multithreading in C++
+Header: `#include <thread>`
+
+Syntax for creating new thread: `thread t(callable_object, arg1, arg2, ..)` 
+
+This creates a new thread of execution associated with t, which calls callable_object(arg1, arg2). The callable object (i.e. a function pointer, a lambda expression, the instance of a class with a function call operator) is immediately invoked by the new thread, with the (optionally) passed arguments. By default they are copied, if you want to pass by reference you have to warp the argument using std::ref(arg).
+
+<br>
+
+**Single Thread Implementation**
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+void print(int n, const string &str)  {  
+    cout<<"Printing integer: "<<n<<endl;  
+    cout<<"Printing string: " <<str<<endl;  
+} 
+
+int main() {
+    thread t1(print, 10, "Educative.blog");            // --> will create new thread t
+    t1.join();                                         // --> will join thread t to main thread
+    return 0;
+}
+```
+
+Here, join() will pause the main function’s thread until the specified thread, in this case t1, has finished its task. Without join() here, the main thread would finish its task before t1 would complete print, resulting in an error.
+
+<br>
+
+**MultiThreading Implementation**
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+void print(int n, const string &str)  {
+    string msg = to_string(n) + " : " + str + "\n";
+    cout<<msg;
+}
+ 
+int main() {
+    vector<string> s = {"Educative.blog", "Educative", "courses", "are great"};
+    vector<thread> threads;
+ 
+    for(int i=0; i<s.size(); i++){
+        threads.push_back(thread(print, i, s[i]));                // --> will create new threads and append them to thread vector
+    }
+    
+    for(auto &th : threads)                                       // --> will iterate on every thread and join them to main thread
+        th.join();
+    
+    return 0;
+}
+```
+
+Here we used a for loop to initialize multiple threads, pass them the print function and arguments, which they then complete concurrently. This multithreading option would be faster one using only the main thread as more of the total CPU is being used.
+
+<br>
+
+### 14. Join() and Detach()
+If the main thread exits, all the secondary threads still running suddenly terminate, without any possibility of recovery. To prevent this to happen, the parent thread has two options for each child:
+1. Blocks and waits for the child termination, by invoking the **join()** method on the child.
+2. Explicitly declaring that the child can continue its execution even after the parent’s exit, using the **detach()** method.
+
+<br>
+
 
 
 ## @ Process Synchronisation

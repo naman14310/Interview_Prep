@@ -116,6 +116,8 @@ Context switches are computationally intensive since register and memory state m
 ### 11. Which is the Best Scheduling Algorithm ?
 Every scheduling algorithm has a type of a situation where it is the best choice. Let's look at different such situations:
 
+<br>
+
 Case 1: If Incoming processes are short with no specific priority
 
 **FCFS** works best when compared to SJF and RR because the processes are short which means that no process will wait for a longer time. When each process is executed one by one, every process will be executed eventually.

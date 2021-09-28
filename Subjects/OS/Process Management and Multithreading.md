@@ -415,25 +415,28 @@ Thread-safe code is code that will work even if many Threads are executing it si
 
 
 ## @ Process Synchronisation
-
-**Race condition** is a situation where several processes access and manipulate the same data concurrently and the outcome of the execution depends on the particular order in which the accesses take place. To avoid such situations, it must be ensured that only one process can manipulate the data at a
-given time. This can be done by process synchronization.
+Two processes are said to be **Independent** if the execution of one process does not affect the execution of another process. Two processes are said to be **Cooperative** if the execution of one process affects the execution of another process. These processes need to be synchronized so that the order of execution can be guaranteed.
 
 <br>
 
-### 1. Critical Section
+### 1. Race Condition
+It is a situation where several processes access and manipulate the same data concurrently and the outcome of the execution depends on the particular order in which the accesses take place. To avoid such situations, it must be ensured that only one process can manipulate the data at a given time. 
+
+<br>
+
+### 2. Critical Section
 1. Each process has a section of code, called the critical section, in which the process access shared resources, changes common variables and files.
 2. The problem is to ensure that when one process is executing in its critical section then no other process can execute its own critical section
 3. The critical section is preceded by an *entry section* in which a process seeks permission from other processes. The critical section is followed by an *exit section.*
 
 <br>
 
-### 4. Priority inversion
+### 3. Priority inversion
 A low-priority process gets the priority of a high-priority process waiting for it.
 
 <br>
 
-### 2. Condition for Synchronisation mechanisms
+### 4. Condition for Synchronisation mechanisms
 A solution to the critical section problem must satisfy the following properties:
 1. Mutual exclusion
 2. Progress 
@@ -442,7 +445,19 @@ A solution to the critical section problem must satisfy the following properties
 
 <br>
 
-### 3. Semaphores
+### 5. Busy Waiting
+Busy waiting means that a process is waiting for a condition to be satisfied in a tight loop without releasing the processor. It can be avoided but incurs the overhead associated with putting a process to sleep and having to wake it up when the appropriate program state is reached.
+
+<br>
+
+### 6. SpinLocks
+1. Spinlock is a synchronisation mechanism, a process is waiting for lock will keep the processor busy by continuously polling the lock. 
+2. It is a Busy Waiting solution and is usually used when there is low contention of resources for short period of time.
+3. Spinlocks can be used only for mutual exclusion.	
+
+<br>
+
+### 7. Semaphores
 A semaphore is an integer variable that, apart from initialization, is accessed only through two atomic operations called wait() and signal().
 
 ```cpp
@@ -463,7 +478,7 @@ signal(S){
 
 <br>
 
-### 4. Binary Semaphores (Mutexes)
+### 8. Binary Semaphores (Mutexes)
 It is used to implement solution of critical section problem with multiple processes. Initialized to 1.
 
 ```cpp
@@ -500,7 +515,7 @@ signal(Semaphore s){
 
 <br>
 
-### 5. Counting semaphore
+### 9. Counting semaphore
 It is used to control access to a resource that has multiple instances. Initialized to n, where n is the number of resources.
 
 ```cpp
@@ -534,7 +549,7 @@ signal(Semaphore s){
 
 <br>
 
-### 6. Do Semaphore suffers from deadlock
+### 10. Do Semaphore suffers from deadlock
 Semaphores may lead to indefinite wait (starvation) and deadlocks.
 
 ```cpp
@@ -553,7 +568,9 @@ signal (Q);                  signal (S);
 
 
 
-### 8. Producer Consumer Problem (Bounded Buffer)
+## @ Classical Synchronisation Problems
+
+### 1. Producer Consumer Problem (Bounded Buffer)
 We have a buffer of fixed size. A producer can produce an item and can place in the buffer. A consumer can pick items and can consume them. We need to ensure that when a producer is placing an item in the buffer, then at the same time consumer should not consume any item. In this problem, buffer is the critical section. 
 
 To solve this problem, we need two counting semaphores – Full and Empty. “Full” keeps track of number of items in the buffer at any given time and “Empty” keeps track of number of unoccupied slots. 
@@ -603,7 +620,7 @@ do {
 
 <br>
 
-### 9. Reader Writer Problem
+### 2. Reader Writer Problem
 Consider a situation where we have a file shared between many people. Then,
 1. If one of the people tries editing the file, no other person should be reading or writing at the same time.
 2. However if some person is reading the file, then others may read it at the same time.
@@ -680,7 +697,7 @@ do {
 
 <br>
 
-### 10. Dinning Philosopher Problem
+### 3. Dinning Philosopher Problem
 The Dining Philosopher Problem states that K philosophers seated around a circular table with one chopstick between each pair of philosophers. A philosopher may eat if he can pick up the two chopsticks adjacent to him. One chopstick may be picked up by any one of its adjacent followers but not both. 
 
 ```cpp

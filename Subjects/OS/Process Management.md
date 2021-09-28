@@ -365,6 +365,19 @@ If the main thread exits, all the secondary threads still running suddenly termi
 
 <br>
 
+### 15. What is Thread Safe ?
+Thread-safe code is code that will work even if many Threads are executing it simultaneously.
+
+<br>
+
+### 16. Why static variables are considered evil ?
+1. Since statics live in one space, they are not by defualt thread safe. We need to use synchonisation mechanism to handle them.
+2. We can't control statics in terms of creation and destruction.
+3. Also they violates the principle of OOPS that data is encapsulated within objects.
+4. Statics have a lifetime that matches the entire runtime of the program. This means, even once we are done using the class, the memory from all those static variables cannot be garbage collected.
+
+<br>
+
 
 
 ## @ Process Synchronisation

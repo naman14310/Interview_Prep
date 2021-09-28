@@ -138,9 +138,9 @@ Case 3: The processes are a mix of user based and kernel based processes.
 
 ### 12. Which scheduling algorithm is used in Linux, Windows and Android ?
 ```
-Linux      :          Completely Fair Scheduling (CFS) algorithm
-Windows    :          Multilevel feedback queue (combination of fixed-priority preemptive scheduling, round-robin, and FCFS)
-Android    :          O(1) scheduling algorithm (based on Linux Kernel 2.6)
+Linux      :      Completely Fair Scheduling (CFS) algorithm
+Windows    :      Multilevel feedback queue (combination of fixed-priority preemptive scheduling, round-robin, and FCFS)
+Android    :      O(1) scheduling algorithm (based on Linux Kernel 2.6)
 ```
 
 <br>

@@ -298,6 +298,8 @@ Syntax for creating new thread: `thread t(callable_object, arg1, arg2, ..)`
 
 This creates a new thread of execution associated with t, which calls callable_object(arg1, arg2). The callable object (i.e. a function pointer, a lambda expression, the instance of a class with a function call operator) is immediately invoked by the new thread, with the (optionally) passed arguments. By default they are copied, if you want to pass by reference you have to warp the argument using std::ref(arg).
 
+Note: a thread object is just movable, not copyable.
+
 <br>
 
 **Single Thread Implementation**

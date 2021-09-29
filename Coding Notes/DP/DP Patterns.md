@@ -728,3 +728,79 @@ int maxProfit(int k, vector<int>& prices) {
 ```
 
 <br>
+
+### 2. Best Time to Buy and Sell Stock with Cooldown
+You are given an array prices where prices[i] is the price of a given stock on the ith day. Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times) with the following restrictions: After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).
+
+Input: prices = [1,2,3,0,2]
+
+Output: 3
+
+```cpp
+int solve (vector<int> & prices, int idx, int n, bool buy, vector<vector<int>> & dp){
+    if(idx>=n) return 0;
+
+    if(dp[idx][buy]!=-1) return dp[idx][buy];
+
+    if(buy){
+        int p1 = solve(prices, idx+1, n, !buy, dp) - prices[idx];       // --> Buy
+        int p2 = solve(prices, idx+1, n, buy, dp);                      // --> No Buy
+
+        return dp[idx][buy] = max(p1, p2);
+    }
+    else{
+        int p1 = solve(prices, idx+2, n, !buy, dp) + prices[idx];       // --> Sell
+        int p2 = solve(prices, idx+1, n, buy, dp);                      // --> No sell
+
+        return dp[idx][buy] = max(p1, p2);
+    }
+
+}
+
+int maxProfit(vector<int>& prices) {
+    int n = prices.size();
+    vector<vector<int>> dp (n+1, vector<int> (2, -1));
+
+    return solve(prices, 0, n, true, dp);
+}
+```
+
+<br>
+
+### 3. Best Time to Buy and Sell Stock with Transaction Fee
+You are given an array prices where prices[i] is the price of a given stock on the ith day, and an integer fee representing a transaction fee. Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.
+
+Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+
+Input: prices = [1,3,2,8,4,9], fee = 2
+
+Output: 8
+
+```cpp
+int solve (vector<int> & prices, int n, int idx, int fee, bool buy, vector<vector<int>> & dp){
+    if(idx==n) return 0;
+
+    if(dp[idx][buy]!=-1) return dp[idx][buy];
+
+    if(buy){
+        int p1 = solve (prices, n, idx+1, fee, !buy, dp) - fee - prices[idx];       // --> Choice 1 : buy at current price
+        int p2 = solve (prices, n, idx+1, fee, buy, dp);                            // --> Choice 2 : Don't buy at current price
+
+        return dp[idx][buy] = max(p1, p2);
+    }
+    else{
+        int p1 = solve (prices, n, idx+1, fee, !buy, dp) + prices[idx];             // --> Choice 1 : Sell at current price
+        int p2 = solve (prices, n, idx+1, fee, buy, dp);                            // --> Choice 2 : Don't sell at current price
+
+        return dp[idx][buy] = max(p1, p2);
+    }
+}
+
+
+int maxProfit(vector<int>& prices, int fee) {
+    int n = prices.size();
+    vector<vector<int>> dp (n+1, vector<int> (2, -1));
+
+    return solve (prices, n, 0, fee, true, dp);    
+}
+```

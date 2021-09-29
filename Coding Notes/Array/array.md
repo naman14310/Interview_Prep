@@ -179,11 +179,11 @@ int Solution::maxp3(vector<int> &A) {
 <br>
 
 ### 8. Count Number of Teams
-There are n soldiers standing in a line. Each soldier is assigned a unique rating value. Choose 3 soldiers with index (i, j, k) with rating (rating[i], rating[j], rating[k]). A team is valid if: 
+There are n soldiers standing in a line. Each soldier is assigned a unique rating value. Choose 3 soldiers with index (i, j, k) with rating (rating[i], rating[j], rating[k]). A team is valid if for all i, j, k (0 <= i < j < k < n): 
 1. (rating[i] < rating[j] < rating[k]) or, 
 2. (rating[i] > rating[j] > rating[k]) 
 
-where (0 <= i < j < k < n). Return the number of teams you can form given the conditions. (soldiers can be part of multiple teams).
+Return the number of teams you can form given the conditions. (soldiers can be part of multiple teams).
 
 Input: rating = [2,5,3,4,1]
 

@@ -161,39 +161,7 @@ bool increasingTriplet(vector<int>& nums) {
 
 <br>
 
-### 7. Duplicate Zeros
-Given a fixed length array arr of integers, duplicate each occurrence of zero, shifting the remaining elements to the right. Note that elements beyond the length of the original array are not written.
-
-Hint: Start shifting from back
-
-```cpp
-void duplicateZeros(vector<int>& arr) {
-    int zc = 0;
-    for(int i=0; i<arr.size(); i++)
-        if(arr[i]==0) 
-            zc++;
-
-    int i=arr.size()-1;
-
-    while(i>=0){
-      if(arr[i]==0){
-          zc--;
-          int pos = i+zc;
-          if(pos<arr.size()) arr[pos] = arr[i];
-          if(pos+1<arr.size()) arr[pos+1] = 0;
-      }
-      else{
-          int pos = i+zc;
-          if(pos<arr.size()) arr[pos] = arr[i];
-      }
-      i--;
-    }
-}
-```
-
-<br>
-
-### 8. Highest Product (IB)
+### 7. Highest Product (IB)
 Given an array A, of N integers. Return the highest product possible by multiplying 3 numbers from the array.
 
 ```cpp
@@ -205,6 +173,47 @@ int Solution::maxp3(vector<int> &A) {
         return A[n-1]*A[n-2]*A[n-3];
     else
         return A[n-1] * max(A[0]*A[1], A[n-2]*A[n-3]);
+}
+```
+
+<br>
+
+### 8. Count Number of Teams
+There are n soldiers standing in a line. Each soldier is assigned a unique rating value. You have to form a team of 3 soldiers amongst them under the following rules:
+1. Choose 3 soldiers with index (i, j, k) with rating (rating[i], rating[j], rating[k]).
+2. A team is valid if: (rating[i] < rating[j] < rating[k]) or (rating[i] > rating[j] > rating[k]) where (0 <= i < j < k < n).
+
+Return the number of teams you can form given the conditions. (soldiers can be part of multiple teams).
+
+Input: rating = [2,5,3,4,1]
+
+Output: 3
+
+Hint: For each soldier, count how many soldiers on the left and right have less and greater ratings. This soldier can form less[left] * greater[right] + greater[left] * less[right] teams.
+
+```cpp
+int numTeams(vector<int>& rating) {
+	int n = rating.size();
+	int ans = 0;
+
+	for(int j=1; j<n-1; j++){
+
+		int ls=0, lg=0, rs=0, rg=0;
+
+		for(int i=0; i<j; i++){
+			if(rating[i]<rating[j]) ls++;
+			else if(rating[i]>rating[j]) lg++;
+		}
+
+		for(int k=j+1; k<n; k++){
+			if(rating[k]<rating[j]) rs++;
+			else if(rating[k]>rating[j]) rg++;
+		}
+
+		ans += (ls*rg) + (lg*rs);
+	}
+
+	return ans;
 }
 ```
 

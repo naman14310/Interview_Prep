@@ -490,6 +490,47 @@ int Solution::arrange(string A, int k) {
 
 <br>
 
+### 6. Partition Array for Maximum Sum
+Given an integer array arr, partition the array into (contiguous) subarrays of length at most k. After partitioning, each subarray has their values changed to become the maximum value of that subarray. Return the largest sum of the given array after partitioning.
+
+Input: arr = [1,15,7,9,2,5,10], k = 3
+
+Output: 84
+
+Explanation: arr becomes [15,15,15,9,10,10,10]
+
+```cpp
+int solve (vector<int> &arr, int idx, int k, vector<int> &dp){
+    int n = arr.size();
+    if(idx==n) return 0;
+
+    if(dp[idx]!=-1) return dp[idx];
+
+    int mx = 0;
+    int res = 0;
+
+    for(int i=idx; i<min(n, idx+k); i++){
+
+        mx = max(mx, arr[i]);
+        int sum = (i-idx+1) * mx;
+
+        int temp = sum + solve(arr, i+1, k, dp);
+
+        res = max(res, temp);
+    }
+
+    return dp[idx] = res;
+}
+
+
+int maxSumAfterPartitioning(vector<int>& arr, int k) {
+    vector<int> dp (arr.size(), -1);
+    return solve (arr, 0, k, dp);
+}
+```
+
+<br>
+
 
 
 ## @ Jump Game Pattern

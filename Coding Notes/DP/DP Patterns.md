@@ -357,7 +357,7 @@ int minCut(string s) {
 }
 ```
 
-**Optimization:** Since second variable j is not changing in recursive call, Hence inplace of 2D DP, we will simply use 1D Dp
+**Optimization:** Since second variable j is not changing in recursive call, Hence inplace of 2D DP, we can use 1D DP
 
 ```cpp
 

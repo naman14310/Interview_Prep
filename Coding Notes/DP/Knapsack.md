@@ -1,7 +1,11 @@
 # Problems on Knapsack Pattern
 
+<br>
+
 ### @ 0-1 Knapsack (Parent Problem)
 Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value in the knapsack. You cannot break an item, either pick the complete item or don’t pick it (0-1 property)
+
+<br>
 
 Complexity Analysis: 
 
@@ -11,9 +15,13 @@ Complexity Analysis:
 2. Auxiliary Space: O(N*W) 
 -> The use of 2D array data structure for storing intermediate states
 
+<br>
+
 Identifying Pattern:
 
 If some array A is given in question and we have choices to choose every item to get considered for filling in a bag W then that problem is of knapsack pattern.
+
+<br>
 
 **Method 1 : Memorization (Top-Down)**
 
@@ -69,6 +77,8 @@ int knapSack(int w, int wt[], int val[], int n) {
     return dp[n][w];
 }
 ```
+
+<br>
 
 ### 1. Subset Sum Problem
 Given an array of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given target sum. 
@@ -130,6 +140,8 @@ bool isSubsetSum(int n, int arr[], int target){
 }
 ```
 
+<br>
+
 ### 2. Partition Equal Subset Sum
 Given a non-empty array nums containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
 
@@ -174,6 +186,8 @@ Hint: Find if there any subset sum exist whose sum is equal to half of totalSum
     }
 ```
 
+<br>
+
 ### 3. Count of Subset Sum
 Given an array arr[] of length N and an integer target, the task is to find the number of subsets with a sum equal to target.
 
@@ -208,6 +222,8 @@ int count_subset_sum (vector<int> & nums, int target){
     return solve (nums, n, target, 0, 0, dp);
 }
 ```
+
+<br>
 
 ### 4. Minimum Subset Sum Difference
 Given an integer array arr of size N, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is minimum and find the minimum difference.
@@ -257,14 +273,25 @@ int minDifference(int arr[], int n)  {
 } 
 ```
 
+<br>
+
 ### 5. Count Subsets with given difference
 Given an integer array arr of size N and a difference diff, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is equal to diff.
-
-Hint: Reduce it to count of subset sums
 
 Input: nums = {1, 1, 2, 3}, diff = 3
 
 Output: 3
+
+Hint: Reduce it to count of subset sums.
+
+```
+Math Behind the question:
+
+    s2 - s1 = diff   (where s1 is smaller subset sum)
+    (totalSum-s1) - s1 = diff --> totalSum - 2*s1 = diff
+    s1 = (totalSum - diff)/2;
+        
+```
 
 ```cpp
 int count_subsetSum (vector<int> & nums, int n, int target, int idx, int curr_sum, vector<vector<int>>& dp){
@@ -286,13 +313,9 @@ int count_subsetSum (vector<int> & nums, int n, int target, int idx, int curr_su
 
 
 int count_subset_with_given_diff (vector<int> & nums, int diff){
-    /*
-        s2 - s1 = diff   (where s1 is smaller subset sum)
-        (totalSum-s1) - s1 = diff --> totalSum - 2*s1 = diff
-        s1 = (totalSum - diff)/2;
-    */
     int n = nums.size();
     int totalSum = 0;
+    
     for(int i : nums)
         totalSum += i;
 
@@ -302,6 +325,8 @@ int count_subset_with_given_diff (vector<int> & nums, int diff){
     return count_subsetSum (nums, n, s1, 0, 0, dp);
 }
 ```
+
+<br>
 
 ### 6. Target Sum
 You are given an integer array nums and an integer target. You want to build an expression out of nums by adding one of the symbols '+' and '-' before each integer in nums and then concatenate all the integers. Return the number of different expressions that you can build, which evaluates to target.
@@ -361,7 +386,115 @@ int findTargetSumWays(vector<int>& v, int diff) {
 }
 ```
 
-### 7. Last Stone Weight II (Tricky)
+<br>
+
+### 7. Equal Average Partition
+Given an array A with non negative numbers, divide the array into two parts such that the average of both the parts is equal. Return both parts (If exist). If there is no solution. return an empty list. If multiple solutions exist, return the solution where length(A) is minimum. If there is still a tie, return the one where A is lexicographically smallest.
+
+Input: A = [1 7 15 29 11 9]
+
+Output: [[9 15], [1 7 11 29]]
+
+Hint: Reduce it to subset sum problem
+
+```
+Simplifiation using Maths:
+
+    S = totalSum of array
+    s1 = sum of part1
+    n1 = len of part1
+
+    avg(part1) = avg(part2)
+    s1/n1 = (S-s1)/(n-n1)
+
+    s1*(n-n1) = (S-s1)*n1
+    s1*n - s1*n1 = S*n1 - s1*n1
+
+    s1*n = S*n1
+
+    => s1 = (S*n1)/n    ----> eq1
+
+Hence we, get eq1 which fill form the basis of this quesyion. 
+Now we will iterate for each possible value of n1 (i.e. 1 to n/2), and checks whether any subset having sum equals to s1 exists or not.
+
+Return smallest such subset as part1 and remaining elements in part2.
+
+```
+
+```cpp
+
+bool solve (vector<int> &A, vector<int> &part1, int idx, int sum, int len, vector<vector<vector<int>>> &dp){
+    if(sum==0) return true;
+    if(idx==A.size() or len==0) return false;
+
+    if(dp[idx][sum][len]!=-1) return dp[idx][sum][len];
+
+    if(A[idx]<=sum){
+        part1.push_back(idx);
+        bool include = solve (A, part1, idx+1, sum-A[idx], len-1, dp);
+        if(include) return dp[idx][sum][len] = true;
+
+        part1.pop_back();
+        bool not_include = solve(A, part1, idx+1, sum, len, dp);
+        return dp[idx][sum][len] = not_include;
+    }
+    else{
+        bool not_include = solve(A, part1, idx+1, sum, len, dp);
+        return dp[idx][sum][len] = not_include;
+    }
+}
+
+
+vector<vector<int> > Solution::avgset(vector<int> &A) {
+    int n = A.size();
+    sort(A.begin(), A.end());       // --> sort A to get lexicographically smallest answer  
+
+    int totalSum = accumulate(A.begin(), A.end(), 0);
+
+    /* Iterate for each possible val of n1 and find corresponding s1 using eq1 */
+
+    for(int n1=1; n1<=n/2; n1++){
+        if((totalSum*n1)%n!=0) continue;    // --> If s1 comes out to be non-integral val, simply continue
+
+        int s1 = (totalSum*n1)/n;
+
+        vector<int> part1;
+        vector<vector<vector<int>>> dp (n, vector<vector<int>> (s1+1, vector<int> (n1+1, -1)));
+
+        /* Check whether any subset of length n1 and sum s1 exists or not (also form that subset) */  
+
+        bool sumExist = solve(A, part1, 0, s1, n1, dp);
+
+        /* if subset exist, return respective part and part2, else check for higher n1 val */
+
+        if(sumExist){
+
+            vector<int> p1, p2;
+            int i=0, j=0;
+
+            while(i<n){
+                if(j<n1 and i==part1[j]){
+                    p1.push_back(A[i]);
+                    i++; j++;
+                }
+                else{
+                    p2.push_back(A[i]);
+                    i++;
+                }
+            }
+
+            return {p1, p2};
+        }
+
+    }
+
+    return {};
+}
+```
+
+<br>
+
+### 8. Last Stone Weight II (Tricky)
 You are given an array of integers stones where stones[i] is the weight of the ith stone. We are playing a game with the stones. On each turn, we choose any two stones and smash them together. Suppose the stones have weights x and y with x <= y. The result of this smash is:
 1. If x == y, both stones are destroyed, and
 2. If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
@@ -411,7 +544,9 @@ int lastStoneWeightII(vector<int>& stones) {
 }
 ```
 
-### 8. Ones and Zeroes
+<br>
+
+### 9. Ones and Zeroes (Tricky)
 You are given an array of binary strings strs and two integers m and n. Return the size of the largest subset of strs such that there are at most m 0's and n 1's in the subset.
 
 Input: strs = ["10","0001","111001","1","0"], m = 5, n = 3
@@ -462,12 +597,18 @@ int findMaxForm(vector<string>& strs, int m, int n) {
 }
 ```
 
+<br>
+
 
 ------
+
+<br>
 
 
 ### @ Unbounded Knapsack (Parent Problem)
 This is different from classical Knapsack problem, here we are allowed to use unlimited number of instances of an item.
+
+<br>
 
 **Method 1 : Memorization (Top-Down)**
 
@@ -532,6 +673,8 @@ int knapSack(int n, int w, int val[], int wt[]){
 }
 ```
 
+<br>
+
 ### 1. Rod Cutting Problem
 Given a rod of length n inches and an array of prices that includes prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces.
 
@@ -552,7 +695,7 @@ int solve (vector<int> & price, int n, int idx, int remaining_len, vector<vector
     }
 }
 
-/* price arrays contains the price of every possible len from [1-n] where n is total len of rod*/
+/* price arrays contains the price of every possible len from 1 to n, where n is total len of rod*/
 
 int rod_cutting_max_profit (vector<int> & price){
     int n = price.size();
@@ -560,6 +703,8 @@ int rod_cutting_max_profit (vector<int> & price){
     return solve (price, n, 0, n, dp);
 }
 ```
+
+<br>
 
 ### 2. Coin Change I (Find Minimum number of coins)
 You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.
@@ -610,6 +755,8 @@ int coinChange(vector<int>& coins, int amount) {
 }
 ```
 
+<br>
+
 ### 3. Coin Change II (Find Max number of ways)
 You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0. You may assume that you have an infinite number of each kind of coin.
 
@@ -646,6 +793,8 @@ int change(int amount, vector<int>& coins) {
     return solve (coins, n, amount, 0, dp);
 }
 ```
+
+<br>
 
 ### 4. Perfect Squares
 Given an integer n, return the least number of perfect square numbers that sum to n.

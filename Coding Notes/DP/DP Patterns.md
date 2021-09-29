@@ -804,3 +804,239 @@ int maxProfit(vector<int>& prices, int fee) {
     return solve (prices, n, 0, fee, true, dp);    
 }
 ```
+
+<br>
+
+
+## @ Regex Matching
+
+### 1. Regular Expression Matching
+Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+1. '.' Matches any single character.
+2. '*' Matches zero or more of the preceding element.
+3. The matching should cover the entire input string (not partial).
+
+Input: s = "aab", p = "c*a*b"
+Output: true
+
+Input: s = "ab", p = ".*"
+Output: true
+
+Input: s = "bbbba", p = ".*a*a"
+Output: true
+
+Input: s = "a", p = "ab*"
+Output: true
+
+
+```cpp
+bool solve (string & s, string & p, int i, int j, char prev, vector<vector<int>> & dp){
+    if(dp[i][j]!=-1) return dp[i][j];
+
+
+    /* If next char in pattern is '*' then instead of processing currently, recurse for next pos of j */
+
+    if(j+1<p.length() and p[j+1]=='*')
+        return dp[i][j] = solve (s, p, i, j+1, p[j], dp);
+
+
+    /* ----------------------- Base Cases -------------------------*/
+
+    // --> Case 1 : if i reached at the end 
+
+    if(i==s.length()){
+
+        /* If j also reached at the end return true */
+
+        if(j==p.length()) return true;     
+
+        /* If curr is * then there is still chance to skip remaining pattern hence recurse for j+1 */
+
+        else if(p[j]=='*')                 
+            return dp[i][j] = solve(s, p, i, j+1, '*', dp);
+
+        /* Else return false */
+
+        else return false;
+    }
+
+    // --> Case 2 :  If j reached at the end, and i didnt then directly return false
+
+    else if(j==p.length()) return false;
+
+    /* --------------------------------------------------------------*/
+
+
+    /* If curr char is . or it matched current char of s then recurse for i+1 and j+1 */
+
+    if(p[j]=='.' or p[j]==s[i])
+        return dp[i][j] = solve(s, p, i+1, j+1, p[j], dp);
+
+
+    else if(p[j]=='*'){
+
+        /* if curr char is * then prev can be either . or any lowercase letter */
+
+        if(prev=='.' or prev==s[i]){
+
+            /* Case1 :  Matching more then one element */
+
+            bool res = solve (s, p, i+1, j, prev, dp);
+
+            /* Case2 : Matching exactly one element */
+
+            bool res2 = solve (s, p, i+1, j+1, '*', dp);
+
+            /* Case3 : Matching zero element with '*' */
+
+            bool res3 = solve (s, p, i, j+1, '*', dp);
+
+            return dp[i][j] = res or res2 or res3;
+        }
+
+        /* If prev!=s[i] then only one case is left which is we will match 0 char with '*' */
+
+        else{    
+            bool res = solve (s, p, i, j+1, '*', dp);
+            return dp[i][j] = res;
+        }
+    }
+
+
+    return false;
+}
+
+
+bool isMatch(string s, string p) {
+    vector<vector<int>> dp (s.length()+1, vector<int> (p.length()+1, -1));
+    return solve (s, p, 0, 0, ' ', dp);
+}
+```
+
+<br>
+
+### 2. Wildcard Matching
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+1. '?' Matches any single character.
+2. '*' Matches any sequence of characters (including the empty sequence).
+3. The matching should cover the entire input string (not partial).
+
+Input: s = "adceb", p = "*a*b"
+Output: true
+
+Input: s = "acdcb", p = "a*c?b"
+Output: false
+
+```cpp
+bool solve (string & s, string & p, int i, int j, vector<vector<int>> & dp){
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+
+    /* ---------------------------- Base Cases ----------------------------*/
+
+    if(i==s.length()){
+
+        if(j==p.length()) 
+            return true;
+
+        else if(p[j]=='*') 
+            return dp[i][j] = solve (s, p, i, j+1, dp);
+
+        else return 
+            false;
+    }    
+
+    else if (j==p.length()) return false;
+
+    /* --------------------------------------------------------------------*/
+
+
+    if(p[j]=='?' or p[j]==s[i])
+        return dp[i][j] = solve (s, p, i+1, j+1, dp);
+
+
+    else if(p[j]=='*'){
+
+        /* Case 1 : Matching 0 characters */
+
+        bool res = solve (s, p, i, j+1, dp);
+
+        /* Case 2 : Matching exactly 1 character */
+
+        bool res2 = solve (s, p, i+1, j+1, dp);
+
+        /* Case 3 : Matching more then 1 character */
+
+        bool res3 = solve (s, p, i+1, j, dp);
+
+        return dp[i][j] = res or res2 or res3;
+    }
+
+
+    else return false;
+}
+
+
+bool isMatch(string s, string p) {
+
+    vector<vector<int>> dp (s.length()+1, vector<int> (p.length()+1, -1));
+    return solve (s, p, 0, 0, dp);
+}
+```
+
+<br>
+
+### 3. Valid Parenthesis String
+Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid. The following rules define a valid string:
+1. Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+2. Any right parenthesis ')' must have a corresponding left parenthesis '('.
+3. Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+4. '*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
+
+Input: s = "(*))"
+
+Output: true
+
+```cpp
+bool solve (string & s, int idx, int n, int br_cnt, vector<vector<int>> & dp){
+
+    /* 
+        Following are the two Base Conditions:
+        1. If br_cnt<0 that means we got extra ')' bracket, hence return false
+        2. If idx==n that means we reached at the end 
+           so if br_cnt==0 that means string is balanced hence return true else return false
+    */
+
+    if(br_cnt<0) return false;
+    if(idx==n) return br_cnt==0;
+
+    if(dp[idx][br_cnt]!=-1) return dp[idx][br_cnt];
+
+    /* If curr char is '(', we will increase the br_cnt and recurse */
+
+    if(s[idx]=='(')
+        return dp[idx][br_cnt] = solve (s, idx+1, n, br_cnt+1, dp);
+
+    /* If curr char is ')', we will decrease the br_cnt and recurse */
+
+    else if(s[idx]==')')
+        return dp[idx][br_cnt] = solve (s, idx+1, n, br_cnt-1, dp);
+
+    /* If curr char is '*', we have following 3 choices */
+
+    else{
+        bool res1 = solve(s, idx+1, n, br_cnt+1, dp);           // --> choice 1 : consider it as '('
+        bool res2 = solve(s, idx+1, n, br_cnt-1, dp);           // --> choice 2 : consider it as ')'
+        bool res3 = solve(s, idx+1, n, br_cnt, dp);             // --> choice 3 : consider it as ''
+
+        return dp[idx][br_cnt] = res1 or res2 or res3;
+    }
+}
+
+bool checkValidString(string s) {
+    int n = s.length();
+    vector<vector<int>> dp (n, vector<int> (n, -1));
+    return solve (s, 0, n, 0, dp);
+}
+```

@@ -310,7 +310,132 @@ vector<string> wordBreak(string s, vector<string>& wordDict) {
 
 <br>
 
-### 3. Arrange II (IB)
+### 3. Palindrome Partitioning II
+Given a string s, partition s such that every substring of the partition is a palindrome. Return the minimum cuts needed for a palindrome partitioning of s.
+
+```cpp
+bool isPalindrome (string & s, int i, int j){
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
+    return true;
+}
+
+
+int solve (string & s, int i, int j, vector<vector<int>> & dp){    
+    if(i>=j or isPalindrome(s, i, j)) return 0;
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    int ans = INT_MAX;
+
+    for(int k=i; k<j; k++){
+
+        /* 
+            Instead of writing below standard line
+            We will recurse for only right part
+            Only when left part turns out to be palindrome
+
+            int temp =  solve (s, i, k, dp, palindrome) + solve (s, k+1, j, dp, palindrome) + 1;
+        */
+
+        if(isPalindrome(s, i, k)){                         
+            int temp = solve (s, k+1, j, dp) + 1;
+            ans = min (ans, temp);
+        }
+    }
+
+    return dp[i][j] = ans;
+}
+
+
+int minCut(string s) {
+    int n = s.length();
+    vector<vector<int>> dp (n+1, vector<int> (n+1, -1));
+
+    return solve (s, 0, n-1, dp);
+}
+```
+
+**Optimization:** Since second variable j is not changing in recursive call, Hence inplace of 2D DP, we will simply use 1D Dp
+
+```cpp
+
+/* isPalindrome function will be similar to prev code */
+
+int solve (string & s, int idx, vector<int> & dp){    
+    if(isPalindrome(s, idx, s.length()-1)) return 0;
+
+    if(dp[idx]!=-1) 
+        return dp[idx];
+
+    int ans = INT_MAX;
+
+    for(int k=idx; k<s.length(); k++){
+        if(isPalindrome(s, idx, k)){                         
+            int temp = solve (s, k+1, dp) + 1;
+            ans = min (ans, temp);
+        }
+    }
+
+    return dp[idx] = ans;
+}
+
+
+int minCut(string s) {
+    int n = s.length();
+    vector<int> dp (n+1, -1);
+
+    return solve (s, 0, dp);
+}
+```
+
+<br>
+
+### 4. Palindrome Partitioning IV
+Given a string s, return true if it is possible to split the string s into three non-empty palindromic substrings. Otherwise, return false.
+
+Input: s = "abcbdd"
+
+Output: true
+
+```cpp
+bool isPalindrome (string & s, int i, int j){
+    while(i<j){
+        if(s[i]!=s[j]) return false;
+        i++; j--;
+    }
+    return true;
+}
+
+
+bool solve (string & s, int n, int idx, int cnt, vector<vector<int>> & dp){
+    if(dp[idx][cnt]!=-1) return false;
+
+    if(cnt==1) return dp[idx][cnt] = isPalindrome(s, idx, n-1);
+
+    for(int k=idx; k<n-cnt+1; k++){
+        if(isPalindrome(s, idx, k)){
+            bool res = solve (s, n, k+1, cnt-1, dp);
+            if(res) return true;
+        }
+    }
+
+    return dp[idx][cnt] = false;
+}
+
+
+bool checkPartitioning(string s) {
+    int n = s.length();
+    vector<vector<int>> dp (n+1, vector<int> (4, -1));
+    
+    return solve (s, n, 0, 3, dp);      //--> For this question cnt is 3
+}
+```
+
+<br>
+
+### 5. Arrange II (IB)
 You are given a sequence of black and white horses, and a set of K stables. You have to accommodate the horses into the stables such that:
 1. You fill the horses into the stables preserving the relative order of horses. 
 2. No stable should be empty and no horse should be left unaccommodated.

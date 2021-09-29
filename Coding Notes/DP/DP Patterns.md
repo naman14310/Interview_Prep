@@ -579,6 +579,50 @@ double largestSumOfAverages(vector<int>& nums, int k) {
 
 <br>
 
+### 8. Minimum Difficulty of a Job Schedule (Tricky Language)
+You want to schedule a list of jobs in d days. Jobs are dependent (i.e To work on the i-th job, you have to finish all the jobs j where 0 <= j < i). You have to finish at least one task every day. The difficulty of a job schedule is the sum of difficulties of each day of the d days. The difficulty of a day is the maximum difficulty of a job done in that day.
+
+Given an array of integers jobDifficulty and an integer d. The difficulty of the i-th job is jobDifficulty[i]. Return the minimum difficulty of a job schedule. If you cannot find a schedule for the jobs return -1.
+
+Input: jobDifficulty = [7,1,7,1,7,1], d = 3
+
+Output: 15
+
+```cpp
+int solve (vector<int> & jobs, int n, int idx, int d, vector<vector<int>> & dp){
+    if(idx==n) return 0;
+
+    if(dp[idx][d]!=-1) return dp[idx][d];
+
+    if(d==1) return 
+        *max_element(jobs.begin()+idx, jobs.end());
+
+    int mx = 0;
+    int ans = INT_MAX;
+
+    for(int i=idx; i<=n-d; i++){
+        mx = max(mx, jobs[i]);
+        int res = solve (jobs, n, i+1, d-1, dp);
+
+        ans = min(ans, res+mx);
+    }
+
+    return dp[idx][d] = ans;
+}
+
+
+int minDifficulty(vector<int>& jobDifficulty, int d) {
+    int n = jobDifficulty.size();
+    if(n<d) return -1;
+
+    vector<vector<int>> dp (n, vector<int> (d+1, -1));
+
+    return solve (jobDifficulty, n, 0, d, dp);
+}
+```
+
+<br>
+
 
 
 ## @ Jump Game Pattern

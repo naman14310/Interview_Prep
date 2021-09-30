@@ -867,15 +867,14 @@ Given a binary tree denoted by root node A and a leaf node B from this tree. All
 [Problem](https://www.interviewbit.com/problems/burn-a-tree/)
 
 ```
-Input:
-            1 
-           / \ 
-          2   3 
-         /   / \
-        4   5   6
-        
-B = 4
+Input: B = 4
 
+    1 
+   / \ 
+  2   3 
+ /   / \
+4   5   6
+        
 Output: 4
 ```
 
@@ -883,7 +882,7 @@ Hint: Find the longest distant leaf node from node B
 
 ```cpp
 
-/* Return type: pair of {whether flame comes from that branch, height below that subtree}
+/* Return type: pair of {whether flame comes from that branch, height below that subtree} */
 
 pair<bool, int> burn (TreeNode* root, int B, int &time){
     if(!root) return {false, 0};

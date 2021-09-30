@@ -526,7 +526,45 @@ int minFlipsMonoIncr(string & s) {
 
 <br>
 
-### 10. Array Nesting
+### 10. Bulb Switcher IV
+There is a room with n bulbs, arranged in a row from left to right. Initially, all the bulbs are turned off. Your task is to obtain the configuration represented by target where target[i] is '1' if the ith bulb is turned on and is '0' if it is turned off. In one flip operation, you can Flip each bulb from index i to index n - 1. Return the minimum number of flips required to form target.
+
+Input: target = "10111"
+
+Output: 3
+
+Hint: Iterate from left to right and set bulbs one by one to target.
+
+```cpp
+/*
+	flip = false : even
+	flip = true : odd
+*/
+
+int minFlips(string target) {
+	bool flip = false;
+	int ans = 0;
+
+	for(char ch : target){
+
+		if(ch=='1' and !flip){
+			flip = !flip;
+			ans++;
+		}
+
+		if(ch=='0' and flip){
+			flip = !flip;
+			ans++;
+		}
+	}
+
+	return ans;
+}
+```
+
+<br>
+
+### 11. Array Nesting
 You are given an integer array nums of length n where nums is a permutation of the numbers in the range [0, n - 1]. You should build a set s[k] = {nums[k], nums[nums[k]], nums[nums[nums[k]]], ... } subjected to the following rule:
 1. The first element in s[k] starts with the selection of the element nums[k] of index = k.
 2. The next element in s[k] should be nums[nums[k]], and then nums[nums[nums[k]]], and so on.
@@ -564,7 +602,7 @@ int arrayNesting (vector<int>& nums){
 
 <br>
 
-### 11. Partition Array into Disjoint Intervals
+### 12. Partition Array into Disjoint Intervals
 Given an array nums, partition it into two (contiguous) subarrays left and right so that:
 
 1. Every element in left is less than or equal to every element in right.
@@ -599,7 +637,7 @@ int partitionDisjoint(vector<int>& nums) {
 
 <br>
 
-### 12. 4Sum II
+### 13. 4Sum II
 Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that: 0 <= i, j, k, l < n and nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
 
 Hint: Use two hashmaps for storing sum of A[i]+B[i] and C[i]+D[i]
@@ -633,7 +671,7 @@ int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
 
 <br>
 
-### 13. Pairs of Songs With Total Durations Divisible by 60
+### 14. Pairs of Songs With Total Durations Divisible by 60
 You are given a list of songs where the ith song has a duration of time[i] seconds. Return the number of pairs of songs for which their total duration in seconds is divisible by 60. Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0.
 
 Hint: Play with remainders
@@ -653,7 +691,7 @@ int numPairsDivisibleBy60(vector<int>& time) {
 
 <br>
 
-### 14. Maximum Swap
+### 15. Maximum Swap
 You are given an integer num. You can swap two digits at most once to get the maximum valued number. Return the maximum valued number you can get.
 
 Input: num = 2736
@@ -694,7 +732,7 @@ Hint: At each digit, if there is a larger digit that occurs later, we want the s
 
 <br>
 
-### 15. Beautiful Arrangement II
+### 16. Beautiful Arrangement II
 Given two integers n and k, construct a list answer that contains n different positive integers ranging from 1 to n and obeys the following requirement: Suppose this list is answer = [a1, a2, a3, ... , an], then the list [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] has exactly k distinct integers.
 
 Hint: Fill in cyclic pattern
@@ -721,7 +759,7 @@ vector<int> constructArray(int n, int k) {
 
 <br>
 
-### 16. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
+### 17. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
 Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
 
 Hint: Run a while loop till we get all zeros. decrement all odd numbers by one, now all numbers becomes even, divide all by 2. Repeat these steps to get all zeros in min steps.
@@ -761,7 +799,7 @@ int minOperations(vector<int>& nums) {
 
 <br>
 
-### 17. Maximum Absolute Difference
+### 18. Maximum Absolute Difference
 You are given an array of N integers. Return maximum value of f(i, j) for all 1 ≤ i, j ≤ N. f(i, j) is defined as |A[i] - A[j]| + |i - j|, where |x| denotes absolute value of x.
 
 Input: A = [1, 3, -1]
@@ -801,7 +839,7 @@ int Solution::maxArr(vector<int> &A) {
 
 <br>
 
-### 18. Maximum Length of Subarray With Positive Product
+### 19. Maximum Length of Subarray With Positive Product
 Given an array of integers nums, find the maximum length of a subarray where the product of all its elements is positive. Return the maximum length of a subarray with positive product (Zero not considered).
 
 Input: nums = [-1,-2,-3,0,1]

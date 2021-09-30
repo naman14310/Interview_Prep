@@ -176,22 +176,31 @@ vector<int> inorderTraversal(TreeNode* root) {
 
 ## @ Questions based on Path Traversals
 
-### 1. N-ary Tree Preorder Traversal
+### 1. Path to Given Node
+Find the path from Root to a given node B.
 
 ```cpp
-void traverse(Node* root, vector<int> & ans){
-    if(root){
-        ans.push_back(root->val);
+void findPath (TreeNode* root, int B, vector<int> &path, bool &found){
+    if(!root) return;
 
-        for(int i=0; i<root->children.size(); i++)
-            traverse(root->children[i], ans);
-    }
+    path.push_back(root->val);
+    if(root->val==B){
+        found = true;
+        return;
+    } 
+
+    findPath (root->left, B, path, found);
+    if(!found) findPath (root->right, B, path, found);
+
+    if(!found) path.pop_back();
 }
 
-vector<int> preorder(Node* root) {
-    vector<int> ans;
-    traverse(root, ans);
-    return ans;
+vector<int> Solution::solve(TreeNode* A, int B) {
+    vector<int> path;
+    bool found = false;
+    
+    findPath(A, B, path, found);
+    return path;
 }
 ```
 

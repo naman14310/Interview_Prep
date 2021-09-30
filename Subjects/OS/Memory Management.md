@@ -20,12 +20,7 @@ The hardware device called **Memory Management Unit** is used for mapping logica
 <br>
 
 ### 4. Purpose of logical address ?
-Because this gives the Operating System a way to securely manage memory.
-
-<br>
-
-### 5. Why is secure memory management necessary?
-Imagine you are editing an important letter in MS Word while listening to music on YouTube on a very recently released browser. The browser is buggy and writes bogus values to a range of physical addresses that were being used by the Word program to store the edits of your letter. All of that information is corrupt!
+Because this gives the Operating System a way to securely manage memory. Imagine you are editing an important letter in MS Word while listening to music on YouTube on a very recently released browser. The browser is buggy and writes bogus values to a range of physical addresses that were being used by the Word program to store the edits of your letter. All of that information is corrupt!
 
 **How can the OS prevent this?**
 
@@ -33,7 +28,7 @@ Maintain a mapping of physical addresses allocated to each process and make sure
 
 <br>
 
-### 6. Fragmentation
+### 5. Fragmentation
 Fragmentation means wastage of memory.
 
 **Internal Fragmentation**
@@ -48,17 +43,17 @@ Fragmentation means wastage of memory.
 
 <br>
 
-### 7. Paging increases context switch time how and why ?
+### 6. Paging increases context switch time how and why ?
 OS must keep track of each individual process's page table, updating it whenever the process's pages get moved in and out of memory, and applying the correct page table when processing system calls for a particular process. This all increases the overhead involved when swapping processes in and out of the CPU. 
 
 <br>
 
-### 8. How Paging Works ?
+### 7. How Paging Works ?
 Processes are divided into pages and main memory is divided into frames. Now The CPU generates the logical address, which contains the page number and the page offset. The page number is used to index into the page table, to get the corresponding page frame number, and once we have the page frame of the physical memory(also called main memory), we can apply the page offset to get the right word of memory.
 
 <br>
 
-### 9. Why TLB (Translation Look Aside Buffer) ?
+### 8. Why TLB (Translation Look Aside Buffer) ?
 The thing is that page table is stored in physical memory, and sometimes can be very large, so to speed up the translation of logical address to physical address, we sometimes use TLB, which is made of expensive and faster associative memory, So instead of going into page table first, we go into the TLB and use page number to index into the TLB, and get the corresponding page frame number and if it is found, we completely avoid page table( because we have both the page frame number and the page offset) and form the physical address.
 
 **TLB Miss:** If we don't find the page frame number inside the TLB, it is called a TLB miss only then we go to the page table to look for the corresponding page frame number.
@@ -67,17 +62,17 @@ The thing is that page table is stored in physical memory, and sometimes can be 
 
 <br>
 
-### 10. Page Fault
+### 9. Page Fault
 Occurs when the page accessed by a running program is not present in physical memory. It means the page is present in the secondary memory but not yet loaded into a frame of physical memory.
 
 <br>
 
-### 11. What is Cache Hit and Cache Miss ?
+### 10. What is Cache Hit and Cache Miss ?
 Cache Memory is a small memory that operates at a faster speed than physical memory and we always go to cache before we go to physical memory. If we are able to locate the corresponding word in cache memory inside the cache, its called **cache hit** and we don't even need to go to the physical memory. If cache memory is unable to find the corresponding block, then we go to physical memory and do all that process of going through page table or TLB.
 
 <br> 
 
-### 12. Whole control flow (IMP)
+### 11. Whole control flow (IMP)
 [Explaination](https://stackoverflow.com/questions/37825859/cache-miss-a-tlb-miss-and-page-fault)
 
 1.First go to the cache memory and if its a cache hit, then we are done.

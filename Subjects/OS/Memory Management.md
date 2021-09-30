@@ -75,7 +75,7 @@ Cache Memory is a small memory that operates at a faster speed than physical mem
 ### 11. Whole control flow (IMP)
 [Explaination](https://stackoverflow.com/questions/37825859/cache-miss-a-tlb-miss-and-page-fault)
 
-1.First go to the cache memory and if its a cache hit, then we are done.
+1. First go to the cache memory and if its a cache hit, then we are done.
 2. If its a cache miss, go to step 3.
 3. First go to TLB and if its a TLB hit, go to physical memory using physical address formed, we are done.
 4. If its a TLB miss, then go to page table to get the frame number of your page for forming the physical address.

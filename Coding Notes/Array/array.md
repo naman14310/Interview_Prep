@@ -732,7 +732,46 @@ Hint: At each digit, if there is a larger digit that occurs later, we want the s
 
 <br>
 
-### 16. Beautiful Arrangement II
+### 16. Largest Permutation
+Given an integer array A of size N consisting of unique integers from 1 to N. You can swap any two integers atmost B times. Return the largest lexicographical value array that can be created by executing atmost B swaps.
+
+Input: A = [1, 2, 3, 4], B = 1
+
+Output: [4, 2, 3, 1]
+
+Hint: Use map to store values of right side and find mx val at right for every number in logn time.
+
+```cpp
+vector<int> solve(vector<int> &A, int B) {
+    map<int, int> mp;
+
+    for(int i=0; i<A.size(); i++)
+        mp[A[i]] = i;
+
+    for(int i=0; i<A.size() and B>0; i++){
+
+        auto itr = mp.end();
+        --itr;
+        
+        int val = itr->first;
+        int pos = itr->second;
+
+        if(A[i]<val){
+            swap(A[i], A[pos]);
+            mp[A[pos]] = pos;
+            B--;
+        }
+
+        mp.erase(itr);
+    }
+
+    return A;
+}
+```
+
+<br>
+
+### 17. Beautiful Arrangement II
 Given two integers n and k, construct a list answer that contains n different positive integers ranging from 1 to n and obeys the following requirement: Suppose this list is answer = [a1, a2, a3, ... , an], then the list [|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|] has exactly k distinct integers.
 
 Hint: Fill in cyclic pattern
@@ -759,7 +798,7 @@ vector<int> constructArray(int n, int k) {
 
 <br>
 
-### 17. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
+### 18. Minimum Numbers of Function Calls to Make Target Array (Reverse Logic)
 Your task is to form an integer array nums from an initial array of zeros arr that is the same size as nums. Either we can increment any element by 1 or we can multiply any element by 2.
 
 Hint: Run a while loop till we get all zeros. decrement all odd numbers by one, now all numbers becomes even, divide all by 2. Repeat these steps to get all zeros in min steps.
@@ -799,7 +838,7 @@ int minOperations(vector<int>& nums) {
 
 <br>
 
-### 18. Maximum Absolute Difference
+### 19. Maximum Absolute Difference
 You are given an array of N integers. Return maximum value of f(i, j) for all 1 ≤ i, j ≤ N. f(i, j) is defined as |A[i] - A[j]| + |i - j|, where |x| denotes absolute value of x.
 
 Input: A = [1, 3, -1]
@@ -839,7 +878,7 @@ int Solution::maxArr(vector<int> &A) {
 
 <br>
 
-### 19. Maximum Length of Subarray With Positive Product
+### 20. Maximum Length of Subarray With Positive Product
 Given an array of integers nums, find the maximum length of a subarray where the product of all its elements is positive. Return the maximum length of a subarray with positive product (Zero not considered).
 
 Input: nums = [-1,-2,-3,0,1]
@@ -911,6 +950,7 @@ Hint: If negative signs are even, then whole subarray will give positive product
 ```
 
 <br>
+
 
 
 ## @ Hard

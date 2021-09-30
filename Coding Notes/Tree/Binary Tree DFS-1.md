@@ -861,6 +861,65 @@ int maxProduct(TreeNode* root) {
 
 <br>
 
+### 8. Burn a Tree
+Given a binary tree denoted by root node A and a leaf node B from this tree. All nodes connected to a given node (left child, right child and parent) get burned in 1 second. Then all the nodes which are connected through one intermediate get burned in 2 seconds, and so on. Find the minimum time required to burn the complete binary tree.
+
+[Problem](https://www.interviewbit.com/problems/burn-a-tree/)
+
+```
+Input:
+            1 
+           / \ 
+          2   3 
+         /   / \
+        4   5   6
+        
+B = 4
+
+Output: 4
+```
+
+Hint: Find the longest distant leaf node from node B
+
+```cpp
+
+/* Return type: pair of {whether flame comes from that branch, height below that subtree}
+
+pair<bool, int> burn (TreeNode* root, int B, int &time){
+    if(!root) return {false, 0};
+
+    if(!root->left and !root->right){
+        if(root->val==B) return {true, 0};      // --> Its the starting point and its nbrs will also burn at same time
+        else return {false, 1};                 // --> Normal leaf node, simply return height 1
+    }
+
+    auto left = burn(root->left, B, time);
+    auto right = burn(root->right, B, time);
+
+    /* If from any branch, flame will come then update the burning time by adding distance from left and right */
+
+    if(left.first or right.first){
+        time = max(time, left.second+right.second+1);
+
+        if(left.first) return {true, left.second+1};
+        else return {true, right.second+1};
+    }
+    
+    /* Else simply return maxheight of subtree starting from curr node */
+
+    else return {false, max(left.second, right.second)+1};
+}
+
+
+int Solution::solve(TreeNode* A, int B) {
+    int time = 0;
+    auto p = burn(A, B, time);
+    return time;
+}
+```
+
+<br>
+
 
 
 ## @ Questions based on Deletion of Nodes

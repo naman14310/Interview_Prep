@@ -111,7 +111,13 @@ Virtual memory is an area of a computer system's secondary memory storage space 
 
 <br>
 
-### 14. Demand Paging 
+### 14. Difference between Virtual and Physical memory ?
+1. Physical memory or RAM is very much faster than virtual memory. So a system with 2 GB of physical RAM and 2 GB of virtual memory will not offer the same performance as a similar system with 4 GB of physical RAM.
+2. Physical memory is limited to the size of the RAM, whereas, Virtual memory is limited by the size of the hard drive, so virtual memory has the capability for more storage.
+
+<br> 
+
+### 15. Demand Paging 
 Demand paging is an approach to implement virtual memory. Pages are loaded into the memory only when the CPU wants to access them. We use a program called **lazy swapper** (also known as pager).
 
 **Pure Demand Paging**
@@ -120,12 +126,12 @@ Pure demand paging is an extreme case of demand paging where the execution of a 
 
 <br>
 
-### 15. Locality of Reference
+### 16. Locality of Reference
 Locality of Reference refers to the tendency of the computer program to access instructions whose addresses are near one another. The property of locality of reference is mainly shown by loops and subroutine calls in a program.
 
 <br>
 
-### 16. Which page replacement algo suffers from Belady anamoly ?
+### 17. Which page replacement algo suffers from Belady anamoly ?
 FIFO, becoz it not stack algorithm.
 
 **Stack Algorithm did not show Belady anamoly**
@@ -134,7 +140,7 @@ A page replacement algorithm is a stack algorithm if we can show that the pages 
 
 <br>
 
-### 17. Thrashing (IMP)
+### 18. Thrashing (IMP)
 Thrashing is a situation when a system is spending more time in servicing page faults than execution. The actual processing done is very negligible. 
 
 <br>
@@ -148,7 +154,7 @@ The basic concept involved is that if a process is allocated too few frames, the
 
 <br>
 
-### 18. How can we handle thrashing ?
+### 19. How can we handle thrashing ?
 Following approaches can be used to control thrashing:
 
 **1. Use Local Page replacement algorithm**

@@ -143,6 +143,7 @@ The basic concept involved is that if a process is allocated too few frames, the
 <br>
 
 ### 18. How can we handle thrashing ?
+Following approaches can be used to control thrashing:
 
 **1. Use Local Page replacement algorithm**
 
@@ -152,7 +153,7 @@ Local page replacement will select pages which only belongs to that process. Due
 
 It is based on the concept of the Locality Model. A locality is a set of pages that are actively used together. It states that if we allocate enough frames to a process to accommodate its current locality, it will only fault whenever it moves to some new locality. But if the allocated frames are lesser than the size of the current locality, the process is bound to thrash. 
 
-**3. Control Page Fault Frequency **
+**3. Control Page Fault Frequency**
 
 If the page fault rate is too high, it indicates that the process has too few frames allocated to it. On the contrary, a low page fault rate indicates that the process has too many frames. 
 

@@ -105,6 +105,12 @@ Virtual memory is a technique that allows the execution of processes that are no
 
 <br>
 
+**Where it is physically located ?**
+
+Virtual memory is an area of a computer system's secondary memory storage space (such as a hard disk or solid state drive) which acts as if it were a part of the system's RAM or primary memory. This area of Harddisk used for implementing Virtual Memory is known as **Swap Space**.
+
+<br>
+
 ### 14. Demand Paging 
 Demand paging is an approach to implement virtual memory. Pages are loaded into the memory only when the CPU wants to access them. We use a program called **lazy swapper** (also known as pager).
 

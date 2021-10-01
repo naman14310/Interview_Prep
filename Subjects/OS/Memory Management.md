@@ -81,6 +81,91 @@ Cache Memory is a small memory that operates at a faster speed than physical mem
 4. If its a TLB miss, then go to page table to get the frame number of your page for forming the physical address.
 5. If the page  is not found, its a page fault. Use one of the page replacement algorithms if all the frames are occupied by some page else just load the required page from secondary memory to physical memory frame.
 
+<br>
+
+### 12. Swapping
+Swapping is a memory management technique and is used to temporarily remove the inactive programs from the main memory of the computer system.  Due to the swapping technique performance usually gets affected, but it also helps in running multiple and big processes in parallel. 
+
+**Advantages of swapping**
+1. It helps the CPU to manage multiple processes within a single main memory.
+2. It helps to create and use virtual memory.
+
+**Disadvantages of swapping**
+1. If the algorithm used for swapping is not good then the overall method can increase the number of page faults and thus decline the overall performance of processing.
+2. If the computer system loses power at the time of high swapping activity then the user might lose all the information related to the program.
+
+<br>
+
+### 13. Virtual Memory
+Virtual memory is a technique that allows the execution of processes that are not completely in memory.
+
+**Need of Virtual Memory**
+1. This allows execution of programs larger than the memory.
+2. This allows higher degree of multiprogramming.
+
+<br>
+
+### 14. Demand Paging 
+Demand paging is an approach to implement virtual memory. Pages are loaded into the memory only when the CPU wants to access them. We use a program called **lazy swapper** (also known as pager).
+
+**Pure Demand Paging**
+
+Pure demand paging is an extreme case of demand paging where the execution of a process is started with none of its pages in memory.
+
+<br>
+
+### 15. Locality of Reference
+Locality of Reference refers to the tendency of the computer program to access instructions whose addresses are near one another. The property of locality of reference is mainly shown by loops and subroutine calls in a program.
+
+<br>
+
+### 16. Which page replacement algo suffers from Belady anamoly ?
+FIFO, becoz it not stack algorithm.
+
+**Stack Algorithm did not show Belady anamoly**
+A page replacement algorithm is a stack algorithm if we can show that the pages in memory for n frames is always a subset of pages in memory that will be there in memory for (n+1) frames. Optimal and LRU are stack algorithms.
+
+<br>
+
+### 17. Thrashing (IMP)
+Thrashing is a situation when a system is spending more time in servicing page faults than execution. The actual processing done is very negligible. 
+
+<br>
+
+**How Thrashing occurs**
+
+The basic concept involved is that if a process is allocated too few frames, then there will be too many and too frequent page faults. As a result, no useful work would be done by the CPU and the CPU utilisation would fall drastically. The long-term scheduler would then try to improve the CPU utilisation by loading some more processes into the memory thereby increasing the degree of multiprogramming. This would result in a further decrease in the CPU utilization triggering a chained reaction of higher page faults followed by an increase in the degree of multiprogramming, called Thrashing. 
+
+![img](https://s3.ap-south-1.amazonaws.com/s3.studytonight.com/tutorials/uploads/pictures/1610973226-71449.png)
+
+
+<br>
+
+### 18. How can we handle thrashing ?
+
+**1. Use Local Page replacement algorithm**
+
+Local page replacement will select pages which only belongs to that process. Due to this, there is a chance of a reduction in the thrashing.
+
+**2. Working-Set Model**
+
+It is based on the concept of the Locality Model. A locality is a set of pages that are actively used together. It states that if we allocate enough frames to a process to accommodate its current locality, it will only fault whenever it moves to some new locality. But if the allocated frames are lesser than the size of the current locality, the process is bound to thrash. 
+
+**3. Control Page Fault Frequency **
+
+If the page fault rate is too high, it indicates that the process has too few frames allocated to it. On the contrary, a low page fault rate indicates that the process has too many frames. 
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/1-161.png)
+
+Upper and lower limits can be established on the desired page fault rate as shown in the diagram. If the page fault rate falls below the lower limit, frames can be removed from the process. Similarly, if the page fault rate exceeds the upper limit, more number of frames can be allocated to the process. 
+
+Note: If the page fault rate is high with no free frames, then some of the processes can be suspended and frames allocated to them can be reallocated to other processes. The suspended processes can then be restarted later. 
+
+
+
+
+
+
 
 
 

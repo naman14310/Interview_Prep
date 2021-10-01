@@ -149,9 +149,13 @@ Following approaches can be used to control thrashing:
 
 Local page replacement will select pages which only belongs to that process. Due to this, there is a chance of a reduction in the thrashing.
 
+<br>
+
 **2. Working-Set Model**
 
 It is based on the concept of the Locality Model. A locality is a set of pages that are actively used together. It states that if we allocate enough frames to a process to accommodate its current locality, it will only fault whenever it moves to some new locality. But if the allocated frames are lesser than the size of the current locality, the process is bound to thrash. 
+
+<br>
 
 **3. Control Page Fault Frequency**
 

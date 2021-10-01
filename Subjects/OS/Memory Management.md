@@ -123,6 +123,7 @@ Locality of Reference refers to the tendency of the computer program to access i
 FIFO, becoz it not stack algorithm.
 
 **Stack Algorithm did not show Belady anamoly**
+
 A page replacement algorithm is a stack algorithm if we can show that the pages in memory for n frames is always a subset of pages in memory that will be there in memory for (n+1) frames. Optimal and LRU are stack algorithms.
 
 <br>

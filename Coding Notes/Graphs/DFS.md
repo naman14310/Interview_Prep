@@ -1,8 +1,10 @@
 # DFS 
 
+<br>
+
 ## @ DFS on Adjacency List
 
-#### 1. All Paths From Source to Target
+### 1. All Paths From Source to Target
 Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1, and return them in any order.
 
 ```cpp
@@ -36,7 +38,9 @@ vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
 }
 ```
 
-#### 2. Find Eventual Safe States
+<br>
+
+### 2. Find Eventual Safe States
 A node is evetually safe if all path from the node ends at a terminal node. Return an array containing all the safe nodes of the graph.
 
 ![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/03/17/picture1.png)
@@ -111,7 +115,9 @@ vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
 }
 ```
 
-#### 3. Course Schedule
+<br>
+
+### 3. Course Schedule
 There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. Return true if you can finish all courses. Otherwise, return false.
 
 Hint: Do simple cycle detection 
@@ -154,9 +160,13 @@ bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 }
 ```
 
+<br>
+
+
+
 ## @ DFS on Matrix
 
-#### 1. Max Area of Island
+### 1. Max Area of Island
 
 ![img](https://assets.leetcode.com/uploads/2021/05/01/maxarea1-grid.jpg)
 
@@ -200,7 +210,9 @@ int maxAreaOfIsland(vector<vector<int>>& grid) {
 }
 ```
 
-#### 2. Number of Closed Islands
+<br>
+
+### 2. Number of Closed Islands
 Given a 2D grid consists of 0s (land) and 1s (water).  An island is a maximal 4-directionally connected group of 0s and a closed island is an island totally (all left, top, right, bottom) surrounded by 1s. Return the number of closed islands.
 
 ![img](https://assets.leetcode.com/uploads/2019/10/31/sample_3_1610.png)
@@ -249,7 +261,9 @@ int closedIsland(vector<vector<int>>& grid) {
 }
 ```
 
-#### 3. Number of Islands
+<br>
+
+### 3. Number of Islands
 
 ```cpp
 bool isInside(int x, int y, int row, int col){
@@ -289,7 +303,9 @@ int numIslands(vector<vector<char>>& grid) {
 }
 ```
 
-#### 4. Surrounded Regions
+<br>
+
+### 4. Surrounded Regions
 Given an m x n matrix board containing 'X' and 'O', capture all regions surrounded by 'X'. A region is captured by flipping all 'O's into 'X's in that surrounded region.
 
 ![img](https://assets.leetcode.com/uploads/2021/02/19/xogrid.jpg)
@@ -353,7 +369,9 @@ void solve(vector<vector<char>>& board) {
 }
 ```
 
-#### 5. Pacific Atlantic Water Flow
+<br>
+
+### 5. Pacific Atlantic Water Flow
 There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell's height is less than or equal to the current cell's height. Return a 2D list of grid coordinates such that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
 
 ![img](https://assets.leetcode.com/uploads/2021/06/08/waterflow-grid.jpg)
@@ -441,7 +459,9 @@ vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
 }
 ```
 
-#### 6. Rat in a Maze Problem - I 
+<br>
+
+### 6. Rat in a Maze Problem - I 
 Consider a rat placed at (0, 0) in a square matrix of order N * N. It has to reach the destination at (N - 1, N - 1). Find all possible paths that the rat can take to reach from source to destination. The directions in which the rat can move are 'U'(up), 'D'(down), 'L' (left), 'R' (right). Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it. In a path, no cell can be visited more than one time.
 
 ```
@@ -507,7 +527,9 @@ vector<string> findPath(vector<vector<int>> &m, int n) {
 }
 ```
 
-#### 7. Word Search
+<br>
+
+### 7. Word Search
 Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
 
 ![img](https://assets.leetcode.com/uploads/2020/11/04/word2.jpg)
@@ -563,7 +585,9 @@ bool exist(vector<vector<char>>& board, string word) {
 }
 ```
 
-#### 8. Word Search II (DFS + Trie)
+<br>
+
+### 8. Word Search II (DFS + Trie)
 Given an m x n board of characters and a list of strings words, return all words on the board. Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
 
 Hint: Insert all words in trie, and explore all words simultaneously as move further inside trie.
@@ -679,10 +703,78 @@ vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
 }
 ```
 
+<br>
+
+### 9. Detect Cycles in 2D Grid
+A cycle is a path of length 4 or more in the grid that starts and ends at the same cell. From a given cell, you can move in four directions (up, down, left, or right), if it has the same value of the current cell. Also, you cannot move to the cell that you visited in your last move. Return true if any cycle of the same value exists in grid, otherwise, return false.
+
+![img](https://assets.leetcode.com/uploads/2020/07/15/2.png)
+
+```cpp
+class Solution {
+public:
+    
+    bool isInside (int x, int y, int row, int col){
+        return x>=0 and x<row and y>=0 and y<col;
+    }
+    
+    
+    bool dfs(vector<vector<char>> &grid, int x, int y, int row, int col, vector<vector<bool>> &vis, vector<vector<bool>> &currPath, int prevX, int prevY){
+        
+        int dx[] = {1, 0, -1, 0};
+        int dy[] = {0, 1, 0, -1};
+        
+        currPath[x][y] = true;
+        vis[x][y] = true;
+        
+        for(int i=0; i<4; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+            
+            if(isInside(xnew, ynew, row, col)){
+                
+                if(!(xnew==prevX and ynew==prevY) and currPath[xnew][ynew]) return true;
+                
+                if(!currPath[xnew][ynew] and grid[xnew][ynew] == grid[x][y]){
+                    bool res = dfs(grid, xnew, ynew, row, col, vis, currPath, x, y);
+                    if(res) return true;
+                }
+            }
+        }
+        
+        currPath[x][y] = false;
+        return false;
+    }
+        
+    
+    bool containsCycle(vector<vector<char>>& grid) {
+        int row = grid.size(), col = grid[0].size();
+        
+        vector<vector<bool>> vis (row, vector<bool> (col, false));
+        vector<vector<bool>> currPath (row, vector<bool> (col, false));
+        
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                
+                if(!vis[i][j]){
+                    bool cycle = dfs(grid, i, j, row, col, vis, currPath, -1, -1);
+                    if(cycle) return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+};
+```
+
+<br>
+
+
 
 ## @ DFS with pruning
 
-#### 1. Cheapest Flights Within K Stops
+### 1. Cheapest Flights Within K Stops
 There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei]. You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
 
 Note: This is simple approach using dfs. Optimized approach is using dijkstra.
@@ -726,9 +818,13 @@ int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int
 }
 ```
 
+<br>
+
+
+
 ## @ Hard to Guess as Graphs
 
-#### 1. Jump Game III
+### 1. Jump Game III
 Given an array of non-negative integers arr, you are initially positioned at start index of the array. When you are at index i, you can jump to i + arr[i] or i - arr[i], check if you can reach to any index with value 0.
 
 Input: arr = [4,2,3,0,3,1,2], start = 5
@@ -761,7 +857,9 @@ bool canReach(vector<int>& arr, int start) {
 }
 ```
 
-#### 2. Evaluate Division
+<br>
+
+### 2. Evaluate Division
 You are given an array of variables equations and an array of real numbers values, where equations[i] = [Ai, Bi] and values[i] represent the equation Ai / Bi = values[i]. Each Ai or Bi is a string that represents a single variable.
 
 You are also given some queries, where queries[j] = [Cj, Dj] represents the jth query where you must find the answer for Cj / Dj = ?. Return the answers to all queries. If a single answer cannot be determined, return -1.0.

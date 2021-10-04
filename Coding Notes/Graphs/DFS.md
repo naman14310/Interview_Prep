@@ -160,6 +160,62 @@ bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 }
 ```
 
+<br>
+
+
+
+## @ Trees Represented As Graphs
+
+### 1. Largest Distance between nodes of a Tree
+Given an arbitrary unweighted rooted tree which consists of N nodes. The goal of the problem is to find largest distance between two nodes in a tree. The tree is given as an array A, there is an edge between nodes A[i] and i (0 <= i < N). Exactly one of the i's will have A[i] equal to -1, it will be root node.
+
+Hint: Graph variation of max diameter of tree
+
+```cpp
+
+int dfs (unordered_map<int, vector<int>> &graph, int src, int &diameter){
+
+    if(graph[src].size()==0) return 0;      // --> leaf node
+
+    int mx1 = 0, mx2 = 0;                   // --> Will represent two maxlength of subtrees rooted at src
+
+    for(int nbr : graph[src]){
+        int depth = dfs (graph, nbr, diameter)+1;
+
+        if(depth>=mx1){
+            mx2 = mx1;
+            mx1 = depth;
+        }
+        else if(depth>mx2)
+            mx2 = depth;
+    }
+
+    diameter = max(diameter, mx1+mx2);
+    return max(mx1, mx2);
+}
+
+
+int solve(vector<int> &A) {
+    unordered_map<int, vector<int>> graph;
+    int diameter = 0;
+    int root = 0;
+
+    for(int i=0; i<A.size(); i++){
+        if(A[i]==-1)
+            root = i;
+        else
+            graph[A[i]].push_back(i);
+    }
+
+    int res = dfs(graph, root, diameter);
+    return diameter;
+}
+
+```
+
+<br>
+
+
 
 ## @ DFS on Matrix
 

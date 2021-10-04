@@ -160,9 +160,6 @@ bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 }
 ```
 
-<br>
-
-
 
 ## @ DFS on Matrix
 
@@ -815,6 +812,51 @@ int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int
 
     if(min_cost==INT_MAX) return -1;
     else return min_cost;
+}
+```
+
+<br>
+
+### 2. Path with good nodes
+Given a tree with N nodes labelled from 1 to N. Each node is either good or bad denoted by binary array A of size N where if A[i] is 1 then ithnode is good else if A[i] is 0 then ith node is bad. Also the given tree is rooted at node 1 and you need to tell the number of root to leaf paths in the tree that contain not more than C good nodes.
+
+Input: A = [0, 1, 0, 1, 1, 1],  B = [[1, 2], [1, 5], [1, 6], [2, 3], [2, 4]],  C = 1
+
+Output: 3
+
+```cpp
+int dfs (unordered_map<int,vector<int>> &graph, vector<int> &good, int src, int C, vector<bool> &currPath){
+    C -= good[src-1];
+
+    if(C<0) return 0;           // --> If path contains more then C good nodes then return 0
+
+    if(graph[src].size()==1)    // --> If currNode is leaf and path contains less then C node then return 1
+        return 1;
+    
+    currPath[src-1] = true;
+    int res = 0;
+
+    for(int nbr : graph[src]){
+
+        if(!currPath[nbr-1])
+            res += dfs(graph, good, nbr, C, currPath);
+    }
+
+    currPath[src-1] = true;
+    return res;
+}
+
+
+int Solution::solve(vector<int> &A, vector<vector<int> > &B, int C) {
+    unordered_map<int,vector<int>> graph;
+    vector<bool> currPath(A.size(), false);
+    
+    for(auto e : B){
+        graph[e[0]].push_back(e[1]);
+        graph[e[1]].push_back(e[0]);
+    }
+
+    return dfs (graph, A, 1, C, currPath);
 }
 ```
 

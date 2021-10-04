@@ -1,15 +1,22 @@
 # Disjoint Sets (Union-Find)
 Two or more sets with nothing in common are called disjoint sets.
 
-**Use of Disjoint sets**
-1. Cycle detection in undirected graph
-2. Finding number of components (or Strongly connected components) in an undirected graph 
+<br>
 
-**Operation of Disjoint Sets**
+**Use of Disjoint sets**
+1. Cycle detection in undirected graph.
+2. Finding number of components (or Strongly connected components) in an undirected graph.
+3. For grouping items into multiple sets or groups.
+
+<br>
+
+**Operation of Disjoint Sets:**
 1. Find operation: It Keeps track of the set that an element belongs to. Hence, It'll be easier to check whether they belong to same subset ot not.
 2. Union operation: Used to merge two sets into one.
 
-#### 1. Redundant Connection
+<br>
+
+### 1. Redundant Connection
 You are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph. Return an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.
 
 ![img](https://assets.leetcode.com/uploads/2021/05/02/reduntant1-2-graph.jpg)
@@ -20,9 +27,7 @@ Output: [1,4]
 
 ```cpp
 struct vt{
-    int parent;
-    int rank;
-
+    int parent, rank;
     vt(int p, int r){
         parent = p;
         rank = r;
@@ -63,7 +68,6 @@ vector<int> findRedundantConnection(vector<vector<int>>& edges) {
     vector<vt> ds (n+1, vt(-1, 0));          
 
     for(auto e : edges){
-
         int root1 = ds_find(ds, e[0]);      
         int root2 = ds_find(ds, e[1]);
 
@@ -77,15 +81,16 @@ vector<int> findRedundantConnection(vector<vector<int>>& edges) {
 }
 ```
 
-#### 2. Number of Provinces
+<br>
+
+### 2. Number of Provinces
 There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is connected directly with city c, then city a is connected indirectly with city c. A province is a group of directly or indirectly connected cities and no other cities outside of the group.
 
 You are given an n x n matrix isConnected where isConnected[i][j] = 1 if the ith city and the jth city are directly connected, and isConnected[i][j] = 0 otherwise. Return the total number of provinces.
 
 ```cpp
 struct vt{
-    int parent;
-    int rank;
+    int parent, int rank;
     vt(int p, int r){
         parent = p;
         rank = r;
@@ -138,7 +143,9 @@ int findCircleNum(vector<vector<int>>& isConnected) {
 }
 ```
 
-#### 3. Number of Operations to Make Network Connected
+<br>
+
+### 3. Number of Operations to Make Network Connected
 Given an initial computer network connections. You can extract certain cables between two directly connected computers, and place them between any pair of disconnected computers to make them directly connected. Return the minimum number of times you need to do this in order to make all the computers connected. If it's not possible, return -1. 
 
 ![img](https://assets.leetcode.com/uploads/2020/01/02/sample_1_1677.png)
@@ -149,8 +156,7 @@ Hint: Find total no. of groups after adding all edges one by one and total extra
 
 ```cpp
 struct vt{
-    int parent;
-    int rank;
+    int parent, rank;
     vt (int p, int r){
         parent = p;
         rank = r;
@@ -197,7 +203,9 @@ int makeConnected(int n, vector<vector<int>>& connections) {
 }
 ```
 
-#### 4. Satisfiability of Equality Equations
+<br>
+
+### 4. Satisfiability of Equality Equations
 Given an array equations, each string equations[i] has length 4 and takes one of two different forms: "a==b" or "a!=b".  Here, a and b are lowercase letters. Return true if and only if it is possible to assign integers to variable names so as to satisfy all the given equations.
 
 Input: ["a==b","b!=c","c==a"]
@@ -208,8 +216,7 @@ Hint: All "==" equations actually represent the connection in the graph. The con
 
 ```cpp
 struct vt{
-    int parent;
-    int rank;
+    int parent, rank;
     vt(int p, int r){
         parent = p;
         rank = r;
@@ -246,7 +253,6 @@ bool equationsPossible(vector<string>& equations) {
     for(string s : equations){
 
         if(s[1]=='='){
-
             int v1 = s[0]-'a', v2 = s[3]-'a';
 
             int root1 = ds_find(ds, v1);
@@ -262,7 +268,6 @@ bool equationsPossible(vector<string>& equations) {
     for(string s : equations){
 
         if(s[1]=='!'){
-
             int v1 = s[0]-'a', v2 = s[3]-'a';
 
             int root1 = ds_find(ds, v1);
@@ -276,10 +281,11 @@ bool equationsPossible(vector<string>& equations) {
 }
 ```
 
-#### 5. Largest Component Size by Common Factor
-Given a non-empty array of unique positive integers nums, consider the following graph:
+<br>
 
-1. There are nums.length nodes, labelled nums[0] to nums[nums.length - 1];
+### 5. Largest Component Size by Common Factor
+Given a non-empty array of unique positive integers nums, consider the following graph:
+1. There are nums.length nodes, labelled nums[0] to nums[nums.length - 1].
 2. There is an edge between nums[i] and nums[j] if and only if nums[i] and nums[j] share a common factor greater than 1.
 
 Return the size of the largest connected component in the graph.
@@ -296,8 +302,11 @@ Hint: Union each number with all its factor. Count the most frequent parent.
 /* --------------------------------- GENERAL UNION FIND TEMPLATE ----------------------------------- */
 
 struct vt{
-    int parent;
-    int rank;
+    int parent, rank;
+    vt(int p, int r){
+        parent = p;
+        rank = r;
+    }
 };
 
 int ds_find(vector<vt> & ds, int v){
@@ -371,7 +380,100 @@ int largestComponentSize(vector<int>& nums) {
 }
 ```
 
-#### 6. Journey to the Moon
+<br>
+
+### 6. Permutation Swaps
+Rishabh has a permutation A of N integers 1, 2, ... N but he doesn't like it. Rishabh wants to get a permutation B. Also, Rishabh has some M good pairs given in a form of 2D matrix C of size M x 2  where (C[i][0], C[i][1]) denotes that two indexes of the permutation A. In one operation he can swap Ax and Ay only if (x, y) is a good pair. If the permutation B can be obtained return 1 else return 0.
+
+Input: A = [1, 3, 2, 4], B = [1, 4, 2, 3], C = [[3, 4]]
+
+Output: 0
+
+Hint: Find if two indexes (that we want to swap) belongs to same group or not.
+
+```cpp
+struct ds{
+    int parent, rank;
+    ds(int p, int r){
+        parent = p;
+        rank = r;
+    }
+};
+
+
+/* Simple ds Find operation with path compression */
+
+int ds_find(vector<ds> &v, int vt){
+    if(v[vt].parent==-1) return vt;
+    return v[vt].parent = ds_find(v, v[vt].parent);
+}
+
+
+/* Simple ds Union operation by rank */
+
+void ds_union(vector<ds> &v, int root1, int root2){
+
+    if(v[root1].rank < v[root2].rank)
+        v[root1].parent = root2;
+
+    else if(v[root1].rank > v[root2].rank)
+        v[root2].parent = root1;
+
+    else{
+        v[root1].parent = root2;
+        v[root2].rank++;
+    }
+}
+
+
+int solve(vector<int> &A, vector<int> &B, vector<vector<int> > &C) {
+    int n = A.size();
+    vector<ds> v(n+1, {-1, 0});
+
+    /* We will create an unordered_map for mapping values with their indexes */
+
+    unordered_map<int,int> mp;
+    for(int i=0; i<n; i++)
+        mp[A[i]] = i;
+
+    /* Iterate one by one on all given pairs and apply Union operation on every pair */
+
+    for(auto e : C){
+        int vt1 = e[0]-1, vt2=e[1]-1;
+
+        int root1 = ds_find(v, vt1);
+        int root2 = ds_find(v, vt2);
+
+        if(root1!=root2 or (root1==-1 and root2==-1))
+            ds_union(v, root1, root2);
+    }
+
+    /* 
+        After grouping indexes using union Find, 
+        find if two indexes (that we want to swap)
+        belongs to same group or not.
+        If not then return false!
+    */
+
+    for(int i=0; i<n; i++){
+        if(A[i]!=B[i]){
+
+            int vt1 = i, vt2 = mp[B[i]];
+
+            int root1 = ds_find(v, vt1);
+            int root2 = ds_find(v, vt2);
+
+            if(root1!=root2) return false;
+        }
+    }
+
+    return true;
+}
+```
+
+<br>
+
+### 7. Journey to the Moon
 The member states of the UN are planning to send 2 people to the moon. You will be given a list of pairs of astronaut ID's. Each pair is made of astronauts from the same country. Determine how many pairs of astronauts from different countries they can choose from.
 
 ```cpp

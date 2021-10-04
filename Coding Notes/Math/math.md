@@ -582,3 +582,46 @@ int Solution::findRank(string A) {
     return (ans+1) % mod;
 }
 ```
+
+<br>
+
+### 6. Find the Minimum Number of Fibonacci Numbers Whose Sum Is K
+Given an integer k, return the minimum number of Fibonacci numbers whose sum is equal to k. The same Fibonacci number can be used multiple times.
+
+Approach:
+1. Generate all Fibonacci numbers up to the limit (they are few).
+2. Use greedy solution, taking at every time the greatest Fibonacci number which is smaller than or equal to the current number. Subtract this Fibonacci number from the current number and repeat again the process.
+
+
+```cpp
+int findMinFibonacciNumbers(int k) {
+    vector<long long> fib;
+    fib.push_back(1);
+    fib.push_back(2);
+
+    long long K = k;
+
+    while(fib.back()<k){
+
+        int n = fib.size();
+        long long nxt = fib[n-1] + fib[n-2];
+
+        if(nxt>K) break;
+        fib.push_back(nxt);
+    }
+
+    int i = fib.size()-1;
+    int ans = 0;
+
+    while(K>0){
+
+        while(fib[i]>K)
+            i--;
+
+        K -= fib[i];
+        ans++;
+    }
+
+    return ans;
+}
+```

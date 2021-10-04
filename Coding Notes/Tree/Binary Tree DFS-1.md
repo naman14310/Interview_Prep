@@ -1018,4 +1018,26 @@ vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
 }
 ```
 
+<br>
+
+### 4. Remove Half Nodes
+Remove all the half nodes and return the final binary tree. Half nodes are nodes which have only one child. Leaves should not be touched as they have both children as NULL.
+
+```cpp
+TreeNode* solve(TreeNode* A) {
+    if(!A) return A;
+    if(!A->left and !A->right) return A;
+
+    auto left = solve(A->left);
+    auto right = solve(A->right);
+
+    if(!left) return right;
+    if(!right) return left;
+
+    A->left = left;
+    A->right = right;
+    return A;
+}
+```
+
 

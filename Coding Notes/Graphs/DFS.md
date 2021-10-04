@@ -166,7 +166,7 @@ bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 
 ## @ Trees Represented As Graphs
 
-### 1. Largest Distance between nodes of a Tree
+### 1. Largest Distance between nodes of a Tree (Tricky)
 Given an arbitrary unweighted rooted tree which consists of N nodes. The goal of the problem is to find largest distance between two nodes in a tree. The tree is given as an array A, there is an edge between nodes A[i] and i (0 <= i < N). Exactly one of the i's will have A[i] equal to -1, it will be root node.
 
 Hint: Graph variation of max diameter of tree
@@ -211,6 +211,68 @@ int solve(vector<int> &A) {
     return diameter;
 }
 
+```
+
+<br>
+
+### 2. Maximum Edge Removal (Tricky)
+Given an undirected tree with an even number of nodes. Consider each connection between a parent and child node to be an edge. You need to remove maximum number of these edges, such that the disconnected subtrees that remain each have an even number of nodes. Return the maximum number of edges you can remove.
+
+```
+Input: A = 6, B = [[1, 2], [1, 3], [1, 4], [3, 5]. [4, 6]]
+
+Output: 2
+
+Explanation:
+
+      1
+    / | \
+   2  3  4
+      |   \
+      5    6
+      
+Maximum number of edges we can remove is 2, i.e (1, 3) and (1, 4)
+```
+
+Hint: Do DFS traversal initially starting from leaf node. Temp res (return from traversal of one nbr) will give answer for one branch.
+
+```cpp
+
+/* function will return uncutted nodes */
+
+int dfs (unordered_map<int, vector<int>> &graph, int src, int &cuts){
+    if(graph[src].size()==0) return 1;      // --> leaf node
+
+    int nodes = 1;                          // --> 1 represent curr node
+
+    /* Since uncutted nodes from each individual branch will always remain odd we will simply add them */
+
+    for(int nbr : graph[src])
+        nodes += dfs(graph, nbr, cuts);
+    
+    /* If total uncutted nodes in subtree rooted at src is even, then do one cut and return 0 */
+    
+    if(nodes%2==0){
+        cuts++;
+        return 0;
+    }
+    
+    /* Else return odd number of uncutted nodes */
+
+    return nodes;
+}
+
+
+int solve(int A, vector<vector<int> > &B) {
+    int cuts = 0;
+
+    unordered_map<int, vector<int>> graph;
+    for(auto e : B)
+        graph[e[0]].push_back(e[1]);
+
+    dfs(graph, 1, cuts);
+    return cuts-1;      // --> Since for making n seperate trees, we need to make n-1 cuts!
+}
 ```
 
 <br>

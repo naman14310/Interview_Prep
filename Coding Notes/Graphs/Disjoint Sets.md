@@ -11,7 +11,7 @@ Two or more sets with nothing in common are called disjoint sets.
 <br>
 
 **Operation of Disjoint Sets:**
-1. Find operation: It Keeps track of the set that an element belongs to. Hence, It'll be easier to check whether they belong to same subset ot not.
+1. Find operation: It returns the absolute root of set. Hence, It'll be easier to check whether they belong to same subset ot not.
 2. Union operation: Used to merge two sets into one.
 
 <br>

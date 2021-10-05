@@ -459,7 +459,7 @@ int kConcatenationMaxSum(vector<int>& arr, int k) {
 ### 5. Largest Sum Subarray of Size at least K (Tricky)
 Given an array and a number k, find the largest sum of the subarray containing at least k numbers. It may be assumed that the size of array is at-least k.
 
-![Video Explaination](https://www.youtube.com/watch?v=OodoQ95se20)
+[Video Explaination](https://www.youtube.com/watch?v=OodoQ95se20)
 
 Hint: Mixture of Kadane and sliding window
 

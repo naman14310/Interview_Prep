@@ -268,6 +268,12 @@ int Solution::repeatedNumber(const vector<int> &A) {
 
 ## @ Kadane's Algo
 
+Points to Remember:
+1. Remember Kadanes using Train method.
+2. Kadanes will give us maximum sum among all subarrays ending at any index i. 
+
+<br>
+
 ### 1. Maximum Subarray (Kadane algo)
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 

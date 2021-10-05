@@ -293,7 +293,10 @@ int maxSubArray(vector<int>& nums) {
 ### 2. Maximum Product Subarray (Kadane with multiplication)
 Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
 
-Hint: Maintain positive and negative products and swap(ptemp, ntemp) whenever negative element appears. ps, zeros are break points (reinitialize ptemp, ntemp to 1)
+
+**Approach 1 : Using Kadanes Pattern**
+1. Maintain max(ptemp) and min(ntemp) products and swap(ptemp, ntemp) whenever negative element appears. 
+2. Zeros are break points (reinitialize ptemp, ntemp to 1)
 
 ```cpp
 int maxProduct(vector<int>& nums) {
@@ -324,6 +327,71 @@ int maxProduct(vector<int>& nums) {
     }
     if(zero==true) return max(product,0);
     else return product;
+}
+```
+
+<br>
+
+**Approach 2 : Breakdown with Observation**
+
+1. Maxproduct subarray will always start from either start or end of the array.
+2. 0's will partition given array into multiple arrays, and we need to compute for all arrays individually. 
+
+[Video Explaination](https://www.youtube.com/watch?v=jzQ-f2uU0UU)
+
+```cpp
+int maxProduct(vector<int>& nums) {
+    int n = nums.size();
+    int ans = INT_MIN;
+    bool zero = false;
+
+    /* ------------ Iterating from left to right, checking for all subarrays starting from startPoint ------------ */
+
+    int temp = 1;
+
+    for(int i=0; i<n; i++){
+
+        /* If num==0 : start new array (0 will act as partition between multiple arrays) */
+
+        if(nums[i]==0){ 
+            temp=1;
+            zero = true;
+        }
+
+        /* Else continue with computing product for currSubarray and update ans at every instance */
+
+        else{
+            temp *= nums[i];
+            ans = max(ans, temp); 
+        } 
+
+    }
+
+
+    /* ------------ Iterating from right to left, checking for all subarrays starting from endPoint ------------ */
+
+
+    temp = 1;
+
+    for(int i=n-1; i>=0; i--){
+
+        /* If num==0 : start new array (0 will act as partition between multiple arrays) */
+
+        if(nums[i]==0)
+            temp=1;
+
+        /* Else continue with computing product for currSubarray and update ans at every instance */
+
+        else{
+            temp *= nums[i];
+            ans = max(ans, temp); 
+        } 
+
+    }
+
+
+    if(zero) return max(0, ans);        // --> Boundary Case
+    else return ans;
 }
 ```
 

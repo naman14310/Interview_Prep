@@ -391,66 +391,66 @@ int maxSubarraySumCircular(vector<int>& nums) {
 ### 4. K-Concatenation Maximum Sum (Tricky)
 Given an integer array arr and an integer k, modify the array by repeating it k times. For example, if arr = [1, 2] and k = 3 then the modified array will be [1, 2, 1, 2, 1, 2]. Return the maximum sub-array sum in the modified array. Note that the length of the sub-array can be 0 and its sum in that case is 0. As the answer can be very large, return the answer modulo 1e9 + 7.
 
+[Video Explaination](https://www.youtube.com/watch?v=qnoOu5Usb4o)
+
 Input: arr = [1,-2,1], k = 5
 
 Output: 2
 
+Approach: We need to handle following 3 cases:
+1. K==1                 : return kadaneSum or given arr
+2. K>1 and totalSum<=0  : return kadaneSum of doubleArr (i.e. kadane of first two copies)
+3. K>1 and totalSum>0   : return kadane of first two copies + (k-2)*totalSUm
+
 ```cpp
-int M = 1000000007;
+int kadane (vector<int> &v){
+    int tempSum = 0, maxSum = INT_MIN;
 
-/* It will simply return max Subarray sum using Kadane's algorithm */
-
-int maxsumSubarray (vector<int> & arr){
-    int tempSum = arr[0], maxSum = arr[0];
-
-    for(int i=1; i<arr.size(); i++){
-        tempSum = max ((tempSum+arr[i])%M, arr[i]%M);
-        maxSum = max (tempSum, maxSum);
+    for(int i=0; i<v.size(); i++){
+        tempSum = max(tempSum+v[i], v[i]);
+        maxSum = max(maxSum, tempSum);
     }
 
     return maxSum;
 }
 
-/* It will return max Suffix (of 1st array) + Prefix (of 2nd array) sum using Kadane on two concatenated vectors */ 
-
-int maxPrefixSuffixSum (vector<int> & arr){
-    vector<int> double_arr = arr;
-    double_arr.insert(double_arr.end(), arr.begin(), arr.end());
-
-    int maxPSsum = maxsumSubarray (double_arr);
-    return maxPSsum;
-}
-
 
 int kConcatenationMaxSum(vector<int>& arr, int k) {
-    long long totalSum = 0;
-    int res = 0;
+    long long mod = 1000000007;
+    long long totalSum = accumulate(arr.begin(), arr.end(), 0);
 
-    for(int num : arr)
-        totalSum = (totalSum%M + num%M)%M;
 
-    int KadaneSum = maxsumSubarray(arr);
-    int maxPS = maxPrefixSuffixSum(arr);
 
-    /* If k=1 return simple Kadane Sum */
+    /* ---------------------- Case 1 : If K==1 ----------------------- */
+    // --> return its kadane sum
 
-    if(k==1) res = KadaneSum%M;
+    if(k==1){
+        long long arr_kadane = kadane(arr);
+        return arr_kadane>0 ? arr_kadane : 0;
+    }
 
-    /* 
-        Else we have 2 cases : Either totalSum is positive is negative 
 
-        1. If totalSum < 0 --> return max(KadaneSum, maxPrefixSuffix)
-        2. if totalSum >=0 --> return maxPrefixSuffix + (k-2) * totalSum
 
-    */
+    /* ------------------ Case 2 : If totalSum <= 0 ------------------ */
+    // --> return kadaneSum of doubleArr
 
-    else if(totalSum<0)
-        res = max(KadaneSum%M, maxPS%M);
+    vector<int> doubleArr;
+
+    for(int num : arr) doubleArr.push_back(num);
+    for(int num : arr) doubleArr.push_back(num);
+
+    long long doubleArr_kadane = kadane(doubleArr);
+
+    if(totalSum <= 0) 
+        return doubleArr_kadane > 0 ? doubleArr_kadane : 0;
+
+
+
+    /* ------------------ Case 3 : If totalSum > 0 ------------------- */
+    // --> return kadaneSum of doubleArr + (k-2)*totalSum
 
     else
-        res = (maxPS + (totalSum%M * (k-2)%M )%M ) % M;
-
-    return max(res%M,0);      // --> return max(res,0) because we can also return empty subarray
+        return (doubleArr_kadane%mod + ((k-2)*totalSum)%mod)%mod;
 }
 ```
 

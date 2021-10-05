@@ -329,9 +329,10 @@ int maxProduct(vector<int>& nums) {
 
 <br>
 
-### 3. Maximum Sum Circular Subarray
-
-Hint: Find maxSum subarray and minSum subarray using Kadane's algo. If maxSum<0 return maxSum, else return max(maxSum, totalSum-minSum)
+### 3. Maximum Sum Circular Subarray (Tricky)
+Approach: 
+1. Find maxSum subarray and minSum subarray using Kadane's algo. 
+2. If maxSum<0 return maxSum, else return max(maxSum, totalSum-minSum)
 
 [Full Explaination](https://leetcode.com/problems/maximum-sum-circular-subarray/discuss/178422/One-Pass)
 

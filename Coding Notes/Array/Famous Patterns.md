@@ -456,6 +456,58 @@ int kConcatenationMaxSum(vector<int>& arr, int k) {
 
 <br>
 
+### 5. Largest Sum Subarray of Size at least K (Tricky)
+Given an array and a number k, find the largest sum of the subarray containing at least k numbers. It may be assumed that the size of array is at-least k.
+
+![Video Explaination](https://www.youtube.com/watch?v=OodoQ95se20)
+
+Hint: Mixture of Kadane and sliding window
+
+```cpp
+/* Here kadane is used to find maxSum of all subarray ending at all index i */ 
+
+vector<long long> kadane (long long int a[], int n){
+    
+    vector<long long> v (n, 0);     // --> At each index, it'will return maxSum of subarrays ending at that index
+    long long tempSum = 0;
+    
+    for(int i=0; i<n; i++){
+        tempSum = max(tempSum + a[i], a[i]);
+        v[i] = tempSum;
+    }
+    
+    return v;
+}
+
+
+long long int maxSumWithK(long long int a[], long long int n, long long int k) {
+    vector<long long> v = kadane(a, n);
+    long long windowSum = 0;
+    
+    for(int i=0; i<k; i++)
+        windowSum += a[i];
+        
+    int i=0;
+    long long ans = windowSum;
+
+    while(i+k<n){
+        windowSum -= a[i];
+        windowSum += a[i+k];
+        
+        /* 
+            maxSum of subarray having atleast k element and ending at index i+k is
+            max(windowSum, windowSum + prev_max_sum_before_window)
+        */
+        
+        ans = max(ans, max(windowSum + v[i], windowSum));
+        i++;
+    }
+    
+    return ans;
+}
+```
+
+<br>
 
 
 ## @ Wave Sort

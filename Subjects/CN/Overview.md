@@ -97,6 +97,9 @@ The allocation of public IP addresses is regulated by an international organizat
 <br>
 
 ### 13. Types of Networking Devices
+Following are some commonly used network devices:
+
+<br>
 
 **Hub** - Physical Layer
 1. Hub works at physical layer and hence connect networking devices physically together. 

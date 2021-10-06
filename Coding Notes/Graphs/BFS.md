@@ -1,8 +1,10 @@
 # BFS
 
+<br>
+
 ## @ BFS on adjacency list
 
-#### 1. Keys and Rooms
+### 1. Keys and Rooms
 There are N rooms and you start in room 0. A key rooms[i][j] = v opens the room with number v. Return true if and only if you can enter every room.
 
 Input: [[1],[2],[3],[]]
@@ -33,14 +35,12 @@ bool canVisitAllRooms(vector<vector<int>>& rooms) {
 }
 ```
 
-#### 2. Time Needed to Inform All Employees
-A company has n employees with a unique ID for each employee from 0 to n - 1. The head of the company is the one with headID.
+<br>
 
-Each employee has one direct manager given in the manager array, manager[headID] = -1. Also, it is guaranteed that the subordination relationships have a tree structure.
+### 2. Time Needed to Inform All Employees
+A company has n employees with a unique ID from 0 to n - 1. The head of the company is the one with headID. Each employee has one direct manager given in the manager array, manager[headID] = -1. Relationships have a tree structure.
 
-The head of the company wants to inform all the company employees of an urgent piece of news. He will inform his direct subordinates, and they will inform their subordinates, and so on until all employees know about the urgent news.
-
-The i-th employee needs informTime[i] minutes to inform all of his direct subordinates (i.e., After informTime[i] minutes, all his direct subordinates can start spreading the news). Return the number of minutes needed to inform all the employees about the urgent news.
+The head of the company wants to inform all the company employees of an urgent piece of news. He will inform his direct subordinates, and they will inform their subordinates, and so on. The i-th employee needs informTime[i] minutes to inform all of his direct subordinates (i.e., After informTime[i] minutes, all his direct subordinates can start spreading the news). Return the number of minutes needed to inform all the employees.
 
 Input: n = 4, headID = 2, manager = [3,3,-1,2], informTime = [0,0,162,914]
 
@@ -71,9 +71,13 @@ int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTim
 }
 ```
 
+<br>
+
+
+
 ## @ BFS on matrix
 
-#### 1. Flood Fill
+### 1. Flood Fill
 You are given an image and three integers sr, sc, and newColor. You should perform a flood fill on the image starting from the pixel image[sr][sc]. To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same color), and so on. Replace the color of all of the aforementioned pixels with newColor.
 
 ![img](https://assets.leetcode.com/uploads/2021/06/01/flood1-grid.jpg)
@@ -114,9 +118,10 @@ vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int ne
 }
 ```
 
-#### 2. Rotting Oranges
-You are given an m x n grid where each cell can have one of three values:
+<br>
 
+### 2. Rotting Oranges
+You are given an m x n grid where each cell can have one of three values:
 1. 0 representing an empty cell,
 2. 1 representing a fresh orange, or
 3. 2 representing a rotten orange.
@@ -148,7 +153,7 @@ int bfs (vector<vector<int>>& grid, queue<pair<int,int>> & q, int row, int col, 
             continue;
         }
 
-        rotten_oranges++;         // It will increment count of total rotten oranges
+        rotten_oranges++;         // --> It will increment count of total rotten oranges
 
         for(int i=0; i<4; i++){
             int xnew = x + dx[i];
@@ -195,7 +200,9 @@ int orangesRotting(vector<vector<int>>& grid) {
 }
 ```
 
-#### 3. 01 Matrix
+<br>
+
+### 3. 01 Matrix (Tricky)
 Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell. The distance between two adjacent cells is 1.
 
 ![img](https://assets.leetcode.com/uploads/2021/04/24/01-2-grid.jpg)
@@ -256,7 +263,9 @@ vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
 }
 ```
 
-#### 4. Shortest Path in Binary Matrix
+<br>
+
+### 4. Shortest Path in Binary Matrix
 Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix. If there is no clear path, return -1. A clear path is a path from the top-left cell (i.e., (0, 0)) to the bottom-right cell (i.e., (n - 1, n - 1)) such that: All the visited cells of the path are 0. All the adjacent cells of the path are 8-directionally connected.
 
 ![img](https://assets.leetcode.com/uploads/2021/02/18/example2_1.png)
@@ -314,7 +323,9 @@ int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
 }
 ```
 
-#### 5. Knight on a Chessboard
+<br>
+
+### 5. Knight on a Chessboard
 Given a square chessboard, the initial position of Knight and position of a target. Find out the minimum steps a Knight will take to reach the target position. ! based indexing is followed.
 
 Input: N=6, knightPos[ ] = {4, 5}, targetPos[ ] = {1, 1}
@@ -325,7 +336,6 @@ Output: 3
 ```cpp
 struct cell{
     int x, y, steps;
-
     cell (int x, int y, int steps){
         this->x = x;
         this->y = y;
@@ -379,7 +389,9 @@ int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int N){
 }
 ```
 
-#### 6. Find shortest safe route in a path with landmines
+<br>
+
+### 6. Find shortest safe route in a path with landmines
 Given a path in the form of a rectangular matrix having few landmines arbitrarily placed (marked as 0), calculate length of the shortest safe route possible from any cell in the first column to any cell in the last column of the matrix. We have to avoid landmines and their four adjacent cells (left, right, above and below) as they are also unsafe. We are allowed to move to only adjacent cells which are not landmines.
 
 ```cpp
@@ -455,10 +467,13 @@ int shortest_route (vector<vector<int>> & grid){
 }
 ```
 
+<br>
+
+
 
 ## @ Hard to Guess as Graphs
 
-#### 1. Open the Lock (Too Tricky)
+### 1. Open the Lock (Too Tricky)
 You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'. The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'. Each move consists of turning one wheel one slot. The lock initially starts at '0000'.
 
 You are given a list of deadends dead ends, meaning if the lock displays any of these codes, the wheels of the lock will stop turning and you will be unable to open it. Given a target representing the value of the wheels that will unlock the lock, return the minimum total number of turns required to open the lock, or -1 if it is impossible.
@@ -538,10 +553,11 @@ int openLock(vector<string>& deadends, string target) {
 }
 ```
 
-#### 2. Minimum Genetic Mutation
+<br>
+
+### 2. Minimum Genetic Mutation
 A gene string can be represented by an 8-character long string, with choices from 'A', 'C', 'G', and 'T'. Suppose we need to investigate a mutation where one mutation is defined as one single character changed in the gene string.
 
-For example, "AACCGGTT" --> "AACCGGTA" is one mutation.
 There is also a gene bank that records all the valid gene mutations. A gene must be in bank to make it a valid gene string. Note that the starting point is assumed to be valid, so it might not be included in the bank.
 
 Given the two gene strings start and end and the gene bank bank, return the minimum number of mutations needed to mutate from start to end. If there is no such a mutation, return -1.
@@ -614,8 +630,10 @@ int minMutation(string start, string end, vector<string>& bank) {
 }
 ```
 
-#### 3. K-Similar Strings
-Strings s1 and s2 are k-similar (for some non-negative integer k) if we can swap the positions of two letters in s1 exactly k times so that the resulting string equals s2. Given two anagrams s1 and s2, return the smallest k for which s1 and s2 are k-similar.
+<br>
+
+### 3. K-Similar Strings
+Strings s1 and s2 are k-similar, if we can swap the positions of two letters in s1 exactly k times so that the resulting string equals s2. Given two anagrams s1 and s2, return the smallest k for which s1 and s2 are k-similar.
 
 Input: s1 = "abac", s2 = "baca"
 
@@ -686,9 +704,10 @@ int kSimilarity(string s1, string s2) {
 }
 ```
 
-#### 4. Word Ladder
-A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
+<br>
 
+### 4. Word Ladder
+A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
 1. Every adjacent pair of words differs by a single letter.
 2. Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.
 3. sk == endWord
@@ -766,7 +785,9 @@ int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
 }
 ```
 
-#### 5. Word Ladder II
+<br>
+
+### 5. Word Ladder II
 Given two words, beginWord and endWord, and a dictionary wordList, return all the shortest transformation sequences from beginWord to endWord, or an empty list if no such sequence exists. Each sequence should be returned as a list of the words [beginWord, s1, s2, ..., sk]
 
 Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
@@ -882,9 +903,10 @@ vector<vector<string>> findLadders(string beginWord, string endWord, vector<stri
 }
 ```
 
-#### 6. Jump Game IV
-Given an array of integers arr, you are initially positioned at the first index of the array. In one step you can jump from index i to index:
+<br>
 
+### 6. Jump Game IV
+Given an array of integers arr, you are initially positioned at the first index of the array. In one step you can jump from index i to index:
 1. i + 1 where: i + 1 < arr.length.
 2. i - 1 where: i - 1 >= 0.
 3. j where: arr[i] == arr[j] and i != j.
@@ -970,7 +992,9 @@ int minJumps(vector<int>& arr) {
 }
 ```
 
-#### 7. Water and Jug Problem
+<br>
+
+### 7. Water and Jug Problem
 You are given two jugs with capacities jug1Capacity and jug2Capacity liters. There is an infinite amount of water supply available. Determine whether it is possible to measure exactly targetCapacity liters using these two jugs. If targetCapacity liters of water are measurable, you must have targetCapacity liters of water contained within one or both buckets by the end.
 
 Input: jug1Capacity = 3, jug2Capacity = 5, targetCapacity = 4
@@ -1037,59 +1061,42 @@ bool bfs(int & jug1Capacity, int & jug2Capacity, int & target){
 
 
 bool canMeasureWater(int jug1Capacity, int jug2Capacity, int targetCapacity) {
-
     return bfs (jug1Capacity, jug2Capacity, targetCapacity);
 }
 ```
 
-#### 8. Snakes and Ladders
+<br>
+
+### 8. Snakes and Ladders
 Return the least number of moves required to win the game. Note that you only take a snake or ladder at most once per move. If the destination to a snake or ladder is the start of another snake or ladder, you do not follow the subsequent snake or ladder.
 
 ![img](https://assets.leetcode.com/users/lee215/image_1537671763.png)
 
-Hint: First convert 2D board to 1D matrix
+Hint: First convert 2D board to 1D vector
 
 ```cpp
-int bfs(vector<int>& game){
-    int n = game.size();
-    int target = n-1;
-    int moves = 0;
+int bfs (vector<int> &board, int src, int target){
+    queue<pair<int,int>> q;
+    vector<bool> vis (target+1, false);
 
-    vector<bool> vis (game.size(), false);
-    queue<int> q;
-
-    q.push(1);
-    q.push(-1);
-    vis[1] = true;
+    q.push({src,0});
+    vis[src] = true;
 
     while(!q.empty()){
-        int pos = q.front(); q.pop();
+        auto p = q.front(); q.pop();
+        int cell = p.first, moves = p.second;
 
-        if(pos==target) return moves;
-
-        if(pos==-1){
-            if(q.empty()) break;
-
-            q.push(-1);
-            moves++;
-            continue;
-        }
+        if(cell==target) return moves;
 
         for(int i=1; i<=6; i++){
+            int nbr = cell + i;
+            if(nbr>target) continue;
 
-            if(pos+i>target) continue;
+            if(board[nbr]!=-1) nbr = board[nbr]; 
 
-            if(game[pos+i]==-1){
-                if(!vis[pos+i]){
-                    q.push(pos+i);
-                    vis[pos+i] = true;
-                }
-            }   
-            else{
-                if(!vis[game[pos+i]]){
-                    q.push(game[pos+i]);
-                    vis[game[pos+i]] = true;
-                }
+            if(!vis[nbr]){
+                q.push({nbr, moves+1});
+                vis[nbr] = true;
             }
         }
     }
@@ -1100,6 +1107,8 @@ int bfs(vector<int>& game){
 
 int snakesAndLadders(vector<vector<int>>& board) {
     int row = board.size(), col = board[0].size();
+    int src=1, target = row*col;
+
     vector<int> game;
     game.push_back(0);    // ----> dummy index (since indexing starts from 1)
 
@@ -1116,11 +1125,13 @@ int snakesAndLadders(vector<vector<int>>& board) {
         flip = !flip;
     }
 
-    return bfs (game);
+    return bfs (game, 1, target);
 }
 ```
 
-#### 9. Bus Routes (Tricky)
+<br>
+
+### 9. Bus Routes (Tricky)
 You are given an array routes representing bus routes where routes[i] is a bus route that the ith bus repeats forever. For example, if routes[0] = [1, 5, 7], this means that the 0th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... forever.
 You will start at the bus stop source (You are not on any bus initially), and you want to go to the bus stop target. You can travel between bus stops by buses only. Return the least number of buses you must take to travel from source to target. Return -1 if it is not possible.
 

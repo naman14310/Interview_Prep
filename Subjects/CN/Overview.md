@@ -93,3 +93,68 @@ In an electrical connection (such as Ethernet), the signal would be a voltage or
 
 ### 12. ICANN (Internet Corporation for Assigned Names and Numbers)
 The allocation of public IP addresses is regulated by an international organization which is the Internet Corporation for Assigned Names and Numbers (ICANN). ICANN is also responsible for the allocation of domain names called the Domain Name System (DNS).
+
+<br>
+
+### 13. Types of Networking Devices
+
+**Hub** - Physical Layer
+1. Hub works at physical layer and hence connect networking devices physically together. 
+2. They transmit information regardless of the fact if data packet is destined for the device connected or not.
+
+<br>
+
+**Repeaters (Active Hubs)** - Physical Layer
+1. They are smarter than the passive hubs. 
+2. They not only provide the path for the data signals infact they regenerate, concentrate and strengthen the signals before sending them to their destinations. 
+
+<br>
+
+**Switches** - Data Link Layer
+1. Switch works on data link layer, and hence it can check MAC address of data packets. 
+2. It transfers data packets only to that port which is connected to the destination device.
+3. Switches operate in full-duplex mode where devices can send and receive data from the switch simultaneously.
+
+<br>
+
+**Bridges** - Data Link layer
+1. It connects two different networks that uses same protocol. 
+2. Bridges are used to segment larger networks into smaller portions.
+3. It has the capacity to block the incoming flow of data as well.
+
+<br>
+
+**Routers** - Network layer
+1. They process logical addressing information in the Network header of a packet such as IP Addresses.
+2. It also has the ability to limit the flow of broadcasts.
+3. When a router receives the data, it determines the destination address by reading the header of the packet. Once the address is determined, it searches in its routing table to get know how to reach the destination and then forwards the packet to the higher hop on the route.
+
+<br>
+
+**Brouters** - Network layer
+1. Brouters are the combination of both the bridge and routers. 
+2. They take up the functionality of the both networking devices serving as a bridge when forwarding data between networks, and serving as a router when routing data to individual systems.
+
+<br>
+
+**Gateways** - Network layer
+1. Gateway is a device which is used to connect multiple networks and passes packets from one packet to the other network. 
+2. A router is also a gateway, since it interprets data from one network protocol to another.
+
+<br>
+
+**Modem** - Physical layer
+1. It converts the computer-generated digital signals into analog signals to enable their travelling via phone lines. 
+2. The ‘modulator-demodulator’ or modem can be used as a dial up for LAN or to connect to an ISP.
+
+<br>
+
+### 14. Network Interface Card (NIC)
+1. They are installed on the mother board. 
+2. They are responsible for developing a physical connection between the network and the computer. 
+3. Computer data is translated into electrical signals send to the network via Network Interface Cards.
+
+<br>
+
+### 15. Network Protocols
+A network protocol is an established set of rules that determine how data is transmitted between different devices in the same network.

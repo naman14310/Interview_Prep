@@ -92,12 +92,27 @@ Between each Router, the MAC address header is stripped and regenerated to get i
 <br>
 
 ### Q. What is the Need of Transport Layer ?
-
 At any given time on a user’s computer there might be an Internet browser open, while music is being streamed, while a messenger or chat app is running. Each of these applications are sending and receiving data from the Internet, and all that data is arriving in the form of 1’s and 0’s on to that computer’s NIC.
 
 Something has to exist in order to distinguish which 1’s and 0’s belong to the messenger or the browser or the streaming music. That “something” is Layer 4. Layer 4 accomplishes this by using an addressing scheme known as **Port Numbers**. Both TCP and UDP have 65,536 port numbers!
 
 ![img](https://www.practicalnetworking.net/wp-content/uploads/2016/01/packtrav-layer-4-1024x555.png)
+
+<br>
+
+
+### Q. How all layers works together ?
+As the data is handed from layer to layer, each layer adds the information it requires to accomplish its goal before the complete datagram is converted to 1s and 0s and sent across the wire. For example:
+1. Layer 4 will add a TCP header which would include a Source and Destination port.
+2. Layer 3 will add an IP header which would include a Source and Destination IP address.
+3. Layer 2 would add an Ethernet header which would include a Source and Destination MAC address.
+
+On the receiving end, each layer strips the header from the data and passes it back up the stack towards the Application layers. 
+
+![gif](https://www.practicalnetworking.net/wp-content/uploads/2016/01/packtrav-encap-decap.gif)
+
+
+
 
 
 

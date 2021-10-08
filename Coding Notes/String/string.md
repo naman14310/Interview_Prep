@@ -185,64 +185,23 @@ int countBinarySubstrings(string s) {
 ### 7. Roman to Integer
 
 ```cpp
-int romanToInt(string s) {
-    unordered_map<char, int> mp = {{'I',1},{'V',5},{'X',10},{'L',50},{'C',100},{'D',500},{'M',1000}};
-    int sum = 0;
-    int i=0;
-    
-    while(i<s.length()){
+int romanToInt(string A) {
+    unordered_map<char, int> mp = {{'I',1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}};
+    int ans = 0;
+    int prev = INT_MAX;
 
-        if(s[i]=='I'){
-            if(i+1<s.length() && s[i+1]=='V'){
-                sum+=4;
-                i+=2;
-            }
-            else if(i+1<s.length() && s[i+1]=='X'){
-                sum+=9;
-                i+=2;
-            }
-            else{
-                sum+=1;
-                i+=1;
-            }
-        }
+    for(int i=0; i<A.size(); i++){
+        char ch = A[i];
 
-        else if(s[i]=='X'){
-            if(i+1<s.length() && s[i+1]=='L'){
-                sum+=40;
-                i+=2;
-            }
-            else if(i+1<s.length() && s[i+1]=='C'){
-                sum+=90;
-                i+=2;
-            }
-            else{
-                sum+=10;
-                i+=1;
-            }
-        }
+        if(prev<mp[ch])
+            ans += mp[ch] - (2*prev);
+        else
+            ans += mp[ch];
 
-        else if(s[i]=='C'){
-            if(i+1<s.length() && s[i+1]=='D'){
-                sum+=400;
-                i+=2;
-            }
-            else if(i+1<s.length() && s[i+1]=='M'){
-                sum+=900;
-                i+=2;
-            }
-            else{
-                sum+=100;
-                i+=1;
-            }
-        }
-
-        else{
-            sum+=mp[s[i]];
-            i+=1;
-        }
+        prev = mp[ch];
     }
-    return sum;
+
+    return ans;
 }
 ```
 

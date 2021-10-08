@@ -740,7 +740,26 @@ vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries){
 
 <br>
 
-### 9. Pairs With Given Xor
+### 9. Min XOR value (Tricky)
+Given an integer array A of N integers, find the pair of integers in the array which have minimum XOR value. Report the minimum XOR value.
+
+Hint: Sort and find xor of all adjacent elements. Minimum val among them will be our answer!
+
+```cpp
+int Solution::findMinXor(vector<int> &A) {
+    int ans = INT_MAX;
+    sort(A.begin(), A.end());
+
+    for(int i=1; i<A.size(); i++)
+        ans = min(ans, A[i] xor A[i-1]);
+    
+    return ans;
+}
+```
+
+<br>
+
+### 10. Pairs With Given Xor
 Given an 1D integer array A containing N distinct integers. Find the number of unique pairs of integers in the array whose XOR is equal to B.
 
 Hint: x xor y = B --> x xor x xor y = x xor B --> y = x xor B. Hence search y for every x in left side.
@@ -767,7 +786,7 @@ int Solution::solve(vector<int> &A, int B) {
 
 <br>
 
-### 10. Equal Sum and XOR
+### 11. Equal Sum and XOR
 Given a positive integer n, find count of positive integers i such that 0 <= i <= n and n+i = n^i 
 
 Hint: Answer = pow(2, count of zero bits)

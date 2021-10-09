@@ -25,7 +25,60 @@ int minMoves2(vector<int>& nums) {
 
 <br>
 
-### 2. Find Pivot Index (Left sum == Right sum)
+### 2. Seats (IB)
+There is a row of seats. An occupied seat is marked with a character 'x' and an unoccupied seat is marked with a dot ('.'), Make the whole group sit together i.e. next to each other, without having any vacant seat between them in such a way that the total number of hops or jumps to move them should be minimum. Return minimum value % MOD where MOD = 10000003.
+
+```
+Example:
+Here is the row having 15 seats represented by the String (0, 1, 2, 3, ......... , 14) 
+              	. . . . x . . x x . . . x . .
+
+Now to make them sit together one of approaches is
+	  	. . . . . . x x x x . . . . .
+
+Min moves required = 5 
+```
+
+Hint: Compute Median and make it as centre to fill people on seats
+
+```cpp
+int seats(string A) {
+    vector<int> v;
+
+    for(int i=0 ; i<A.size(); i++)
+        if(A[i]=='x') v.push_back(i);
+    
+    int n = v.size();
+    if(n==0) return 0;      // --> Boundary Case
+
+    long long ans = 0, mid = 0;
+
+    if(n&1) mid = n/2;
+    else mid = (n/2)-1;
+
+    /* Placing left side people of Median */
+
+    int pos = v[mid];
+    for(int i=mid; i>=0; i--){
+        ans = (ans + (pos-v[i])) % 10000003;
+        pos--;
+    }
+    
+    /* Placing right side people of Meduan */ 
+
+    pos = v[mid]+1;
+    for(int i=mid+1; i<n; i++){
+        ans = (ans + (v[i]-pos)) % 10000003;
+        pos++;
+    }
+
+    return ans%10000003;
+}
+```
+
+<br>
+
+### 3. Find Pivot Index (Left sum == Right sum)
 Given an array of integers nums, calculate the pivot index of this array. The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
 
 Input: nums = [2,1,-1]
@@ -56,7 +109,7 @@ int pivotIndex(vector<int>& nums) {
 
 <br>
 
-### 3. Global and Local Inversions
+### 4. Global and Local Inversions
 You are given an integer array nums of length n which represents a permutation of all the integers in the range [0, n - 1]. 
 1. The number of global inversions is the number of the different pairs (i, j) where: 0 <= i < j < n and nums[i] > nums[j]
 2. The number of local inversions is the number of indices i where: 0 <= i < n - 1 and nums[i] > nums[i + 1]
@@ -78,7 +131,7 @@ bool isIdealPermutation(vector<int>& A) {
 
 <br>
 
-### 4. Max Min (In Minimum Comparisions)
+### 5. Max Min (In Minimum Comparisions)
 Given an array A of size N. You need to find the sum of Maximum and Minimum element in the given array. You should make minimum number of comparisons.
 
 Hint: Use Divide and Conquer and recurse for left and right half of array.
@@ -110,7 +163,7 @@ int Solution::solve(vector<int> &A) {
 
 <br>
 
-### 5. Rotate Array (Awesome 3 line reverse logic)
+### 6. Rotate Array (Awesome 3 line reverse logic)
 
 ```cpp
 /* ROTATE RIGHT */
@@ -136,7 +189,7 @@ void rotate_left(vector<int>& nums, int k) {
 
 <br>
 
-### 6. Increasing Triplet Subsequence
+### 7. Increasing Triplet Subsequence
 Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
 
 Hint: Maintain two variables for storing smallest and second smallest elements so far.
@@ -161,7 +214,7 @@ bool increasingTriplet(vector<int>& nums) {
 
 <br>
 
-### 7. Highest Product (IB)
+### 8. Highest Product (IB)
 Given an array A, of N integers. Return the highest product possible by multiplying 3 numbers from the array.
 
 ```cpp
@@ -178,7 +231,7 @@ int Solution::maxp3(vector<int> &A) {
 
 <br>
 
-### 8. Count Number of Teams
+### 9. Count Number of Teams
 There are n soldiers standing in a line. Each soldier is assigned a unique rating value. Choose 3 soldiers with index (i, j, k) with rating (rating[i], rating[j], rating[k]). A team is valid if for all i, j, k (0 <= i < j < k < n): 
 1. (rating[i] < rating[j] < rating[k]) or, 
 2. (rating[i] > rating[j] > rating[k]) 

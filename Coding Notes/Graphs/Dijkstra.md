@@ -1,13 +1,14 @@
 # Dijkstra Algo
-
 Used for finding shortest path (or cheapest) in weighted graph.
 
 Note: It cannot detect negative weight cycles (when sum of all edges in a cycle turns out to be negative). 
 (Read Bellman Ford and Floyd Warshall Algo)
 
+<br>
+
 ## @ Dijkstra on Adjacency List
 
-#### 1. Network Delay Time
+### 1. Network Delay Time
 You are given a network of n nodes, labeled from 1 to n. You are also given a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. We will send a signal from a given node k. Return the time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
 
 ![img](https://assets.leetcode.com/uploads/2019/05/23/931_example_1.png)
@@ -80,7 +81,9 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 }
 ```
 
-#### 2. Minimum edges to reverse to make path from a source to a destination (Tricky)
+<br>
+
+### 2. Minimum edges to reverse to make path from a source to a destination (Tricky)
 Given a directed graph and a source node and destination node, we need to find how many edges we need to reverse in order to make at least 1 path from source node to destination node.
 
 ![img](https://media.geeksforgeeks.org/wp-content/uploads/reverseEdge.png)
@@ -143,10 +146,13 @@ int compute_reversed_edges (vector<vector<int>> & edgeList, int src, int dest, i
 }
 ```
 
+<br>
+
+
 
 ## @ Dijkstra on Matrix
 
-#### 1. Path With Minimum Effort
+### 1. Path With Minimum Effort
 You are given a 2D array of size rows x columns, where heights[row][col] represents the height of cell (row, col). You are situated in the top-left cell, (0, 0), and you hope to travel to the bottom-right cell, (rows-1, columns-1) (i.e., 0-indexed). You can move up, down, left, or right. A route's effort is the maximum absolute difference in heights between two consecutive cells of the route. Return the minimum effort required to travel from the top-left cell to the bottom-right cell.
 
 ![img](https://assets.leetcode.com/uploads/2020/10/04/ex1.png)
@@ -241,7 +247,9 @@ int minimumEffortPath(vector<vector<int>>& heights) {
 }
 ```
 
-#### 2. Swim in Rising Water
+<br>
+
+### 2. Swim in Rising Water
 You are given an n x n integer matrix grid where each value grid[i][j] represents the elevation at that point (i, j). The rain starts to fall. At time t, the depth of the water everywhere is t. You can swim from a square to another 4-directionally adjacent square if and only if the elevation of both squares individually are at most t. You can swim infinite distances in zero time. Return the least time until you can reach the bottom right square (n - 1, n - 1) if you start at the top left square (0, 0).
 
 ![img](https://assets.leetcode.com/uploads/2021/06/29/swim2-grid-1.jpg)
@@ -321,12 +329,14 @@ int swimInWater(vector<vector<int>>& grid) {
 }
 ```
 
+<br>
+
 
 ## @ Dijkstra without Relaxation (within k based questions)
 
 **Data Structure : Multiset or Priority Queue**
 
-#### 1. Cheapest Flights Within K Stops
+### 1. Cheapest Flights Within K Stops
 There are n cities connected by some number of flights. You are given an array flights where flights[i] = [fromi, toi, pricei]. You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.
 
 ![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/02/16/995.png)
@@ -417,7 +427,9 @@ int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int
 }
 ```
 
-#### 2. Shortest Path in a Grid with Obstacles Elimination
+<br>
+
+### 2. Shortest Path in a Grid with Obstacles Elimination
 Given a m * n grid, where each cell is either 0 (empty) or 1 (obstacle). In one step, you can move up, down, left or right from and to an empty cell. Return the minimum number of steps to walk from the upper left corner (0, 0) to the lower right corner (m-1, n-1) given that you can eliminate at most k obstacles. If it is not possible to find such walk return -1.
 
 ```
@@ -501,7 +513,6 @@ int dijkstra (vector<vector<int>>& grid, int k, int row, int col){
 
 int shortestPath(vector<vector<int>>& grid, int k) {
     int row = grid.size(), col = grid[0].size();
-
     return dijkstra (grid, k, row, col);
 }
 ```

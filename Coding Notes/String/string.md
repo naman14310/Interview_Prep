@@ -207,7 +207,84 @@ int romanToInt(string A) {
 
 <br>
 
-### 8. Longest Palindrome
+### 8. Integer to Roman
+
+```cpp
+string Solution::intToRoman(int A) {
+    string res = "";
+
+    while(A>=1000){
+        res += "M";
+        A-=1000;
+    }
+
+    while(A>=900){
+        res += "CM";
+        A-=900;
+    }
+
+    while(A>=500){
+        res += "D";
+        A-=500;
+    }
+
+    while(A>=400){
+        res += "CD";
+        A-=400;
+    }
+
+    while(A>=100){
+        res += "C";
+        A-=100;
+    }
+
+    while(A>=90){
+        res += "XC";
+        A-=90;
+    }
+
+    while(A>=50){
+        res += "L";
+        A-=50;
+    }
+
+    while(A>=40){
+        res += "XL";
+        A-=40;
+    }
+
+    while(A>=10){
+        res += "X";
+        A-=10;
+    }
+
+    while(A>=9){
+        res += "IX";
+        A-=9;
+    }
+
+    while(A>=5){
+        res += "V";
+        A-=5;
+    }
+
+    while(A>=4){
+        res += "IV";
+        A-=4;
+    }
+
+    while(A>=1){
+        res += "I";
+        A-=1;
+    }
+
+    return res;
+}
+```
+
+<br>
+
+### 9. Longest Palindrome
 Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
 
 Input: s = "abccccdd"
@@ -238,7 +315,7 @@ int longestPalindrome(string s) {
 
 <br>
 
-### 9. Construct K Palindrome Strings
+### 10. Construct K Palindrome Strings
 Given a string s and an integer k. You should construct k non-empty palindrome strings using all the characters in s. Return True if you can use all the characters in s to construct k palindrome strings or False otherwise.
 
 Input: s = "aabababccdsb", k = 3
@@ -264,7 +341,7 @@ bool canConstruct(string s, int k) {
 
 <br>
 
-### 10. Reverse Words in a String
+### 11. Reverse Words in a String
 Return the string A after reversing the string word by word.
 
 Input: s = "the sky is blue"

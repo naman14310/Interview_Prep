@@ -786,7 +786,38 @@ int Solution::solve(vector<int> &A, int B) {
 
 <br>
 
-### 11. Equal Sum and XOR
+### 11. XOR-ing the Subarrays
+[Question](https://www.interviewbit.com/problems/xor-ing-the-subarrays/)
+
+You need to find the value obtained by XOR-ing the contiguous subarrays, followed by XOR-ing the values thus obtained. Determine and return this value.
+
+```cpp
+int Solution::solve(vector<int> &A) {
+    int n = A.size();
+    int res = 0;
+
+    for(int i=0; i<n; i++){
+        int l = i;
+        int r = n-1-i; 
+
+        int subarray_cnt = (l+1)*(r+1);       // --> count of subarrays in which index i is present 
+
+        /* 
+            If it is present in odd number of subarrays
+            then only it will contribute in res
+        */
+
+        if(subarray_cnt&1)
+            res = res^A[i];
+    }
+
+    return res;
+}
+```
+
+<br>
+
+### 12. Equal Sum and XOR
 Given a positive integer n, find count of positive integers i such that 0 <= i <= n and n+i = n^i 
 
 Hint: Answer = pow(2, count of zero bits)

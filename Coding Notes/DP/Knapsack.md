@@ -884,3 +884,57 @@ int numSquares(int n) {
     return solve (sqrs, n, 0, 0, dp);
 }
 ```
+
+<br>
+
+### 5. Tushar's Birthday Party
+Given the eating capacity of each friend, filling capacity of each dish and cost of each dish. A friend is satisfied if the sum of the filling capacity of dishes he ate is equal to his capacity. Find the minimum cost such that all of Tushar’s friends are satisfied (reached their eating capacity). Note that,
+1. Each dish is supposed to be eaten by only one person. Sharing is not allowed.
+2. Each friend can take any dish unlimited number of times.
+3. There always exists a dish with filling capacity 1 so that a solution always exists.
+
+Hint: Use Tabulation Method for Unbounded knapsack. Last row of matrix will give minCost for All capacities (No need to compute again-n-again).
+
+```cpp
+vector<vector<int>> knapsack (const vector<int> &weight, const vector<int>&cost, int n){
+    int row = n+1, col = 1001;
+    vector<vector<int>> dp (row, vector<int> (col, -1));
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            if(j==0) dp[i][j] = 0;
+
+            else if(i==0) dp[i][j] = -1;
+
+            else if(weight[i-1]>j)
+                dp[i][j] = dp[i-1][j];
+            
+            else{
+                int c1 = dp[i-1][j], c2 = dp[i][j-weight[i-1]];
+
+                if(c1==-1 and c2==-1) dp[i][j] = -1;
+                else if(c1==-1) dp[i][j] = c2 + cost[i-1];
+                else if(c2==-1) dp[i][j] = c1;
+                else dp[i][j] = min (c1, c2+cost[i-1]);
+            }
+        }
+    }
+
+    return dp;
+}
+
+
+int Solution::solve(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
+    int totalCost = 0;
+    int n = B.size();
+
+    auto matrix = knapsack (B, C, n);
+
+    for(int w : A)
+        totalCost += matrix[n][w];
+    
+    return totalCost;
+}
+```
+

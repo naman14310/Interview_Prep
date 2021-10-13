@@ -1007,6 +1007,47 @@ int Solution::solve(TreeNode* A, int B) {
 
 <br>
 
+### 12. Verify Preorder Serialization of a Binary Tree
+Given a string of comma-separated values preorder, return true if it is a correct preorder traversal serialization of a binary tree.
+
+Input: preorder = "9,3,4,#,#,1,#,#,2,#,6,#,#"
+
+Output: true
+
+Hint: Check whether every node has two children ahead of it or not.
+
+```cpp
+bool isValidSerialization(string preorder) {
+    stringstream ss(preorder);
+
+    string token;
+    vector<string> tokens;
+
+    while(getline(ss, token, ',')){
+        tokens.push_back(token);
+    }
+
+    int i=0, j=0;
+
+    while(i<tokens.size()){            
+        if(tokens[i]=="#"){
+            i++;
+            if(i<tokens.size() and i>j) return false;
+        }            
+        else{
+            if(j+2>=tokens.size()) return false;
+            j+=2;
+            i++;
+        }
+    }
+
+    return true;
+}
+```
+
+
+<br>
+
 
 
 ## @ Questions based on Deletion of Nodes

@@ -731,7 +731,34 @@ bool check(Node *root){
 
 <br>
 
-### 5. Count Complete Tree Nodes (Tricky)
+### 5. Sum of Nodes with Even-Valued Grandparent
+Return the sum of values of nodes with an even-valued grandparent. If there are no nodes with an even-valued grandparent, return 0.
+
+![img](https://assets.leetcode.com/uploads/2021/08/10/even1-tree.jpg)
+
+Output: 18
+
+```cpp
+void solve (TreeNode* root, int &sum, int grandparent, int parent){
+    if(!root) return;
+
+    if(grandparent>0 and grandparent%2==0)
+        sum += root->val;
+
+    solve(root->left, sum, parent, root->val);
+    solve(root->right, sum, parent, root->val);
+}
+
+int sumEvenGrandparent(TreeNode* root) {
+    int sum = 0;
+    solve (root, sum, -1, -1);
+    return sum;
+}
+```
+
+<br>
+
+### 6. Count Complete Tree Nodes (Tricky)
 Given the root of a complete binary tree, return the number of the nodes in the tree. Design an algorithm that runs in less than O(n) time complexity.
 
 ```cpp
@@ -778,7 +805,7 @@ int countNodes(TreeNode* root) {
 
 <br>
 
-### 6. Most Frequent Subtree Sum
+### 7. Most Frequent Subtree Sum
 Given the root of a binary tree, return the most frequent subtree sum. If there is a tie, return all the values with the highest frequency in any order.
 
 ```cpp
@@ -818,7 +845,7 @@ vector<int> findFrequentTreeSum(TreeNode* root) {
 
 <br>
 
-### 7. Maximum Product of Splitted Binary Tree
+### 8. Maximum Product of Splitted Binary Tree
 Given a binary tree root. Split the binary tree into two subtrees by removing 1 edge such that the product of the sums of the subtrees are maximized. Since the answer may be too large, return it modulo 10^9 + 7.
 
 ![img](https://assets.leetcode.com/uploads/2020/01/21/sample_1_1699.png)
@@ -861,7 +888,7 @@ int maxProduct(TreeNode* root) {
 
 <br>
 
-### 8. Burn a Tree
+### 9. Burn a Tree
 Given a binary tree denoted by root node A and a leaf node B from this tree. All nodes connected to a given node (left child, right child and parent) get burned in 1 second. Then all the nodes which are connected through one intermediate get burned in 2 seconds, and so on. Find the minimum time required to burn the complete binary tree.
 
 [Problem](https://www.interviewbit.com/problems/burn-a-tree/)

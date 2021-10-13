@@ -481,6 +481,66 @@ int longestZigZag(TreeNode* root) {
 
 <br>
 
+### 11. Maximum Difference Between Node and Ancestor
+Given the root of a binary tree, find the maximum value v for which there exist different nodes a and b where v = |a.val - b.val| and a is an ancestor of b.
+
+![img](https://assets.leetcode.com/uploads/2020/11/09/tmp-tree.jpg)
+
+Output: 7
+
+Hint: Iterate every path in tree. Use two vectors to store running max and min of curr path and find maxDiff everytime.
+
+```cpp
+/* Here maxV and minV stores running max and running min of currPath */
+
+void solve (TreeNode* root, vector<int> &maxV, vector<int> &minV, int &ans){
+    if(!root) return;
+
+    int diff1 = abs(root->val - maxV.back());
+    int diff2 = abs(root->val - minV.back());
+
+    ans = max({ans, diff1, diff2});
+
+    /* If currVal >= max of currPath --> push_back() it in maxV */
+
+    if(root->val >= maxV.back())
+        maxV.push_back(root->val);
+
+    /* If currVal <= min of currPath --> push_back() it in minV */
+
+    if(root->val <= minV.back())
+        minV.push_back(root->val);
+
+
+    solve(root->left, maxV, minV, ans);
+    solve(root->right, maxV, minV, ans);
+
+    /* If currVal == max of currPath --> pop_back() from maxV */
+
+    if(root->val == maxV.back())
+        maxV.pop_back();
+
+    /* If currVal == min of currPath --> pop_back() from minV */
+
+    if(root->val == minV.back())
+        minV.pop_back();
+}
+
+
+int maxAncestorDiff(TreeNode* root) {
+    vector<int> maxV, minV;
+    int ans = 0;
+
+    maxV.push_back(root->val);
+    minV.push_back(root->val);
+
+    solve(root, maxV, minV, ans);
+    return ans;
+}
+```
+
+<br>
+
 
 
 ## @ BT to Linked List Conversion

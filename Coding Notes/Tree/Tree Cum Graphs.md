@@ -1,5 +1,9 @@
 # Problems on Trees Represented as Graphs
 
+Trees given in the form of edges or parent_arrays can be treated as graphs. DFS calls similar to graphs should be used!
+
+<br>
+
 
 ### 1. Largest Distance between nodes of a Tree (Tricky)
 Given an arbitrary unweighted rooted tree which consists of N nodes. The goal of the problem is to find largest distance between two nodes in a tree. The tree is given as an array A, there is an edge between nodes A[i] and i (0 <= i < N). Exactly one of the i's will have A[i] equal to -1, it will be root node.

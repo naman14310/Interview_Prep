@@ -236,3 +236,63 @@ vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
     return dist;
 }
 ```
+
+<br>
+
+### 5. Kth Ancestor of a Tree Node
+You are given a tree with n nodes numbered from 0 to n - 1 in the form of a parent array parent where parent[i] is the parent of ith node. The root of the tree is node 0. Find the kth ancestor of a given node.
+
+[Binary Lifting](https://www.youtube.com/watch?v=PE-kQVZxvWA)
+
+```cpp
+class TreeAncestor {
+public:
+    
+    vector<vector<int>> matrix;
+    int row, col;
+    
+    
+    TreeAncestor(int n, vector<int>& parent) {
+        row = ceil(log2(n))+1;
+        col = n;
+        matrix = vector<vector<int>> (row, vector<int> (col, 0));
+        
+        /* computing binary lifting matrix */
+        
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                
+                if(i==0)
+                    matrix[i][j] = parent[j];
+                
+                else{
+                    int prev_hop = matrix[i-1][j];
+                    matrix[i][j] = prev_hop==-1 ? -1 : matrix[i-1][prev_hop];
+                }        
+                
+            }
+        }
+        
+    }
+    
+    
+    int getKthAncestor(int node, int k) {        
+        int ancestor = node;
+        int pos = 0;
+        
+        while(k>0){
+            if(ancestor==-1) return -1;
+            
+            int bit = k&1;
+            
+            if(bit&1)
+                ancestor = matrix[pos][ancestor];    
+            
+            k>>=1;
+            pos++;
+        }
+        
+        return ancestor;
+    }
+};
+```

@@ -629,7 +629,34 @@ vector<int> printBoundary(Node *root){
 
 ## @ Few IMP Interview Questions
 
-### 1. Transform to Sum Tree
+### 1. Binary Search Tree to Greater Sum Tree
+Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.
+
+![img](https://assets.leetcode.com/uploads/2019/05/02/tree.png)
+
+```cpp
+void solve (TreeNode* root, int& sum){
+    if(!root) return;
+
+    solve(root->right, sum);
+
+    root->val += sum;
+    sum = root->val;
+
+    solve(root->left, sum);
+}
+
+
+TreeNode* bstToGst(TreeNode* root) {
+    int sum = 0;
+    solve (root, sum);
+    return root;
+}
+```
+
+<br>
+
+### 2. Transform to Sum Tree
 Given a Binary Tree of size N. Convert this to a tree where each node contains the sum of the left and right sub trees of the original tree. The values of leaf nodes are changed to 0.
 
 ```cpp
@@ -651,7 +678,7 @@ void toSumTree(Node *root){
 
 <br>
 
-### 2. Check if Binary tree is Sum tree or not
+### 3. Check if Binary tree is Sum tree or not
 Given a Binary Tree. Return 1 if, for every node X in the tree other than the leaves, its value is equal to the sum of its left subtree's value and its right subtree's value. Else return 0. An empty tree is also a Sum Tree. A leaf node is also considered a Sum Tree.
 
 ```cpp
@@ -675,7 +702,7 @@ bool isSumTree(Node* root){
 
 <br>
 
-### 3. Sum of Left Leaves
+### 4. Sum of Left Leaves
 Observation : Left leaves are those who are attached on the left side of their parent.
 
 ```cpp
@@ -699,7 +726,7 @@ int sumOfLeftLeaves(TreeNode* root) {
 <br>
 
 
-### 4. Check if all leaves are at same level
+### 5. Check if all leaves are at same level
 
 ```cpp
 bool traverse(Node* root, int level, int & leaf_level){
@@ -731,7 +758,7 @@ bool check(Node *root){
 
 <br>
 
-### 5. Sum of Nodes with Even-Valued Grandparent
+### 6. Sum of Nodes with Even-Valued Grandparent
 Return the sum of values of nodes with an even-valued grandparent. If there are no nodes with an even-valued grandparent, return 0.
 
 ![img](https://assets.leetcode.com/uploads/2021/08/10/even1-tree.jpg)
@@ -758,7 +785,7 @@ int sumEvenGrandparent(TreeNode* root) {
 
 <br>
 
-### 6. Count Complete Tree Nodes (Tricky)
+### 7. Count Complete Tree Nodes (Tricky)
 Given the root of a complete binary tree, return the number of the nodes in the tree. Design an algorithm that runs in less than O(n) time complexity.
 
 ```cpp
@@ -805,7 +832,7 @@ int countNodes(TreeNode* root) {
 
 <br>
 
-### 7. Most Frequent Subtree Sum
+### 8. Most Frequent Subtree Sum
 Given the root of a binary tree, return the most frequent subtree sum. If there is a tie, return all the values with the highest frequency in any order.
 
 ```cpp
@@ -845,7 +872,7 @@ vector<int> findFrequentTreeSum(TreeNode* root) {
 
 <br>
 
-### 8. Maximum Product of Splitted Binary Tree
+### 9. Maximum Product of Splitted Binary Tree
 Given a binary tree root. Split the binary tree into two subtrees by removing 1 edge such that the product of the sums of the subtrees are maximized. Since the answer may be too large, return it modulo 10^9 + 7.
 
 ![img](https://assets.leetcode.com/uploads/2020/01/21/sample_1_1699.png)
@@ -888,7 +915,7 @@ int maxProduct(TreeNode* root) {
 
 <br>
 
-### 9. Burn a Tree
+### 10. Burn a Tree
 Given a binary tree denoted by root node A and a leaf node B from this tree. All nodes connected to a given node (left child, right child and parent) get burned in 1 second. Then all the nodes which are connected through one intermediate get burned in 2 seconds, and so on. Find the minimum time required to burn the complete binary tree.
 
 [Problem](https://www.interviewbit.com/problems/burn-a-tree/)

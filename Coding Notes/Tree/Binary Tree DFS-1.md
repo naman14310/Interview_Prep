@@ -832,7 +832,41 @@ int countNodes(TreeNode* root) {
 
 <br>
 
-### 8. Most Frequent Subtree Sum
+### 8. All Possible Full Binary Trees
+Given an integer n, return a list of all possible full binary trees with n nodes. Each node of each tree in the answer must have Node.val == 0. A full binary tree is a binary tree where each node has exactly 0 or 2 children.
+
+![img](https://s3-lc-upload.s3.amazonaws.com/uploads/2018/08/22/fivetrees.png)
+
+```cpp
+vector<TreeNode*> allPossibleFBT(int n) {
+
+    if(n%2==0) return {};               // --> FBT can have only odd number of nodes
+    if(n==1) return {new TreeNode()};
+
+    vector<TreeNode*> v;     
+
+    for(int i=1; i<n-1; i+=2){          // --> incrementation by 2 to avoid redundant recursive call for even number of nodes
+
+        auto left = allPossibleFBT(i);  
+        auto right = allPossibleFBT(n-i-1);
+
+        for(auto l : left){
+            for(auto r : right){
+                TreeNode* root = new TreeNode();
+                root->left = l;
+                root->right = r;
+                v.push_back(root);
+            }
+        }    
+    }
+
+    return v;
+}
+```
+
+<br>
+
+### 9. Most Frequent Subtree Sum
 Given the root of a binary tree, return the most frequent subtree sum. If there is a tie, return all the values with the highest frequency in any order.
 
 ```cpp
@@ -872,7 +906,7 @@ vector<int> findFrequentTreeSum(TreeNode* root) {
 
 <br>
 
-### 9. Maximum Product of Splitted Binary Tree
+### 10. Maximum Product of Splitted Binary Tree
 Given a binary tree root. Split the binary tree into two subtrees by removing 1 edge such that the product of the sums of the subtrees are maximized. Since the answer may be too large, return it modulo 10^9 + 7.
 
 ![img](https://assets.leetcode.com/uploads/2020/01/21/sample_1_1699.png)
@@ -915,7 +949,7 @@ int maxProduct(TreeNode* root) {
 
 <br>
 
-### 10. Burn a Tree
+### 11. Burn a Tree
 Given a binary tree denoted by root node A and a leaf node B from this tree. All nodes connected to a given node (left child, right child and parent) get burned in 1 second. Then all the nodes which are connected through one intermediate get burned in 2 seconds, and so on. Find the minimum time required to burn the complete binary tree.
 
 [Problem](https://www.interviewbit.com/problems/burn-a-tree/)

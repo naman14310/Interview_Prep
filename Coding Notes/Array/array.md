@@ -1349,3 +1349,50 @@ int wiggleMaxLength(vector<int>& nums) {
 }
 ```
 
+<br>
+
+### 8. Minimum Domino Rotations For Equal Row
+In a row of dominoes, tops[i] and bottoms[i] represent the top and bottom halves of the ith domino.  We may rotate the ith domino, so that tops[i] and bottoms[i] swap values. Return the minimum number of rotations so that all the values in tops are the same, or all the values in bottoms are the same. If it cannot be done, return -1.
+
+![img](https://assets.leetcode.com/uploads/2021/05/14/domino.png)
+
+Input: tops = [2,1,2,4,2,2], bottoms = [5,2,6,2,3,2]
+
+Output: 2
+
+```cpp
+int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
+	int n = tops.size();
+	unordered_map<int, int> mp;
+
+	for(int i=0; i<n; i++){
+		mp[tops[i]]++;
+
+		if(bottoms[i]!=tops[i])
+			mp[bottoms[i]]++;
+	}
+	
+
+	int ans_val = -1;
+
+	for(auto p : mp){
+		if(p.second==n){
+			ans_val = p.first;
+			break;
+		}
+	}
+
+	if(ans_val==-1) 
+		return -1;
+		
+
+	int cnt1 = 0, cnt2 = 0;
+
+	for(int i=0; i<n; i++){
+		if(tops[i]==ans_val) cnt1++;
+		if(bottoms[i]==ans_val) cnt2++;
+	}
+
+	return min({cnt1, n-cnt1, cnt2, n-cnt2});
+}
+```

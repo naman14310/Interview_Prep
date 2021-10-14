@@ -148,7 +148,20 @@ int Solution::longestSubsequenceLength(const vector<int> &A) {
 
 <br>
 
-### 4. Longest Arithmetic Subsequence
+### 4. Decreasing Subsequences (Tricky)
+Given an int array nums of length n. Split it into strictly decreasing subsequences. Output the min number of subsequences you can get by splitting.
+
+Input: [5, 2, 4, 3, 1, 6]
+
+Output: 3
+
+Explanation: You can split this array into: [5, 2, 1], [4, 3], [6].
+
+Solution: **The number of decreasing subsequence partitions is equal to the length of the longest non-decreasing subsequence**, because every non-decreasing number represents a point where a continuation of a previous decreasing subsequence is impossible. If we have largest increasing subsequence then each element of that subsequence must be placed into different subsets because if any of the two element will be placed in same set then it will not satisfy the property that the subset elements are decreasing.
+
+<br>
+
+### 5. Longest Arithmetic Subsequence
 Given an array nums of integers, return the length of the longest arithmetic subsequence in nums. Recall that a sequence seq is arithmetic if seq[i+1] - seq[i] are all the same value (for 0 <= i < seq.length - 1).
 
 Input: nums = [9,4,7,2,10]
@@ -183,7 +196,7 @@ int longestArithSeqLength(vector<int>& nums) {
 
 <br>
 
-### 5. Length of Longest Fibonacci Subsequence
+### 6. Length of Longest Fibonacci Subsequence
 A sequence x1, x2, ..., xn is Fibonacci-like if:
 1. n >= 3
 2. xi + xi+1 == xi+2 for all i + 2 <= n
@@ -220,7 +233,7 @@ int lenLongestFibSubseq(vector<int>& arr) {
 
 <br>
 
-### 6. Best Team With No Conflicts
+### 7. Best Team With No Conflicts
 A conflict exists if a younger player has a strictly higher score than an older player. A conflict does not occur between players of the same age. Given two lists, scores and ages, where each scores[i] and ages[i] represents the score and age of the ith player, respectively, return the highest overall score of all possible basketball teams.
 
 Input: scores = [4,5,6,5], ages = [2,1,2,1]
@@ -319,7 +332,7 @@ int bestTeamScore(vector<int>& scores, vector<int>& ages) {
 
 <br>
 
-### 7. Russian Doll Envelopes
+### 8. Russian Doll Envelopes
 You are given a 2D array of integers envelopes where envelopes[i] = [wi, hi] represents the width and the height of an envelope. One envelope can fit into another if and only if both the width and height of one envelope are greater than the other envelope's width and height. Return the maximum number of envelopes you can Russian doll (i.e., put one inside the other). You cannot rotate an envelope.
 
 Input: envelopes = [[5,4],[6,4],[6,7],[2,3]]
@@ -357,7 +370,7 @@ int maxEnvelopes(vector<vector<int>>& envelopes) {
 
 <br>
 
-### 8. Largest Divisible Subset (Tricky)
+### 9. Largest Divisible Subset (Tricky)
 Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
 1. answer[i] % answer[j] == 0, or
 2. answer[j] % answer[i] == 0
@@ -452,7 +465,7 @@ vector<int> largestDivisibleSubset(vector<int>& nums) {
 
 <br>
 
-### 9. Maximum Profit in Job Scheduling (Tricky)
+### 10. Maximum Profit in Job Scheduling (Tricky)
 We have n jobs, where every job is scheduled to be done from startTime[i] to endTime[i], obtaining a profit of profit[i]. You're given the startTime, endTime and profit arrays, return the maximum profit you can take such that there are no two jobs in the subset with overlapping time range. If you choose a job that ends at time X you will be able to start another job that starts at time X.
 
 ![img](https://assets.leetcode.com/uploads/2019/10/10/sample22_1584.png)

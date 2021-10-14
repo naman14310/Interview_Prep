@@ -543,3 +543,69 @@ int minSpeedOnTime(vector<int>& dist, double hour) {
 }
 ```
 
+<br>
+
+### 11. Heaters
+Given the positions of houses and heaters on a horizontal line, return the minimum radius standard of heaters so that those heaters could cover all houses.
+
+Input: houses = [1,5], heaters = [2]
+
+Output: 3
+
+```cpp
+bool isValid(vector<int> &minDist, int radius){        
+    for(int d : minDist)
+        if(d>radius) return false;
+
+    return true;
+}
+
+
+int binarySearch(vector<int> &minDist, int start, int end){
+    int ans = end;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(isValid(minDist, mid)){
+            ans = mid;
+            end=mid-1;
+        }
+
+        else start = mid+1;
+    }        
+
+    return ans;
+}
+
+
+int findRadius(vector<int>& houses, vector<int>& heaters) {
+    sort(heaters.begin(), heaters.end());
+    vector<int> minDist (houses.size(), INT_MAX);
+
+    /* Compute closest distance of every house from nearest heater */
+
+    for(int i=0; i<houses.size(); i++){
+        int h = houses[i];
+        auto pos = lower_bound(heaters.begin(), heaters.end(), h) - heaters.begin();
+
+        if(pos==0){
+            int closest = pos;
+            minDist[i] = abs(heaters[closest] - h);
+        }
+
+        else if(pos==heaters.size()){
+            int closest = pos-1;
+            minDist[i] = abs(heaters[closest] - h);
+        }
+
+        else{
+            int closest1 = pos-1, closest2 = pos;
+            minDist[i]= min(abs(heaters[closest1] - h), abs(heaters[closest2] - h));
+        }
+    }
+
+
+    return binarySearch(minDist, 0, INT_MAX);
+}
+```

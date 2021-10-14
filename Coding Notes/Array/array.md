@@ -231,7 +231,33 @@ int Solution::maxp3(vector<int> &A) {
 
 <br>
 
-### 9. Count Number of Teams
+### 9. Minimum Difference Between Largest and Smallest Value in Three Moves
+Given an array nums, you are allowed to choose one element of nums and change it by any value in one move. Return the minimum difference between the largest and smallest value of nums after perfoming at most 3 moves.
+
+Input: nums = [1,5,0,10,14]
+
+Output: 1
+
+Hint: We have 4 plans:
+1. kill 3 biggest elements
+2. kill 2 biggest elements + 1 smallest elements
+3. kill 1 biggest elements + 2 smallest elements
+4. kill 3 smallest elements
+
+```cpp
+int minDifference(vector<int>& nums) {
+	int n = nums.size();
+	if(n<=4) return 0;
+
+	sort(nums.begin(), nums.end());
+
+	return min({nums[n-1]-nums[3], nums[n-2]-nums[2], nums[n-3]-nums[1], nums[n-4]-nums[0]});
+}
+```
+
+<br>
+
+### 10. Count Number of Teams
 There are n soldiers standing in a line. Each soldier is assigned a unique rating value. Choose 3 soldiers with index (i, j, k) with rating (rating[i], rating[j], rating[k]). A team is valid if for all i, j, k (0 <= i < j < k < n): 
 1. (rating[i] < rating[j] < rating[k]) or, 
 2. (rating[i] > rating[j] > rating[k]) 

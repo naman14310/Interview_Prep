@@ -493,3 +493,61 @@ bool Solution::hotel(vector<int> &arrive, vector<int> &depart, int K){
 }
 ```
 
+<br>
+
+### 3. Describe the Painting
+
+[Question](https://leetcode.com/problems/describe-the-painting/)
+
+![img](https://assets.leetcode.com/uploads/2021/06/18/1.png)
+
+Input: segments = [[1,4,5],[4,7,7],[1,7,9]]
+
+Output: [[1,4,14],[4,7,16]]
+
+```cpp
+vector<vector<long long>> splitPainting(vector<vector<int>>& segments) {
+
+    vector<long long> csum (100002, 0);
+    vector<bool> endPoints (100002, false);         // --> used to mark endPoints of all segments (Since there are segmets which have same sum but different mix of colour  
+
+    for(auto s : segments){
+        int start = s[0], end = s[1], color = s[2];
+        csum[start] += color;
+        csum[end] -= color;
+
+        endPoints[start] = endPoints[end] = true;
+    }
+
+
+    int start = 0;
+    vector<vector<long long>> res;
+
+    for(int i=1; i<csum.size(); i++){
+        csum[i] += csum[i-1];
+
+        if(csum[i]==csum[i-1]){
+
+            if(endPoints[i]){
+                res.push_back({start, i, csum[i]});
+                start = i;
+            }
+        }
+
+        else{
+
+            if(csum[i-1]==0)
+                start = i;
+            else{
+                res.push_back({start, i, csum[i-1]});
+                start = i;
+            }
+        }
+    }
+
+    return res;
+}
+```
+
+
+

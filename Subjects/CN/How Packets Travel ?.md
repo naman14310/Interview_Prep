@@ -148,9 +148,10 @@ However, what is definitely not known is their MAC addresses. The hosts will use
 <br>
 
 **How ARP works ?**
-1. The ARP Request is sent as a Broadcast, and had there been other hosts connected to this link, they too would have received the ARP Request.
-2. Host A includes its own MAC address in the ARP Request itself. This allows Host B (if it exists) to easily respond directly back to Host A with the requested information.
+1. The ARP Request is sent as a Broadcast.
+2. Host A includes its own MAC address in the ARP Request itself.
 3. Receiving the ARP Request allows Host B to learn something. Namely, that Host A’s IP address is 10.10.10.10 and the correlating MAC address is aaaa.aaaa.aaaa. This entry is now added to Host B’s ARP Table.
+4. Host B use this new information to respond directly to Host A. The ARP Response is sent as a Unicast.
 
 <br>
 

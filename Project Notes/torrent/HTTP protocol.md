@@ -64,6 +64,11 @@ In TLS 1.3, Diffie Helman Key exchange algorithm is used to provide more securit
 
 An SSL certificate (also known as a TLS or SSL/TLS certificate) is a digital document that binds the identity of a website to a cryptographic key pair consisting of a public key and a private key. The public key, included in the certificate, allows a web browser to initiate an encrypted communication session with a web server via the TLS and HTTPS protocols. The private key is kept secure on the server, and is used to digitally sign web pages and other documents (such as images and JavaScript files).
 
+<br>
+
+**Explain concept of Public and Private Keys**
+
+It is possible to use the public key to encrypt a message that can only be decrypted with the private key. Furthermore, the holder of the private key can use it to sign other digital documents (such as web pages), and anyone with the public key can verify this signature.
 
 <br>
 

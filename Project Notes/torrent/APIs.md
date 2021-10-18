@@ -2,6 +2,9 @@
 
 Application Programming Interface or API is a common software interface that allows two applications to communicate.
 
+<br>
+
+
 **Difference between API request and webpage request**
 
 The major difference between an “API request” and a “webpage request” is what kind of data is provided in the response. A website returns HTML, CSS, and JavaScript which work together with your browser to render a webpage. Web APIs respond with data in a raw format, not intended to be rendered by a browser into a user experience. JSON and XML are the most common formats used for this raw data.

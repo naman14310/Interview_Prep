@@ -60,6 +60,13 @@ In TLS 1.3, Diffie Helman Key exchange algorithm is used to provide more securit
 
 <br>
 
+**What is SSL Certificate?**
+
+An SSL certificate (also known as a TLS or SSL/TLS certificate) is a digital document that binds the identity of a website to a cryptographic key pair consisting of a public key and a private key. The public key, included in the certificate, allows a web browser to initiate an encrypted communication session with a web server via the TLS and HTTPS protocols. The private key is kept secure on the server, and is used to digitally sign web pages and other documents (such as images and JavaScript files).
+
+
+<br>
+
 -----
 
 <br>

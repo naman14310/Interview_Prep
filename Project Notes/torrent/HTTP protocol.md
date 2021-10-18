@@ -36,15 +36,19 @@ HTTP stands for Hypertext Transfer Protocol. It is a set of rule which is used f
 
 HTTPS stands for Hyper Text Transfer Protocol Secure. Https transfers data in the encrypted format. Thus, https prevents hackers from reading and modifying the data during the transfer between the browser and web server. HTTPS established an encrypted link between the browser and the web server using the Secure Socket Layer (SSL) or Transport Layer Security (TLS) protocols. 
 
+To achieve this security in https, Public Key Infrastructure (PKI) is used because public keys can be used by several Web Browsers while private key can be used by the Web Server of that particular website. The distribution of these public keys is done via Certificates which are maintained by the Browser
+
+<br>
+
 **Secure Socket Layer (SSL)**
 
 SSL ensures that the data transfer between the two systems remains encrypted and private. SSL establishes an encrypted link using an SSL certificate which is also known as a digital certificate. 
 
+<br>
+
 **Transport Layer Security (TLS)**
 
 TLS is the evolved version of SSL. HTTPS is an implementation of TLS encryption on top of the HTTP protocol. Any website that uses HTTPS is therefore employing TLS encryption.
-
-<br>
 
 ![img](https://github.com/naman14310/Interview_Prep/blob/main/Project%20Notes/torrent/images/TLS%201.2.jpeg)
 

@@ -37,7 +37,7 @@ Eg: fetching a specific Twitter user, using Twitter’s RESTful API, will requir
 1. REST is usefull because you're not tying your API to your client-side technology. It is accessible from a client-side Web project, an iOS app, an IoT device and even a Windows Phone. 
 2. Another key idea in this architectural philosophy is that the server **supports caching and is stateless**. 
 3. Caching is important, as if multiple requests for the same resource are requested, caching of the result of the request means that the scalability of the server should increase.
-4. Likewise, statelessness is about making sure that calls to the API aren't tied to a particular server, which increases the likelihood of building scalable server infrastructures. Because the server is stateless, every call to it must include all the data required to execute the request. 
+4. Statelessness is about making sure that calls to the API aren't tied to a particular server. Because the server is stateless, every call to it must include all the data required to execute the request. 
 
 <br>
 

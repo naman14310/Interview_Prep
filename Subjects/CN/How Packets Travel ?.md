@@ -1,5 +1,7 @@
 # How Packet Travels ?
 
+[Complete Video](https://www.youtube.com/watch?v=rYodcvhh7b8)
+
 <br>
 
 ## The OSI Model

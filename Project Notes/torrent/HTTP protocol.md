@@ -38,7 +38,7 @@ HTTPS stands for Hyper Text Transfer Protocol Secure. Https transfers data in th
 
 To achieve this security in https, Public Key Infrastructure (PKI) is used because public keys can be used by several Web Browsers while private key can be used by the Web Server of that particular website. The distribution of these public keys is done via Certificates which are maintained by the Browser.
 
-Note: Tt should be noted that this security in https is achieved at the cost of processing time because Web Server and Web Browser needs to exchange encryption keys using Certificates before actual data can be transferred.
+**Note:** It should be noted that this security in https is achieved at the cost of processing time because Web Server and Web Browser needs to exchange encryption keys using Certificates before actual data can be transferred.
 
 <br>
 

@@ -113,6 +113,68 @@ On the receiving end, each layer strips the header from the data and passes it b
 
 
 
+<br>
+
+## IMP Terminologies
+
+### Switch
+
+![img](https://www.practicalnetworking.net/wp-content/uploads/2016/01/packtrav-switch-l2.png)
+
+1. Switch is a network device which operates at Data link layer. The Layer 2 header contains information that enables hop to hop delivery, such as the Source and Destination MAC address.
+2. A switch maintains a MAC Address table, that maps MAC addresses of devices plugged into each switch port.
+3. MAC Address Table is populated by looking at the Source MAC address field of any received frames.
+4. In order to forward the frame, the Switch will lookup the Destination MAC address in their MAC Address Table to determine what port to use.
+5. If a Switch encounters a frame for which it does not know the location of the Destination MAC address, it simply duplicates and floods the frame out each switch port (except the port it was received on).
+
+<br>
+
+### Router
+
+![img](https://www.practicalnetworking.net/wp-content/uploads/2016/01/packtrav-router-l3.png)
+
+1. Routers operate at Network layer. The Layer 3 header contains information that enables end to end delivery, such as the Source and Destination IP Address.
+2. Each interface on a router creates a network boundary.
+3. A Router maintains  a Routing Table, which contains paths to all the networks a Router knows how to reach.
+4. **When a router receives a packet destined to a network which is not in its Routing Table, that packet is discarded.**
+
+<br>
+
+### ARP (Address Resolution Protocol)
+Typically, when two hosts are communicating, they already know each other’s IP address. They can know each other’s IP address from a variety of methods: sometimes it is manually provided by a user, sometimes by another protocol (often DNS). 
+
+However, what is definitely not known is their MAC addresses. The hosts will use ARP to discover the appropriate MAC address. The discovered mapping is then added and stored in an ARP Table, which is a mapping of IP addresses to correlating MAC addresses.
+
+<br>
+
+**How ARP works ?**
+1. The ARP Request is sent as a Broadcast, and had there been other hosts connected to this link, they too would have received the ARP Request.
+2. Host A includes its own MAC address in the ARP Request itself. This allows Host B (if it exists) to easily respond directly back to Host A with the requested information.
+
+<br>
+
+
+![img](https://www.practicalnetworking.net/wp-content/uploads/2016/01/packtrav-arp-l2-l3.png)
+
+In the image above, there are three networks: the purple network, the gray network, and the red network.
+1. When the Client needs to speak to the Purple Server, it will know the Purple Server’s IP address, and from that it will determine that the Purple Server exists in the local network. When a Client is attempting to speak to a host in the same network, the Client will issue an ARP request for the host’s MAC address.
+2. When the Client needs to speak to the Red Server, it will know the Red Server’s IP address, and from that it will know that the Red Server exists in a foreign network. As such, the packet must be delivered to the nearest router(R1) also known as Default Gateway.
+
+<br>
+
+Note: Any device that intends to forward a packet based upon the IP address (L3), must also have the ability to deliver the packet to the next hop (L2). Consequently, all Layer 3 devices must maintain an ARP Table.
+
+<br>
+
+**Why ARP is Needed ?**
+
+Packet delivery is always the job of Layer 2 (data link layer), and its primary goal is getting a packet from hop to hop. Conversely, Layer 3 (Network layer), which is concerned with end to end delivery is unable to put a packet on a wire and send it to another host’s NIC. ARP’s role is to help the client create the proper L2 header, based on the L3 header, in order to get the packet from one hop to the next.
+
+
+
+
+
+
 
 
 

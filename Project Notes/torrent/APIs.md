@@ -13,7 +13,7 @@ The major difference between an “API request” and a “webpage request” is
 <br>
 
 ## REST APIs
-REST is an architectural style, or design pattern, for APIs. REST stands for **REpresentational State Transfer**.
+REST is an architectural style (not a protocol), or design pattern, for APIs. REST stands for **REpresentational State Transfer**.
 
 *When a RESTful API is called, the server will transfer to the client a representation of the state of the requested resource. The representation of the state can be in a JSON format.*
 

@@ -2,7 +2,7 @@
 
 **Port: 80**
 
-HTTP stands for Hypertext Transfer Protocol. It is a set of rule which is used for transferring data like, audio, video, images, text and other multimedia files on world wide web. HTTP does not have any security.
+HTTP stands for Hypertext Transfer Protocol. It is a set of rule which is used for transferring data like, audio, video, images, text and other multimedia files on world wide web. HTTP does not have any security. HTTP transfers data in MIME format.
 
 <br>
 

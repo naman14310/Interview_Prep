@@ -10,8 +10,8 @@ A proxy server, or web proxy, is a server that sits in front of a group of clien
 <br>
 
 **Reasons to use a proxy server:**
-1. To achieve anonymity and protect our identity online.
-2. Fetching static pages with low latency using Caching.
+1. To achieve Anonymity and protect our identity online.
+2. Caching, results in low latency.
 3. Block a group of users from accessing certain sites.
 4. To avoid state or institutional browsing restrictions.
 

@@ -43,7 +43,7 @@ When websites respond to CDN servers with the requested content, they attach the
 
 **Where are CDN caching servers located?**
 
-CDN caching servers are located in data centers all over the globe in order to be as close to end users accessing the content as fast as possible. 
+CDN caching servers are located in data centers all over the globe in order to be as close to end users. 
 
 <br>
 

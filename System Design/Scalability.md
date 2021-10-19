@@ -64,7 +64,9 @@ Scalability is the ability to expand from the existing configuration of the syst
 2. The risk for downtime is much higher than horizontal scaling.
 3. Greater risk of hardware failures.
 
+<br>
 
+### [Which is right for our App ?](https://www.missioncloud.com/blog/horizontal-vs-vertical-scaling-which-is-right-for-your-app)
 
 
 

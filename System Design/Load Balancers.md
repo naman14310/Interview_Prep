@@ -85,7 +85,7 @@ Suppose our hash function output range in between zero to INT_MAX, then this ran
 
 ![img](https://miro.medium.com/max/684/1*PdXXrVOA_k9A18BD-ZNMfQ.png)
 
-Now we have 5 servers. According to consistent hashing rule, User 1 is on server S1, User2 is on S3, User 3 is on S2 and User 4 is on S4 server.
+Now we have 5 servers. According to consistent hashing rule, User 1 is on server S1, User2 is on S3, User 3 is on S2 and so on..
 
 <br>
 

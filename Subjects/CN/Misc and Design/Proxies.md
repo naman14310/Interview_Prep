@@ -25,11 +25,11 @@ A reverse proxy is a server that sits in front of web servers and forwards clien
 <br>
 
 **Benefits of using reverse proxy:**
-1. Load Balancing - distributes the incoming traffic evenly among the different servers to prevent any single server from becoming overloaded. 
-2. Caching - results in faster response time.
-3. Protection from attacks, such as a DDoS attack.
-4. Global Server Load Balancing (GSLB) - In this form of load balancing, a website can be distributed on several servers around the globe and the reverse proxy will send clients to the server that’s geographically closest to them. 
-5. Encrypting and decrypting SSL (or TLS) communications for each client can be computationally expensive for an origin server. A reverse proxy can be configured to decrypt all incoming requests and encrypt all outgoing responses, freeing up valuable resources on the origin server.
+1. Load Balancing - distributes the incoming traffic evenly among the different servers.
+2. Global Server Load Balancing (GSLB) - In this form of load balancing, a website can be distributed on several servers around the globe and the reverse proxy will send clients to the server that’s geographically closest to them. 
+3. Caching - results in faster response time.
+4. Protection from attacks, such as a DDoS attack.
+5. Encrypting and decrypting communications for each client can be computationally expensive for an origin server. A reverse proxy can be configured to decrypt all incoming requests and encrypt all outgoing responses.
 
 
 <br>

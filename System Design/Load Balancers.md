@@ -72,7 +72,7 @@ Assuming hash function to be uniformly random, we can expect all servers to have
 
 **Problem with Normal Hashing**
 
-Assume we need to add one more server to this system. According to example, User 1 Request ID was 44, and its hash value was 9. Since there are 5 servers now the value of the remainder is 4. Which means that User Request goes to Application Server 4. Like this, all the Request path to servers will change. As a result, all the useful cache information we had is going to useless because the numbers of the servers which we are serving completely changed. This is called **Rehashing**.
+Assume we need to add one more server to this system. According to example, User 1 Request ID was 44, and its hash value was 9. Since there are 5 servers now the value of the remainder is 4. Which means that User Request goes to Application Server 4. Like this, all the Request path to servers will change. As a result, all the useful cache information we had, will become useless because the numbers of the servers which we are serving completely changed. This is called **Rehashing**.
 
 <br>
 

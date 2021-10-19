@@ -37,3 +37,9 @@ A reverse proxy is a server that sits in front of web servers and forwards clien
 **How reverse Proxy is different from forward proxy?**
 
 A forward proxy sits in front of a client and ensures that no origin server ever communicates directly with that specific client. On the other hand, a reverse proxy sits in front of an origin server and ensures that no client ever communicates directly with that origin server.
+
+<br>
+
+**How reverse proxies are different from Load Balancers?**
+
+Load Balancer can be a subset of Reverse proxy, that means a reverse proxy can perform functionality of load balancers while ensuring anonimity, security and reliability to web servers, while load balancers serve a specific purpose of distributing load evenly on all servers preventing any one server to become overloaded. 

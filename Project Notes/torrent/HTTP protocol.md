@@ -30,6 +30,13 @@ HTTP stands for Hypertext Transfer Protocol. It is a set of rule which is used f
 
 <br>
 
+### How HTTP Works ?
+A web server contains an HTTP daemon, a program that waits for HTTP requests and handles them when they arrive. A web browser is an HTTP client that sends requests to servers. When the user enters file requests by either "opening" a web file by typing in a URL or clicking on a hypertext link, the browser builds an HTTP request and sends it to the IP address indicated by the URL. The HTTP daemon in the destination server receives the request and sends back the requested file or files associated with the request.
+
+When these request/response pairs are being sent, they use TCP/IP to reduce and transport information in small packets of binary sequences of ones and zeros. These packets are physically sent through electric wires, fiber optic cables and wireless networks.
+
+<br>
+
 ## HTTPs
 
 **Port: 443**

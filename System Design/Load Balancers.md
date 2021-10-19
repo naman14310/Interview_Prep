@@ -70,7 +70,9 @@ Assuming hash function to be uniformly random, we can expect all servers to have
 
 <br>
 
-Now, assume we need to add one more server to this system. According to example, User 1 Request ID was 44, and its hash value was 9. Since there are 5 servers now the value of the remainder is 4. Which means that User Request goes to Application Server 4. Like this, all the Request path to servers will change. As a result, all the useful cache information we had is going to useless because the numbers of the servers which we are serving completely changed. This is called **Rehashing**.
+**Problem with Normal Hashing**
+
+Assume we need to add one more server to this system. According to example, User 1 Request ID was 44, and its hash value was 9. Since there are 5 servers now the value of the remainder is 4. Which means that User Request goes to Application Server 4. Like this, all the Request path to servers will change. As a result, all the useful cache information we had is going to useless because the numbers of the servers which we are serving completely changed. This is called **Rehashing**.
 
 <br>
 
@@ -86,6 +88,8 @@ Suppose our hash function output range in between zero to INT_MAX, then this ran
 Now we have 5 servers. According to consistent hashing rule, User 1 is on server S1, User2 is on S3, User 3 is on S2 and User 4 is on S4 server.
 
 <br>
+
+**Working with server Replicas**
 
 When a server is removed or added then the only key from that server is relocated. For example, if server S3 is removed then, all pending requests of server S3 will be moved to server S4. But there is one problem, when server S3 is removed then requests from S3 are not equally distributed among remaining servers S0, S1, S2, and S4. They were only assigned to server S4 which will increase the load on server S4.
 

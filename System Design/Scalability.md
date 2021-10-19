@@ -68,5 +68,11 @@ Scalability is the ability to expand from the existing configuration of the syst
 
 ### [Which is right for our App ?](https://www.missioncloud.com/blog/horizontal-vs-vertical-scaling-which-is-right-for-your-app)
 
+<br>
+
+## Performance Vs Scalability
+Performance refers to the capability of a system to provide a certain response time, serve a defined number of users or process a certain amount of data. So performance is a software quality metric. Whereas, Scalability referes to the characteristic of a system to increase performance by adding additional ressources.
+
+The system is scalable, if adding additional resources really helps to improve performance. Whether your system is scalable or not depends on your architecture. If we want our systems to be scalable we have to take this into consideration right from the beginning of development and also monitor throughout the lifecycle. 
 
 

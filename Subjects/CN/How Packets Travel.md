@@ -117,7 +117,7 @@ On the receiving end, each layer strips the header from the data and passes it b
 
 <br>
 
-## IMP Terminologies
+## @ Key Players
 
 ### Switch
 
@@ -139,6 +139,8 @@ On the receiving end, each layer strips the header from the data and passes it b
 2. Each interface on a router creates a network boundary.
 3. A Router maintains  a Routing Table, which contains paths to all the networks a Router knows how to reach.
 4. **When a router receives a packet destined to a network which is not in its Routing Table, that packet is discarded.**
+
+#### [Router Vs Gateway](https://www.geeksforgeeks.org/difference-between-router-and-gateway/)
 
 <br>
 

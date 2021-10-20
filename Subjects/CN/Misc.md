@@ -2,10 +2,50 @@
 
 <br>
 
-## [Private IP Vs Public IP](https://www.geeksforgeeks.org/difference-between-private-and-public-ip-addresses/)
-Private IP address of a system is the IP address which is used to communicate within the same network. Using private IP data or information can be sent or received within the same network. Private IP can be known by entering “ipconfig” on command prompt. It works only in LAN.		
+## Private IP Vs Public IP 
 
-Public IP address of a system is the IP address which is used to communicate outside the network. Public IP address is basically assigned by the ISP (Internet Service Provider). It is used to get internet service. Public IP can be known by searching “what is my ip” on google.
+#### Private IP
+1. Private IP address of a system is the IP address which is used to communicate within the same network.
+2. Our Wifi Router creates a local network of our devices and assigns private IPs to each local device.
+3. It can only be accessed from inside of your LAN (unless you setup **Port Forwarding** for remote access).
+4. Private IP can be known by entering “ipconfig” on command prompt. 
+
+
+#### Public IP
+1. Public IP address of a system is the IP address which is used to communicate outside the network. 
+2. Public IP address is basically assigned by the ISP (Internet Service Provider) for unique identification of each devices. 
+3. Public IP can be known by searching “what is my ip” on google.
+4. When we connect with mobile data, IP provided will be public.
+
+
+<br>
+
+## Dynamic IP and Static IP
+
+### Dynamic IPs
+1. Dynamic IP addresses are randomly generated IP addresses for users, these IP addresses are by default allotted by network providers to its subscribers. They are dynamic in nature i.e. they changes any time.
+2. For businesses, network providers offer a range of IPs. Within this range that business can allow IP addresses to its employees.
+3. For dynamic IP allotment, DHCP (Dynamic host control protocol) is used where the user has to put in a range and submit it.
+4. Dynamic ip address is easy to designate and maintaining cost of dynamic ip is less than static ip.
+
+#### Why Dynamic IP addresses are used ?
+Reason for keeping most of IPs dynamic is that IP address are limited in number, and it is not feasible to assign static IPs to all devices. All the users on the network will not be always active so restricting an IP address for a user is not beneficial for network providers. Every user who connects to the network will avail a random IP from their available pool.
+
+<br>
+
+### Static IP
+1. Static IP addresses are fixed IP addresses and they are usually provided to businesses. If a static ip address is provided then it can’t be changed or modified.
+2. Network providers charge a premium to allow static IP addresses.
+3. The cost to maintain the static ip address is higher than dynamic ip address.
+
+#### Why Static IP addresses are used ?
+Static IP addresses are used by businesses for hosting: FTP servers, Email servers, VPN servers, Web hosting services, Remote desktop service, Tracking user activities.
+
+<br>
+
+### Should I use static IP addresses or dynamic IP addresses?
+Large scale companies and software companies require static IP addresses because they need all the services that can be easily availed with static IP addresses. All the other companies and users who don’t use these services should use dynamic IP addresses.
+
 
 
 <br>

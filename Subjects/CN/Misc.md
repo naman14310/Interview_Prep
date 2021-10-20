@@ -2,25 +2,36 @@
 
 <br>
 
-## Private IP Vs Public IP 
+## [Private IP Vs Public IP](https://www.avast.com/c-ip-address-public-vs-private) 
 
 #### Private IP
 1. Private IP address of a system is the IP address which is used to communicate within the same network.
 2. Our Wifi Router creates a local network of our devices and assigns private IPs to each local device.
 3. It can only be accessed from inside of your LAN (unless you setup **Port Forwarding** for remote access).
 4. Private IP can be known by entering “ipconfig” on command prompt. 
+5. Private IP address exists within specific private IP address ranges reserved by IANA and should never appear on the internet.
+
+```
+Reserved IP address ranges for Private networks
+
+Class A: 10.0.0.0 — 10.255.255.255
+
+Class B: 172.16.0.0 — 172.31.255.255 
+
+Class C: 192.168.0.0 — 192.168.255.255 
+```
 
 
 #### Public IP
 1. Public IP address of a system is the IP address which is used to communicate outside the network. 
 2. Public IP address is basically assigned by the ISP (Internet Service Provider) for unique identification of each devices. 
 3. Public IP can be known by searching “what is my ip” on google.
-4. When we connect with mobile data, IP provided will be public.
-
+4. When we connect with mobile data, IP provided by ISPs will be public.
+5. Your personal device has a private IP that remains hidden when you connect to the internet through your router’s public IP.
 
 <br>
 
-## Dynamic IP and Static IP
+## [Dynamic IP and Static IP](https://mahipal-nehra.medium.com/dynamic-ip-address-vs-static-ip-address-731139d25b14)
 
 ### Dynamic IP
 1. Dynamic IP addresses are randomly generated IP addresses for users, these IP addresses are by default allotted by network providers to its subscribers. They are dynamic in nature i.e. they changes any time.

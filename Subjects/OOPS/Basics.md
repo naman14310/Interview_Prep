@@ -33,7 +33,7 @@ public class Phone{
 
 <br>
 
-### Limitations of OOPs ?
+### Limitations of OOPs
 1. The length of the programmes developed using OOP language is much larger than the procedural approach.
 2. Object-oriented programs are typically slower than procedurebased programs, as they typically require more instructions to be executed.
 3. Not suitable for all types of problems.

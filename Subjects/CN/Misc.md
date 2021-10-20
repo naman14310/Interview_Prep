@@ -22,7 +22,7 @@
 
 ## Dynamic IP and Static IP
 
-### Dynamic IPs
+### Dynamic IP
 1. Dynamic IP addresses are randomly generated IP addresses for users, these IP addresses are by default allotted by network providers to its subscribers. They are dynamic in nature i.e. they changes any time.
 2. For businesses, network providers offer a range of IPs. Within this range that business can allow IP addresses to its employees.
 3. For dynamic IP allotment, DHCP (Dynamic host control protocol) is used where the user has to put in a range and submit it.

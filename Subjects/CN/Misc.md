@@ -2,6 +2,14 @@
 
 <br>
 
+## [Private IP Vs Public IP](https://www.geeksforgeeks.org/difference-between-private-and-public-ip-addresses/)
+Private IP address of a system is the IP address which is used to communicate within the same network. Using private IP data or information can be sent or received within the same network. Private IP can be known by entering “ipconfig” on command prompt. It works only in LAN.		
+
+Public IP address of a system is the IP address which is used to communicate outside the network. Public IP address is basically assigned by the ISP (Internet Service Provider). It is used to get internet service. Public IP can be known by searching “what is my ip” on google.
+
+
+<br>
+
 ## VPN
 
 [Video](https://www.youtube.com/watch?v=8wDI5_MVdmk)

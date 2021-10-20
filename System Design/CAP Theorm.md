@@ -1,10 +1,6 @@
 # CAP Theorem
 
-[Scaler Video](https://www.youtube.com/watch?v=8UryASGBiR4)
-
-[Primer Video](https://www.youtube.com/watch?v=R_Fxz14tr2M)
-
-[Medium Blog](https://medium.com/codex/system-design-interview-basics-cap-vs-pacelc-cf7c5eebc313)
+[Scaler Video](https://www.youtube.com/watch?v=8UryASGBiR4) | [Primer Video](https://www.youtube.com/watch?v=R_Fxz14tr2M) | [Medium Blog](https://medium.com/codex/system-design-interview-basics-cap-vs-pacelc-cf7c5eebc313)
 
 <br>
 

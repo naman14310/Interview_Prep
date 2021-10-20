@@ -42,7 +42,7 @@ In other words, it means that partition tolerance is really not an option. Your 
 
 <br>
 
-#### 1. CP Database (Consistent and Partition Tolerant)
+### 1. CP Database (Consistent and Partition Tolerant)
 System sacrifices availability in the case of a network partition, but makes sure that consistency and partition tolerance is never compromised.
 
 **Applications Of CP Databases:** 
@@ -53,7 +53,7 @@ In applications such as banking, eCommerce, user login, etc. availability is not
 
 <br>
 
-#### 2. AP Database (Available and Partition Tolerant)
+### 2. AP Database (Available and Partition Tolerant)
 All nodes continue operating in such a system, however some that are affected by the partition may return inconsistent data. Once the partition is resolved, the most recent write is replicated to each node, and consistency is reestablished.
 
 **Applications Of AP Databases:** 
@@ -64,7 +64,7 @@ In applications such as Facebook and Instagram that work with millions of posts 
 
 <br>
 
-#### 3. CA Database (Consistent and Available)
+### 3. CA Database (Consistent and Available)
 A CA database is consistent and available as long as there’s no network partition. However, Distributed systems are defined by their ability to have partitions.  Hence, a CA database can’t exist in distributed systems, apart from relational databases (SQL databases).
 
 **Applications Of AP Databases:** 

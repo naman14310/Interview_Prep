@@ -47,7 +47,7 @@ System sacrifices availability in the case of a network partition, but makes sur
 
 **Applications Of CP Databases:** 
 
-In applications such as banking, eCommerce, user login, or text messages, availability is not as important as consistency. These applications strictly require data consistency. So it’s okay if the system is not available at all times, but if a value is returned by the node, it must be consistent.
+In applications such as banking, eCommerce, user login, etc. availability is not as important as consistency. These applications strictly require data consistency. So it’s okay if the system is not available at all times, but if a value is returned by the node, it must be consistent.
 
 **DataBases:** MongoDB, Apache, Hbase, Couchbase, Redis
 

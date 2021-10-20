@@ -698,3 +698,58 @@ vector<int> smallestRange(vector<vector<int>>& nums) {
     return ans;
 }
 ```
+
+<br>
+
+### 14. Longest Substring with At Least K Repeating Characters (Tricky)
+Given a string s and an integer k, return the length of the longest substring of s such that the frequency of each character in this substring is greater than or equal to k.
+
+Input: s = "ababbc", k = 2
+
+Output: 5
+
+Hint: A substring is valid if each character has at least k frequency. The main idea is to find all the valid substrings with a different number of unique characters and track the maximum length.
+
+```cpp
+bool isValid (vector<int> &cnt, int k){
+    for(int c : cnt)
+        if(c>0 and c<k) return false;
+
+    return true;
+}
+
+
+int longestSubstring(string s, int k) {
+    int ans = 0;
+
+    for(int len=1; len<=26; len++){
+    
+        int i=0, j=0;
+        int unique_cnt = 0;
+        vector<int> cnt (26, 0);
+
+        while(j<s.length()){
+            int idx = s[j] - 'a';
+            cnt[idx]++;
+
+            if(cnt[idx]==1) unique_cnt++;
+
+            while(unique_cnt > len){
+                int idx2 = s[i]-'a';
+                cnt[idx2]--;
+                i++;
+
+                if(cnt[idx2]==0) unique_cnt--;
+            }
+
+            if(isValid(cnt, k)) 
+                ans = max(ans, j-i+1);
+
+            j++;
+        }
+
+    }
+
+    return ans;
+}
+```

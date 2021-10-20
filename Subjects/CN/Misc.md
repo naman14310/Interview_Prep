@@ -10,10 +10,7 @@ Public IP address of a system is the IP address which is used to communicate out
 
 <br>
 
-## VPN
-
-[Video](https://www.youtube.com/watch?v=8wDI5_MVdmk)
-
+## [VPN](https://www.youtube.com/watch?v=8wDI5_MVdmk)
 VPN stands for "Virtual Private Network". A VPN hides your IP address by letting the network redirect through a specially configured remote VPN server. This means that if you surf online with a VPN, the VPN server becomes the source of your data. The VPN acts as a secure tunnel between you and the internet. Your ISP and other third parties cannot detect this tunnel.This means your Internet Service Provider (ISP) and other third parties cannot see which websites you visit or what data you send and receive online.
 
 <br>
@@ -39,7 +36,7 @@ Connecting via a VPN client can be imagined as if you were connecting your home 
 
 <br>
 
-## What is G in 4G ?
+## [What is G in 4G ?](http://net-informations.com/q/diff/generations.html)
 Simply, the "G" stands for "GENERATION". While you connected to internet, the speed of your internet is depends upon the signal strength that has been shown in alphabets like 2G, 3G, 4G. Each Generation is defined as a set of telephone network standards. The speed increases and the technology used to achieve that speed also changes.
 
 ![img](http://net-informations.com/q/diff/img/mobile-generations.png)

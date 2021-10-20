@@ -1,5 +1,13 @@
 # CAP Theorem
 
+[Scaler Video](https://www.youtube.com/watch?v=8UryASGBiR4)
+
+[Primer Video](https://www.youtube.com/watch?v=R_Fxz14tr2M)
+
+[Medium Blog](https://medium.com/codex/system-design-interview-basics-cap-vs-pacelc-cf7c5eebc313)
+
+<br>
+
 **The CAP theorem states that a distributed database system can at best guarantee 2 out of the 3 desired features: Consistency, Availability, and Partition tolerance.**
 
 When working with distributed systems, there are countless databases to choose from, including MySQL, Cloudbase, Oracle, Cassandra, and so many others. CAP theorem makes it simpler to categorize the options and choose the right tool to use in different scenarios.
@@ -17,14 +25,10 @@ A partition refers to a break in connection between nodes within a distributed s
 
 <br>
 
-## Partition Tolerance is not an option!
+### Partition Tolerance is not an option!
 CAP theorem is often misinterpreted, that you can only have two out of the three characteristics at any given time. This is not true, though. The fact is that you can have all three characteristics (consistency, availability, and partition tolerance) as long as there is no network failure.
 
 In other words, it means that partition tolerance is really not an option. Your distributed system needs to be partition tolerant in any case. Upon network failure, you can choose between consistency and availability.
-
-<br>
-
-![img](https://miro.medium.com/max/700/0*NdhzeRka30FMCchn)
 
 <br>
 
@@ -38,7 +42,7 @@ In other words, it means that partition tolerance is really not an option. Your 
 
 <br>
 
-![img](https://miro.medium.com/max/1242/1*UgttbELFVn3Z-uc7LeghbA.png)
+![img](https://miro.medium.com/max/583/1*IxtBHOXYfeTTYtg1AS8kvQ.png)
 
 <br>
 
@@ -83,3 +87,14 @@ Note: Certain systems can be configured to operate in either CP or AP mode, depe
 The choice between consistency and availability comes when you have to pick a database type for your distributed system. NoSQL databases are a more common choice in designing distributed systems because they’re horizontally scalable (unlike SQL databases that are vertically scalable). They’re easy to scale, especially beneficial if the network is growing rapidly, with multiple interconnected nodes.
 
 NoSQL follows two popular consistency models: ACID and BASE. ACID models guarantee consistency over availability. It’s called a ‘strong consistency model’. BASE models, which are the more popular choice of NoSQL systems, guarantee availability over consistency. BASE models offer ‘eventual consistency’.
+
+<br>
+
+## PACELC Theorem
+The PACELC theorem states that in a system that replicates data:
+1. If there is a Partition (‘P’), a distributed system can tradeoff between Availability and Consistency (i.e., ‘A’ and ‘C’);
+2. Else (‘E’), when the system is running normally in the absence of partitions, the system can tradeoff between Latency (‘L’) and Consistency (‘C’).
+
+<br>
+
+![img](https://miro.medium.com/max/875/1*jhRZ60EgLthrOUaHYgys0Q.png)

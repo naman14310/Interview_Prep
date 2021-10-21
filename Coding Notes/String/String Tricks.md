@@ -3,7 +3,7 @@
 <br>
 
 ### 1. Palindrome break
-Convert a given palindromic string containing characters a and b to non palindrome (which is lexicographically smallest) by replacing only one character.
+Convert a given palindromic string containing characters a and b to non palindrome (lexicographically smallest) by replacing only one character.
 
 ```cpp
 string breakPalindrome(string s) {

@@ -51,7 +51,7 @@ int removePalindromeSub(string s) {
 <br>
 
 ### 3. Longest Palindrome
-Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
+Given a string s consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
 
 Input: s = "abccccdd"
 

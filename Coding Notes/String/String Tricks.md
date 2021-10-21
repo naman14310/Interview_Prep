@@ -108,7 +108,7 @@ bool canConstruct(string s, int k) {
 <br>
 
 ### 5. Count minimum swap to make string palindrome
-Given a string s, the task is to find out the minimum no of adjacent swaps required to make string s palindrome. If it is not possible, then return -1.
+Given a string s, the task is to find out the minimum no of adjacent swaps required to make string s palindrome. If not possible, return -1.
 
 Input: aabcb
 

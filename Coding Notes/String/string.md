@@ -378,6 +378,86 @@ int maxProduct(vector<string>& words) {
 
 <br>
 
+### 4. Maximum Length of a Concatenated String with Unique Characters
+You are given an array of strings arr. A string s is formed by the concatenation of a subsequence of arr that has unique characters. Return the maximum possible length of s.
+
+Input: arr = ["un","iq","ue"]
+
+Output: 4
+
+```cpp
+bool isValid (vector<bool> &v1, vector<bool> &v2){    
+    for(int i=0; i<26; i++)
+        if(v1[i] and v2[i]) return false;
+
+    return true;
+}
+
+
+void combine(vector<bool> &v1, vector<bool>&v2){
+    for(int i=0; i<26; i++)
+        if(v2[i]) v1[i] = true;    
+}
+
+
+void detach(vector<bool> &v1, vector<bool>&v2){
+    for(int i=0; i<26; i++)
+        if(v2[i]) v1[i] = false;
+}
+
+
+int solve (vector<vector<bool>> &bitvector, int idx, vector<bool> &v, vector<int> &wordLen){
+    if(idx==bitvector.size()) return 0;
+
+    if(isValid(v, bitvector[idx])){
+        combine(v, bitvector[idx]);
+        int len1 = solve(bitvector, idx+1, v, wordLen) + wordLen[idx];
+
+        detach(v, bitvector[idx]);
+        int len2 = solve(bitvector, idx+1, v, wordLen);
+
+        return max(len1, len2);
+    }
+
+    else{
+        int len2 = solve(bitvector, idx+1, v, wordLen);
+        return len2;
+    }
+
+}
+
+
+
+int maxLength(vector<string>& arr) {
+    vector<vector<bool>> bitvector;
+    vector<int> wordLen;
+
+    for(string s : arr){
+        vector<bool> v (26, false);
+        bool flag = false;
+
+        for(char ch : s){
+            if(v[ch-'a']){
+                flag = true;
+                break;
+            }
+
+            v[ch-'a'] = true;
+        }
+
+        if(!flag){
+            bitvector.push_back(v);
+            wordLen.push_back(s.length());
+        } 
+    }
+
+    vector<bool> v (26, false);
+    return solve (bitvector, 0, v, wordLen);
+}
+```
+
+<br>
+
 
 
 ## @ String Parsing

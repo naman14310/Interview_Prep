@@ -521,7 +521,48 @@ vector<int> Solution::flip(string A) {
 
 <br>
 
-### 5. Shortest Subarray with Sum at Least K
+
+### 5. Count Binary Substrings
+Give a binary string s, return the number of non-empty substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively. Substrings that occur multiple times are counted the number of times they occur.
+
+```cpp
+int countBinarySubstrings(string s) {
+    int i = 1;        
+    int left = 1, right=0;
+
+    bool flip = false;
+    int ans = 0;
+
+    while(i<s.length()){
+        if(s[i]!=s[i-1]){
+            if(!flip){
+                right++;
+                flip = true;
+            }
+            else{
+                ans += min(left, right);
+                left = right;
+                right = 1;
+            }
+        }
+
+        else if(flip){
+            right++;
+        }
+        else{
+            left++;
+        }
+
+        i++;
+    }
+    ans += min(left, right);
+    return ans;
+}
+```
+
+<br>
+
+### 6. Shortest Subarray with Sum at Least K
 Given an integer array nums and an integer k, return the length of the shortest non-empty subarray of nums with a sum of at least k. If there is no such subarray, return -1.
 
 **Approach 1: Brute Force - O(n2)**

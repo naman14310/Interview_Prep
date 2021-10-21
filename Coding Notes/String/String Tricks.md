@@ -147,7 +147,39 @@ int minSwaps (string &s){
 
 <br>
 
-### 6. Orderly Queue
+### 6. Minimum Deletions to Make Character Frequencies Unique
+A string s is called good if there are no two different characters in s that have the same frequency. Given a string s, return the minimum number of characters you need to delete to make s good.
+
+Input: s = "ceabaacb"
+
+Output: 2
+
+```cpp
+int minDeletions(string s) {
+    unordered_map<char, int> mp;
+    for(char ch : s)
+        mp[ch]++;
+
+    unordered_set<int> st;
+    int moves = 0;
+
+    for(auto p : mp){
+        int freq = p.second;
+
+        while(st.find(freq) != st.end())
+            freq--;
+
+        moves += p.second-freq;
+        if(freq>0) st.insert(freq);
+    }
+
+    return moves;
+}
+```
+
+<br>
+
+### 7. Orderly Queue
 You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string. Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
 
 Input: s = "cba", k = 1

@@ -143,7 +143,7 @@ Tip:
 
 ## @ Easy
 
-#### 1. Count Inversions
+### 1. Count Inversions
 
 ```cpp
 void merge(long long arr[], long long start, long long end, long long mid, long long &invCount){
@@ -186,7 +186,7 @@ long long int inversionCount(long long arr[], long long N){
 
 <br>
 
-#### 2. Biggest Number String
+### 2. Biggest Number String
 You're given a vector of numbers, Create a lexiographically largest no. by concatenating those numbers.
 
 ```cpp
@@ -210,7 +210,7 @@ string concatenate(vector<int> numbers){
 
 <br>
 
-#### 3. Custom Sort String
+### 3. Custom Sort String
 order and str are strings composed of lowercase letters. In order, no letter occurs more than once. order was sorted in some custom order previously. We want to permute the characters of str so that they match the order that order was sorted. More specifically, if x occurs before y in order, then x should occur before y in the returned string. Return any permutation of str (as a string) that satisfies this property.
 
 Input: order = "cba", str = "abcd"
@@ -286,7 +286,7 @@ string customSortString(string order, string str) {
 
 ## @ Medium
 
-#### 1. Minimum Swaps to Sort
+### 1. Minimum Swaps to Sort
 Given an array of n distinct elements. Find the minimum number of swaps required to sort the array in strictly increasing order.
 
 Hint: Think of something related to cycle detection. Found all cycle lengths and add them to find minimum no. of swaps.
@@ -318,5 +318,46 @@ int minSwaps(vector<int>&nums){
     return minswaps;
 }
 ```
+
+<br>
+
+### 2. Min Steps to Make Piles Equal Height
+Alexa is given n piles of equal or unequal heights. In one step, Alexa can remove any number of boxes from the pile which has the maximum height and try to make it equal to the one which is just lower than the maximum height of the stack. Determine the minimum number of steps required to make all of the piles equal in height.
+
+Input  : [1, 1, 2, 2, 2, 3, 3, 3, 4, 4]
+
+Output : 15
+
+```
+Approach:
+After sorting in reverse, we have...
+[4, 4, 3, 3, 3, 2, 2, 2, 1] --> (2 steps to transform the 4's) --> The 3's must wait for 2 numbers before it to finish their reduction
+[3, 3, 3, 3, 3, 2, 2, 2, 1] --> (5 steps to transform the 3's) --> The 2's must wait for 5 numbers before it to finish their reduction
+[2, 2, 2, 2, 2, 2, 2, 2, 1] --> (8 steps to transform the 2's) --> The 1's must wait for 8 numbers before it to finish their reduction
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1] --> Total 15 steps
+```
+
+```cpp
+int solve (vector<int> &piles){
+
+    sort(piles.begin(), piles.end(), greater<int>());
+
+    int prev_cnt = 0, cnt = 0;
+    int ans = 0;
+
+    for(int i=0; i<piles.size(); i++){
+        if(i==0 or piles[i]!=piles[i-1]){
+            ans += prev_cnt + cnt;
+            prev_cnt += cnt;
+            cnt=1;
+        }
+        else
+            cnt++;
+    }
+
+    return ans;
+}
+```
+
 
 

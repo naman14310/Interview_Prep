@@ -10,7 +10,9 @@ Some important string functions:
 
 <br>
 
-## @ Easy
+
+
+## @ Standard Problems
 
 ### 1. Tokenize string (stringstream)
 
@@ -94,95 +96,7 @@ string normalize(const string &sentence) {
 
 <br>
 
-### 4. Palindrome break
-Convert a given palindromic string containing characters a and b to non palindrome (which is lexicographically smallest) by replacing only one character.
-
-```cpp
-string breakPalindrome(string s) {
-  int n = s.length();    
-  if(n<=1) return "";
-
-  for(int i=0; i<n/2; i++){
-      if(s[i]!='a'){
-          s[i] = 'a';
-          return s;
-      }
-  }
-
-  s[n-1] = 'b';
-  return s;    
-}
-```
-
-<br>
-
-### 5. Remove Palindromic Subsequences (Tricky)
-You are given a string s consisting only of letters 'a' and 'b'. In a single step you can remove one palindromic subsequence from s. Return the minimum number of steps to make the given string empty.
-
-```cpp
-bool isPalindrome(string s){
-    int i=0, j=s.length()-1;
-    while(i<j){
-        if(s[i]!=s[j]) return false;
-        i++;
-        j--;
-    }
-    return true;
-
-}
-
-int removePalindromeSub(string s) {
-    if(s.length()==0) return 0;
-    if(isPalindrome(s)){
-        return 1;    
-    }
-    else return 2;
-}
-```
-
-<br>
-
-### 6. Count Binary Substrings
-Give a binary string s, return the number of non-empty substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively. Substrings that occur multiple times are counted the number of times they occur.
-
-```cpp
-int countBinarySubstrings(string s) {
-    int i = 1;        
-    int left = 1, right=0;
-
-    bool flip = false;
-    int ans = 0;
-
-    while(i<s.length()){
-        if(s[i]!=s[i-1]){
-            if(!flip){
-                right++;
-                flip = true;
-            }
-            else{
-                ans += min(left, right);
-                left = right;
-                right = 1;
-            }
-        }
-
-        else if(flip){
-            right++;
-        }
-        else{
-            left++;
-        }
-
-        i++;
-    }
-    ans += min(left, right);
-    return ans;
-}
-```
-
-<br>
-
-### 7. Roman to Integer
+### 4. Roman to Integer
 
 ```cpp
 int romanToInt(string A) {
@@ -207,7 +121,7 @@ int romanToInt(string A) {
 
 <br>
 
-### 8. Integer to Roman
+### 5. Integer to Roman
 
 ```cpp
 string Solution::intToRoman(int A) {
@@ -284,64 +198,7 @@ string Solution::intToRoman(int A) {
 
 <br>
 
-### 9. Longest Palindrome
-Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
-
-Input: s = "abccccdd"
-
-Output: 7
-
-Hint: Count how many letters appear an odd number of times. Because we can use all letters, except for each odd-count letter we must leave one, except one of them we can use.
-
-```cpp
-int longestPalindrome(string s) {
-
-    unordered_map<char, int> mp;
-    int oddFreq = 0;
-
-    for(char ch : s)
-        mp[ch]++;
-
-    /* Count all char with odd freq */
-
-    for(auto p : mp)
-        if(p.second%2 != 0) oddFreq++;
-
-    if(oddFreq>0) oddFreq--;        // --> becoz we can use one single char at middle of the palindrome
-
-    return s.length()-oddFreq;
-}
-```
-
-<br>
-
-### 10. Construct K Palindrome Strings
-Given a string s and an integer k. You should construct k non-empty palindrome strings using all the characters in s. Return True if you can use all the characters in s to construct k palindrome strings or False otherwise.
-
-Input: s = "aabababccdsb", k = 3
-
-Output: true
-
-Hint: Just cnt number of char with odd freq.
-
-```cpp
-bool canConstruct(string s, int k) {
-    unordered_map<char, int> mp;
-    for(char ch : s)
-        mp[ch]++;
-
-    int odd_cnt = 0;
-    
-    for(auto p : mp)
-        if(p.second % 2 != 0) odd_cnt++;
-
-    return odd_cnt<=k and s.length()>=k;
-}
-```
-
-<br>
-
-### 11. Reverse Words in a String
+### 6. Reverse Words in a String
 Return the string A after reversing the string word by word.
 
 Input: s = "the sky is blue"
@@ -382,7 +239,8 @@ string reverseWords(string s) {
 <br>
 
 
-## @ Medium
+
+## @ Intuitive
 
 ### 1. Minimum Add to Make Parentheses Valid
 You are given a parentheses string s. In one move, you can insert a parenthesis at any position of the string. Return the minimum number of moves required to make s valid.
@@ -520,7 +378,11 @@ int maxProduct(vector<string>& words) {
 
 <br>
 
-### 4. String to Integer (atoi)
+
+
+## @ String Parsing
+
+### 1. String to Integer (atoi)
 Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
 
 [Algorithm](https://leetcode.com/problems/string-to-integer-atoi/)
@@ -592,7 +454,7 @@ public:
 
 <br>
 
-### 5. Compare Version Numbers
+### 2. Compare Version Numbers
 Compare two version numbers version1 and version2.
 1. If version1 > version2 return 1,
 2. If version1 < version2 return -1,
@@ -658,50 +520,5 @@ int Solution::compareVersion(string A, string B) {
     }
  
     return 0;
-}
-```
-
-<br>
-
-
-## @ Hard
-
-### 1. Orderly Queue
-You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string. Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
-
-Input: s = "cba", k = 1
-
-Output: "acb"
-
-[Explaination](https://leetcode.com/problems/orderly-queue/discuss/165878/C%2B%2BJavaPython-Sort-String-or-Rotate-String)
-
-```cpp
-string orderlyQueue(string s, int k) {
-
-    /* If k>1, simply return sorted string */
-
-    if(k>1){
-        sort(s.begin(), s.end());
-        return s;
-    }
-
-    /* 
-        Else if k==1, return smallest of all n-1 permutations that can be formed by
-        poping one element from front and pushing it to back
-    */
-
-    deque<char> dq (s.begin(), s.end());
-    string ans = s;
-
-    for(int i=0; i<s.length()-1; i++){
-
-        char ch = dq.front(); dq.pop_front();
-        dq.push_back(ch);
-
-        string temp (dq.begin(), dq.end());
-        if(temp<ans) ans = temp;
-    }
-
-    return ans;
 }
 ```

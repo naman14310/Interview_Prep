@@ -1,4 +1,4 @@
-# Problems based on Game Playing
+# Game Playing
 
 <br>
 

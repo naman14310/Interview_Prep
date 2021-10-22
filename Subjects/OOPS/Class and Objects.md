@@ -36,6 +36,12 @@ Access Modifiers or Access Specifiers in a class are used to assign the accessib
 2. Private
 3. Protected
 
+<br>
+
+![img](https://www.sitesbay.com/cpp/images/access-specifier-in-cpp.png)
+
+<br>
+
 ### Public
 The public members of a class can be accessed from anywhere in the program using the direct member access operator (.) with the object of that class. 
 

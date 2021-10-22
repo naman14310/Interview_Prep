@@ -2,7 +2,61 @@
 
 <br>
 
-### 1. Count Sorted Vowel Strings
+### 1. Climbing Stairs
+You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+```cpp
+int solve (int n, vector<int> & dp){
+    if(n<0) return 0;
+    if(n==0) return 1;
+
+    if(dp[n]!=-1) 
+        return dp[n];
+
+    return dp[n] = solve(n-1, dp) + solve(n-2, dp);
+}
+
+int climbStairs(int n) {
+    vector<int> dp (n+1, -1);
+    return solve (n, dp);
+}
+```
+
+<br>
+
+### 2. Min Cost Climbing Stairs
+You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps. You can either start from the step with index 0, or the step with index 1. Return the minimum cost to reach the top of the floor.
+
+Input: cost = [10,15,20]
+
+Output: 15
+
+```cpp
+int solve (vector<int> & cost, int idx, vector<int> & dp){
+    if(idx>=0 and idx>=cost.size()) return 0;
+    if(idx>=0 and dp[idx]!=-1) return dp[idx];
+
+    int res1 = solve (cost, idx+1, dp);
+    int res2 = solve (cost, idx+2, dp);
+
+    int ans = min(res1, res2);
+    ans += idx==-1 ? 0 : cost[idx];
+
+    if(idx>=0) dp[idx] = ans;
+
+    return ans;
+}
+
+
+int minCostClimbingStairs(vector<int>& cost) {
+    vector<int> dp (cost.size(), -1);
+    return solve (cost, -1, dp);
+}
+```
+
+<br>
+
+### 3. Count Sorted Vowel Strings
 Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted. A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1] in the alphabet.
 
 Input: n = 2
@@ -32,7 +86,7 @@ int countVowelStrings(int n) {
 
 <br>
 
-### 2. Integer Break (Tricky)
+### 4. Integer Break (Tricky)
 Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers. Return the maximum product you can get.
 
 Input: n = 2
@@ -68,7 +122,7 @@ int integerBreak(int n) {
 
 <br>
 
-### 3. Minimum Cost For Tickets
+### 5. Minimum Cost For Tickets
 You have planned some train traveling one year in advance. The days of the year in which you will travel are given as an integer array days. Each day is an integer from 1 to 365. Train tickets are sold in three different ways:
 1. a 1-day pass is sold for costs[0] dollars
 2. a 7-day pass is sold for costs[1] dollars
@@ -115,7 +169,7 @@ int mincostTickets(vector<int>& days, vector<int>& costs) {
 
 <br> 
 
-### 4. Paint House
+### 6. Paint House
 There are a row of N houses, each house can be painted with one of the three colors: red, blue or green. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color.
 
 The cost of painting each house with a certain color is represented by a N x 3 cost matrix A. Find the minimum total cost to paint all houses.
@@ -150,7 +204,7 @@ int solve(vector<vector<int>> &A) {
 
 <br>
 
-### 5. 2 Keys Keyboard
+### 7. 2 Keys Keyboard
 There is only one character 'A' on the screen of a notepad. You can perform two operations on this notepad for each step:
 1. Copy All: You can copy all the characters present on the screen (a partial copy is not allowed).
 2. Paste: You can paste the characters which are copied last time.
@@ -200,7 +254,7 @@ int minSteps(int n) {
 
 <br>
 
-### 6. Number of Dice Rolls With Target Sum
+### 8. Number of Dice Rolls With Target Sum
 You have d dice and each die has f faces numbered 1, 2, .., f. Return the number of possible ways (out of fd total ways) modulo 10^9 + 7 to roll the dice so the sum of the face-up numbers equals target.
 
 Input: d = 2, f = 6, target = 7
@@ -238,7 +292,7 @@ int numRollsToTarget(int d, int f, int target) {
 
 <br>
 
-### 7. Combination Sum IV (basically permutation sum)
+### 9. Combination Sum IV (basically permutation sum)
 Given an array of distinct integers nums and a target, return the number of possible combinations that add up to target. Note that different sequences are counted as different combinations.
 ```
 Input: nums = [1,2,3], target = 4
@@ -281,7 +335,7 @@ int combinationSum4(vector<int>& nums, int target) {
 
 <br>
 
-### 8. Decode Ways
+### 10. Decode Ways
 To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, "11106" can be mapped into:
 1. "AAJF" with the grouping (1 1 10 6)
 2. "KJF" with the grouping (11 10 6)
@@ -336,7 +390,7 @@ int numDecodings(string s) {
 
 <br>
 
-### 9. Allocate Mailboxes (Tricky)
+### 11. Allocate Mailboxes (Tricky)
 Given the array houses and an integer k. where houses[i] is the location of the ith house along a street, your task is to allocate k mailboxes in the street. Return the minimum total distance between each house and its nearest mailbox.
 
 ![img](https://assets.leetcode.com/uploads/2020/05/07/sample_11_1816.png)
@@ -416,7 +470,7 @@ int minDistance(vector<int>& houses, int k) {
 
 <br>
 
-### 10. Frog Jump
+### 12. Frog Jump
 A frog is crossing a river. The frog can jump on a stone, but it must not jump into the water. Given a list of stones' positions (in units) in sorted ascending order, determine if the frog can cross the river by landing on the last stone. Initially, the frog is on the first stone and assumes the first jump must be 1 unit. If the frog's last jump was k units, its next jump must be either k - 1, k, or k + 1 units. The frog can only jump in the forward direction.
 
 Input: stones = [0,1,3,5,6,8,12,17]
@@ -468,7 +522,84 @@ bool canCross(vector<int>& stones) {
 
 <br>
 
-### 11. Find Two Non-overlapping Sub-arrays Each With Target Sum
+### 13. Maximum Score from Performing Multiplication Operations (Tricky)
+You are given two integer arrays nums and multipliers of size n and m respectively, where n >= m. You begin with a score of 0. You want to perform exactly m operations. On the ith operation (1-indexed), you will:
+1. Choose one integer x from either the start or the end of the array nums.
+2. Add multipliers[i] * x to your score.
+3. Remove x from the array nums.
+
+Return the maximum score after performing m operations.
+
+Input: nums = [1,2,3], multipliers = [3,2,1]
+
+Output: 14
+
+**Naive Memorization - O(m3)**
+
+```cpp
+int solve (vector<int>& nums, vector<int>& multipliers, int start, int end, int idx, vector<vector<vector<int>>> & dp){
+    if(idx==multipliers.size()) 
+        return 0;
+
+    if(dp[start][end][idx]!=INT_MIN) return dp[start][end][idx];
+
+    /* option 1 : pick from start */
+
+    int res1 = nums[start]*multipliers[idx] + solve (nums, multipliers, start+1, end, idx+1, dp);
+
+    /* option 2 : pick from end */
+
+    int res2 = nums[end]*multipliers[idx] + solve (nums, multipliers, start, end-1, idx+1, dp);
+
+    return dp[start][end][idx] = max(res1, res2);
+}
+
+
+int maximumScore(vector<int>& nums, vector<int>& multipliers) {
+    int n = nums.size();
+    int m = multipliers.size();
+
+    vector<vector<vector<int>>> dp (n, vector<vector<int>> (n, vector<int> (m, INT_MIN)));
+    return solve (nums, multipliers, 0, n-1, 0, dp);
+}
+```
+
+**Optimization : Reducing DP variables - O(n2)**
+
+```cpp
+int solve (vector<int>& nums, vector<int>& multipliers, int start, int idx, int n, int m, vector<vector<int>> & dp){
+    if(idx==m) 
+        return 0;
+
+    if(dp[start][idx]!=INT_MIN) 
+        return dp[start][idx];
+
+    int end = n - (idx-start) - 1;      // --> end can be simply computed by using other two variables
+
+    /* option 1 : pick from start */
+
+    int res1 = nums[start]*multipliers[idx] + solve (nums, multipliers, start+1, idx+1, n, m, dp);
+
+    /* option 2 : pick from end */
+
+    int res2 = nums[end]*multipliers[idx] + solve (nums, multipliers, start, idx+1, n, m, dp);
+
+    return dp[start][idx] = max(res1, res2);
+}
+
+
+int maximumScore(vector<int>& nums, vector<int>& multipliers) {
+    int n = nums.size();
+    int m = multipliers.size();
+
+    vector<vector<int>> dp (m, vector<int> (m, INT_MIN));
+    return solve (nums, multipliers, 0, 0, n, m, dp);
+}
+```
+
+<br>
+
+### 14. Find Two Non-overlapping Sub-arrays Each With Target Sum
 Given an array of integers arr and an integer target. You have to find two non-overlapping sub-arrays of arr each with a sum equal target. Return the minimum sum of the lengths of the two required sub-arrays, or return -1 if you cannot find such two sub-arrays.
 
 Input: arr = [3,1,1,1,5,1,2,1], target = 3

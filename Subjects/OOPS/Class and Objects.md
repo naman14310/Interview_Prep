@@ -134,3 +134,26 @@ int main() {
 }
 ```
 
+<br>
+
+## Member Functions
+Member functions are the functions, which have their declaration inside the class. Inside class definition it can be defined directly, but outside the class, we have to use the scope resolution `::` operator along with class name along with function name.
+
+```cpp
+class Cube{
+public:
+    int side;
+    int getVolume();        // --> Member function declared here, but defined outside the class
+    
+    int getArea(){          // --> Member function declared and defind inside the class
+        return side*side;
+    }
+}
+
+// --> member function defined outside class definition
+int Cube :: getVolume(){
+    return side*side*side;
+}
+
+```
+

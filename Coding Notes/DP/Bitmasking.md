@@ -41,6 +41,8 @@ bool canIWin(int maxChoosableInteger, int desiredTotal) {
 }
 ```
 
+<br>
+
 **Bitmasking using Bit manipulations (Faster)**
 
 ```cpp

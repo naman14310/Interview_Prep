@@ -1,5 +1,7 @@
 # Problems on LCS Pattern
 
+<br>
+
 ### @ Longest Common Subsequence (Parent Problem)
 Given two strings s1 and s2, return the length of their longest common subsequence.
 
@@ -37,6 +39,8 @@ int longestCommonSubsequence(string text1, string text2) {
 }
 ```
 
+<br>
+
 **Method 2 : Tabulation (Bottom-Up)**
 
 ```cpp
@@ -60,6 +64,8 @@ int longestCommonSubsequence(string s1, string s2) {
     return dp[s1.length()][s2.length()];
 }
 ```
+
+<br>
 
 ### 1. Print Longest Common Subsequence
 Given two sequences, print the longest subsequence present in both of them. LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
@@ -100,6 +106,8 @@ string printLCS (string & s1, string & s2){
 }
 ```
 
+<br>
+
 ### 2. Shortest Common Supersequence
 Given two strings s1 and s2 of lengths m and n respectively, find the length of the smallest string which has both, s1 and s2 as its sub-sequences.
 
@@ -131,6 +139,8 @@ int shortestCommonSupersequence(string s1, string s2, int m, int n){
     return m+n-lcs_len;
 }
 ```
+
+<br>
 
 ### 3. Print Shortest Common Supersequence
 Given two strings s1 and s2, return the shortest string that has both str1 and str2 as subsequences.  If multiple answers exist, you may return any of them.
@@ -200,6 +210,8 @@ string shortestCommonSupersequence(string s1, string s2) {
 }
 ```
 
+<br>
+
 ### 4. Minimum number of deletions and insertions to transform one string into another
 Given two strings ‘s1’ and ‘s2’ of size m and n respectively. The task is to remove and insert the minimum number of characters from s1 to transform it into s2. It could be possible that the same character needs to be removed from one point of s1 and inserted to some another point.
 
@@ -231,6 +243,8 @@ int minOperations(string s1, string s2) {
     return m+n-(2*lcs_len);
 } 
 ```
+
+<br>
 
 ### 5. Longest Palindromic Subsequence
 Given a string s, find the longest palindromic subsequence's length in s.
@@ -266,6 +280,8 @@ int longestPalindromeSubseq(string s) {
     return lcs (s, rev, n);
 }
 ```
+
+<br>
 
 ### 6. Minimum Insertion Steps to Make a String Palindrome (Same as Min Deletion steps)
 Given a string s. In one step you can insert any character at any index of the string. Return the minimum number of steps to make s palindrome.
@@ -303,6 +319,8 @@ int minInsertions(string s) {
 }
 ```
 
+<br>
+
 ### 7. Longest Repeating Subsequence
 Given a string, find the length of the longest repeating subsequence such that the two subsequences don’t have same string character at the same position, i.e., any i’th character in the two subsequences shouldn’t have the same index in the original string. 
 
@@ -331,6 +349,8 @@ int LongestRepeatingSubsequence(string s){
     return dp[n][n];
 }
 ```
+
+<br>
 
 ### 8. Minimum ASCII Delete Sum for Two Strings
 Given two strings s1 and s2, return the lowest ASCII sum of deleted characters to make two strings equal.
@@ -377,6 +397,8 @@ int minimumDeleteSum(string s1, string s2) {
 }
 ```
 
+<br>
+
 ### 9. Uncrossed Lines (Tricky)
 We write the integers of nums1 and nums2 (in the order they are given) on two separate horizontal lines. Now, we may draw connecting lines: a straight line connecting two numbers nums1[i] and nums2[j] such that:
 
@@ -412,6 +434,8 @@ int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
     return lcs (nums1, nums2);
 }
 ```
+
+<br>
 
 ### 10. Interleaving String
 Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
@@ -458,6 +482,8 @@ bool isInterleave(string s1, string s2, string s3) {
 }
 ```
 
+<br>
+
 ### 11. Distinct Subsequences
 Given two strings s and t, return the number of distinct subsequences of s which equals t.
 
@@ -501,6 +527,7 @@ int numDistinct(string s, string t) {
 }
 ```
 
+<br>
 
 ### 12. Edit Distance
 Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word:

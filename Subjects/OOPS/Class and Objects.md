@@ -51,7 +51,6 @@ public:
  
 int main(){
     Circle obj;
-     
     obj.radius = 5.5;       // --> accessing public datamember outside class
      
     cout << "Radius is: " << obj.radius << "\n";

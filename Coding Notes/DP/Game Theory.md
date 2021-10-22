@@ -1,9 +1,33 @@
 # Problems based on Game Playing
 
-## @ Game Theory
+<br>
 
-### 1. Stone Game (Predict the Winner)
-Alex and Lee play a game with piles of stones. The objective of the game is to end with the most stones. The total number of stones is odd, so there are no ties. Alex and Lee take turns, with Alex starting first.  Each turn, a player takes the entire pile of stones from either the beginning or the end of the row.  This continues until there are no more piles left. Assuming Alex and Lee play optimally, return True if and only if Alex wins the game.
+### 1. Nim Game
+Initially, there is a heap of stones on the table. You and your friend will alternate taking turns, and you go first. On each turn, the person whose turn it is will remove 1 to 3 stones from the heap. The one who removes the last stone is the winner. Given n, the number of stones in the heap, return true if you can win the game assuming both you and your friend play optimally, otherwise return false.
+
+```cpp
+bool canWinNim(int n) {
+    vector<bool> res (n+1, true);
+
+    for(int i=4; i<=n; i++)
+        res[i] = !res[i-1] or !res[i-2] or !res[i-3];
+
+    return res[n];
+}
+```
+
+#### Approach 2: [Constant Space Solution](https://leetcode.com/problems/nim-game/discuss/73760/One-line-O(1)-solution-and-explanation)
+
+```cpp
+bool canWinNim(int n) {
+    return n%4;
+}
+```
+
+<br>
+
+### 2. Stone Game (Predict the Winner)
+Alex and Lee play a game with piles of stones. The objective of the game is to end with the most stones. The total number of stones is odd, so there are no ties. Alex and Lee take turns, with Alex starting first. Each turn, a player takes the entire pile of stones from either the beginning or the end of the row.  This continues until there are no more piles left. Assuming Alex and Lee play optimally, return True if and only if Alex wins the game.
 
 Input: piles = [5,3,4,5]
 
@@ -49,7 +73,9 @@ bool stoneGame(vector<int>& piles) {
 }
 ```
 
-### 2. Stone Game II
+<br>
+
+### 3. Stone Game II
 There are a number of piles arranged in a row, and each pile has a positive integer number of stones piles[i]. The objective of the game is to end with the most stones. Alice and Bob take turns, with Alice starting first. Initially, M = 1. On each player's turn, that player can take all the stones in the first X remaining piles, where 1 <= X <= 2M. Then, we set M = max(M, X). The game continues until all the stones have been taken. Assuming Alice and Bob play optimally, return the maximum number of stones Alice can get.
 
 Input: piles = [2,7,9,4,4]
@@ -103,7 +129,9 @@ int stoneGameII(vector<int>& piles) {
 }
 ```
 
-### 3. Stone Game III
+<br>
+
+### 4. Stone Game III
 There are several stones arranged in a row, and each stone has an associated value which is an integer given in the array stoneValue. Alice and Bob take turns, with Alice starting first. On each player's turn, that player can take 1, 2 or 3 stones from the first remaining stones in the row. The score of each player is the sum of values of the stones taken. The score of each player is 0 initially.
 
 The objective of the game is to end with the highest score, and the winner is the player with the highest score and there could be a tie. The game continues until all the stones have been taken. Assume Alice and Bob play optimally. Return "Alice" if Alice will win, "Bob" if Bob will win or "Tie" if they end the game with the same score.
@@ -209,7 +237,9 @@ string stoneGameIII(vector<int>& stoneValue) {
 }
 ```
 
-### 4. Stone Game IV
+<br>
+
+### 5. Stone Game IV
 Initially, there are n stones in a pile. On each player's turn, that player makes a move consisting of removing any non-zero square number of stones in the pile. Also, if a player cannot make a move, he/she loses the game. Given a positive integer n. Return True if and only if Alice wins the game otherwise return False, assuming both players play optimally with Alice starting first.
 
 Input: n = 4
@@ -256,8 +286,9 @@ bool winnerSquareGame(int n) {
 }
 ```
 
+<br>
 
-### 5. Stone Game VII
+### 6. Stone Game VII
 Alice and Bob take turns playing a game, with Alice starting first.
 
 There are n stones arranged in a row. On each player's turn, they can remove either the leftmost stone or the rightmost stone from the row and receive points equal to the sum of the remaining stones' values in the row. The winner is the one with the higher score when there are no stones left to remove.
@@ -315,7 +346,9 @@ int stoneGameVII(vector<int>& stones) {
 }
 ```
 
-### 6. Maximum Score from Performing Multiplication Operations (Tricky)
+<br>
+
+### 7. Maximum Score from Performing Multiplication Operations (Tricky)
 You are given two integer arrays nums and multipliers of size n and m respectively, where n >= m. You begin with a score of 0. You want to perform exactly m operations. On the ith operation (1-indexed), you will:
 1. Choose one integer x from either the start or the end of the array nums.
 2. Add multipliers[i] * x to your score.

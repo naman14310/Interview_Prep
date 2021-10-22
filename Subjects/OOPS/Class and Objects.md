@@ -256,5 +256,50 @@ int main(){
 Following are some important points about friend functions and classes: 
 1. Friendship is not mutual. If class A is a friend of B, then B doesn’t become a friend of A automatically.
 2. Friendship is not inherited.
+3. When we make a class as friend, all its member functions automatically become friend functions.
+
+<br>
+
+#### NOTE: Friend Functions is a reason, why C++ is not called as a pure Object Oriented language. Because it violates the concept of Encapsulation.
+
+<br>
+
+## Inline Functions
+IThese are actual functions, which are copied everywhere during compilation, like preprocessor macro, so the overhead of function calling is reduced. All the functions defined inside class definition are by default inline. We can also make any non-class function inline by using keyword inline with them.
+
+#### Points to Note (IMP):
+1. For an inline function, declaration and definition must be done together. 
+2. Inline functions do increase efficiency, but we should not make all the functions inline. Because if we make large functions inline, it may lead to code bloat, and might affect the speed too.
+3. Hence, it is adviced to define large functions outside the class definition using scope resolution :: operator, because if we define such functions inside class definition, then they become inline automatically.
+4. Inline functions doesn't get storage, they are kept in Symbol table.
+
+<br>
+
+### Forward References
+All the inline functions are evaluated by the compiler, at the end of class declaration. 
+
+```cpp
+class ForwardReference{
+    int i;
+public:
+
+    /*  This code will work because no inline function in a class is evaluated 
+        until the closing braces of class declaration. */
+    
+    int f() {
+        return g() + 10;      // --> call to undeclared function
+    }
+    
+    int g() {
+        return i;
+    }
+};
+
+int main(){
+    ForwardReference fr;
+    fr.f();
+}
+```
+
 
  

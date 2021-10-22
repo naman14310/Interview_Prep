@@ -1,4 +1,6 @@
-# Problems on DP with Bit Masking
+# DP with Bit Masking
+
+<br>
 
 ### 1. Can I Win
 In the "100 game" two players take turns adding, to a running total, any integer from 1 to 10. The player who first causes the running total to reach or exceed 100 wins. For example, two players might take turns drawing from a common pool of numbers from 1 to 15 without replacement until they reach a total >= 100. Given two integers maxChoosableInteger and desiredTotal, return true if the first player to move can force a win, otherwise, return false. Assume both players play optimally.
@@ -40,6 +42,7 @@ bool canIWin(int maxChoosableInteger, int desiredTotal) {
 ```
 
 **Bitmasking using Bit manipulations (Faster)**
+
 ```cpp
 bool solve (int maxChoosableInteger, int desiredTotal, bool player1, int sum, unordered_map<int,bool> & dp, int key, vector<int> & pow){
     if(dp.find(key)!=dp.end()) 

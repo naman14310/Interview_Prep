@@ -216,8 +216,8 @@ int main(){
  
 
 **Friend Function** can be given a special grant to access private and protected members. A friend function can be: 
-a) A member of another class 
-b) A global function 
+1. A member of another class 
+2. A global function 
 
 ```cpp
 #include <iostream>

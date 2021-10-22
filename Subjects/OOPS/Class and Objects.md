@@ -168,7 +168,7 @@ int Cube :: getVolume(){
 
 <br>
 
-## What are Static Member Functions
+## Static Member Functions
 1. These functions work for the class as whole rather than for a particular object of a class. 
 2. Static member function can be called using class name and scope resolution :: operator.
 3. These functions cannot access ordinary data members and member functions.
@@ -176,7 +176,7 @@ int Cube :: getVolume(){
 
 <br>
 
-## What are Const Member Functions
+## Const Member Functions
 Such member functions can never modify the object or its related data members.
 
 <br>

@@ -265,7 +265,7 @@ Following are some important points about friend functions and classes:
 <br>
 
 ## Inline Functions
-These functions are copied everywhere during compilation, like preprocessor macro, so the overhead of function calling is reduced. All the functions defined inside class definition are by default inline. We can also make any non-class function inline by using keyword inline with them.
+These functions are copied everywhere during compilation, like preprocessor macro, so the overhead of function calling is reduced. All the functions defined inside class definition are by default inline. We can also make any non-class function inline by using keyword inline.
 
 #### Points to Note (IMP):
 1. For an inline function, declaration and definition must be done together. 

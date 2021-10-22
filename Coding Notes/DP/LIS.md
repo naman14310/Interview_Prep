@@ -149,7 +149,7 @@ int Solution::longestSubsequenceLength(const vector<int> &A) {
 <br>
 
 ### 4. Decreasing Subsequences (Tricky)
-Given an int array nums of length n. Split it into strictly decreasing subsequences. Output the min number of subsequences you can get by splitting.
+Given an array nums. Split it into strictly decreasing subsequences. Output the min number of subsequences you can get by splitting.
 
 Input: [5, 2, 4, 3, 1, 6]
 

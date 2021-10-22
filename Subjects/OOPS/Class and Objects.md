@@ -157,3 +157,104 @@ int Cube :: getVolume(){
 
 ```
 
+<br>
+
+### Types of Member Functions
+1. Simple functions
+2. Static functions
+3. Const functions
+4. Inline functions
+5. Friend functions
+
+<br>
+
+## What are Static Member Functions
+1. These functions work for the class as whole rather than for a particular object of a class. 
+2. Static member function can be called using class name and scope resolution :: operator.
+3. These functions cannot access ordinary data members and member functions.
+4. They can only access static data members and static member functions.
+
+<br>
+
+## What are Const Member Functions
+Such member functions can never modify the object or its related data members.
+
+<br>
+
+## Friend Class and Friend Functions
+A **Friend class** can access private and protected members of other class in which it is declared as friend.
+
+```cpp
+#include <iostream>
+class A {
+private:
+    int a;
+ 
+public:
+    A() { a = 0; }
+    friend class B;         // --> Friend Class
+};
+ 
+class B {
+private:
+    int b;
+ 
+public:
+    void showA(A &x){
+        // --> Since B is friend of A, it can access private members of A
+        cout << "A::a=" << x.a;
+    }
+};
+ 
+int main(){
+    A a;
+    B b;
+    b.showA(a);
+    return 0;
+}
+```
+ 
+
+**Friend Function** can be given a special grant to access private and protected members. A friend function can be: 
+a) A member of another class 
+b) A global function 
+
+```cpp
+#include <iostream>
+ 
+class B;
+ 
+class A {
+public:
+    void showB(B&);
+};
+ 
+class B {
+private:
+    int b;
+ 
+public:
+    B() { b = 0; }
+    friend void A::showB(B& x);     // --> Friend function
+};
+ 
+void A::showB(B& x){
+    // --> Since showB() is friend of B, it can access private members of B
+    std::cout << "B::b = " << x.b;
+}
+ 
+int main(){
+    A a;
+    B x;
+    a.showB(x);
+    return 0;
+}
+```
+
+<br>
+
+Following are some important points about friend functions and classes: 
+1. Friendship is not mutual. If class A is a friend of B, then B doesn’t become a friend of A automatically.
+2. Friendship is not inherited.
+
+ 

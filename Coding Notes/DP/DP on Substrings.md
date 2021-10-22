@@ -1,5 +1,7 @@
 # Problems based on DP on Substrings
 
+<br>
+
 ### 1. Longest Common Substring
 Given two strings. The task is to find the length of the longest common substring.
 
@@ -27,6 +29,8 @@ int longestCommonSubstr (string s1, string s2, int n, int m){
     return ans;
 }
 ```
+
+<br>
 
 ### 2. Longest Palindromic Substring
 Given a string s, return the longest palindromic substring in s.
@@ -99,6 +103,8 @@ string longestPalindrome(string s) {
 }
 ```
 
+<br>
+
 ### 3. Count Palindromic Substrings
 Given a string s, return the number of palindromic substrings in it.
 
@@ -150,6 +156,8 @@ int countSubstrings(string s) {
     return solve (s, n, dp);
 }
 ```
+
+<br>
 
 ### 4. Maximum Length of Repeated Subarray
 Given two integer arrays nums1 and nums2, return the maximum length of a subarray that appears in both arrays.

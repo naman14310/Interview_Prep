@@ -260,6 +260,7 @@ int main(){
 }
 ```
  
+ <br>
 
 **Friend Function** can be given a special grant to access private and protected members. A friend function can be: 
 1. A member of another class 

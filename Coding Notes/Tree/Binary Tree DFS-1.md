@@ -789,44 +789,26 @@ int sumEvenGrandparent(TreeNode* root) {
 Given the root of a complete binary tree, return the number of the nodes in the tree. Design an algorithm that runs in less than O(n) time complexity.
 
 ```cpp
-int find_left_height(TreeNode* root){
-    int h = 0;       
-    while(root){
-        h++;
-        root = root->left;
-    }
-    return h;
-} 
-
-int find_right_height(TreeNode* root){
-    int h = 0;       
-    while(root){
-        h++;
-        root = root->right;
-    }
-    return h;
+int cntLeft (TreeNode* root){
+    if(!root) return 0;
+    return 1+cntLeft(root->left);
 }
 
-int count(TreeNode* root, int leftH, int rightH){
-
-    /* 
-        leftH and rightH == -1 --> means we don't know about the height 
-        We will only compute left and right height if we don't know it 
-    */
-
-    if(leftH==-1) leftH = find_left_height(root);
-    if(rightH==-1) rightH = find_right_height(root);
-
-    if(leftH==rightH) return pow(2, leftH)-1;
-
-    int countLeft = count(root->left, leftH-1, -1);
-    int countRight = count(root->right, -1, rightH-1);
-
-    return 1 + countLeft + countRight;
+int cntRight (TreeNode* root){
+    if(!root) return 0;
+    return 1+cntRight(root->right);
 }
+
 
 int countNodes(TreeNode* root) {
-    return count(root, -1, -1);
+    if(!root) return 0;
+
+    int lh = cntLeft(root);
+    int rh = cntRight(root);
+
+    if(lh==rh) return pow(2, lh)-1;
+
+    return countNodes(root->left) + countNodes(root->right) + 1;
 }
 ```
 

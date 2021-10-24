@@ -47,3 +47,8 @@ public class Phone{
 
 ### OOPs is well suited for ?
 This approach to programming is well-suited for programs that are large, complex and actively updated or maintained.
+
+<br>
+
+### What does keyword `Namespace` do ?
+It defines a scope for the identifiers that are used in the program. 

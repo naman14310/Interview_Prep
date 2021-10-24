@@ -5,6 +5,10 @@
 ### What is OOPS ?
 OOP (object-oriented programming) is a programming paradigm which involves creation of classes and objects. The main aim of OOP is to bind data together and the functions that operate on them. It organizes software design around data, or objects, rather than functions and logic.
 
+**Note: OOPs follow Bottom-Up Approach**
+
+<br>
+
 #### Real World Example
 Lets take an example of mobile phones. Class refers to a category of some entity. Here Mobile will be our class, and its instances (or phones) will become our objects. Now one object is a collection of data and member functions. In our example, phone specs will be the object data and its features which defines the characteristic of any object will be our function such as take_photo(), call(), message(), shutdown() etc.
 

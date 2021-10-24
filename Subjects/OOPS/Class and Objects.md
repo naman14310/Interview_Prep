@@ -4,7 +4,7 @@
 
 <br>
 
-## Structure Vs Class
+## @ Structure Vs Class
 
 #### Similarities:
 1. Both are user defined data types.
@@ -30,7 +30,7 @@ When we need to map real world entities with our program. Or when we need polymo
 
 <br>
 
-## Access Modifiers
+## @ Access Modifiers
 Access Modifiers or Access Specifiers in a class are used to assign the accessibility to the class members (By default, they are private). Following are 3 access modifiers:
 1. Public
 2. Private
@@ -141,7 +141,7 @@ int main() {
 
 <br>
 
-## Member Functions
+## @ Member Functions
 Member functions are the functions, which have their declaration inside the class. Inside class definition it can be defined directly, but outside the class, we have to use the scope resolution `::` operator along with class name along with function name.
 
 ```cpp
@@ -164,7 +164,7 @@ int Cube :: getVolume(){
 
 <br>
 
-### Types of Member Functions
+#### Types of Member Functions
 1. Simple functions
 2. Static functions
 3. Const functions
@@ -174,7 +174,7 @@ int Cube :: getVolume(){
 
 <br>
 
-## Inline Functions
+## @ Inline Functions
 These functions are copied everywhere during compilation, like preprocessor macro, so the overhead of function calling is reduced. All the functions defined inside class definition are by default inline. We can also make any non-class function inline by using keyword inline.
 
 #### Points to Note (IMP):
@@ -217,7 +217,7 @@ int main(){
 
 <br>
 
-## Friend Class and Friend Functions
+## @ Friend Class and Friend Functions
 A **Friend class** can access private and protected members of other class in which it is declared as friend.
 
 Note: Unlike member functions, it cannot access the member names directly and has to use an object name and dot membership operator.
@@ -308,8 +308,8 @@ Following are some important points about friend functions and classes:
 
 
 
-## Memory Allocation of Objects
-Usually, C program has four memory sections: heap, stack, data, code.
+## @ Memory Allocation of Objects
+Usually, C/C++ program has four memory sections: heap, stack, data, code.
 
 1. **Heap:** This memory is unused and can be used to dynamically allocate the memory at runtime. It is applied and freed by programmer.
 2. **Stack:** Store function’s parameter and local variant in a function. It is system’s responsibility to apply and free the space.
@@ -319,7 +319,7 @@ Usually, C program has four memory sections: heap, stack, data, code.
 <br>
 
 
-## The Static Keyword
+## @ The Static Keyword
 We can use static keyword with:
 1. Variable
 2. Objects
@@ -444,4 +444,255 @@ Now the destructor is invoked after the end of main. This happened because the s
 <br>
 
 
+## @ Constructors in C++
+A constructor is a special type of member function of a class which initializes objects of a class. 
+
+
+#### How constructors are different from a normal member function?
+1. Constructor has same name as the class itself
+2. Constructors don’t have return type
+3. A constructor is automatically called when an object is created.
+4. It must be placed in public section of class.
+5. If we do not specify a constructor, C++ compiler generates a default constructor for object.
+
+Note: In C++, the constructor cannot be virtual, because when a constructor of a class is executed there is no virtual table in the memory, means no virtual pointer defined yet. So, the constructor should always be non-virtual.
+
+<br>
+
+![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20191128195435/CPP-Constructors.png)
+
+<br>
+
+**Real Life example:**
+
+Suppose you went to a shop to buy a marker. When you want to buy a marker, what are the options? 
+1. The first one you go to a shop and say give me a marker. So just saying give me a marker mean that you did not set which brand name and which color. So, whatever the frequently sold marker is there in the market or in his shop he will simply hand over that. And this is what a default constructor is.
+2. The second method you go to a shop and say I want a marker a red in color and XYZ brand. So you are mentioning this and he will give you that marker. So in this case you have given the parameters. And this is what a parameterized constructor is.
+3. Then the third one you go to a shop and say I want a marker like this(a physical marker on your hand). So the shopkeeper will see that marker, and give a new marker for you. So copy of that marker. And that’s what copy constructor is.
+
+<br>
+
+### Default Constructor
+Default constructor is the constructor which doesn’t take any argument. Even if we do not define any constructor explicitly, the compiler will automatically provide a default constructor implicitly.
+
+```cpp
+class construct{
+public:
+    int a, b;
+ 
+    /* Default Constructor */
+    
+    construct(){
+        a = 10; b = 20;
+    }
+};
+ 
+int main(){
+    construct c;        // --> Default constructor called automatically when the object is created
+    
+    cout << "a: " << c.a << endl << "b: " << c.b;
+    return 0;
+}
+```
+
+<br>
+
+### Parameterized Constructors
+These are constructors with parameters. Typically, these arguments help initialize an object when it is created.
+
+```
+Example e = Example(0, 50); // --> Explicit call
+
+Example e(0, 50);           // --> Implicit call
+```
+
+Note: Whenever we define one or more non-default constructors (with parameters) for a class, a default constructor should also be explicitly defined as the compiler will not provide a default constructor in this case.
+
+```cpp
+class Point{
+private:
+    int x, y;
+ 
+public:
+    /* Parameterized Constructor */
+    Point(int x1, int y1){
+        x = x1; y = y1;
+    }
+ 
+    int getX(){
+        return x;
+    }
+    
+    int getY(){
+        return y;
+    }
+};
+ 
+int main(){
+    Point p1(10, 15);       // --> Constructor called
+ 
+    // --> Access values assigned by constructor
+    cout << "p1.x = " << p1.getX() << ", p1.y = " << p1.getY();
+    return 0;
+}
+
+```
+
+Uses of Parameterized constructor: 
+1. It is used to initialize objects with different values when they are created.
+2. It is used to overload constructors.
+
+<br>
+
+### Copy Constructor
+It initializes an object using another object of the same class.
+
+```cpp
+class Point{
+private:
+    int x, y;
+public:
+    Point(int x1, int y1) { x = x1; y = y1; }
+ 
+    /* Copy constructor */
+    
+    Point(const Point &p1) {
+        x = p1.x; y = p1.y; 
+    }
+ 
+    int getX()  {  return x; }
+    int getY()  {  return y; }
+};
+ 
+int main(){
+
+    Point p1(10, 15);   // --> Normal constructor is called here
+    Point p2 = p1;      // --> Copy constructor is called here
+ 
+    // --> Let us access values assigned by constructors
+    cout << "p1.x = " << p1.getX() << ", p1.y = " << p1.getY();
+    cout << "\np2.x = " << p2.getX() << ", p2.y = " << p2.getY();
+    return 0;
+}
+```
+
+<br>
+
+#### When is copy constructor called ? 
+1. When an object of the class is returned by value. 
+2. When an object of the class is passed (to a function) by value as an argument. 
+3. When an object is constructed based on another object of the same class. 
+4. When the compiler generates a temporary object.
+
+<br>
+
+### Shallow Copy Vs Deep Copy
+
+![img](https://i.stack.imgur.com/AWKJa.jpg)
+
+<br>
+
+If we don’t define our own copy constructor, the C++ compiler creates a default copy constructor for each class which does a member-wise copy between objects. It works fine in general, But if there is any pointer variable defined in the object, then pointer in copied object will also points to the same location. This is known as **Shallow copy**. 
+
+<br>
+
+If we manually write a copy constructor and assign pointer values then that will be the case of **Deep copy**. It is possible only with user defined copy constructor. 
+
+```cpp
+class box {
+private:
+    int a;
+    int* p;
+  
+public:
+    box(){
+        p = new int;
+    }
+  
+    void set(int x, int y){
+        a = x;
+        *p = y;
+    }
+  
+    // --> Manually written Copy constructor for implementing Deep Copy
+    
+    box(box &obj){
+        a = obj.a;
+        p = new int;
+        *p = *(obj.p);
+    }
+};
+  
+int main(){
+    box first;          // --> first object
+    first.set(12, 14);
+    
+    box second = first;     // --> Here deep copy will happen  
+    return 0;
+}
+```
+
+<br>
+
+#### Copy constructor vs Assignment Operator 
+Copy constructor is called when a new object is created from an existing object, as a copy of the existing object. Assignment operator is called when an already declared(or initialized) object is assigned a new value from another existing object.
+
+```
+MyClass t1, t2;
+MyClass t3 = t1;  // --> Copy constructor will be called
+t2 = t1;          // --> Overridden assignment operator will be called
+```
+
+<br>
+
+#### Can we make copy constructor private ? 
+Yes, a copy constructor can be made private. When we make a copy constructor private in a class, objects of that class become non-copyable. This is particularly useful when our class has pointers or dynamically allocated resources. 
+
+<br>
+
+#### Why argument to a copy constructor must be passed as a reference ? 
+A copy constructor is called when an object is passed by value. So if we pass an argument by value in a copy constructor, a call to copy constructor would be made to call copy constructor which becomes a non-terminating chain of calls. Therefore compiler doesn’t allow parameters to be passed by value.
+
+<br>
+
+#### [Why copy constructor argument should be const in C++ ?](https://www.geeksforgeeks.org/copy-constructor-argument-const/)
+
+<br>
+
+## @ Destructors in C++
+Destructor is an instance member function which is invoked automatically whenever an object is going to be destroyed. It is the last function that is going to be called before an object is destroyed. If the object is created by using 'new' to allocate memory which resides in the heap memory, the destructor should use 'delete' to free the memory.   
+
+<br>
+
+#### Properties of Destructor
+1. It cannot be declared static or const.
+2. The destructor does not have arguments.
+3. It has no return type not even void.
+4. An object of a class with a Destructor cannot become a member of the union.
+5. A destructor should be declared in the public section of the class.
+6. The programmer cannot access the address of destructor.
+7. Destructor can be virtual.
+
+<br>
+
+#### When is destructor called ? 
+A destructor function is called automatically when the object goes out of scope: 
+1. the function ends 
+2. the program ends 
+3. a block containing local variables ends 
+4. a delete operator is called  
+
+<br>
+
+#### When do we need to write a user-defined destructor ? 
+If we do not write our own destructor in class, compiler creates a default destructor for us. The default destructor works fine unless we have dynamically allocated memory or pointer in class. When a class contains a pointer to memory allocated in class, we should write a destructor to release memory before the class instance is destroyed. This must be done to avoid memory leak.
+
+<br>
+
+#### Can there be more than one destructor in a class ? 
+No, there can only one destructor in a class with classname preceded by ~, no parameters and no return type.
+
+<br>
+
+#### [Virtual Destructors](https://www.youtube.com/watch?v=JXHJZJXKP64)
  

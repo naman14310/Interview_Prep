@@ -42,7 +42,7 @@ Access Modifiers or Access Specifiers in a class are used to assign the accessib
 
 <br>
 
-### Public
+#### Public
 The public members of a class can be accessed from anywhere in the program using the direct member access operator (.) with the object of that class. 
 
 ```cpp
@@ -65,7 +65,9 @@ int main(){
 }
 ```
 
-### Private
+<br>
+
+#### Private
 The class members declared as private are not allowed to be accessed directly by any object or function outside the class. Only the member functions or the friend functions are allowed to access the private data members of a class. We can access the private data members of a class indirectly using the public member functions of the class. 
 
 ```cpp
@@ -93,7 +95,9 @@ int main(){
 }
 ```
 
-### Protected
+<br>
+
+#### Protected
 Only difference of Protected with Private is that it can be accessed by any subclass (derived class) of that class as well. 
 
 ```cpp
@@ -133,6 +137,7 @@ int main() {
     return 0;
 }
 ```
+
 
 <br>
 
@@ -176,8 +181,49 @@ int Cube :: getVolume(){
 
 <br>
 
-## Const Member Functions
-Such member functions can never modify the object or its related data members.
+
+<br>
+
+## Inline Functions
+These functions are copied everywhere during compilation, like preprocessor macro, so the overhead of function calling is reduced. All the functions defined inside class definition are by default inline. We can also make any non-class function inline by using keyword inline.
+
+#### Points to Note (IMP):
+1. For an inline function, declaration and definition must be done together. 
+2. Inline functions do increase efficiency, but we should not make all the functions inline. Because if we make large functions inline, it may lead to code bloat, and might affect the speed too.
+3. Hence, it is adviced to define large functions outside the class definition using scope resolution :: operator, because if we define such functions inside class definition, then they become inline automatically.
+4. Inline functions doesn't get storage, they are kept in Symbol table.
+
+<br>
+
+Note: Inline expansion makes a program run faster because the overhead of a function call and return is eliminated. However, it makes the program to take up more storage because the statements that define inline functions are reproduced at each point where the function is called. So a trade-off becomes necessary.
+
+<br>
+
+### Forward References
+All the inline functions are evaluated by the compiler, at the end of class declaration. 
+
+```cpp
+class ForwardReference{
+    int i;
+public:
+
+    /*  This code will work because no inline function in a class is evaluated 
+        until the closing braces of class declaration. */
+    
+    int f() {
+        return g() + 10;      // --> call to undeclared function
+    }
+    
+    int g() {
+        return i;
+    }
+};
+
+int main(){
+    ForwardReference fr;
+    fr.f();
+}
+```
 
 <br>
 
@@ -261,49 +307,5 @@ Following are some important points about friend functions and classes:
 <br>
 
 #### NOTE: Friend Functions is a reason, why C++ is not called as a pure Object Oriented language. Because it violates the concept of Encapsulation.
-
-<br>
-
-## Inline Functions
-These functions are copied everywhere during compilation, like preprocessor macro, so the overhead of function calling is reduced. All the functions defined inside class definition are by default inline. We can also make any non-class function inline by using keyword inline.
-
-#### Points to Note (IMP):
-1. For an inline function, declaration and definition must be done together. 
-2. Inline functions do increase efficiency, but we should not make all the functions inline. Because if we make large functions inline, it may lead to code bloat, and might affect the speed too.
-3. Hence, it is adviced to define large functions outside the class definition using scope resolution :: operator, because if we define such functions inside class definition, then they become inline automatically.
-4. Inline functions doesn't get storage, they are kept in Symbol table.
-
-<br>
-
-Note: Inline expansion makes a program run faster because the overhead of a function call and return is eliminated. However, it makes the program to take up more storage because the statements that define inline functions are reproduced at each point where the function is called. So a trade-off becomes necessary.
-
-<br>
-
-### Forward References
-All the inline functions are evaluated by the compiler, at the end of class declaration. 
-
-```cpp
-class ForwardReference{
-    int i;
-public:
-
-    /*  This code will work because no inline function in a class is evaluated 
-        until the closing braces of class declaration. */
-    
-    int f() {
-        return g() + 10;      // --> call to undeclared function
-    }
-    
-    int g() {
-        return i;
-    }
-};
-
-int main(){
-    ForwardReference fr;
-    fr.f();
-}
-```
-
 
  

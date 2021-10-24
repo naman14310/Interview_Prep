@@ -89,3 +89,17 @@ Output:
 20 10
 
 Note: `::m` will always refer to global m
+
+<br> 
+
+### Memory management operators in C/C++
+We use dynamic allocation techniques when it is not known in advance, how much memory space is needed. C uses `malloc()` and `calloc()` functions to allocate memory dynamically at runtime. Similarily it uses `free()` function to free dynamically allocated memory. 
+
+In C++, an object can be created by `new` and destroyed by `delete`. 
+
+<br>
+
+**Advantages of new over malloc()**
+1. It automatically computes size of data object.
+2. It automatically returns correct pointer type, so no need to typecast.
+3. Like any other operator, new and delete can be overloaded.

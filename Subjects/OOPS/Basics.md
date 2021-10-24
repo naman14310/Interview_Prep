@@ -83,7 +83,9 @@ int main(){
 ```
 
 Output:
+
 20 30 10
+
 20 10
 
 Note: `::m` will always refer to global m

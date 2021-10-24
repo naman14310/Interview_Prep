@@ -171,16 +171,6 @@ int Cube :: getVolume(){
 4. Inline functions
 5. Friend functions
 
-<br>
-
-## Static Member Functions
-1. These functions work for the class as whole rather than for a particular object of a class. 
-2. Static member function can be called using class name and scope resolution :: operator.
-3. These functions cannot access ordinary data members and member functions.
-4. They can only access static data members and static member functions.
-
-<br>
-
 
 <br>
 
@@ -308,5 +298,143 @@ Following are some important points about friend functions and classes:
 <br>
 
 #### NOTE: Friend Functions is a reason, why C++ is not called as a pure Object Oriented language. Because it violates the concept of Encapsulation.
+
+<br>
+
+
+
+## Memory Allocation of Objects
+Usually, C program has four memory sections: heap, stack, data, code.
+
+1. **Heap:** This memory is unused and can be used to dynamically allocate the memory at runtime. It is applied and freed by programmer.
+2. **Stack:** Store function’s parameter and local variant in a function. It is system’s responsibility to apply and free the space.
+3. **Data:** Store global variant and static variant and constant. It can be divided into three small parts in detail. First initialized global variant and static variant, then uninitialized global variant and uninitialized static variant, last constant variant.
+4. **Code:** Store your code. (only can be read, not allowed to be written)
+
+<br>
+
+
+## The Static Keyword
+We can use static keyword with:
+1. Variable
+2. Objects
+3. Functions
+
+<br>
+
+### Static Variables
+1. When a variable is declared as static, space for it gets allocated for the lifetime of the program. They have a property of preserving their value even after they are out of their scope.
+2. Even if the function is called multiple times, space for the static variable is allocated only once and the value of variable in the previous call gets carried through the next function call. 
+3. Static variables are allocated memory in data segment, not stack segment.
+4. Static variables (like global variables) are initialized as 0 if not initialized explicitly. 
+5. There can not be multiple copies of same static variables for different objects.
+6. Static variables can not be initialized using constructors.
+7. In C, static variables can only be initialized using constant literals. (C++ removed this property)
+
+```cpp
+
+#include<iostream>
+using namespace std;
+  
+class GfG{
+public:
+    static int i;
+      
+    GfG(){
+        // Do nothing
+    };
+};
+
+/*  static variable inside a class must be defined or initialized explicitly by the user 
+    using the class name and scope resolution operator outside the class.   */
+
+int GfG::i = 1;  
+  
+int main()
+{
+    GfG obj;
+    cout << obj.i; 
+}
+```
+
+<br>
+
+### Static Objects
+Just like variables, objects also when declared as static have a scope till the lifetime of program.
+
+**Program 1: Normal Object**
+
+```cpp
+class GfG{
+    int i;
+    public:
+        GfG(){
+            i = 0;
+            cout << "Inside Constructor, ";
+        }
+        ~GfG(){
+            cout << "Inside Destructor, ";
+        }
+};
+  
+int main(){
+    int x = 0;
+    if (x==0){
+        GfG obj;
+    }
+    cout << "End of main ";
+}
+```
+
+Output: Inside Constructor, Inside Destructor, End of main
+
+When the object is created, the constructor is invoked and soon as the control of if block gets over the destructor is invoked as the scope of object is inside the if block only where it is declared.
+
+<br>
+
+**Program 2: Static Object**
+
+```cpp
+#include<iostream>
+using namespace std;
+  
+class GfG{
+    int i = 0;
+      
+    public:
+    GfG(){
+        i = 0;
+        cout << "Inside Constructor, ";
+    }
+      
+    ~GfG(){
+        cout << "Inside Destructor";
+    }
+};
+  
+int main(){
+    int x = 0;
+    if (x==0){
+        static GfG obj;
+    }
+    cout << "End of main, ";
+}
+```
+
+Output: Inside Constructor, End of main, Inside Destructor
+
+Now the destructor is invoked after the end of main. This happened because the scope of static object is through out the life time of program.
+
+
+<br>
+
+### Static Functions
+1. These functions work for the class as whole rather than for a particular object of a class. 
+2. Static member function can be called using class name and scope resolution :: operator.
+3. They can only access static data members and static member functions.
+4. These functions cannot access ordinary data members and member functions.
+
+<br>
+
 
  

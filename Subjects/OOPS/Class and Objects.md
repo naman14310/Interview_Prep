@@ -220,6 +220,8 @@ int main(){
 ## Friend Class and Friend Functions
 A **Friend class** can access private and protected members of other class in which it is declared as friend.
 
+Note: Unlike member functions, it cannot access the member names directly and has to use an object name and dot membership operator.
+
 ```cpp
 #include <iostream>
 class A {
@@ -294,6 +296,9 @@ Following are some important points about friend functions and classes:
 1. Friendship is not mutual. If class A is a friend of B, then B doesn’t become a friend of A automatically.
 2. Friendship is not inherited.
 3. When we make a class as friend, all its member functions automatically become friend functions.
+4. A function can be declared friend with any number of classes.
+5. A friend function is not in the scope of class to which it has been declared as friend hence it cannot be called using object of that class.
+6. It can be declared either in public or private part of class without affecting its meaning.
 
 <br>
 

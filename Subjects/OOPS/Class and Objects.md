@@ -722,5 +722,7 @@ int main() {
 
 <br>
 
-#### [Virtual Destructors](https://www.youtube.com/watch?v=JXHJZJXKP64)  |  [Private Destructors](https://www.geeksforgeeks.org/private-destructor/)
+#### [Virtual Destructors](https://www.youtube.com/watch?v=JXHJZJXKP64)  
+
+#### [Private Destructors](https://www.geeksforgeeks.org/private-destructor/)
  

@@ -431,8 +431,10 @@ Now the destructor is invoked after the end of main. This happened because the s
 ### Static Functions
 1. These functions work for the class as whole rather than for a particular object of a class. 
 2. Static member function can be called using class name and scope resolution :: operator.
-3. They can only access static data members and static member functions.
-4. These functions cannot access ordinary data members and member functions.
+3. They can only access static data members and static member functions. 
+4. Static member functions do not have this pointer. 
+5. A static member function cannot be virtual.
+6. A static member function cannot be const and volatile.
 
 <br>
 

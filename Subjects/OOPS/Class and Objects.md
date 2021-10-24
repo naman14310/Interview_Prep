@@ -694,5 +694,37 @@ No, there can only one destructor in a class with classname preceded by ~, no pa
 
 <br>
 
+#### When do we need to write a user defined destructor ?
+There are two things that necessitate defining a destructor:
+1. When your object gets destructed, you need to perform some action other than destructing all class members.
+2. When you need to destruct objects through a base class pointer. When you need to do this, you must define the destructor to be virtual within the base class. Otherwise, your derived destructors won't get called, independent of whether they are defined or not, and whether they are virtual or not.
+
+```cpp
+class Foo {
+    public:
+        ~Foo() {
+            std::cerr << "Foo::~Foo()\n";
+        };
+};
+
+class Bar : public Foo {
+    public:
+        ~Bar() {
+            std::cerr << "Bar::~Bar()\n";
+        };
+};
+
+int main() {
+    Foo* bar = new Bar();
+    delete bar;
+}
+```
+
+<br>
+
 #### [Virtual Destructors](https://www.youtube.com/watch?v=JXHJZJXKP64)
+
+<br>
+
+#### [Private Destructors](https://www.geeksforgeeks.org/private-destructor/)
  

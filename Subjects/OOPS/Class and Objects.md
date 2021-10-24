@@ -273,6 +273,9 @@ These functions are copied everywhere during compilation, like preprocessor macr
 3. Hence, it is adviced to define large functions outside the class definition using scope resolution :: operator, because if we define such functions inside class definition, then they become inline automatically.
 4. Inline functions doesn't get storage, they are kept in Symbol table.
 
+
+Note: Inline expansion makes a program run faster because the overhead of a function call and return is eliminated. However, it makes the program to take up more storage because the statements that define inline functions are reproduced at each point where the function is called. So a trade-off becomes necessary.
+
 <br>
 
 ### Forward References

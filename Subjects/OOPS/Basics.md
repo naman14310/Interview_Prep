@@ -64,7 +64,7 @@ Global version of variable cannot be accessed from within the inner block. The s
 #include <iostream>
 using namespace std;
 
-int m = 10      // --> global 
+int m = 10;     // --> global 
 
 int main(){
 

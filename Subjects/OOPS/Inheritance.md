@@ -603,4 +603,3 @@ Base::fun() called
 Because interfaces specify only what the class is doing, not how it is doing it. The problem with multiple inheritance is that two classes may define different ways of doing the same thing, and the subclass can't choose which one to pick.
 
 <br>
-

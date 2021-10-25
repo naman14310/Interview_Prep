@@ -48,7 +48,7 @@ Lets take an example of bank. RBI is the parent of all banks in India. It has so
 ```
 Base class visibility	                        Derived class visibility
 --------------------------------------------------------------------------------------------------------
-                            Public	                    Private	                    Protected           
+                            Public                      Private                     Protected           
 --------------------------------------------------------------------------------------------------------  
 Private                     Not Inherited               Not Inherited               Not Inherited       
 Protected                   Protected                   Private                     Protected

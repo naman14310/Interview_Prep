@@ -602,3 +602,34 @@ int Solution::compareVersion(string A, string B) {
     return 0;
 }
 ```
+
+<br>
+
+### 3. [Zigzag String](https://www.interviewbit.com/problems/zigzag-string/)
+
+```cpp
+string convert(string A, int B) {
+    string res = "";
+
+    for(int i=0; i<B; i++){
+        bool flip = true;
+        int d = 0;
+
+        for(int j=i; j<A.length(); j+=d){
+            if(flip or i==0 or i==B-1)
+                d = 2*(B-i) - 2;
+            else
+                d = 2*(B-(B-i)+1) - 2;
+
+            if(d==0) d=1;
+            flip = !flip;
+
+            if(A[j]=='.') continue;
+            res.push_back(A[j]);
+            A[j] = '.';
+        }
+    }
+
+    return res;
+}
+```

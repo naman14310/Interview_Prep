@@ -150,7 +150,7 @@ Weeping
 
 ### Multiple Inheritance
 ```
-class D : visibility B-1, visibility B-2, ?  {  
+class D : visibility B-1, visibility B-2, ..  {  
     // --> Body of the class;  
 }   
 ```

@@ -478,7 +478,13 @@ Class A : public B, virtual public C[
 <br>
 
 
-## Sealed Modifiers
+## How Class can be Made Inheritable
+We can achieve this by making use of private constructor, virtual inheritance and friend class. 
+
+### Final Keyword in C++
+In C++ 11 we can make the base class non-inheritable by using final specifier.
+
+### Sealed Modifiers in C#
 Sealed is a keyword in Oops, which is used for some particular behavior i.e when we want a class or a method that will be used by only creator and cannot be inherited or overrided. Sealed modifiers can be applied to instances, methods, classes etc. Sealed members are allowed in sealed and non-sealed classes.
 
 1. A sealed class cannot be inherited. An error occurs if a sealed class is specified as the base class of another class.
@@ -509,6 +515,80 @@ A a = b;
 ```
 
 Then the information in b about member bar is lost in a.
+
+<br>
+
+## Does overloading work with Inheritance ?
+1. In C++, if a derived class redefines base class member method then all the base class methods with same name become hidden in derived class. 
+2. Even if the signature of the derived class method is different, all the overloaded methods in base class become hidden
+
+```cpp
+class Base {
+public:
+    int f(int i) {
+        cout<<"f(int): ";
+        return i+3;
+    }
+};
+
+
+class Derived : public Base {
+public:
+    double f(double d) {
+        cout<<"f(double): ";
+        return d+3.3;
+    }
+};
+
+
+int main() {
+    Derived* dp = new Derived;
+    cout << dp->f(3) << '\n';
+    cout << dp->f(3.3) << '\n';
+    delete dp;
+    return 0;
+}
+```
+
+```
+Output:
+f(double): 6.3
+f(double): 6.6 
+```
+
+Overloading doesn’t work for derived class in C++ programming language. There is no overload resolution between Base and Derived. The compiler looks into the scope of Derived, finds the single function “double f(double)” and calls it. It never disturbs with the (enclosing) scope of Base. 
+
+#### If we want to overload a function of a base class, it is possible to unhide it by using the `using` keyword.
+
+```cpp
+class Base {
+public:
+    int fun() {
+        cout<<"Base::fun() called";
+    }
+};
+ 
+class Derived: public Base {
+public:
+    using Base::fun;        // --> This Line makes it possible
+     
+    int fun(char c) {
+        cout<<"Derived::fun(char c) called";
+    }
+};
+ 
+int main(){
+    Derived d;
+    d.fun();                // --> Works fine now 🙂
+    return 0;
+}
+```
+
+```
+Output:
+Base::fun() called
+```
+
 
 <br>
 

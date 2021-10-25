@@ -18,8 +18,6 @@ Encapsulation can be achieved by using private members and public member functio
 2. The fields can be made read-only (If we don’t define setter methods) or write-only (If we don’t define the getter methods).
 3. User would not be knowing what is going on behind the scene. They would only be knowing that to update a field call set method and to read a field call get method but what these set and get methods are doing is purely hidden from them.
 
-<br>
-
 #### Real World Example
 Capsule will be our class and various medicines filled under the capsule will be our data and member functions.
 

@@ -50,9 +50,9 @@ Base class visibility	                        Derived class visibility
 --------------------------------------------------------------------------------------------------------
                             Public	                    Private	                    Protected           
 --------------------------------------------------------------------------------------------------------  
-Private	                    Not Inherited	              Not Inherited	              Not Inherited       
-Protected	                  Protected	                  Private	                    Protected
-Public	                    Public	                    Private	                    Protected
+Private                     Not Inherited               Not Inherited               Not Inherited       
+Protected                   Protected                   Private                     Protected
+Public                      Public                      Private                     Protected
 ```
 
 1. Private members of base class are not inheritable.

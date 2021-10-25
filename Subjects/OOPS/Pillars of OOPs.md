@@ -307,3 +307,175 @@ int main() {
 }  
 ```
 
+<br>
+
+### [Virtual Inheritance](https://www.youtube.com/watch?v=GsK_4doAmpc)
+Virtual inheritance is used when we are dealing with multiple inheritance but want to prevent multiple instances of same class appearing in inheritance hierarchy.
+
+![img](https://miro.medium.com/max/700/1*vR45T1AB59vlEteqE7mHPA.png)
+
+<br>
+
+From above example we can see that “A” is inherited two times in D means an object of class “D” will contain two attributes of “a” (D::C::a and D::B::a). This problem is also known as **diamond problem**.
+
+<br>
+
+If we are inheriting virtually like:
+
+![img](https://miro.medium.com/max/700/1*4nisaqYSLEbZ0kzQZ1nIww.png)
+
+Now class A will act like a direct virtual parent of D (and not through B and C). Hence, only one copy of data members of class A will be created in D, which removes the compiler confusion.
+
+<br>
+
+### Aggregation (HAS-A Relationship)
+Aggregation is a process in which one class defines another class as any entity reference. 
+
+```cpp
+class Address {  
+public:     
+    string addressLine, city, state;    
+    
+    Address(string addressLine, string city, string state) {    
+        this->addressLine = addressLine;    
+        this->city = city;    
+        this->state = state;    
+    }    
+};  
+
+
+class Employee {    
+private:  
+    Address* address;       // --> Employee HAS-A Address   
+    
+public:  
+    int id; string name;    
+    
+    Employee(int id, string name, Address* address) {    
+        this->id = id;    
+        this->name = name;    
+        this->address = address;    
+    }    
+    
+    void display() {    
+        cout<<id <<" "<<name<< " "<< address->addressLine<< " "<< address->city<< " "<<address->state<<endl;    
+       }    
+};   
+   
+   
+int main(void) {  
+    Address a1 = Address("C-146, Sec-15", "Noida", "UP");    
+    Employee e1 = Employee(101, "Nakul", &a1);    
+    e1.display();   
+    return 0;  
+}  
+```
+
+<br>
+
+### Constructors With Inheritance
+If we inherit a class from another class and create an object of the derived class, it is clear that the default constructor of the derived class will be invoked but before that the default constructor of all of the base classes will be invoke
+
+#### Why the base class’s constructor is called on creating an object of derived class?
+When a class is inherited from other, The data members and member functions of base class comes automatically in derived class based on the access specifier. When we create an object of derived class, all of the members of derived class must be initialized but the inherited members in derived class can only be initialized by the base class’s constructor as the definition of these members exists in base class only. This is why the constructor of base class is called first to initialize all the inherited members. 
+
+<br>
+
+#### Points to Remember (IMP)
+1. If base class constructors do not have any argument, there is no need of any constructor in derived class.
+2. If there are one or more arguments in base class constructor, derived class need to pass arguments to base class contructor.
+3. If both base class and derived class has constructors, base class contructors will be executed first.
+4. In multiple inheritance, base classes are constructed in order in which they appear in the class declaration.
+5. In multilevel inheritance, constructors will get executed in order of inheritance.
+6. The constructors of virtual base class will get executed before non virtual base class.
+7. If there are multiple virtual base classes, they will get executed in the order they declared.
+
+<br>
+
+```cpp
+class Base1{
+    int data1;
+    
+public:
+    Base1(int i){
+        data1 = i;
+        cout<<"Base1 class constructor called\n";
+    }
+};
+
+
+class Base2{
+    int data2;
+    
+public:
+    Base2(int i){
+        data2 = i;
+        cout<<"Base2 class constructor called\n";
+    }
+};
+
+class Derived : public Base1, public Base2{
+    int derived1, derived2;
+    
+public:
+    
+    Derived (a, b, c, d) : Base1 (a), Base2 (b){
+        derived1 = c;
+        derived2 = d;
+        cout<<"Derived class constructor called\n";
+    }
+}
+
+int main(){
+    Derived obj (10, 20, 30, 40);
+    return 0;
+}
+```
+
+```
+Output:
+Base1 class constructor called
+Base2 class constructor called
+Derived class constructor called
+```
+
+<br>
+
+#### [Few Examples for order of execution of constructors](https://www.youtube.com/watch?v=qHrnTf5DOeI&list=PLu0W_9lII9agpFUAlPFe_VNSlXW5uE0YL&index=48)
+
+```
+Case1: 
+
+Class B : public A{
+    // --> order of execution of constructors -> first A() then B()
+}
+
+
+Case2:
+
+Class A : public B, public C[
+    // --> order of execution of constructors -> first B() then C() then A()
+}
+
+
+Case3:
+
+Class A : public B, virtual public C[
+    // --> order of execution of constructors -> first C() then B() then A()
+}
+
+```
+
+<br>
+
+**Note: Destructors in C++ are called in the opposite order of that of Constructors.**
+
+<br>
+
+![img](https://media.geeksforgeeks.org/wp-content/uploads/order-of-constructor.png)
+
+<br>
+
+
+
+

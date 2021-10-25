@@ -741,4 +741,106 @@ int minSumOfLengths(vector<int>& arr, int target) {
 }
 ```
 
+<br>
+
+### 15. [Ways to form Max Heap](https://www.interviewbit.com/problems/ways-to-form-max-heap/)
+
+```cpp
+/*
+        First calculate height, h = log2(A)+1;
+
+        If tree is completely filled then,
+            total_nodes = pow(2, h)-1; 
+
+        Internal Nodes Calculation
+        ---------------------------
+
+        Number of internal nodes = total_nodes/2 (including root node)
+
+        internal_nodes present in Left and Right = (total_nodes/2 - 1)/2
+
+
+        Leaf Nodes Calculation
+        -----------------------
+
+        Now, we need to distribute leaves in left and right subtree, and we will use the 
+        property that leaves are filled in contiguos fashion from left to right. 
+
+        If tree is completely filled then, total_leaf_nodes =  (total_nodes/2)+1
+        
+        Given total_nodes = A
+        Hence actual_leaf_nodes = A - total_nodes/2
+
+        If (actual_leaf_nodes <= total_leaf_nodes/2):
+            Left_leaf_nodes = actual_leaf_nodes
+            Right_left_nodes = 0
+        Else:
+            Left_leaf_nodes = total_leaf_nodes/2
+            Right_leaf_nodes = actual_leaf_nodes - Left_leaf_nodes
+
+
+        Total Left and Right Cnt 
+        -------------------------
+
+        L =  internal_nodes_at_left + Left_leaf_nodes
+        R = internal_nodes_at_right + Right_leaf_nodes
+
+
+        Recursive Equation
+        -------------------
+
+        MaxElement will always be present on the root. Now we are A-1 elements are there,
+        We can pick L number of elements from (A-1) and put them in left side. Hence,
+
+        T(A) = nCr(A-1, L) * T(L) * T(R)
+*/
+
+long long fact (int n){
+    if(n==1) return 1;
+    return n * fact(n-1);
+}
+
+
+long long nCr (int n, int r){
+    if(n==0 or r==0) return 1;
+    return fact(n) / (fact(r) * fact(n-r));
+}
+
+
+int total_ways (int A, vector<long long> &dp){
+    if(A==1 or A==2) return 1;
+
+    if(dp[A]!=-1) return dp[A];
+    
+    int MOD = 1000000007;
+
+    int h = log2(A)+1;
+    long long total_nodes = pow(2, h)-1;
+    long long total_leaf_nodes = (total_nodes/2)+1;
+    long long actual_leaf_nodes = A - total_nodes/2;
+
+    long long L = (total_nodes/2 - 1)/2;
+    long long R = (total_nodes/2 - 1)/2;
+
+    if(actual_leaf_nodes <= total_leaf_nodes/2){
+        L += actual_leaf_nodes;
+    }
+    else{
+        L += total_leaf_nodes/2;
+        R += actual_leaf_nodes - total_leaf_nodes/2;
+    }
+
+    long long choosen = nCr(A-1, L) % MOD;
+    return dp[A] = (choosen * ((total_ways(L, dp) * total_ways(R, dp)) % MOD)) % MOD;
+}
+
+
+int Solution::solve(int A) {
+    vector<long long> dp (A+1, -1);
+    return total_ways (A, dp);
+}
+
+```
+
+
 

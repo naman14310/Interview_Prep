@@ -231,7 +231,7 @@ class C : public A, public B {
 
 int main() {  
     C c;  
-    c.display();  
+    c.view();  
     return 0;  
 }  
 ```

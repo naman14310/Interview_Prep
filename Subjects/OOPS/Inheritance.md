@@ -487,6 +487,30 @@ Sealed is a keyword in Oops, which is used for some particular behavior i.e when
 
 <br>
 
+## [What is Object Slicing ?](https://stackoverflow.com/questions/274626/what-is-object-slicing)
+"Slicing" is where you assign an object of a derived class to an instance of a base class, thereby losing part of the information - some of it is "sliced" away. For Example:
+
+```
+class A {
+    int foo;
+};
+
+class B : public A {
+    int bar;
+};
+```
+
+So an object of type B has two data members, foo and bar. Then if you were to write this:
+
+```
+B b;
+
+A a = b;
+```
+
+Then the information in b about member bar is lost in a.
+
+<br>
 
 ## New vs Override Vs Virtual
 1. **Virtual:**  indicates that a method may be overriden by an inheritor.
@@ -495,7 +519,7 @@ Sealed is a keyword in Oops, which is used for some particular behavior i.e when
 
 <br>
 
-## Why is there no multiple inheritance in Java, but implementing multiple interfaces is allowed?
+## Why Multiple Inheritance is not allowed in Java but Multiple Interfaces are allowed ?
 Because interfaces specify only what the class is doing, not how it is doing it. The problem with multiple inheritance is that two classes may define different ways of doing the same thing, and the subclass can't choose which one to pick.
 
 <br>

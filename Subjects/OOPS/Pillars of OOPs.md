@@ -41,6 +41,11 @@ Lets take an example of bank. RBI is the parent of all banks in India. It has so
 
 <br>
 
+#### Can Object Oriented Programming exists without inheritance ?
+Yes, Go doesn’t have inheritance – instead composition, embedding and interfaces support code reuse and polymorphism.
+
+<br>
+
 ### Visibility Modes in Inheritance
 
 ```
@@ -107,6 +112,8 @@ Bonus: 5000
 ### Multilevel Inheritance
 When one class inherits another class which is further inherited by another class, it is known as multi level inheritance. Inheritance is transitive so the last derived class acquires all the members of all its base classes.
 
+**Real world Example : Family Tree**
+
 ```cpp
 class Animal {  
 public:  
@@ -149,6 +156,10 @@ Weeping
 <br>
 
 ### Multiple Inheritance
+
+**Real World Example : Maruti Suzuki creates Ertiga**
+
+
 ```
 class D : visibility B-1, visibility B-2, ..  {  
     // --> Body of the class;  

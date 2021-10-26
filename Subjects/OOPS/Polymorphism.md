@@ -191,34 +191,175 @@ int main() {
 ## Overriding
 If derived class defines same function as defined in its base class, it is known as function overriding in C++. It is used to achieve runtime polymorphism. It enables you to provide specific implementation of the function which is already provided by its base class.
 
-```cpp
-class Animal {  
-public:  
-    void eat(){    
-        cout<<"Eating...";    
-    }      
-};   
+### Need Of Function Overriding
+Lets take an example of class car and its derived class sportsCar. Now car has some service (or function) shiftGear which changes gear with default style. Now sportscar wants to shift gear in modern style. Now we can think that, why not we should create new function for this functionality. But, now if we can create a new function, sportscar object can change gear in modern style but it can also access prev function of base class. Not this is wrong because, one car should not have two definations for one service. So that's why we override the base class function itself instead of making new one. 
 
-class Dog: public Animal {    
-public:  
-    void eat() {    
-        cout<<"Eating bread...";    
-    }    
-};  
+```cpp
+class car{
+public:
+    void shiftGear(){
+        cout<<"change gear in default style";
+    }
+};
+
+class sportsCar : public car{
+public:
+
+    /* Overrided Function */
+
+    void shiftGear() {
+        cout<<"change gear in modern style";
+    }
+}; 
 
 int main(void) {  
-    Dog d = Dog();    
-    d.eat();  
+    sportsCar c;    
+    c.shiftGear();  
     return 0;  
 }
 ```
 
 ```
-Output: Eating bread...
+Output: change gear in modern style
 ```
 
 <br>
 
 ## Virtual Function
-A C++ virtual function is a member function in the base class that you redefine in a derived class. It is declared using the virtual keyword. It is used to tell the compiler to perform dynamic linkage or late binding on the function.
+A C++ virtual function is a member function in the base class that you redefine in a derived class. It is declared using the virtual keyword. It is used to tell the compiler to perform dynamic linkage or late binding on the function. When the function is made virtual, C++ determines which function is to be invoked at the runtime based on the type of the object pointed by the base class pointer.
 
+<br>
+
+### [Need of Virtual Function & Early Binding Vs Late Binding](https://www.youtube.com/watch?v=cUCy2ENJjW8)
+As we know that, base class pointer can store address of child class pointer. Now consider following program:
+
+```cpp
+class car{
+public:
+    void shiftGear(){
+        cout<<"change gear in default style";
+    }
+};
+
+class sportsCar : public car{
+public:
+
+    /* Overrided Function */
+    
+    void shiftGear() {
+        cout<<"change gear in modern style";
+    }
+};
+
+int main(){
+    car* ptr;
+    sportsCar c;
+    ptr = &c;       // --> here base class ptr is storing address of child class object
+    
+    ptr->shiftGear();       // --> POINT OF AMBIGUITY
+    return 0;
+}
+
+```
+
+```
+Output: change gear in default style
+```
+
+Now in above example, when we try to call shiftGear function using ptr (which is having base class datatype), the compiler tries to bind that function call at compile time by looking at its datatype (without looking inside it, at what address that ptr is pointing to). Hence, compiler will bind that function call to shiftGear function of base class and execute that function (But child class function should run, as we overridded the function). Hence to overcome this situation, virtual keyword is used in front of functions (which are going to be overrided by derived classes) to tell the compile to bind them at runtime (not at compile time).  
+
+<br>
+
+```cpp
+class car{
+public:
+    virtual void shiftGear(){
+        cout<<"change gear in default style";
+    }
+};
+
+class sportsCar : public car{
+public:
+
+    /* Overrided Function */
+    
+    void shiftGear() {
+        cout<<"change gear in modern style";
+    }
+};
+
+int main(){
+    car* ptr;
+    sportsCar c;
+    ptr = &c;       // --> here base class ptr is storing address of child class object
+    
+    ptr->shiftGear();       // --> POINT OF AMBIGUITY
+    return 0;
+}
+```
+
+```
+Output: change gear in modern style
+```
+
+<br>
+
+### [How Virtual Functions Internally Work](https://www.youtube.com/watch?v=Z_FiER8aAqM)
+
+<br>
+
+#### Some Properties of Virtual Functions
+1. Virtual functions must be members of some class.
+2. Virtual functions cannot be static members.
+3. They can be a friend of another class.
+4. A virtual function must be defined in the base class, even though it is not used.
+5. We cannot have a virtual constructor, but we can have a virtual destructor
+
+<br>
+
+
+## Abstract class & Pure Virtual Functions
+1. A virtual function is not used for performing any task. It only serves as a placeholder.
+2. A pure virtual function is a function declared in the base class that has no definition relative to the base class.
+3. A class containing the pure virtual function cannot be used to declare the objects of its own, such classes are known as **abstract base classes**
+
+#### The main objective of the abstract class and Virtual functions is to provide the traits to the derived classes and to create the base pointer used for achieving the runtime polymorphism.
+
+<br>
+
+Pure virtual function can be defined as:
+
+```
+virtual void display() = 0;   
+```
+
+Example:
+
+```cpp
+class Base {  
+public:  
+    virtual void show() = 0;  
+};  
+
+
+class Derived : public Base {  
+public:  
+    void show() {  
+        cout << "Derived class is derived from the base class." << endl;  
+    }  
+};  
+
+
+int main() {  
+    Base *p;  
+    Derived d;  
+    
+    p = &d;  
+    p->show();  
+    return 0;  
+} 
+```
+
+```
+Output: Derived class is derived from the base class
+```

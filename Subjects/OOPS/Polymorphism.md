@@ -191,5 +191,34 @@ int main() {
 ## Overriding
 If derived class defines same function as defined in its base class, it is known as function overriding in C++. It is used to achieve runtime polymorphism. It enables you to provide specific implementation of the function which is already provided by its base class.
 
+```cpp
+class Animal {  
+public:  
+    void eat(){    
+        cout<<"Eating...";    
+    }      
+};   
 
+class Dog: public Animal {    
+public:  
+    void eat() {    
+        cout<<"Eating bread...";    
+    }    
+};  
+
+int main(void) {  
+    Dog d = Dog();    
+    d.eat();  
+    return 0;  
+}
+```
+
+```
+Output: Eating bread...
+```
+
+<br>
+
+## Virtual Function
+A C++ virtual function is a member function in the base class that you redefine in a derived class. It is declared using the virtual keyword. It is used to tell the compiler to perform dynamic linkage or late binding on the function.
 

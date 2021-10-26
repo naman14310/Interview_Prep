@@ -480,7 +480,7 @@ Class A : public B, virtual public C[
 <br>
 
 
-## How Class can be Made Inheritable
+## How Class can be Made Non-Inheritable
 We can achieve this by making use of private constructor, virtual inheritance and friend class. 
 
 ### Final Keyword in C++

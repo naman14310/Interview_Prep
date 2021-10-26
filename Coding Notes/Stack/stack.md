@@ -178,6 +178,100 @@ string simplifyPath(string path) {
 
 <br>
 
+### 6. Basic Calculator II
+Given a string s which represents an expression, evaluate this expression and return its value. 
+
+Input: s = "3+2*2"
+
+Output: 7
+
+```cpp
+vector<string> parse(string &s){
+    vector<string> v;
+
+    string temp = "";
+    bool num = true;
+
+    for(char ch : s){
+        if(ch==' ') continue;
+
+        if(num and (ch=='+' or ch=='-' or ch=='*' or ch=='/')){
+            num = false;
+            v.push_back(temp);
+            temp = "";
+        }
+
+        if(!num and ch!='+' and ch!='-' and ch!='*' and ch!='/'){
+            num = true;
+            v.push_back(temp);
+            temp = "";
+        }
+
+        temp.push_back(ch);
+    }
+
+    v.push_back(temp);
+    return v;
+}
+
+
+string doOpr (string a, string b, string op){
+    if(op=="*") return to_string(stoi(a)*stoi(b));
+    else if(op=="/") return to_string(stoi(a)/stoi(b));
+    else if(op=="-") return to_string(stoi(a)-stoi(b));
+    else return to_string(stoi(a)+stoi(b));
+}
+
+
+int calculate(string s) {
+    vector tokens = parse (s);
+    if(tokens.size()==1) return stoi(tokens[0]);
+
+    stack<string> stk;
+    stk.push(tokens[0]);
+    stk.push(tokens[1]);
+
+    /* performing multiplication and divide opertaion in first pass */
+
+    for(int i=2; i<tokens.size(); i++){
+        if(i&1){ 
+            stk.push(tokens[i]);
+            continue;
+        }
+
+        if(stk.top()=="*" or stk.top()=="/"){
+
+            string op = stk.top(); stk.pop();
+            string a = stk.top(); stk.pop();
+            string b = tokens[i];
+
+            stk.push(doOpr(a, b, op));
+        }
+
+        else stk.push(tokens[i]);
+    }
+
+    /* performing addition and subtraction operation in second pass */
+
+    tokens.clear();
+
+    while(!stk.empty()){
+        tokens.push_back(stk.top());
+        stk.pop();
+    }
+
+    string ans = tokens.back();
+
+    for(int i=tokens.size()-3; i>=0; i-=2)
+        ans = doOpr(ans, tokens[i], tokens[i+1]);
+
+    return stoi(ans);
+}
+```
+
+
+<br>
+
 
 ## @ Parenthesis Based Questions
 

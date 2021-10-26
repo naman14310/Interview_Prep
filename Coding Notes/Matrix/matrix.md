@@ -327,3 +327,65 @@ int matrixScore(vector<vector<int>>& grid) {
     return ans;
 }
 ```
+
+<br>
+
+### 8. [Game of Life](https://leetcode.com/problems/game-of-life/)
+
+```cpp
+
+/* 
+    2 --> curr dead, prev alive
+    3 --> curr alive, prev dead
+    0 --> prev dead, no change
+    1 --> prev alive, no change
+*/
+
+
+bool isInside (int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+int cntAliveNbr (vector<vector<int>>& board, int x, int y, int row, int col){
+
+    int alive = 0;
+    int dx[] = {1, 0, -1, 0, 1, 1, -1, -1};
+    int dy[] = {0, 1, 0, -1, 1, -1, 1, -1};
+
+    for(int i=0; i<8; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and (board[xnew][ynew]==1 or board[xnew][ynew]==2))
+            alive++;    
+    }
+
+    return alive;
+}
+
+
+void gameOfLife(vector<vector<int>>& board) {
+    int row = board.size(), col = board[0].size();
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+
+            int alive = cntAliveNbr (board, i, j, row, col);
+
+            if(board[i][j]==1 and (alive<2 or alive>3)) board[i][j] = 2;
+
+            else if(board[i][j]==0 and alive==3) board[i][j] = 3;
+        }
+    }
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            if(board[i][j]==2) board[i][j] = 0;
+            if(board[i][j]==3) board[i][j] = 1;
+        }
+    }
+
+}
+
+```

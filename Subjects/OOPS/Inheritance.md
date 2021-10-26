@@ -29,7 +29,9 @@ Yes, Go doesn’t have inheritance – instead composition, embedding and interf
 
 <br>
 
+#### NOTE: Base Class Pointer can point to the object of any of its descendant class. But its converse is not true. 
 
+<br>
 
 ## Visibility Modes in Inheritance
 

@@ -318,12 +318,12 @@ Output: change gear in modern style
 <br>
 
 
-## Abstract class & Pure Virtual Functions
+## [Abstract class & Pure Virtual Functions](https://www.youtube.com/watch?v=0IR_D1qZy2g)
 1. A virtual function is not used for performing any task. It only serves as a placeholder.
 2. A pure virtual function is a function declared in the base class that has no definition relative to the base class.
 3. A class containing the pure virtual function cannot be used to declare the objects of its own, such classes are known as **abstract base classes**
 
-#### The main objective of the abstract class and Virtual functions is to provide the traits to the derived classes and to create the base pointer used for achieving the runtime polymorphism.
+#### A class containing atleast one pure virtual function is known as abstract class. The main objective of the abstract class and Virtual functions is to provide the traits to the derived classes and to create the base pointer used for achieving the runtime polymorphism.
 
 <br>
 
@@ -363,3 +363,22 @@ int main() {
 ```
 Output: Derived class is derived from the base class
 ```
+
+<br>
+
+### Properties Of Abstract Class
+1. We cannot create objects of Abstract class.
+2. If some class inherits Abstract class, then it is compulsory to provide definitions for all pure virtual functions of abstract base class in derived class. That is Overriding should be compulsion.
+3. An abstract class can contain Non-Virtual Function. They can be only called by object of derived class.
+
+#### Note: If we do not want to override pure virtual function of base class in derived class. Then we should again declare it as pure virtual function in derived class, and then derived class will also become another abstract class.
+
+<br>
+
+### Why Abstract Class?
+1. It promotes Generalization concept in OOPS. For ex: Let a Person Class, and its two child classes Student and Faculty. Now Person class does not have any existance on its own, but it has some properties which are inherited by both student and faculty. So there is No need to create object of person class, and it will only be used to pass some traits to its child class.
+2. By creating abstract class (or pure virtual functions) we can enforce child classes to compulsory provide the definations for pure virtual functions.
+
+<br>
+
+

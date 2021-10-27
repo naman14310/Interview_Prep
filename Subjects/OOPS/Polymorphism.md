@@ -323,7 +323,7 @@ Output: change gear in modern style
 3. They can be a friend of another class.
 4. A virtual function must be defined in the base class, even though it is not used.
 5. We cannot have a virtual constructor, but we can have a virtual destructor
-6. In C++, virtual functions can be private and can be overridden by the derived class.
+6. [In C++, virtual functions can be private and can be overridden by the derived class.](https://www.geeksforgeeks.org/can-virtual-functions-be-private-in-c/)
 
 <br>
 

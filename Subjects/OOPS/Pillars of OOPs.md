@@ -13,15 +13,42 @@ Encapsulation is a process of wrapping code and data together into a single unit
 
 Encapsulation can be achieved by using private members and public member functions (setter-getters).
 
+
+#### Real World Example
+Capsule will be our class and various medicines filled under the capsule will be our data and member functions.
+
+
 #### Advantages of encapsulation
 1. It improves maintainability and flexibility and re-usability.
 2. The fields can be made read-only (If we don’t define setter methods) or write-only (If we don’t define the getter methods).
 3. User would not be knowing what is going on behind the scene. They would only be knowing that to update a field call set method and to read a field call get method but what these set and get methods are doing is purely hidden from them.
 
-#### Real World Example
-Capsule will be our class and various medicines filled under the capsule will be our data and member functions.
 
 <br>
+
+
+
+## @ Abstraction
+Data Abstraction is a process of providing only the essential details to the outside world and hiding the internal details, i.e., representing only the essential details in the program.
+
+In C++ program if we implement class with private and public members then it is an example of data abstraction. Data Abstraction can be achieved in two ways:
+1. Abstraction using classes
+2. Abstraction in header files.
+
+
+#### Real World Example
+Let's take a real life example of AC, which can be turned ON or OFF, change the temperature, change the mode, and other external components such as fan, swing. But, we don't know the internal details of the AC, i.e., how it works internally. Thus, we can say that AC seperates the implementation details from the external interface.
+
+
+#### Advantages Of Abstraction:
+1. Implementation details of the class are protected from the inadvertent user level errors.
+2. The main aim of the data abstraction is to reuse the code and the proper partitioning of the code across the classes.
+3. Internal implementation can be changed without affecting the user level code.
+
+
+
+<br>
+
 
 
 ## @ [Some Jargons in OOPs](https://javapapers.com/oops/association-aggregation-composition-abstraction-generalization-realization-dependency/)

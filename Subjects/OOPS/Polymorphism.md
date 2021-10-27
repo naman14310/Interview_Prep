@@ -59,8 +59,17 @@ int main(void) {
 
 <br>
 
+#### [Which Functions cannot be overloaded in C++ ?](https://www.geeksforgeeks.org/function-overloading-in-c/)
+1. Function declarations that differ only in the return type fails in compilation.
+2. Member function declarations with the same name and the name parameter-type-list cannot be overloaded if any of them is a static member function declaration. 
+3. Parameter declarations that differ only in a pointer * versus an array [] are equivalent. That is, the array declaration is adjusted to become a pointer declaration.
+4. Parameter declarations that differ only in that one is a function type and the other is a pointer to the same function type are equivalent.
+5. Parameter declarations that differ only in the presence or absence of const and/or volatile are equivalent.
+
+<br>
+
 #### Ambiguity in Function Overloading
-When the compiler is unable to decide which function is to be invoked among the overloaded function, this situation is known as function overloading.
+Ambiguity occurs When the compiler is unable to decide which function is to be invoked among the overloaded function.
 
 <br>
 

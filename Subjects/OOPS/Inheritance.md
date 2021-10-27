@@ -605,3 +605,87 @@ Base::fun() called
 Because interfaces specify only what the class is doing, not how it is doing it. The problem with multiple inheritance is that two classes may define different ways of doing the same thing, and the subclass can't choose which one to pick.
 
 <br>
+
+## Upcasting and DownCasting in C++
+Upcasting and downcasting are the types of object typecasting.
+
+### Upcasting
+Upcasting is used to convert the reference or pointer of the derived class to a base class. Upcasting is safe casting as compare to downcasting.
+
+```
+Base *ptr = &derived_obj;  
+```
+
+```cpp
+class Base {  
+public:  
+    void disp() {  
+        cout << " It is the Super function of the Base class ";  
+    }  
+};  
+  
+  
+class derive : public Base {  
+public:  
+    void disp() {  
+        cout << "\n It is the derive class function ";  
+    }    
+};  
+
+  
+int main () {  
+    Base *ptr;  // --> created base class ptr
+    derive obj; // --> created object of derive class  
+    ptr = &obj; 
+     
+    ptr->disp();  
+    return 0;  
+}  
+```
+
+```
+Output: It is the Super function of the Base class 
+```
+
+<br>
+
+### Downcasting
+The Downcasting is an opposite process to the upcasting, which converts the base class's pointer or reference to the derived class's pointer or reference. Explicit type cast is required in downcasting. 
+
+```
+Derived *ptr = &base_obj;  
+```
+
+```cpp
+class Parent {  
+public:  
+    void base() {  
+        cout << " It is the function of the Parent class "<< endl;   
+    }  
+};  
+  
+class Child : public Parent {  
+public:  
+    void derive() {  
+        cout << " it is the function of the Child class " <<endl;  
+    }  
+};  
+  
+  
+int main () {  
+    Parent pobj;        // --> create Parent's object  
+    Child *ptr;         // --> create Child's ptr  
+      
+   
+    ptr = (Child *) &pobj;   // --> explicit type cast is required in downcasting  
+    ptr -> derive();  
+   
+    return 0;  
+}  
+```
+
+```
+Output: It is the function of the Child class
+```
+
+

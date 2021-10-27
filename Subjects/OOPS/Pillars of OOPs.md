@@ -31,9 +31,10 @@ Capsule will be our class and various medicines filled under the capsule will be
 ## @ Abstraction
 Data Abstraction is a process of providing only the essential details to the outside world and hiding the internal details, i.e., representing only the essential details in the program.
 
-In C++ program if we implement class with private and public members then it is an example of data abstraction. Data Abstraction can be achieved in two ways:
+Abstraction can be achieved in three ways:
 1. Abstraction using classes
 2. Abstraction in header files.
+3. Using Access specifiers
 
 
 #### Real World Example

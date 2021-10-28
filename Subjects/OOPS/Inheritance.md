@@ -481,10 +481,39 @@ Class A : public B, virtual public C[
 
 
 ## How Class can be Made Non-Inheritable
-We can achieve this by making use of private constructor, virtual inheritance and friend class. 
 
-### Final Keyword in C++
-In C++ 11 we can make the base class non-inheritable by using final specifier.
+### Final Keyword in C++ 11
+1. It is to prevent a class from being inherited.
+
+```cpp
+class Base1 final { };
+
+class Derived1 : Base1 { };   // gives error because the class Base1 
+                              // has been marked final
+```
+
+2. It is also used to mark a virtual function so as to prevent it from being overridden in the derived classes.
+
+```cpp
+class Base2 {
+    virtual void f() final;
+};
+
+class Derived2 : Base2 {
+    void f();                 // gives error because the virtual function Base2::f has 
+                              // been marked final
+};
+```
+
+Note: Note that neither override nor final are language keywords. They only gain special meaning when used in those specific contexts. That means, the following is allowed:
+
+```cpp
+int const final = 0;     
+int const override = 1; 
+```
+
+<br>
+
 
 ### Sealed Modifiers in C#
 Sealed is a keyword in Oops, which is used for some particular behavior i.e when we want a class or a method that will be used by only creator and cannot be inherited or overrided. Sealed modifiers can be applied to instances, methods, classes etc. Sealed members are allowed in sealed and non-sealed classes.

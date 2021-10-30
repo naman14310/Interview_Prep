@@ -2,9 +2,10 @@
 
 ## @ Questions based on Indegree and Outdegree
 
-#### 1. Find the Town Judge
-In a town, there are n people labelled from 1 to n. One of these people is secretly the town judge. If the town judge exists, then:
+<br>
 
+### 1. Find the Town Judge
+In a town, there are n people labelled from 1 to n. One of these people is secretly the town judge. If the town judge exists, then:
 1. The town judge trusts nobody.
 2. Everybody (except for the town judge) trusts the town judge.
 3. There is exactly one person that satisfies properties 1 and 2.
@@ -34,7 +35,9 @@ int findJudge(int n, vector<vector<int>>& trust) {
 }
 ```
 
-#### 2. Minimum Number of Vertices to Reach All Nodes
+<br>
+
+### 2. Minimum Number of Vertices to Reach All Nodes
 Given a directed acyclic graph, with n vertices numbered from 0 to n-1, and an array edges where edges[i] = [from_i, to_i] represents a directed edge from node from_i to node to_i. Find the smallest set of vertices from which all nodes in the graph are reachable. It's guaranteed that a unique solution exists.
 
 Input: n = 6, edges = [[0,1],[0,2],[2,5],[3,4],[4,2]]
@@ -58,7 +61,9 @@ Hint: Find all nodes with 0 indegree
  }
 ```
 
-#### 3. Clone graph
+<br>
+
+### 3. Clone graph
 Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph.
 
 ![img](https://assets.leetcode.com/uploads/2019/11/04/133_clone_graph_question.png)
@@ -147,7 +152,9 @@ Method 2: BFS
  }
 ```
 
-#### 4. Minimum Height Trees
+<br>
+
+### 4. Minimum Height Trees
 Given a tree of n nodes labelled from 0 to n - 1, and an array of n - 1 edges where edges[i] = [ai, bi] indicates an undirected edge, you can choose any node of the tree as the root. When you select a node x as the root, the result tree has height h. Among all possible rooted trees, those with minimum height (i.e. min(h))  are called minimum height trees (MHTs). Return a list of all MHTs' root labels.
 
 Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]

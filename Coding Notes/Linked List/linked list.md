@@ -1191,6 +1191,63 @@ Node *flatten(Node *root){
 
 <br>
 
+### 4. Flatten a Multilevel Doubly Linked List
+
+<br>
+
+![img](https://assets.leetcode.com/uploads/2018/10/12/multilevellinkedlist.png)
+
+Output: [1,2,3,7,8,11,12,9,10,4,5,6]
+
+```cpp
+pair<Node*, Node*> solve (Node* head){
+    if(!head) return {NULL, NULL};
+    if(!head->child and !head->next) return {head, head};
+
+    if(!head->child){
+        auto res = solve(head->next);
+        head->next = res.first;
+        (res.first)->prev = head;
+
+        head->child = NULL;
+        return {head, res.second};
+    }
+
+    if(!head->next){
+        auto res = solve(head->child);
+        head->next = res.first;
+        (res.first)->prev = head;
+
+        head->child = NULL;
+        return {head, res.second};
+
+    }
+
+    else{
+        auto res1 = solve(head->child);
+        auto res2 = solve(head->next);
+
+        head->next = res1.first;
+        (res1.first)->prev = head;
+
+        (res1.second)->next = res2.first;
+        (res2.first)->prev = res1.second;
+
+        head->child = NULL;
+        return {head, res2.second};
+    }
+}
+
+
+Node* flatten(Node* head) {
+    auto p = solve(head);
+    return p.first;
+}
+```
+
+
+<br>
+
 
 ## @ Linked List & Trees
 

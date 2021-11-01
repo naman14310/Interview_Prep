@@ -135,7 +135,14 @@ The memory for variables is automatically deallocated at compile time. In dynami
 
 <br>
 
-#### Advantages of new over malloc()
+#### new Vs malloc()
 1. It automatically computes size of data object.
 2. It automatically returns correct pointer type, so no need to typecast.
 3. Like any other operator, new and delete can be overloaded.
+
+<br>
+
+#### [delete Vs free()](https://www.geeksforgeeks.org/g-fact-30/)
+In C++, delete operator should only be used either for the pointers pointing to the memory allocated using new operator or for a NULL pointer, and free() should only be used either for the pointers pointing to the memory allocated using malloc() or for a NULL pointer.
+
+The most important reason why free() should not be used for de-allocating memory allocated using NEW is that, it does not call the destructor of that object while delete operator does.

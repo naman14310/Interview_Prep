@@ -77,9 +77,44 @@ ref = 30
 
 <br>
 
-## Some IMP Keywords in C++
+## [Enums](https://www.geeksforgeeks.org/enumeration-enum-c/)
+Enumeration (or enum) is a user defined data type in C. It is mainly used to assign names to integral constants, the names make a program easy to read and maintain.
 
-### [This pointer](https://www.geeksforgeeks.org/this-pointer-in-c/)
+```cpp
+#include<iostream.h>
+  
+enum week{Mon, Tue, Wed, Thur, Fri, Sat, Sun};
+  
+int main(){
+    enum week day;
+    day = Wed;
+    printf("%d",day);
+    return 0;
+} 
+```
+
+```
+Output: 2
+```
+
+<br>
+
+### Interesting facts about initialization of enum
+1. Two enum names can have same value.
+2. If we do not explicitly assign values to enum names, the compiler by default assigns values starting from 0. 
+3. We can assign values to some name in any order. All unassigned names get value as value of previous name plus one.
+4. The value assigned to enum names must be some integral constant
+
+<br>
+
+### Enum vs Macro
+We can also use macros to define names constants. However, There are multiple advantages of using enum over macro when many related named constants have integral values.
+1. Enums follow scope rules.
+2. Enum variables are automatically assigned values.
+
+<br>
+
+## [This pointer](https://www.geeksforgeeks.org/this-pointer-in-c/)
 Each object of a class gets its own copy of the data member. All-access the same function definition as present in the code segment. Then now question is that if only one copy of each member function exists and is used by multiple objects, how are the proper data members are accessed and updated?
 
 The ‘this’ pointer is passed as a hidden argument to all nonstatic member function calls and is available as a local variable within the body of all nonstatic functions. ‘this’ pointer is not available in static member functions as static member functions can be called without any object (with class name). 
@@ -114,7 +149,7 @@ Test& Test::func () {
 
 <br>
 
-### [Const](https://www.geeksforgeeks.org/const-keyword-in-cpp/)
+## [Const](https://www.geeksforgeeks.org/const-keyword-in-cpp/)
 Whenever const keyword is attached with any method(), variable, pointer variable, and with the object of a class it prevents that specific object/method()/variable to modify its data items value. There are a certain set of rules for the declaration and initialization of the constant variables:
 1. The const variable cannot be left un-initialized at the time of the assignment.
 2. It cannot be assigned value anywhere in the program.
@@ -168,4 +203,5 @@ Error refers to an illegal operation which results in the abnormal working of th
 6. C++ library has a standard exception class which is base class for all standard exceptions.
 7. In C++, all exceptions are unchecked. Compiler doesn’t check whether an exception is caught or not.
 8. When an exception is thrown, all objects created inside the enclosing try block are destructed before the control is transferred to catch block.
+
 

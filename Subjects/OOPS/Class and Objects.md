@@ -457,6 +457,8 @@ A constructor is a special type of member function of a class which initializes 
 
 Note: In C++, the constructor cannot be virtual, because when a constructor of a class is executed there is no virtual table in the memory, means no virtual pointer defined yet. So, the constructor should always be non-virtual.
 
+Note: Constructors are not inherited. They are called implicitly or explicitly by the child constructor.
+
 <br>
 
 ![img](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20191128195435/CPP-Constructors.png)

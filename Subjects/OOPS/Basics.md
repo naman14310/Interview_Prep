@@ -106,7 +106,36 @@ In C++, an object can be created by `new` and destroyed by `delete`.
 
 <br>
 
-**Advantages of new over malloc()**
+#### malloc() 
+1. malloc() allocates memory block of given size (in bytes) and returns a pointer to the beginning of the block.
+2. malloc() doesn’t initialize the allocated memory. If we try to access the content of memory block(before initializing) then we’ll get segmentation fault error(or maybe garbage values).
+
+<br>
+
+#### calloc()
+1. calloc() can be thought of as being a (thin) wrapper on top of malloc(). It allocate multiple blocks of given size.
+2. Unlike malloc(), calloc() takes two arguments: Number of blocks to be allocated, Size of each block. Hence, 
+3. calloc() initializes the allocated memory block to zero.
+
+<br>
+
+#### malloc Vs calloc
+The calloc() function is generally more suitable and efficient than that of the malloc() function. While both the functions are used to allocate memory space, calloc() can allocate multiple blocks at a single time. You don’t have to request for a memory block every time. The calloc() function is used in complex data structures which require larger memory space.
+
+<br>
+
+#### realloc()
+Using the C realloc() function, you can add more memory size to already allocated memory. It expands the current block while leaving the original content as it is. It can also be used to reduce the size of the previously allocated memory.
+
+<br>
+
+#### free()
+The memory for variables is automatically deallocated at compile time. In dynamic memory allocation, you have to deallocate memory explicitly. If not done, you may encounter out of memory error. The free() function is called to release/deallocate memory in C
+
+
+<br>
+
+#### Advantages of new over malloc()
 1. It automatically computes size of data object.
 2. It automatically returns correct pointer type, so no need to typecast.
 3. Like any other operator, new and delete can be overloaded.

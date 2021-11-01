@@ -3,6 +3,9 @@
 <br>
 
 ## C Vs C++
+C++ can be said a superset of C. 
+
+<br>
 
 #### Similarities
 1. The compilation of both the languages is similar.
@@ -14,7 +17,7 @@
 <br>
 
 #### Differences
-1. C++ can be said a superset of C. **Major added features in C++ are Object-Oriented Programming, Exception Handling and rich C++ Library.**
+1. **Major added features in C++ are Object-Oriented Programming, Exception Handling and rich C++ Library.**
 2. C is a function-driven language whereas C++ is an object-driven language
 3. Reference variables are not supported by C But supported in C++
 4. C provides malloc() and calloc() functions for dynamic memory allocation, and free() for memory de-allocation. Whereas, C++ provides new operator for memory allocation and delete operator for memory de-allocation.

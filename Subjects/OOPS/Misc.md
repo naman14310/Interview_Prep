@@ -2,6 +2,78 @@
 
 <br>
 
+## C Vs C++
+
+#### Similarities
+1. The compilation of both the languages is similar.
+2. They share the same basic syntax. Nearly all of C’s operators and keywords are also present in C++ and do the same thing.
+3. Basic memory model of both is very close to the hardware.
+4. Same notions of stack, heap, file-scope and static variables are present in both the languages.
+5. Both languages does not support database connectivity.
+
+<br>
+
+#### Differences
+1. C++ can be said a superset of C. **Major added features in C++ are Object-Oriented Programming, Exception Handling and rich C++ Library.**
+2. C is a function-driven language whereas C++ is an object-driven language
+3. Reference variables are not supported by C But supported in C++
+4. C provides malloc() and calloc() functions for dynamic memory allocation, and free() for memory de-allocation. Whereas, C++ provides new operator for memory allocation and delete operator for memory de-allocation.
+5. C structures don’t have access modifiers, But, C++ structures have access modifiers.
+6. C follows top-down approach vs C++ follows bottom approach.
+
+
+<br>
+
+## [Top Down Vs Bottom Up Approach](https://www.geeksforgeeks.org/difference-between-bottom-up-model-and-top-down-model/)
+
+#### Top-Down Approach
+1. In this approach We focus on breaking up the problem into smaller parts.
+2. Mainly used by structured programming language such as COBOL, Fortran, C, etc.
+3. Contain redundancy.
+4. Communications is less among modules.
+
+<br>
+
+#### Bottom-Up Approach
+1. In bottom up approach, we solve smaller problems and integrate it as whole and complete the solution.
+2. Mainly used by object oriented programming language such as C++, C#, Python.
+3. Redundancy is minimized by using data encapsulation and data hiding.
+4. More communications among modules.
+
+<br>
+
+## [Procedural Programming Vs OOPS](https://www.geeksforgeeks.org/differences-between-procedural-and-object-oriented-programming/)
+
+<br>
+
+## [What are Reference Variables?](https://www.geeksforgeeks.org/references-in-c/)
+When a variable is declared as a reference, it becomes an alternative name for an existing variable. A variable can be declared as a reference by putting ‘&’ in the declaration. 
+
+```cpp
+#include<iostream>
+using namespace std;
+  
+int main() {
+  int x = 10;
+  int& ref = x;             // --> ref is a reference to x.
+  
+  ref = 20;                 // --> Value of x is now changed to 20
+  cout << "x = " << x << endl ;
+  
+  x = 30;                   // --> Value of x is now changed to 30
+  cout << "ref = " << ref << endl ;
+  
+  return 0;
+}
+```
+```
+Output:  
+x = 20  
+ref = 30
+```
+
+<br>
+
 ## Some IMP Keywords in C++
 
 ### [This pointer](https://www.geeksforgeeks.org/this-pointer-in-c/)
@@ -68,4 +140,29 @@ data_type* const var_name;
 const data_type* const var_name;
 ```
 
+<br>
+
+## [Exception Handling in C++](https://www.youtube.com/watch?v=asekOytwNw4)
+
+#### Difference between Error and Exception
+Error refers to an illegal operation which results in the abnormal working of the program. Whereas exceptions refer to an unwanted event, which occurs during the execution of a program i.e at run time, that disrupts the normal flow of the program’s instructions.
+
+<br>
+
+**C++ provides following specialized keywords for this purpose:**
+1. **try:** represents a block of code that can throw an exception.
+2. **catch:** represents a block of code that is executed when a particular exception is thrown.
+3. **throw:** Used to throw an exception. Also used to list the exceptions that a function throws, but doesn’t handle itself.
+
+<br>
+
+**Some Points to Note:**
+1. The try and catch keywords come in pairs.
+2. There is a special catch block called ‘catch all’ `catch(…)` that can be used to catch all types of exceptions.
+3. Implicit type conversion for thrown variable doesn’t happen for primitive types
+4. If an exception is thrown and not caught anywhere, the program terminates abnormally.
+5. A derived class exception should be caught before a base class exception
+6. C++ library has a standard exception class which is base class for all standard exceptions.
+7. In C++, all exceptions are unchecked. Compiler doesn’t check whether an exception is caught or not.
+8. When an exception is thrown, all objects created inside the enclosing try block are destructed before the control is transferred to catch block.
 

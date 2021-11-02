@@ -73,3 +73,84 @@ int solve (int num){
     }
 }
 ```
+
+<br>
+
+### [Longest Nice Substring](https://leetcode.com/problems/longest-nice-substring/)
+
+```cpp
+/* Checking if the curr string between i and j is nice or not */
+
+bool nice(vector<int> &v1, vector<int> &v2){
+    for(int i=0; i<26; i++){
+        if((v1[i]==0 and v2[i]>0) or (v1[i]>0 and v2[i]==0)) return false;
+    }
+
+    return true;
+}
+
+
+/* Checking for [1-26] unique chars one by one */
+
+string solve (string s, int cnt){
+    vector<int> v1 (26, 0);
+    vector<int> v2 (26, 0);
+
+    int i=0, j=0;
+    string ans = "";
+
+    while(j<s.length()){        
+        char ch = s[j];
+
+        if(islower(ch)){
+            int idx = ch-'a';
+            v1[idx]++;
+            if(v1[idx]==1 and v2[idx]==0) cnt--;
+        } 
+        else{
+            int idx = ch-'A';
+            v2[idx]++;
+            if(v2[idx]==1 and v1[idx]==0) cnt--;
+        }
+
+
+        while(cnt<0){
+            char ch2 = s[i];
+
+            if(islower(ch2)){
+                int idx2 = ch2-'a';
+                v1[idx2]--;
+                if(v1[idx2]==0 and v2[idx2]==0) cnt++;
+            } 
+            else{
+                int idx2 = ch2-'A';
+                v2[idx2]--;
+                if(v2[idx2]==0 and v1[idx2]==0) cnt++;
+            }
+
+            i++;
+        }
+
+
+        if(j-i+1>ans.length() and nice(v1, v2))
+            ans = s.substr(i, j-i+1);
+
+        j++;
+    }
+
+    return ans;
+}
+
+
+string longestNiceSubstring(string s) {
+    string ans = "";
+
+    for(int i=1; i<=26; i++){
+        string temp = solve(s, i);
+        if(temp.length()>ans.length())
+            ans = temp;
+    }
+
+    return ans;
+}
+```

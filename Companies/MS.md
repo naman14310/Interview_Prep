@@ -154,3 +154,12 @@ string longestNiceSubstring(string s) {
     return ans;
 }
 ```
+
+<br>
+
+### [Counter Example](https://leetcode.com/discuss/interview-question/555702/Microsoft-or-Online-Codility-Assessment-or-Counterexample-(Task-1)/486118)
+
+```
+a = Array.new(n) {Rand(1..9)}
+return a if find_min(a) != a.min
+```

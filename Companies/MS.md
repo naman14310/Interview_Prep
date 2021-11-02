@@ -190,3 +190,29 @@ int minDeletions(string s) {
     return deletions;
 }
 ```
+
+<br>
+
+### Min Moves
+Given an array like A = [1,1,3,4,4,4] find the minimum number of moves required to make like [1,4,4,4,4] -> the number and its frequency should match. Here answer is 3 swaps.
+(delete one 1, delete 3, and add 4 by taking1s position).
+Ex: A=[10,10,10], we need ten 10s to make count and frequency match. But we have in total 3 positions only. So delete all 10s and make it an empty list. So min moves is 3.
+
+```cpp
+int solve(vector<int> &v){
+    unordered_map<int, int> mp;
+    for(int num : v)
+        mp[num]++;
+
+    int minMoves = 0;
+
+    for(auto p : mp){
+        if(p.second>=p.first)
+            minMoves += p.second-p.first;
+        else
+            minMoves += min(p.first-p.second, p.second);
+    }
+
+    return minMoves;
+}
+```

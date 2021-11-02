@@ -216,3 +216,33 @@ int solve(vector<int> &v){
     return minMoves;
 }
 ```
+
+<br>
+
+### Min Split
+Find the min number of substring that can be made such that the substring has unique characters.
+```
+Sample Test Case:
+world -> 1, as the string has no letters that occur more than once.
+dddd -> 4, as you can only create substring of each character.
+abba -> 2, as you can make substrings of ab, ba.
+cycle-> 2, you can create substrings of (cy, cle) or (c, ycle)
+```
+
+```cpp
+int solve (string &s){
+    vector<bool> vis (26, false);
+    int split = 0;
+
+    for(char ch : s){
+        if(vis[ch-'a']){
+            vis = vector<bool> (26, false);
+            split++;
+        }
+
+        vis[ch-'a'] = true;
+    }
+
+    return split+1;
+}
+```

@@ -34,3 +34,42 @@ vector<vector<int>> solve (vector<vector<int>> &grid, string &s, int row, int co
     return res;
 }
 ```
+
+<br>
+
+
+### Maximum possible value by inserting '5'
+```
+examples:
+input: 1234 -> output: 51234
+input: 7643 -> output 76543
+input: 0 -> output 50
+input: -661 -> output -5661
+```
+
+```cpp
+int solve (int num){
+    string s = to_string(num);
+
+    if(num<0){
+        for(int i=1; i<s.length(); i++){
+            if(s[i]-'0'>5){
+                s.insert(i, "5");
+                return stoi(s);
+            }
+        }
+        s.push_back(5);
+        return stoi(s);
+    }
+    else{
+        for(int i=0; i<s.length(); i++){
+            if(s[i]-'0'<5){
+                s.insert(i, "5");
+                return stoi(s);
+            }
+        }
+        s.push_back(5);
+        return stoi(s);
+    }
+}
+```

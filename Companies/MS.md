@@ -163,3 +163,30 @@ string longestNiceSubstring(string s) {
 a = Array.new(n) {Rand(1..9)}
 return a if find_min(a) != a.min
 ```
+
+<br>
+
+### [Minimum Deletions to Make Character Frequencies Unique](https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/)
+
+```cpp
+int minDeletions(string s) {
+
+    vector<int> freq (26, 0);
+    for(char ch : s)
+        freq[ch-'a']++;
+
+    unordered_set<int> vis;
+    int deletions = 0;
+
+    for(int i=0; i<26; i++){
+        while(freq[i]>0 and vis.find(freq[i])!=vis.end()){
+            freq[i]--;
+            deletions++;
+        }
+
+        if(freq[i]>0) vis.insert(freq[i]);
+    }
+
+    return deletions;
+}
+```

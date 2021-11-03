@@ -429,4 +429,44 @@ int solve (vector<int> &v){
 
 <br>
 
+### Number of ways to score runs
+A player is only allowed to score 1, 2, 4 and 6 runs in a ball. How many ways the player can score N runs without hitting consecutive 4s?
+
+```
+for ex, to score 4 runs, the player can hit the runs in subsequent balls in the following ways:
+
+1,1,1,1
+1,1,2
+1,2,1
+2,1,1
+2,2
+4
+
+Output=6
+```
+
+```cpp
+int solve (vector<int> &v, int sum, int prev){
+    if(sum==0) return 1;
+    int ways = 0;
+    
+    for(int i=0; i<v.size(); i++){
+        if(v[i]>sum) break;
+        if(v[i]==4 and prev==4) continue;
+
+        ways += solve(v, sum-v[i], v[i]);
+    }
+    
+    return ways;
+}
+
+
+int main(){
+    vector<int> v = {1, 2, 4, 6};
+    int sum = 7;
+
+    cout<<solve(v, sum, 0)<<endl;
+    return 0;
+}
+```
 

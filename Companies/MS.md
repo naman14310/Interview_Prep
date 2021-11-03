@@ -246,3 +246,38 @@ int solve (string &s){
     return split+1;
 }
 ```
+
+<br>
+
+### [Count Good Nodes](https://leetcode.com/problems/count-good-nodes-in-binary-tree/)
+
+```cpp
+void solve(TreeNode* root, vector<int> &v, int &cnt){
+    if(!root) return;
+
+    if(!root->left and !root->right){
+        if(v.empty() or root->val >= v.back()) cnt++;
+        return;
+    } 
+
+    if(v.empty() or root->val >= v.back()){
+        cnt++;
+        v.push_back(root->val);
+    }
+
+    solve(root->left, v, cnt);
+    solve(root->right, v, cnt);
+
+    if(root->val >= v.back())
+        v.pop_back();
+}
+
+
+int goodNodes(TreeNode* root) {
+    int cnt = 0;
+    vector<int> v;
+
+    solve(root, v, cnt);
+    return cnt;
+}
+```

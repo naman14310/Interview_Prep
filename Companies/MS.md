@@ -399,3 +399,34 @@ int minCost(string s, vector<int>& cost) {
     return ans;
 }
 ```
+
+<br>
+
+### Books in Boxes (Variation of House Robber)
+Given N boxes containing different number of Books in each box(numBook[i]),take a minimum number of books from the boxes conditions are such that:
+1. you must take either all or none of the books inside a given box.
+2. you cannot skip taking books from boxes adjacent to each other. Box1 and 2 can not be skipped but you can skip box 1 and 3.
+3. you must have a minimum number of books in your hand
+for example ,if there are 6 boxes and the number of books in box are {7,2,13,12,9,1} then the minimum number of books u can take is 15(by skipping box 1,3,5).
+
+```cpp
+int solve (vector<int> &v){
+    int n = v.size();
+    if(n==1) return 0;
+    if(n==2) return min(v[0], v[1]);
+
+    vector<int> dp (n, 0);
+    dp[0] = 0;
+    dp[1] = min(v[0], v[1]);
+
+    for(int i=2; i<n; i++){
+        dp[i] = min(dp[i-1]+v[i], v[i-1]+dp[i-2]);
+    }
+
+    return dp.back();
+}
+```
+
+<br>
+
+

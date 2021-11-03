@@ -281,3 +281,47 @@ int goodNodes(TreeNode* root) {
     return cnt;
 }
 ```
+
+<br>
+
+### Minimum change we CAN NOT give using coins
+You are given an array of integer representing coins please find out the minimum change you CAN NOT give using these coins
+```
+Examples:
+Input:[8,2,1,1,5,8,7,14]
+Output:47
+
+Input:[4,7]
+Output:1
+
+Input:[1,2,5]
+Output:4
+```
+
+```cpp
+int solve (vector<int> &coins){
+    int sum = accumulate(coins.begin(), coins.end(), 0);
+    int n = coins.size();
+
+    vector<vector<bool>> matrix (n+1, vector<bool> (sum+1, false));
+
+    for(int i=0; i<=n; i++){
+        for(int j=0; j<=sum; j++){
+
+            if(j==0) matrix[i][j] = true;
+
+            else if(i==0) matrix[i][j] = false;
+
+            else if(coins[i-1]>j)
+                matrix[i][j] = matrix[i-1][j];
+
+            else matrix[i][j] = matrix[i-1][j] or matrix[i-1][j-coins[i-1]];
+        }
+    }
+
+    for(int j=1; j<=sum; j++)
+        if(!matrix[n][j]) return j;
+    
+    return sum+1;
+}
+```

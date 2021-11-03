@@ -361,3 +361,41 @@ int minOperations(string s) {
     return min(cnt1, cnt2);
 }
 ```
+
+<br>
+
+### [Minimum Deletion Cost to Avoid Repeating Letters](https://leetcode.com/problems/minimum-deletion-cost-to-avoid-repeating-letters/)
+Given a string s and an array of integers cost where cost[i] is the cost of deleting the ith character in s. Return the minimum cost of deletions such that there are no two identical letters next to each other.
+
+Input: s = "aabaa", cost = [1,2,3,4,1]
+
+Output: 2
+
+```cpp
+int minCost(string s, vector<int>& cost) {
+    int ans = 0;
+
+    char prev = ' ';
+    int tempCost = 0;
+    int mx = 0;
+
+    for(int i=0; i<s.length(); i++){
+
+        if(s[i]!=prev){
+            ans += tempCost - mx;
+
+            tempCost = cost[i];
+            mx = cost[i];
+            prev = s[i];
+        }
+        else{
+            mx = max(mx, cost[i]);
+            tempCost += cost[i];
+        }
+
+    }
+
+    ans += tempCost - mx;
+    return ans;
+}
+```

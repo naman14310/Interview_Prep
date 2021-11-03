@@ -325,3 +325,39 @@ int solve (vector<int> &coins){
     return sum+1;
 }
 ```
+
+<br>
+
+### Minimum Changes To Make Alternating Binary String
+You are given a string s consisting only of the characters '0' and '1'. In one operation, you can change any '0' to '1' or vice versa. Return the minimum number of operations needed to make s alternating.
+
+```cpp
+int minOperations(string s) {
+    int cnt1=0, cnt2=0;
+
+    /* Case1 : Start with 0 */
+
+    bool zero = true;
+
+    for(char ch : s){
+        if(zero and ch=='1') cnt1++;
+        else if(!zero and ch=='0') cnt1++;
+
+        zero = !zero;
+    }
+
+
+    /* Case2 : Start with 1 */
+
+    zero = false;
+
+    for(char ch : s){
+        if(zero and ch=='1') cnt2++;
+        else if(!zero and ch=='0') cnt2++;
+
+        zero = !zero;
+    }
+
+    return min(cnt1, cnt2);
+}
+```

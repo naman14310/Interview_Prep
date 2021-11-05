@@ -470,3 +470,40 @@ int main(){
 }
 ```
 
+<br>
+
+### [Maximal Network Rank](https://leetcode.com/problems/maximal-network-rank/)
+
+```cpp
+int maximalNetworkRank(int n, vector<vector<int>>& roads) {
+    vector<int> degre (n, 0);
+    int ans = 0;
+
+    unordered_set<string> vis;
+
+    for(auto r : roads){
+        degre[r[0]]++;
+        degre[r[1]]++;
+
+        vis.insert(to_string(r[0]) + " " + to_string(r[1]));
+        vis.insert(to_string(r[1]) + " " + to_string(r[0]));
+    }
+
+
+    for(int i=0; i<n; i++){
+        for(int j=i+1; j<n; j++){
+
+            string key = to_string(i) + " " + to_string(j);
+
+            int temp = degre[i] + degre[j];
+            if(vis.find(key)!=vis.end()) temp--;
+
+            ans = max(ans, temp);
+        }    
+    }
+
+    return ans;
+}
+```
+
+

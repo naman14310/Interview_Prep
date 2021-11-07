@@ -1,17 +1,19 @@
 # Trie 
 Trie is an efficient information reTrieval data structure. 
 
-**Applications of Trie:**
+<br>
 
+#### Applications of Trie
 1. Using Trie, search complexities can be brought to optimal limit (key length).
 2. We can easily print all words in alphabetical order which is not easily possible with hashing.
 3. We can efficiently do prefix search (or Auto-complete) with Trie.
 
-**Issues with Trie:**
-
+#### Issues with Trie
 The main disadvantage of tries is that they need a lot of memory for storing the strings.
 
-#### 1. Implement Trie (Prefix Tree)
+<br>
+
+### 1. Implement Trie (Prefix Tree)
 
 ```cpp
 class Trie {
@@ -86,7 +88,9 @@ public:
 };
 ```
 
-#### 2. Search Suggestions System
+<br>
+
+### 2. Search Suggestions System
 Given an array of strings products and a string searchWord. We want to design a system that suggests at most three product names from products after each character of searchWord is typed. Suggested products should have common prefix with the searchWord. If there are more than three products with a common prefix return the three lexicographically minimums products. Return list of lists of the suggested products after each character of searchWord is typed. 
 
 ```cpp
@@ -174,7 +178,9 @@ vector<vector<string>> suggestedProducts(vector<string>& products, string search
 }
 ```
 
-#### 3. Phone directory
+<br>
+
+### 3. Phone directory
 Given a list of contacts of length n which exist in a phone directory and a query string s. Run a search query for each prefix p of the query string s (i.e. from  index 1 to |s|) that prints all the distinct contacts which have the same prefix as p in lexicographical increasing order.
 
 ```cpp

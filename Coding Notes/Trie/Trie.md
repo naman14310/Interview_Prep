@@ -8,6 +8,8 @@ Trie is an efficient information reTrieval data structure.
 2. We can easily print all words in alphabetical order which is not easily possible with hashing.
 3. We can efficiently do prefix search (or Auto-complete) with Trie.
 
+<br>
+
 #### Issues with Trie
 The main disadvantage of tries is that they need a lot of memory for storing the strings.
 
@@ -264,8 +266,9 @@ vector<vector<string>> displayContacts(int n, string contact[], string s){
 }
 ```
 
+<br>
 
-#### 4. Replace Words
+### 4. Replace Words
 Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the successors in the sentence with the root forming it. If a successor can be replaced by more than one root, replace it with the root that has the shortest length. Return the sentence after the replacement.
 
 Input: dictionary = ["cat","bat","rat"],  sentence = "the cattle was rattled by the battery"
@@ -343,7 +346,9 @@ string replaceWords(vector<string>& dictionary, string sentence) {
 }
 ```
 
-#### 5. Maximum XOR of Two Numbers in an Array
+<br>
+
+### 5. Maximum XOR of Two Numbers in an Array
 Given an integer array nums, return the maximum result of nums[i] XOR nums[j], where 0 <= i <= j < n.
 
 ```cpp
@@ -409,7 +414,9 @@ int findMaximumXOR(vector<int>& nums) {
 }
 ```
 
-#### 6. Design Add and Search Words Data Structure
+<br>
+
+### 6. Design Add and Search Words Data Structure
 Design a data structure that supports adding new words and finding if a string matches any previously added string. Implement the WordDictionary class in which:
 
 1. WordDictionary() : Initializes the object.
@@ -483,7 +490,9 @@ bool search(string word) {
 }
 ```
 
-#### 7. Stream of Characters
+<br>
+
+### 7. Stream of Characters
 Implement the StreamChecker class as follows:
 
 1. StreamChecker(words): Constructor, init the data structure with the given words.
@@ -558,8 +567,9 @@ public:
  */
 ```
 
+<br>
 
-#### 8. Find shortest unique prefix for every word in a given list
+### 8. Find shortest unique prefix for every word in a given list
 Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another. 
 
 Input: arr[] = {"zebra", "dog", "duck", "dove"}
@@ -628,7 +638,9 @@ vector<string> find_all_unique_prefixes (vector<string> & words){
 }
 ```
 
-#### 9. Prefix and Suffix Search (Tricky)
+<br>
+
+### 9. Prefix and Suffix Search (Tricky)
 Design a special dictionary with some words that searchs the words in it by a prefix and a suffix. Implement the WordFilter class:
 
 1. WordFilter(string[] words) Initializes the object with the words in the dictionary.
@@ -720,7 +732,9 @@ int f(string prefix, string suffix) {
 }
 ```
 
-#### 10. Longest Duplicate Substring
+<br>
+
+### 10. Longest Duplicate Substring
 Given a string s, consider all duplicated substrings: (contiguous) substrings of s that occur 2 or more times. The occurrences may overlap. Return any duplicated substring that has the longest possible length. If s does not have a duplicated substring, the answer is "".
 
 Input: s = "banana"
@@ -830,8 +844,9 @@ string longestDupSubstring(string s) {
 }
 ```
 
+<br>
 
-#### 11. Concatenated Words (Tricky)
+### 11. Concatenated Words (Tricky)
 Given an array of strings words (without duplicates), return all the concatenated words in the given list of words. A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 
 Input: words = ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
@@ -935,7 +950,9 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
 }
 ```
 
-#### 12. Palindrome Pairs (Tricky)
+<br>
+
+### 12. Palindrome Pairs (Tricky)
 Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.
 
 ```

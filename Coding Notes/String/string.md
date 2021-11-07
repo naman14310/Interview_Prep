@@ -633,3 +633,97 @@ string convert(string A, int B) {
     return res;
 }
 ```
+
+<br>
+
+### 4. [Multiply string](https://leetcode.com/problems/multiply-strings/)
+
+```cpp
+string add (string &s1, string &s2){
+    reverse(s1.begin(), s1.end());
+    reverse(s2.begin(), s2.end());
+
+    int i = 0;
+    int carry = 0; 
+    string ans = "";
+
+    while(i<s1.size() and i<s2.size()){
+        int sum = (s1[i]-'0') + (s2[i]-'0') + carry;
+
+        int digit = sum%10;
+        ans.push_back(digit+'0');
+
+        carry = sum/10;
+        i++;
+    }
+
+    while(i<s1.size()){
+        int sum = (s1[i]-'0') + carry;
+
+        int digit = sum%10;
+        ans.push_back(digit+'0');
+
+        carry = sum/10;
+        i++;
+    }
+
+    while(i<s2.size()){
+        int sum = (s2[i]-'0') + carry;
+
+        int digit = sum%10;
+        ans.push_back(digit+'0');
+
+        carry = sum/10;
+        i++;
+    }
+
+    if(carry==1) ans.push_back('1');
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+
+string solve (string &s, int num){
+    string ans = "";
+    int carry = 0;
+
+    for(int i=0; i<s.length(); i++){
+
+        int mul = ((s[i]-'0') * num) + carry;
+
+        int digit = mul%10;
+        ans.push_back(digit+'0');
+
+        carry = mul/10;
+    }
+
+    if(carry>0) ans.push_back(carry+'0');
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+
+string multiply(string s1, string s2) {
+    reverse(s1.begin(), s1.end());
+    reverse(s2.begin(), s2.end());
+
+    string ans = "0";
+
+    for(int i=0; i<s2.length(); i++){
+
+        string temp = solve(s1, s2[i]-'0');
+        for(int j=0; j<i; j++) temp.push_back('0');
+        ans = add(ans, temp);
+    }
+
+
+    reverse(ans.begin(), ans.end());
+    while(ans.size()>0 and ans.back()=='0') ans.pop_back();
+
+    if(ans=="") return "0";
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+```

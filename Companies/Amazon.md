@@ -129,3 +129,30 @@ bool isRobotBounded(string instructions) {
     return false;
 }
 ```
+
+<br>
+
+### [K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
+
+```cpp
+vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+    vector<vector<int>> res;
+    priority_queue<pair<int, pair<int,int>>> maxheap; 
+
+    for(auto p : points){
+        int d = (p[0]*p[0]) + (p[1]*p[1]);
+
+        maxheap.push({d, {p[0], p[1]}});
+
+        if(maxheap.size()>k) 
+            maxheap.pop();
+    }
+
+    while(!maxheap.empty()){
+        res.push_back({maxheap.top().second.first, maxheap.top().second.second});
+        maxheap.pop();
+    }
+
+    return res;
+}
+```

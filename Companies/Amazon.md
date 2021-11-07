@@ -66,3 +66,32 @@ vector<string> reorderLogFiles(vector<string>& logs) {
     return ans;
 }
 ```
+
+<br>
+
+### [Partition Labels](https://leetcode.com/problems/partition-labels/submissions/)
+
+```cpp
+vector<int> partitionLabels(string s) {
+    vector<int> pos (26, -1);
+    vector<int> res;
+
+    for(int i=0; i<s.length(); i++)
+        pos[s[i]-'a'] = i;
+
+    int prev = -1;
+    int range = 0;
+
+    for(int i=0; i<s.length(); i++){
+
+        range = max(range, pos[s[i]-'a']);
+
+        if(range==i){
+            res.push_back(i-prev);
+            prev = i;
+        }
+    }
+
+    return res;
+}
+```

@@ -98,7 +98,7 @@ vector<int> partitionLabels(string s) {
 
 <br>
 
-### [Robot bounded in Circle](Robot Bounded In Circle)
+### [Robot bounded in Circle](https://leetcode.com/problems/robot-bounded-in-circle/)
 
 The robot stays in the circle iff (looking at the final vector) it changes direction (ie. doesn't stay pointing north), or it moves 0.
 

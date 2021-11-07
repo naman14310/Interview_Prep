@@ -2,7 +2,9 @@
 
 It is a linear ordering of vertices such that for every directed edge u --> v, vertex u comes before vertex v in the ordering.
 
-#### 1. Course Schedule II
+<br>
+
+### 1. Course Schedule II
 There are a total of numCourses courses labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. Return the ordering of courses you should take to finish all courses. If it is impossible to finish all courses, return an empty array.
 
 **Method 1: DFS + Stack**
@@ -52,6 +54,8 @@ vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
     return res;
 }
 ```
+
+<br>
 
 **Method 2: BFS + indegre array (Kahns Algo)**
 
@@ -106,7 +110,9 @@ vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
 }
 ```
 
-#### 2. Minimum time taken by each job to be completed given by a Directed Acyclic Graph
+<br>
+
+### 2. Minimum time taken by each job to be completed given by a Directed Acyclic Graph
 
 Similar Question : Parallel Courses I (Leetcode Premium)
 Similar Question : Longest Path in DAG (GFG)
@@ -165,7 +171,9 @@ int minTimeTakenByJob (unordered_map<int, vector<int>> & graph, int total_jobs){
 }
 ```
 
-#### 3. Alien Dictionary (Tricky)
+<br>
+
+### 3. Alien Dictionary (Tricky)
 Given a sorted dictionary of an alien language having N words and k starting alphabets of standard dictionary. Find the order of characters in the alien language.
 
 Input: N = 5, K = 4, dict = {"baa","abcd","abca","cab","cad"}

@@ -156,3 +156,28 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
     return res;
 }
 ```
+
+<br>
+
+### [Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts](https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts/)
+
+```cpp
+int maxArea(int h, int w, vector<int>& horizontalCuts, vector<int>& verticalCuts) {
+    sort(horizontalCuts.begin(), horizontalCuts.end());
+    sort(verticalCuts.begin(), verticalCuts.end());
+
+    int dy = max(horizontalCuts[0], h-horizontalCuts.back());
+    int dx = max(verticalCuts[0], w-verticalCuts.back());
+
+    for(int i=1; i<horizontalCuts.size(); i++)
+        dy = max(dy, horizontalCuts[i]-horizontalCuts[i-1]);
+
+    for(int i=1; i<verticalCuts.size(); i++)
+        dx = max(dx, verticalCuts[i]-verticalCuts[i-1]);
+
+    long long a = dx;
+    long long b = dy;
+
+    return (a*b) % 1000000007;
+}
+```

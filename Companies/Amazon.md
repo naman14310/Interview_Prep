@@ -95,3 +95,37 @@ vector<int> partitionLabels(string s) {
     return res;
 }
 ```
+
+<br>
+
+### [Robot bounded in Circle](Robot Bounded In Circle)
+
+The robot stays in the circle iff (looking at the final vector) it changes direction (ie. doesn't stay pointing north), or it moves 0.
+
+```cpp
+bool isRobotBounded(string instructions) {
+    int xd = 0, yd = 0;
+    int dir = 0;
+
+    for(char ch : instructions){
+
+        if(ch=='G'){
+            if(dir==0) xd++;
+            else if(dir==1) yd--;
+            else if(dir==2) xd--;
+            else yd++;
+        }
+
+        else if(ch=='L')
+            dir = (dir+1)%4;
+
+        else
+            dir = ((dir-1) + 4)%4;
+    }
+
+    if(xd==0 and yd==0) return true;
+    if(dir!=0) return true;
+
+    return false;
+}
+```

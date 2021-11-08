@@ -609,3 +609,69 @@ int findRadius(vector<int>& houses, vector<int>& heaters) {
     return binarySearch(minDist, 0, INT_MAX);
 }
 ```
+
+<br>
+
+### [Sell Diminishing-Valued Colored Balls](https://leetcode.com/problems/sell-diminishing-valued-colored-balls/)
+
+```cpp
+long long getOrder (vector<int> &inventory, int mid, int orders){
+    int n = inventory.size();       
+    long long ord = 0;
+
+    for(int i=n-1; i>=0; i--){
+        if(inventory[i]>mid)
+            ord += inventory[i] - mid;
+    }
+
+    return ord;
+}
+
+
+long long maxProfit (vector<int> &inventory, int start, int end, int orders){
+    int threshold = 0;
+    long long ord = 0;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        long long o = getOrder(inventory, mid, orders);
+
+        if(o<=orders){
+            threshold = mid;
+            ord = o;
+            end = mid-1;
+        }
+
+        else start = mid+1;
+    }
+
+
+    long long profit = 0;
+
+    for(int i=inventory.size()-1; i>=0; i--){
+        if(inventory[i]>threshold){
+            long long n = inventory[i] - threshold;
+            long long temp = ((n) * (threshold + 1 + inventory[i])) / 2;
+
+            profit = (profit + temp) % 1000000007;
+        }
+    }
+
+
+    while(ord<orders){
+        profit = (profit + threshold) % 1000000007;
+        ord++;
+    }
+
+    return profit;
+}
+
+
+int maxProfit(vector<int>& inventory, int orders) {
+    sort(inventory.begin(), inventory.end());
+    int start = 0, end = inventory.back();
+
+    return maxProfit (inventory, start, end, orders);
+}
+```

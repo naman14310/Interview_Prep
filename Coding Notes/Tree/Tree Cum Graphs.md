@@ -296,3 +296,62 @@ public:
     }
 };
 ```
+
+<br>
+
+### 6. [All Nodes Distance K in Binary Tree](https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/)
+
+```cpp
+void buildGraph (TreeNode* root, unordered_map<int, vector<int>> &graph, TreeNode* parent){
+    if(!root) return;
+
+    if(root->left)
+        graph[root->val].push_back(root->left->val);
+
+    if(root->right)
+        graph[root->val].push_back(root->right->val);
+
+    if(parent)
+        graph[root->val].push_back(parent->val);
+
+    buildGraph(root->left, graph, root);
+    buildGraph(root->right, graph, root);        
+}
+
+
+vector<int> bfs (unordered_map<int, vector<int>> &graph, int src, int k){
+    vector<int> res;
+    queue<pair<int,int>> q;
+    q.push({src,0});
+
+    unordered_set<int> vis;
+    vis.insert(src);
+
+    while(!q.empty()){
+
+        auto p = q.front(); q.pop();
+        int val = p.first, dist = p.second;
+
+        if(dist==k) res.push_back(val);
+        if(dist>k) break;
+
+        for(auto nbr : graph[val]){
+            if(vis.find(nbr)!=vis.end()) continue;
+
+            q.push({nbr, dist+1});
+            vis.insert(nbr);
+        }
+    }
+
+    return res;
+}
+
+
+vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+
+    unordered_map<int, vector<int>> graph;
+    buildGraph (root, graph, NULL);
+
+    return bfs (graph, target->val, k);
+}
+```

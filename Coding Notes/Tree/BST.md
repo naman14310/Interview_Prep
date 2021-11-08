@@ -1024,4 +1024,65 @@ int solve(vector<int> &A) {
 }
 ```
 
+<br>
+
+### 4. [Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
+You are given an integer array nums and you have to return a new counts array. The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
+
+Input: nums = [5,2,6,1]
+
+Output: [2,1,1,0]
+
+[Video Solution](https://www.youtube.com/watch?v=buDoT9ESw1c)
+
+```cpp
+struct TreeNode{
+	int val;
+	int count;
+	TreeNode* left, *right;
+
+	TreeNode (int v, int c){
+		val = v; count = c;
+		left = NULL; right = NULL;
+	}
+};
+
+
+TreeNode* insert (TreeNode* root, int val, int &cnt){
+	if(!root) 
+		return new TreeNode(val, 1);
+
+	if(root->val >= val){
+		root->count++;
+		root->left = insert(root->left, val, cnt);
+	}
+
+	else{
+		cnt += root->count;
+		root->right = insert(root->right, val, cnt);
+	}
+
+	return root;
+}
+
+
+vector<int> countSmaller(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res (n, 0);
+
+	TreeNode* root = new TreeNode(nums.back(), 1);
+
+	for(int i=n-2; i>=0; i--){
+		int cnt = 0;
+		root = insert (root, nums[i], cnt);
+		res[i] = cnt;
+	}
+
+	return res;
+}
+```
+
+
+
+
 

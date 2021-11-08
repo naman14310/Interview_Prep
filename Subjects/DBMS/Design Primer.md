@@ -106,7 +106,7 @@ Denormalization attempts to improve read performance at the expense of some writ
 
 <br>
 
-## NO-SQL DataVases
+## NO-SQL DataBases
 NoSQL is a collection of data items represented in a key-value store, document store, wide column store, or a graph database. Data is denormalized, and joins are generally done in the application code. Most NoSQL stores lack true ACID transactions and favor eventual consistency.
 
 **BASE** is often used to describe the properties of NoSQL databases. In comparison with the CAP Theorem, BASE chooses availability over consistency.

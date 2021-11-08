@@ -612,7 +612,7 @@ int findRadius(vector<int>& houses, vector<int>& heaters) {
 
 <br>
 
-### [Sell Diminishing-Valued Colored Balls](https://leetcode.com/problems/sell-diminishing-valued-colored-balls/)
+### 12. [Sell Diminishing-Valued Colored Balls](https://leetcode.com/problems/sell-diminishing-valued-colored-balls/)
 
 ```cpp
 long long getOrder (vector<int> &inventory, int mid, int orders){

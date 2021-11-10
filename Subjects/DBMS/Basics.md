@@ -42,6 +42,31 @@ Query made on unindexed table is slow because all of the data have to be loaded 
 
 <br>
 
+## [More on B+ Trees](https://www.javatpoint.com/dbms-b-plus-tree)
+1. The B+ tree is a balanced binary search tree. It follows a multi-level index format.
+2. In the B+ tree, leaf nodes denote actual data pointers. B+ tree ensures that all leaf nodes remain at the same height.
+3. In the B+ tree, the leaf nodes are linked using a link list. Therefore, a B+ tree can support random access as well as sequential access.
+4. In the B+ tree, every leaf node is at equal distance from the root node. The B+ tree is of the order n where n is fixed for every B+ tree.
+
+<br>
+
+![img](https://static.javatpoint.com/dbms/images/dbms-b-plus-tree.png)
+
+<br>
+
+### Rules
+
+#### Internal node
+1. An internal node of the B+ tree can contain at least n/2 record pointers except the root node.
+2. At most, an internal node of the tree contains n pointers.
+
+#### Leaf node
+1. The leaf node of the B+ tree can contain at least n/2 record pointers and n/2 key values.
+2. At most, a leaf node contains n record pointer and n key values.
+3. Every leaf node of the B+ tree contains one block pointer P to point to next leaf node.
+
+<br>
+
 ## DDL | DQL | DML | DCL | TCL Commands
 
 <br>

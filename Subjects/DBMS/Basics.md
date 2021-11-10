@@ -2,6 +2,13 @@
 
 <br>
 
+## Instance Vs Schema
+Instance is the snapshot of the database taken at a particular moment. It can also be described in more significant way as the collection of the information stored in the database at that particular moment.
+
+Schema is the overall description or the overall design of the database specified during the database design. Important thing to be remembered here is it should not be changed frequently. 
+
+<br>
+
 ## DDL | DQL | DML | DCL | TCL Commands
 
 <br>

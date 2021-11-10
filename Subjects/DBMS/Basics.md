@@ -11,16 +11,16 @@
 <br>
 
 ### DDL
-DDL or Data Definition Language actually consists of the SQL commands that can be used to define the database schema.
+DDL or **Data Definition Language** actually consists of the SQL commands that can be used to define the database schema.
 
 ### DQL
-DQL or Data Query Language statements are used for performing queries on the data within schema objects.
+DQL or **Data Query Language** statements are used for performing queries on the data within schema objects.
 
 ### DML
-DML or Data Manipulation Language commands deals with the manipulation of data present in the database. It is the component of the SQL statement that controls access to data and to the database.
+DML or **Data Manipulation Language** commands deals with the manipulation of data present in the database. It is the component of the SQL statement that controls access to data and to the database.
 
 ### DCL
-DCL or Data Control Language includes commands such as GRANT and REVOKE which mainly deal with the rights, permissions, and other controls of the database system. 
+DCL or **Data Control Language** includes commands such as GRANT and REVOKE which mainly deal with the rights, permissions, and other controls of the database system. 
 
 ### TCL
-Deals with transactional statements.
+TCL or **Transaction Control Language** deals with transactional statements.

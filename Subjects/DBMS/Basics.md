@@ -9,6 +9,10 @@ Schema is the overall description or the overall design of the database specifie
 
 <br>
 
+## [Data Abstraction in DBMS and 3 level architecture](https://afteracademy.com/blog/what-is-data-abstraction-in-dbms-and-what-are-its-three-levels)
+
+<br>
+
 ## DDL | DQL | DML | DCL | TCL Commands
 
 <br>

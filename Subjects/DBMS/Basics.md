@@ -2,7 +2,7 @@
 
 <br>
 
-## DDL, DQL, DML, DCL and TCL Commands)
+## DDL | DQL | DML | DCL | TCL Commands
 
 <br>
 

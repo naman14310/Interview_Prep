@@ -91,3 +91,4 @@ Query made on unindexed table is slow because all of the data have to be loaded 
 
 <br>
 
+

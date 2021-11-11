@@ -42,6 +42,13 @@ TCL or **Transaction Control Language** deals with transactional statements.
 
 <br>
 
+## [Delete Vs Truncate](https://www.geeksforgeeks.org/difference-between-delete-and-truncate/)
+DELETE is a DML(Data Manipulation Language) command and is used to remove or delete only those rows(tuple) that satisfy the where condition if specified otherwise by default it removes all the tuples(rows) from the table. 
+
+TRUNCATE is a DDL(Data Definition Language) command and is used to delete all the rows or tuples from a table. Unlike the DELETE command, TRUNCATE command does not contain a WHERE clause. Unlike the DELETE command, the TRUNCATE command is fast. We cannot rollback the data after using the TRUNCATE command. 
+
+<br>
+
 ## [SQL Views](https://www.geeksforgeeks.org/sql-views/)
 Views in SQL are kind of virtual tables. We can create a view by selecting fields from one or more tables present in the database. A View can either have all the rows of a table or specific rows based on certain condition.
 
@@ -80,6 +87,13 @@ Implicit Cursors are also known as Default Cursors of SQL SERVER. These Cursors 
 Explicit Cursors are Created by Users whenever the user requires them. Explicit Cursors are used for Fetching data from Table in Row-By-Row Manner.
 
 <br>
+
+## [SQL Injection](https://www.w3schools.com/sql/sql_injection.asp)
+SQL injection is the placement of malicious code in SQL statements, via web page input. SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id, the user gives you an SQL statement that you will unknowingly run on your database.
+
+<br>
+
+
 
 ## Some Famous InterView Queries
 

@@ -2,6 +2,30 @@
 
 <br>
 
+## [DBMS Vs RDBMS](https://www.geeksforgeeks.org/difference-between-rdbms-and-dbms/)
+
+#### DBMS
+1. DBMS stores data as file. It stores data in either a navigational or hierarchical form.
+2. No relationship between data.
+3. Normalization is not present. Data redundancy is common in this model.	
+4. It is used for small organization and deal with small data.
+5. Data fetching is slower for the large amount of data.
+6. The data in a DBMS is subject to low security levels with regards to data manipulation.
+7. Examples: XML, Window Registry, etc.
+
+<br>
+
+#### RDBMS
+1. RDBMS stores data in tabular form.
+2. Normalization is present.
+3. Keys and indexes do not allow Data redundancy.
+4. It is used to handle large amount of data.
+5. Data fetching is fast because of relational approach.
+6. There exists multiple levels of data security in a RDBMS.
+7. Examples: MySQL, PostgreSQL, SQL Server, Oracle, Microsoft Access etc.
+
+<br>
+
 ## Instance Vs Schema
 Instance is the snapshot of the database taken at a particular moment. It can also be described in more significant way as the collection of the information stored in the database at that particular moment.
 
@@ -40,9 +64,21 @@ Database loads data into memory in pieces and apply the conditions that you have
 ### What if we query unindexed table ?
 Query made on unindexed table is slow because all of the data have to be loaded into the memory and read one by one to get you results. Same thing will happen in this case, read will become slow. There is something called Buffer Pool, which is responsible for caching of data which is responsible for performance. 
 
+
 <br>
 
-## [More on B+ Trees](https://www.javatpoint.com/dbms-b-plus-tree)
+## [Indexing in DBMS](https://www.youtube.com/watch?v=SxHX1T53n_A)
+Indexing is a data structure technique which allows you to quickly retrieve records from a database file. An Index is a small table having only two columns. The first column comprises a copy of the primary or candidate key of a table. Its second column contains a set of pointers for holding the address of the disk block where that specific key value stored.
+
+### What is Multilevel Index?
+Multilevel Indexing in Database is created when a primary index does not fit in memory. In this type of indexing method, you can reduce the number of disk accesses to short any record and kept on a disk as a sequential file and create a sparse base on that file.
+
+![img](https://cdn.guru99.com/images/1/070119_0833_IndexinginD5.png)
+
+
+<br>
+
+### [B+ Trees](https://www.javatpoint.com/dbms-b-plus-tree)
 1. The B+ tree is a balanced binary search tree. It follows a multi-level index format.
 2. In the B+ tree, leaf nodes denote actual data pointers. B+ tree ensures that all leaf nodes remain at the same height.
 3. In the B+ tree, the leaf nodes are linked using a link list. Therefore, a B+ tree can support random access as well as sequential access.
@@ -54,8 +90,6 @@ Query made on unindexed table is slow because all of the data have to be loaded 
 
 <br>
 
-### Rules
-
 #### Internal node
 1. An internal node of the B+ tree can contain at least n/2 record pointers except the root node.
 2. At most, an internal node of the tree contains n pointers.
@@ -64,31 +98,3 @@ Query made on unindexed table is slow because all of the data have to be loaded 
 1. The leaf node of the B+ tree can contain at least n/2 record pointers and n/2 key values.
 2. At most, a leaf node contains n record pointer and n key values.
 3. Every leaf node of the B+ tree contains one block pointer P to point to next leaf node.
-
-<br>
-
-## [DBMS Vs RDBMS](https://www.geeksforgeeks.org/difference-between-rdbms-and-dbms/)
-
-#### DBMS
-1. DBMS stores data as file. It stores data in either a navigational or hierarchical form.
-2. No relationship between data.
-3. Normalization is not present. Data redundancy is common in this model.	
-4. It is used for small organization and deal with small data.
-5. Data fetching is slower for the large amount of data.
-6. The data in a DBMS is subject to low security levels with regards to data manipulation.
-7. Examples: XML, Window Registry, etc.
-
-<br>
-
-#### RDBMS
-1. RDBMS stores data in tabular form.
-2. Normalization is present.
-3. Keys and indexes do not allow Data redundancy.
-4. It is used to handle large amount of data.
-5. Data fetching is fast because of relational approach.
-6. There exists multiple levels of data security in a RDBMS.
-7. Examples: MySQL, PostgreSQL, SQL Server, Oracle, Microsoft Access etc.
-
-<br>
-
-

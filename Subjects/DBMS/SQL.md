@@ -172,3 +172,45 @@ Execute stmt using @count;
 ```
 select name, salary+(salary/10) as totalSalary from employee
 ```
+
+<br>
+
+#### 11. Find the Name of a Person Whose Name Starts with Specific Letter
+```
+SELECT * FROM department WHERE NAME LIKE 'A%';
+```
+
+<br>
+
+#### 12. Create an empty table from an existing table in SQL?
+```
+CREATE TABLE new_table AS (SELECT * FROM old_table WHERE 1=2); 
+```
+
+<br>
+
+#### 13. Fetch common records from two tables
+```
+(Select * from table1) Intersect (Select * from table2)  
+```
+
+<br>
+
+#### 14. Fetch alternate records from a table in mysql
+```
+To fetch even Numbered row:
+SELECT * FROM table_name WHERE column_name % 2 = 0
+
+To fetch odd Numbered row:
+SELECT * FROM table_name WHERE column_name % 2 = 1
+```
+
+<br>
+
+#### 15. Select first 5 chars of a string
+```
+Extracting 5 characters from a string, starting in position 1:
+SELECT SUBSTRING('SQL Tutorial', 1, 3) AS ExtractString;
+```
+
+Note: In SQL, Indexing will start from 1

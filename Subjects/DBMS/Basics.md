@@ -111,3 +111,16 @@ Note: In most practical applications, normalization achieves its best in 3rd Nor
 ### [Purpose Of Normalization](https://medium.com/@bbrumm/what-is-the-purpose-of-database-normalisation-8070b2948d70)
 Database normalisation is the process of transforming a database design into something that adheres to a common standard for databases. Once this process is followed, which is a standard process in database design, the database is said to be “normalised”.
 
+<br>
+
+### How does normalization fix the three types of update anomalies ?
+1NF is basically just "don't keep too much data in a single column", so I think that 2NF and 3NF are the primary fix for all 3 database anomalies, since both 2NF and 3NF involve breaking out items into their own tables:
+
+1. Insertion anomaly: If you have one big enrollment table that includes both "class" and "student" data (neither of which exists elsewhere), then you can't enter a new (empty) course without at least one corresponding student (because the table is a record of your enrollments). So, apply 2NF and create separate tables for classes, students, and make your original enrollment table link to both by ClassID and StudentID. Now you can enter new classes with no students, and new students with no classes.
+
+2. Deletion anomaly: Same as above, if each row of your original enrollment table contains the full details of the student and the full details of the class they are enrolled in, then removing the last enrolled student for a class removes the last bit of information about that class. The solution is the same, apply 2NF to make separate tables, so that students can be enrolled or unenrolled without losing class information.
+
+3. Update anomaly: Same as above, using the single-table method, updating information (say, the room number) for a class with multiple students enrolled might lead to a situation where some rows have been new information and other rows have the old. Applying 2NF as above is again the solution, so that class data is changed in only one place (the classes table).
+
+
+

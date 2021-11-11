@@ -136,6 +136,8 @@ A document store is centered around documents (XML, JSON, binary, etc), where a 
 
 Some document stores like MongoDB and CouchDB also provide a SQL-like language to perform complex queries. DynamoDB supports both key-values and documents. Document stores provide high flexibility and are often used for working with occasionally changing data.
 
+### [Know more about Mongo DB](https://www.mongodb.com/document-databases)
+
 <br>
 
 ### [Key Store Vs Document Store](https://stackoverflow.com/questions/3046001/what-does-document-oriented-vs-key-value-mean-when-talking-about-mongodb-vs-c)

@@ -42,7 +42,44 @@ TCL or **Transaction Control Language** deals with transactional statements.
 
 <br>
 
+## [SQL Views](https://www.geeksforgeeks.org/sql-views/)
+Views in SQL are kind of virtual tables. We can create a view by selecting fields from one or more tables present in the database. A View can either have all the rows of a table or specific rows based on certain condition.
 
+```
+CREATE VIEW view_name AS
+SELECT column1, column2.....
+FROM table_name
+WHERE condition;
+```
+
+<br>
+
+## [SQL Trigger](https://www.geeksforgeeks.org/sql-trigger-student-database/)
+A trigger is a stored procedure in database which automatically invokes whenever a special event in the database occurs. For example, a trigger can be invoked when a row is inserted into a specified table or when certain table columns are being updated.
+
+```
+create trigger [trigger_name] 
+[before | after]  
+{insert | update | delete}  
+on [table_name]  
+[for each row]  
+[trigger_body] 
+```
+
+<br>
+
+## [What is Cursor in SQL ?](https://www.geeksforgeeks.org/what-is-cursor-in-sql/)
+Cursor is a Temporary Memory which is Allocated by Database Server at the Time of Performing DQL and DML(Data Manipulation Language) operations on Table by User. Cursors are used to store Database Tables. 
+
+There are 2 types of Cursors: 
+
+#### Implicit Cursors
+Implicit Cursors are also known as Default Cursors of SQL SERVER. These Cursors are allocated by SQL SERVER when the user performs DML operations.
+
+#### Explicit Cursors :
+Explicit Cursors are Created by Users whenever the user requires them. Explicit Cursors are used for Fetching data from Table in Row-By-Row Manner.
+
+<br>
 
 ## Some Famous InterView Queries
 

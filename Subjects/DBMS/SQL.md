@@ -210,7 +210,8 @@ SELECT * FROM table_name WHERE column_name % 2 = 1
 #### 15. Select first 5 chars of a string
 ```
 Extracting 5 characters from a string, starting in position 1:
-SELECT SUBSTRING('SQL Tutorial', 1, 3) AS ExtractString;
+
+SELECT SUBSTRING('SQL Tutorial', 1, 5) AS ExtractString;
 ```
 
 Note: In SQL, Indexing will start from 1

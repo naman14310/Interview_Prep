@@ -98,3 +98,16 @@ Multilevel Indexing in Database is created when a primary index does not fit in 
 1. The leaf node of the B+ tree can contain at least n/2 record pointers and n/2 key values.
 2. At most, a leaf node contains n record pointer and n key values.
 3. Every leaf node of the B+ tree contains one block pointer P to point to next leaf node.
+
+<br>
+
+## What is Normalization?
+Normalization is a database design technique that reduces data redundancy and eliminates undesirable characteristics like Insertion, Update and Deletion Anomalies. Normalization rules divides larger tables into smaller tables and links them using relationships. The purpose of Normalisation in SQL is to eliminate redundant (repetitive) data and ensure data is stored logically.
+
+Note: In most practical applications, normalization achieves its best in 3rd Normal Form. 
+
+<br>
+
+### [Purpose Of Normalization](https://medium.com/@bbrumm/what-is-the-purpose-of-database-normalisation-8070b2948d70)
+Database normalisation is the process of transforming a database design into something that adheres to a common standard for databases. Once this process is followed, which is a standard process in database design, the database is said to be “normalised”.
+

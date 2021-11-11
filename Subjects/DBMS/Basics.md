@@ -67,25 +67,27 @@ Query made on unindexed table is slow because all of the data have to be loaded 
 
 <br>
 
-## DDL | DQL | DML | DCL | TCL Commands
+## [DBMS Vs RDBMS](https://www.geeksforgeeks.org/difference-between-rdbms-and-dbms/)
+
+#### DBMS
+1. DBMS stores data as file. It stores data in either a navigational or hierarchical form.
+2. No relationship between data.
+3. Normalization is not present. Data redundancy is common in this model.	
+4. It is used for small organization and deal with small data.
+5. Data fetching is slower for the large amount of data.
+6. The data in a DBMS is subject to low security levels with regards to data manipulation.
+7. Examples: XML, Window Registry, etc.
 
 <br>
 
-![img](https://media.geeksforgeeks.org/wp-content/uploads/20210920153429/new.png)
+#### RDBMS
+1. RDBMS stores data in tabular form.
+2. Normalization is present.
+3. Keys and indexes do not allow Data redundancy.
+4. It is used to handle large amount of data.
+5. Data fetching is fast because of relational approach.
+6. There exists multiple levels of data security in a RDBMS.
+7. Examples: MySQL, PostgreSQL, SQL Server, Oracle, Microsoft Access etc.
 
 <br>
 
-### DDL
-DDL or **Data Definition Language** actually consists of the SQL commands that can be used to define the database schema.
-
-### DQL
-DQL or **Data Query Language** statements are used for performing queries on the data within schema objects.
-
-### DML
-DML or **Data Manipulation Language** commands deals with the manipulation of data present in the database. It is the component of the SQL statement that controls access to data and to the database.
-
-### DCL
-DCL or **Data Control Language** includes commands such as GRANT and REVOKE which mainly deal with the rights, permissions, and other controls of the database system. 
-
-### TCL
-TCL or **Transaction Control Language** deals with transactional statements.

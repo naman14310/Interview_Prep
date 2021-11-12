@@ -179,7 +179,32 @@ int minDeletions(string s) {
 
 <br>
 
-### 7. Orderly Queue
+### 7. Vowels of All Substrings
+Given a string word, return the sum of the number of vowels ('a', 'e', 'i', 'o', and 'u') in every substring of word.
+
+Input: word = "aba"
+
+Output: 6
+
+```cpp
+long long countVowels(string word) {
+    long long n = word.length();
+    long long ans = 0;
+
+    for(long long i=0; i<n; i++){
+
+        if(word[i]=='a' or word[i]=='e' or word[i]=='i' or word[i]=='o' or word[i]=='u')
+            ans += (i+1) * (n-i);
+
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+### 8. Orderly Queue
 You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string. Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
 
 Input: s = "cba", k = 1

@@ -495,6 +495,65 @@ vector<int> findClosestElements(vector<int>& arr, int k, int x) {
 
 <br>
 
+### 10. Most Beautiful Item for Each Query
+You are given a 2D integer array items where items[i] = [pricei, beautyi] denotes the price and beauty of an item respectively. You are also given a 0-indexed integer array queries. For each queries[j], you want to determine the maximum beauty of an item whose price is less than or equal to queries[j]. If no such item exists, then the answer to this query is 0.
+
+Input: items = [[1,2],[3,2],[2,4],[5,6],[3,5]], queries = [1,2,3,4,5,6]
+
+Output: [2,4,5,5,6,6]
+
+```
+int binarySearch (vector<pair<int,int>> &v, int start, int end, int q){
+    int ans = 0;
+
+    while(start<=end){
+        int mid = start + (end-start)/2;
+
+        if(v[mid].first<=q){
+            ans = v[mid].second;
+            start = mid+1;
+        }
+
+        else end = mid-1;
+    }
+
+    return ans;
+}
+
+
+vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
+    int n = items.size();
+    vector<pair<int,int>> v;
+    sort(items.begin(), items.end());
+
+    int i=0;
+
+    while(i<n){
+        int mx = items[i][1];
+
+        while(i+1<n and items[i][0]==items[i+1][0]){
+            i++;
+            mx = max(mx, items[i][1]);
+        }
+
+        if(v.size()==0) v.push_back({items[i][0],mx});
+        else v.push_back({items[i][0], max(v.back().second, mx)});            
+        i++;
+    }
+
+
+    vector<int> res;
+
+    for(int q : queries)
+        res.push_back(binarySearch(v, 0, v.size()-1, q));
+
+    return res;
+}
+```
+
+
+<br>
+
 
 ## @ Hard
 

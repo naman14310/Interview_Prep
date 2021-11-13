@@ -583,4 +583,24 @@ int maxLength(vector<string>& arr) {
 }
 ```
 
+<br>
+
+### [Crop Characters](https://imgur.com/a/e9PZUXR)
+
+```cpp
+string solve(string s, int k){
+    if(k>=s.length()) return s;
+
+    if(s[k]==' ')
+        return s.substr(0, k);
+    
+    string res = s.substr(0, k);
+    
+    while(res.back()!=' ') res.pop_back();
+
+    res.pop_back();
+    return res;
+}
+```
+
 

@@ -502,7 +502,7 @@ Input: items = [[1,2],[3,2],[2,4],[5,6],[3,5]], queries = [1,2,3,4,5,6]
 
 Output: [2,4,5,5,6,6]
 
-```
+```cpp
 int binarySearch (vector<pair<int,int>> &v, int start, int end, int q){
     int ans = 0;
 

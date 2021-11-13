@@ -603,4 +603,47 @@ string solve(string s, int k){
 }
 ```
 
+<br>
+
+### [String Comparision with one operation](https://imgur.com/a/e9PZUXR)
+
+```cpp
+string solve (string &s, string &t){
+    int lens = s.length(), lent = t.length();
+    string res = "";
+
+    if(s==t) return "EQUAL";
+
+    if(s==t.substr(1,lent-1)){
+        res += "INSERT ";
+        res.push_back(t[0]);
+        return res;
+    } 
+
+    if(s.substr(0, lens-1)==t){
+        res += "REMOVE ";
+        res.push_back(s[lens-1]);
+        return res;
+    }
+
+    for(int i=0; i<lens-1; i++){
+
+        swap(s[i], s[i+1]);
+
+        if(s==t){
+            res += "SWAP ";
+            res.push_back(s[i+1]);
+            res += " ";
+            res.push_back(s[i]);
+            return res;
+        }
+
+        swap(s[i], s[i+1]);
+    }
+
+    return "IMPOSSIBLE";
+
+} 
+```
+
 

@@ -783,5 +783,46 @@ vector<vector<char>> solve (int n, vector<int> &r, vector<int> &c){
 }
 ```
 
+<br>
 
+### [Min Buckets to Fill Water](https://www.geeksforgeeks.org/microsoft-interview-experience-3/)
+Given buckets of size 1..N, find the minimum number of buckets required to fill K liters of water.
+
+```cpp
+/* assuming we can take buckets multiple times */
+
+int solve (int idx, int n, int k, vector<vector<int>> &dp){
+
+    if(k==0) return 0;
+    if(idx>n) return -1;
+
+    if(dp[idx][k]!=INT_MIN) return dp[idx][k];
+
+    if(idx<=k){
+
+        int taken = solve(idx, n, k-idx, dp);
+        int not_taken = solve(idx+1, n, k, dp);
+
+        if(taken==-1 and not_taken==-1) return dp[idx][k] = -1;
+
+        if(taken==-1) return dp[idx][k] = not_taken;
+
+        if(not_taken==-1) return dp[idx][k] = taken+1;
+
+        return dp[idx][k] = min(taken+1, not_taken);
+    }
+
+    else{
+        int not_taken = solve(idx+1, n, k, dp);
+        return dp[idx][k] = not_taken;
+    }
+
+}
+
+
+int getMinBuckets(int n, int k){
+    vector<vector<int>> dp (n+1, vector<int> (k+1, INT_MIN));
+    return solve (1, n, k, dp);
+}
+```
 

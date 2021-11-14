@@ -746,5 +746,41 @@ vector<vector<int>> solve (vector<int> arr, int f, int m){
 }
 ```
 
+<br>
+
+### Bomb in a Grid
+
+```cpp
+bool isInside(int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+vector<vector<char>> solve (int n, vector<int> &r, vector<int> &c){
+
+    vector<vector<char>> grid (n, vector<char> (n, '0'));
+
+    for(int i=0; i<r.size(); i++){
+        int x = r[i], y = c[i];
+        grid[x][y]='B';
+        
+        int dx[] = {1, 0, -1, 0, 1, 1, -1, -1};
+        int dy[] = {0, 1, 0, -1, 1, -1, 1, -1};
+
+        for(int i=0; i<8; i++){
+            int xnew = x + dx[i];
+            int ynew = y + dy[i];
+
+            if(isInside(xnew, ynew, n, n) and grid[xnew][ynew]!='B'){
+                grid[xnew][ynew] += 1;
+            }
+        }
+
+    }
+    
+    return grid;
+}
+```
+
 
 

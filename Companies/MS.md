@@ -749,6 +749,7 @@ vector<vector<int>> solve (vector<int> arr, int f, int m){
 <br>
 
 ### Bomb in a Grid
+Given a N * N matrix. Vector r and c represent respective row and col of bombs. Print the matrix with 'B' in place of bombs and count of nbr bombs in other cells (consider 8 nbrs)
 
 ```cpp
 bool isInside(int x, int y, int row, int col){

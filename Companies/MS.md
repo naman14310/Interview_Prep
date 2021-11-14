@@ -666,5 +666,85 @@ int maxChunksToSorted(vector<int>& arr) {
 }
 ```
 
+<br>
+
+### Subarray with given Mean
+You are given an array A of N integers and an integer S. Your task is to compute how many ways one can choose a contiguous fragment of A such that arithmetic mean is equal to S.
+
+Approach: 
+1. Decrease all the elements of the array by S
+2. Now the problem reduces to finding a subarray whose sum = 0. This can be easily solved using prefix sum and a map.
+
+```cpp
+long long solve (vector<int> &v, int mean){
+
+    for(int i=0; i<v.size(); i++)
+        v[i]-=mean;
+    
+    /* Now question reduced to count number of subarrays having sum = 0 */
+
+    unordered_map<int, int> mp;
+    mp[0] = 1;
+
+    long long ans = 0;
+    long long csum = 0;
+
+
+    for(int num : v){
+        csum += num;
+
+        if(mp.find(csum)!=mp.end())
+            ans += mp[csum];
+        
+        mp[csum]++;
+    }
+
+    return ans;
+}
+```
+
+<br>
+
+### Missing Rolls on Dice
+
+We rolled a dice several times. We remembered N rolls which are described by array A. We forgot F rolls. The arithmatic mean of all rolls is M. What are the possible results of missing rolls.
+
+Input: A=[3, 2, 4, 3], F=2, M=4
+
+Output: [6, 6]
+
+```cpp
+void generateCombs (int start, int idx, int target, vector<vector<int>> &res, vector<int> &v, int f){
+    if(target<0) return;
+
+    if(idx==f){
+        if(target==0) res.push_back(v);
+        return;
+    }
+
+    for(int i=start; i<=6; i++){
+        v.push_back(i);
+        generateCombs (i, idx+1, target-i, res, v, f);
+        v.pop_back();
+    }
+}
+
+vector<vector<int>> solve (vector<int> arr, int f, int m){
+
+    int arrSum = 0;
+    for(int num : arr) arrSum += num;
+
+    int totalSum = (arr.size() + f) * m;
+
+    int target = totalSum - arrSum;
+
+    vector<vector<int>> res;
+    vector<int> v;
+
+    generateCombs(1, 0, target, res, v, f);
+    return res;
+}
+```
+
 
 

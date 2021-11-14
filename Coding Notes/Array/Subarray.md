@@ -379,6 +379,7 @@ long long solve (vector<int> &v, int mean){
     return ans;
 }
 ```
+
 <br>
 
 

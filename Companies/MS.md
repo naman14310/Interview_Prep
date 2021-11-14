@@ -646,4 +646,25 @@ string solve (string &s, string &t){
 } 
 ```
 
+<br>
+
+### [Max Chunks To Make Sorted](https://leetcode.com/problems/max-chunks-to-make-sorted/)
+
+```cpp
+int maxChunksToSorted(vector<int>& arr) {
+
+    int range = 0;
+    int chunk = 0;
+
+    for(int i=0; i<arr.size(); i++){
+        range = max(range, arr[i]);
+
+        if(i==range) chunk++;
+    }
+
+    return chunk;
+}
+```
+
+
 

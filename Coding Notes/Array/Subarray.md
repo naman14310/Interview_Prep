@@ -345,6 +345,42 @@ int Solution::solve(vector<int> &A, int B) {
 
 <br>
 
+### 10. Subarray with given Mean
+You are given an array A of N integers and an integer S. Your task is to compute how many ways one can choose a contiguous fragment of A such that arithmetic mean is equal to S.
+
+Approach: 
+1. Decrease all the elements of the array by S
+2. Now the problem reduces to finding a subarray whose sum = 0. This can be easily solved using prefix sum and a map.
+
+```cpp
+long long solve (vector<int> &v, int mean){
+
+    for(int i=0; i<v.size(); i++)
+        v[i]-=mean;
+    
+    /* Now question reduced to count number of subarrays having sum = 0 */
+
+    unordered_map<int, int> mp;
+    mp[0] = 1;
+
+    long long ans = 0;
+    long long csum = 0;
+
+
+    for(int num : v){
+        csum += num;
+
+        if(mp.find(csum)!=mp.end())
+            ans += mp[csum];
+        
+        mp[csum]++;
+    }
+
+    return ans;
+}
+```
+<br>
+
 
 
 ## @ Tricky Subarrays

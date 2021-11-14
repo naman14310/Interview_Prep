@@ -96,7 +96,38 @@ string normalize(const string &sentence) {
 
 <br>
 
-### 4. Roman to Integer
+### 4. Isomorphic Strings
+Given two strings s and t, determine if they are isomorphic. Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+
+```cpp
+bool isIsomorphic(string s, string t) {
+    unordered_map<char, char> mp;
+    vector<bool> taken (256, false);
+
+    for(int i=0; i<s.length(); i++){
+
+        if(mp.find(s[i])==mp.end()){
+
+            if(taken[t[i]]) return false;
+
+            mp[s[i]] = t[i]; 
+            taken[t[i]] = true;
+
+        }
+
+        else if(mp[s[i]]!=t[i])
+            return false;
+    }
+
+    return true;
+}
+```
+
+<br>
+
+### 5. Roman to Integer
 
 ```cpp
 int romanToInt(string A) {
@@ -121,7 +152,7 @@ int romanToInt(string A) {
 
 <br>
 
-### 5. Integer to Roman
+### 6. Integer to Roman
 
 ```cpp
 string Solution::intToRoman(int A) {
@@ -198,7 +229,7 @@ string Solution::intToRoman(int A) {
 
 <br>
 
-### 6. Reverse Words in a String
+### 7. Reverse Words in a String
 Return the string A after reversing the string word by word.
 
 Input: s = "the sky is blue"

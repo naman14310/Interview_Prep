@@ -578,7 +578,33 @@ int Solution::solve(vector<int> &A, int B) {
 
 ## @ Other Tricky problems
 
-### 1. Get the Maximum Score - O(n) | O(1)
+### 1. [Maximum Number of Weeks for Which You Can Work](https://leetcode.com/problems/maximum-number-of-weeks-for-which-you-can-work/)
+If the max elements is larger than the sum of the rest elements. then the max answer is 2 * rest + 1, because the best strategy is pick max, pick other, pick max, pick other....pick max. otherwise, we can finish all of the milestones.
+
+```cpp
+long long numberOfWeeks(vector<int>& milestones) {
+
+    long long sum = 0;
+    long long mx = INT_MIN;
+
+    for(int m : milestones){
+        sum += m;
+        long long num = m;
+        mx = max(mx, num);
+    }
+
+    long long remSum = sum - mx;
+
+    if(mx>remSum)
+        return 2*remSum+1;
+    else
+        return sum;
+}
+```
+
+<br>
+
+### 2. Get the Maximum Score - O(n) | O(1)
 You are given two sorted arrays of distinct integers nums1 and nums2. A valid path is defined as follows:
 
 1. Choose array nums1 or nums2 to traverse (from index-0).

@@ -826,3 +826,29 @@ int getMinBuckets(int n, int k){
 }
 ```
 
+<br>
+
+### Min Removes to make palindrome
+
+Input: s = "ervervige"
+
+Output: 2
+
+```cpp
+int solve (string &s){
+    unordered_map<char, int> mp;
+
+    for(char ch : s){
+        mp[ch]++;
+    }
+
+    int cnt = 0;
+
+    for(auto p : mp){
+        if(p.second&1) cnt++;
+    }
+
+    return cnt>0?cnt-1:0;
+}
+```
+

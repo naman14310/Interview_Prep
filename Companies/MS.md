@@ -852,3 +852,84 @@ int solve (string &s){
 }
 ```
 
+<br>
+
+### Find Path without getting detected
+
+```cpp
+bool isInside (int x, int y, int row, int col){
+    return x>=0 and y>=0 and x<row and y<col;
+}
+
+
+bool dfs (vector<string> & grid, int x, int y, int row, int col){
+    if(x==row-1 and y==col-1) return true;
+
+    int dx[] = {1, 0, -1, 0};
+    int dy[] = {0, 1 ,0, -1};
+
+    grid[x][y] = '-';
+
+    for(int i=0; i<4; i++){
+        int xnew = x + dx[i];
+        int ynew = y + dy[i];
+
+        if(isInside(xnew, ynew, row, col) and grid[xnew][ynew]=='.'){
+            bool res = dfs (grid, xnew, ynew, row, col);
+            if(res) return true;
+        }
+
+    }
+
+    return false;
+}
+
+
+void move(int &x, int &y, char dir){
+    if(dir=='>') y++;
+    else if(dir=='<') y--;
+    else if(dir=='^') x--;
+    else x++;
+}
+
+
+bool fillVision(vector<string> & grid, int x, int y, char dir, int row, int col){
+    move(x, y, dir);
+
+    while(isInside(x, y, row, col)){
+        if(grid[x][y]=='A') return false;
+        if(grid[x][y]!='.' and grid[x][y]!='*') return true;
+
+        grid[x][y] = '*';
+        move(x, y, dir);
+    }
+
+    return true;
+}
+
+
+bool solve (vector<string> &grid){
+    int row = grid.size(), col = grid[0].size();
+
+    int src_x = 0, src_y = 0;
+
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            
+            if(grid[i][j]=='>' or grid[i][j]=='<' or grid[i][j]=='^' or grid[i][j]=='v'){
+                bool fv = fillVision(grid, i, j, grid[i][j], row, col);
+                if(!fv) return false;
+            }
+
+            if(grid[i][j]=='A'){
+                src_x = i;
+                src_y = j;
+            }
+        }
+    }
+
+    bool isPathExist = dfs (grid, src_x, src_y, row, col);
+    return isPathExist;
+}
+```
+

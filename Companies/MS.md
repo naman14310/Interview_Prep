@@ -933,3 +933,40 @@ bool solve (vector<string> &grid){
 }
 ```
 
+<br>
+
+### [Distinct Books in Shelf](https://leetcode.com/discuss/interview-question/1521473/microsoft-india-fte-engage-codility-oa-october-2021)
+A storeroom is used to organize items stored in it on N shelves. Shelves are numbered from 0 to N-1. The K-th shelf is dedicated items of only one type, denoted by a positive integer A[K]. We need to free R consecutive shelves. What is the maximum number of types of items which still can be stored in the storeroom after freeing R consecutive shelves?
+
+```cpp
+int findDistinctItems(vector<int> &v, int k){
+    int n = v.size();
+    int ans = 0; 
+    unordered_map<int, int> mp;
+
+    for(int i : v)
+        mp[i]++;
+
+    int cnt = mp.size();
+
+    for(int i=0; i<min(k, n); i++){
+        mp[v[i]]--;
+        if(mp[v[i]] == 0) cnt--;
+    }
+
+    ans = max(ans, cnt);
+
+    for(int i=0; i+k<n; i++){
+        mp[v[i]]++;
+        if(mp[v[i]]==1) cnt++;
+
+        mp[v[i+k]]--;
+        if(mp[v[i+k]]==0) cnt--;
+
+        ans = max(ans, cnt);
+    }
+
+    return ans;
+}
+```
+

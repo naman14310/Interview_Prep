@@ -1010,3 +1010,28 @@ int minSwaps (string &s){
 }
 ```
 
+<br>
+
+### [Min Steps to make Pile equal heights](https://leetcode.com/discuss/interview-question/364618/)
+
+```cpp
+int solve (vector<int> &piles){
+    sort(piles.begin(), piles.end(), greater<int>());
+
+    int prev_cnt = 0, cnt = 0;
+    int ans = 0;
+
+    for(int i=0; i<piles.size(); i++){
+        if(i==0 or piles[i]!=piles[i-1]){
+            ans += prev_cnt + cnt;
+            prev_cnt += cnt;
+            cnt=1;
+        }
+        else
+            cnt++;
+    }
+
+    return ans;
+}
+```
+

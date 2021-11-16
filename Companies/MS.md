@@ -1035,3 +1035,30 @@ int solve (vector<int> &piles){
 }
 ```
 
+<br>
+
+### [Min Deletions To Obtain String in Right Format](https://algo.monster/problems/min_deletions_to_obtain_string_in_right_format)
+
+```cpp
+
+int solve (string s){
+    int n = s.length();
+    int cntx = 0;
+    for(char ch : s) 
+        if(ch=='X') cntx++;
+    
+    int ans = cntx;
+    int clx = 0, cly = 0;
+
+    for(int i=0; i<s.length(); i++){
+
+        if(s[i]=='X') clx++;
+        else cly++;
+        
+        ans = min(ans, cly+(cntx-clx));
+    }
+
+    return ans;
+}
+```
+

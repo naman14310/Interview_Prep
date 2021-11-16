@@ -972,6 +972,30 @@ int findDistinctItems(vector<int> &v, int k){
 
 <br>
 
+```java
+public int solution(int A[], int R) {
+    int n = A.length;
+    if ( R == n) {
+         return 0;
+    }
+   int ans = 0;
+   for (int i = 0; i < n - R + 1;  i++) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int j = 0; j < n; j++) {
+            if (j >= i || j < i + R) {
+               continue;
+            } else {
+               set.add(A[j);
+            }
+           ans = Math.max(ans, set.size());
+        }
+    }
+   return ans;
+}
+```
+
+<br>
+
 ### Minimum swap to make string palindrome
 Given a string s, the task is to find out the minimum no of adjacent swaps required to make string s palindrome. If not possible, return -1.
 

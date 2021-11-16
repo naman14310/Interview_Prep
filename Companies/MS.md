@@ -970,3 +970,43 @@ int findDistinctItems(vector<int> &v, int k){
 }
 ```
 
+<br>
+
+### Minimum swap to make string palindrome
+Given a string s, the task is to find out the minimum no of adjacent swaps required to make string s palindrome. If not possible, return -1.
+
+Input: aabcb
+
+Output: 3 
+
+```cpp
+int minSwaps (string &s){
+    int n = s.length();
+    int i=0, j=n-1;
+    int moves = 0;
+
+    while(i<=n/2){
+
+        if(s[i]==s[j]){
+            i++; j--;
+            continue;
+        }
+
+        int k=j-1;
+        while(k>i and s[k]!=s[i]) k--;
+
+        if(k==i) return -1;
+
+        while(k<j){
+            swap(s[k], s[k+1]);
+            moves++;
+            k++;
+        }
+
+        i++; j--;
+    }
+
+    return moves;
+}
+```
+

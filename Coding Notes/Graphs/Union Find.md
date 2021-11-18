@@ -534,3 +534,106 @@ int journeyToMoon(int n, vector<vector<int>> astronaut) {
     return total_ways - same_ways;
 }
 ```
+
+<br>
+
+### 8. [Remove Max Number of Edges to Keep Graph Fully Traversable](https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/)
+
+```cpp
+/* ------------------ Standard Union Find Format -------------------- */
+
+struct ds{
+    int rank, parent;
+    ds (int r, int p){
+        rank = r;
+        parent = p;
+    }
+};
+
+
+int ds_find (vector<ds> &arr, int v){
+    if(arr[v].parent==-1) 
+        return v;
+    else return arr[v].parent = ds_find (arr, arr[v].parent);
+}
+
+
+void ds_union (vector<ds> &arr, int v1, int v2){
+
+    if(arr[v1].rank < arr[v2].rank)
+        arr[v1].parent = v2;
+
+    else if(arr[v1].rank > arr[v2].rank)
+        arr[v2].parent = v1;
+
+    else{
+        arr[v1].parent = v2;
+        arr[v2].rank++;
+    }
+}
+
+
+/* ------------------------------------------------------------------ */
+
+
+int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) {
+    vector<ds> arr1 (n+1, ds(0, -1)); 
+    vector<ds> arr2 (n+1, ds(0, -1));
+
+    int removed_edges = 0;
+
+    /* Iterating for all edges of type 3 first */
+
+    for(auto e : edges){
+        int type = e[0], u = e[1], v = e[2];
+        if(type!=3) continue;
+
+        int root1 = ds_find(arr1, u);
+        int root2 = ds_find(arr1, v);
+        int root3 = ds_find(arr2, u);
+        int root4 = ds_find(arr2, v);
+
+        if(root1==root2 and root3==root4) removed_edges++;
+        else{
+            if(root1!=root2) ds_union(arr1, root1, root2);
+            if(root3!=root4) ds_union(arr2, root3, root4);
+        }
+    }
+
+    /* After adding edges of type 3 --> adding edges of type 1 and type 2 */
+
+    for(auto e : edges){
+        int type = e[0], u = e[1], v = e[2];
+
+        if(type == 1){
+            int root1 = ds_find(arr1, u);
+            int root2 = ds_find(arr1, v);
+
+            if(root1==root2) removed_edges++;
+            else ds_union(arr1, root1, root2);
+        }
+
+        else if(type == 2){
+            int root1 = ds_find(arr2, u);
+            int root2 = ds_find(arr2, v);
+
+            if(root1==root2) removed_edges++;
+            else ds_union(arr2, root1, root2);
+        }
+    }
+
+    /* Checking if there are more then 2 roots (i.e graph is not fully traversable) */
+
+    int rootCnt = 0;
+
+    for(int i=1; i<=n; i++){
+        if(arr1[i].parent==-1) rootCnt++;
+        if(arr2[i].parent==-1) rootCnt++;
+    }
+
+    if(rootCnt>2) return -1;
+
+    return removed_edges;
+}
+```
+

@@ -1,11 +1,14 @@
 # Articulation Points (or Cut Vertex)
-
 A node is defined as Articulation point if on removing it, no. of components in the graph increases.
+
+<br>
 
 **Application** : 
 Find single point of failure in a network
 
-#### Simple Approach (Brute Force)
+<br>
+
+### Simple Approach (Brute Force)
 For each node do, 
 1. Take out the node and all passing edges.
 2. Find if we have only one component.
@@ -13,11 +16,15 @@ For each node do,
   
 Time Complexity : O(V*(V+E))
 
+<br>
+
 ### Approach using Tarjans Algo | O(V+E)
 
 **Conditions of AP**
 1. If node U is root of DFS tree and has atleast 2 childrens (i.e. independent subgraphs)
 2. If node U is not root and it has a child V such that no vertex in subgraph rooted with V has a backedge to one of the ancestors of U.
+
+<br>
 
 [Video Explaination](https://www.youtube.com/watch?v=64KK9K4RpKE)
 
@@ -81,24 +88,33 @@ vector<int> findArticulationPoints(unordered_map<int, vector<int>> & graph, int 
 }
 ```
 
+<br>
+
 
 # Bridges (or Cut Edges)
-
 A bridge is an edge, removing which increases the number of components.
+
+<br>
 
 **Application** : 
 Find critical connections in a network
 
-#### Simple Approach (Brute Force)
+<br>
+
+### Simple Approach (Brute Force)
 For each edge repeat, 
 1. Remove edge from the graph.
 2. Find if we have only one component.
 3. If component==1 then removed edge is not a bridge else it is a bridge.
-  
+
 Time Complexity : O(E*(V+E))
+
+<br>
 
 ### Approach using Tarjans Algo | O(V+E)
 There are n servers numbered from 0 to n - 1 connected by undirected server-to-server connections forming a network where connections[i] = [ai, bi] represents a connection between servers ai and bi. A critical connection is a connection that, if removed, will make some servers unable to reach some other server. Return all critical connections in the network in any order.
+
+<br>
 
 ![img](https://assets.leetcode.com/uploads/2019/09/03/1537_ex1_2.png)
 
